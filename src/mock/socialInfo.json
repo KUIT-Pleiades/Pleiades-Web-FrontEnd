@@ -1,0 +1,28 @@
+{
+  "friendRequest": [
+    {
+      "Id": "friend12",
+      "Name": "길봉태"
+    }
+  ],
+  "Myfriends": [
+    {
+      "Id": "friend1",
+      "Name": "홍길동"
+    },
+    {
+      "Id": "friend2",
+      "Name": "이영희"
+    },
+    {
+      "Id": "friend3",
+      "Name": "박지민"
+    }
+  ],
+  "MyRequests": [
+    {
+      "Id": "friend8",
+      "Name": "박창식"
+    }
+  ]
+}

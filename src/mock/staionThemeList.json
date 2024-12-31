@@ -1,0 +1,19 @@
+{
+  "backgrounds": [
+    {
+      "name": "office",
+      "theme": "테마1",
+      "imgurl": "https://example.com/images/background_office.png"
+    },
+    {
+      "name": "school",
+      "theme": "테마2",
+      "imgurl": "https://example.com/images/background_school.png"
+    },
+    {
+      "name": "gym",
+      "theme": "테마1",
+      "imgurl": "https://example.com/images/background_gym.png"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "question": {
+    "questionID": "Q12345",
+    "question": "당신의 취미는 무엇인가요?"
+  },
+  "answer": "저는 독서와 등산을 좋아합니다",
+  "respondentId": "2",
+  "isFriend": true
+}

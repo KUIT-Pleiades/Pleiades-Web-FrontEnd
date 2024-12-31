@@ -1,0 +1,103 @@
+{
+  "id": "1",
+  "name": "Station 1",
+  "backgroundImg": "/images/station/background/office.png",
+  "members": [
+    {
+      "character": {
+        "characterId": "char1",
+        "characterName": "Emma",
+        "characterAge": 25,
+        "face": {
+          "skinColor": {
+            "name": "white",
+            "imgurl": "/images/skin/white.png"
+          },
+          "hair": {
+            "name": "ponytail",
+            "imgurl": "/images/hair/ponytail.png"
+          },
+          "expression": {
+            "name": "smile",
+            "imgurl": "/images/expression/smile.png"
+          }
+        },
+        "outfit": {
+          "top": {
+            "name": "t-shirt",
+            "imgurl": "/images/outfit/tshirt.png"
+          },
+          "bottom": {
+            "name": "jeans",
+            "imgurl": "/images/outfit/jeans.png"
+          },
+          "shoes": {
+            "name": "sneakers",
+            "imgurl": "/images/outfit/sneakers.png"
+          }
+        },
+        "accessories": {
+          "name": "necklace",
+          "imgurl": "/images/accessories/necklace.png"
+        },
+        "background": {
+          "name": "park",
+          "imgurl": "/images/background/park.png"
+        }
+      },
+      "position": {
+        "x": 100,
+        "y": 100
+      },
+      "isAnswered": false
+    },
+    {
+      "character": {
+        "characterId": "char2",
+        "characterName": "John",
+        "characterAge": 30,
+        "face": {
+          "skinColor": {
+            "name": "black",
+            "imgurl": "/images/skin/black.png"
+          },
+          "hair": {
+            "name": "short",
+            "imgurl": "/images/hair/short.png"
+          },
+          "expression": {
+            "name": "smile",
+            "imgurl": "/images/expression/smile.png"
+          }
+        },
+        "outfit": {
+          "top": {
+            "name": "shirt",
+            "imgurl": "/images/outfit/shirt.png"
+          },
+          "bottom": {
+            "name": "pants",
+            "imgurl": "/images/outfit/pants.png"
+          },
+          "shoes": {
+            "name": "boots",
+            "imgurl": "/images/outfit/boots.png"
+          }
+        },
+        "accessories": {
+          "name": "watch",
+          "imgurl": "/images/accessories/watch.png"
+        },
+        "background": {
+          "name": "office",
+          "imgurl": "/images/background/office.png"
+        }
+      },
+      "position": {
+        "x": 200,
+        "y": 200
+      },
+      "isAnswered": true
+    }
+  ]
+}

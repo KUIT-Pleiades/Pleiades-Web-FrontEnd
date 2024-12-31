@@ -1,0 +1,41 @@
+{
+  "characterId": "char2",
+  "characterName": "길봉태",
+  "characterAge": 22,
+  "face": {
+    "skinColor": {
+      "name": "black",
+      "imgurl": "/images/skin/white.png"
+    },
+    "hair": {
+      "name": "shortcut",
+      "imgurl": "/images/hair/ponytail.png"
+    },
+    "expression": {
+      "name": "smile",
+      "imgurl": "/images/expression/smile.png"
+    }
+  },
+  "outfit": {
+    "top": {
+      "name": "shirt",
+      "imgurl": "/images/outfit/tshirt.png"
+    },
+    "bottom": {
+      "name": "jeans",
+      "imgurl": "/images/outfit/jeans.png"
+    },
+    "shoes": {
+      "name": "sneakers",
+      "imgurl": "/images/outfit/sneakers.png"
+    }
+  },
+  "accessories": {
+    "name": "earrings",
+    "imgurl": "/images/accessories/necklace.png"
+  },
+  "background": {
+    "name": "spacestation",
+    "imgurl": "/images/background/park.png"
+  }
+}
