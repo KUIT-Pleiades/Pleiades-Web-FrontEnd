@@ -1,0 +1,34 @@
+{
+  "stations": [
+    {
+      "id": 1,
+      "name": "재즈 라운지",
+      "backgroundImgUrl": "jazz_lounge_bg.jpg",
+      "numOfUsers": 3
+    },
+    {
+      "id": 2,
+      "name": "클래식 홀",
+      "backgroundImgUrl": "classical_hall_bg.jpg",
+      "numOfUsers": 4
+    },
+    {
+      "id": 3,
+      "name": "K-POP 스테이션",
+      "backgroundImg": "kpop_station_bg.jpg",
+      "numOfUsers": 6
+    },
+    {
+      "id": 4,
+      "name": "힙합 스튜디오",
+      "backgroundImg": "hiphop_studio_bg.jpg",
+      "numOfUsers": 4
+    },
+    {
+      "id": 5,
+      "name": "록 카페",
+      "backgroundImg": "rock_cafe_bg.jpg",
+      "numOfUsers": 2
+    }
+  ]
+}

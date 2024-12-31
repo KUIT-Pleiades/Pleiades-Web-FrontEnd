@@ -1,0 +1,20 @@
+{
+  "questions": [
+    {
+      "questionID": "12345",
+      "question": "당신의 취미는 무엇인가요?"
+    },
+    {
+      "questionID": "Q12346",
+      "question": "가장 좋아하는 음식은?"
+    },
+    {
+      "questionID": "Q12347",
+      "question": "어떤 음악을 즐겨 듣나요?"
+    },
+    {
+      "questionID": "Q12348",
+      "question": "주말에는 주로 무엇을 하시나요?"
+    }
+  ]
+}

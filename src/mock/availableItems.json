@@ -1,0 +1,86 @@
+{
+  "faces": {
+    "skinColors": [
+      {
+        "name": "white",
+        "imgurl": "https://example.com/images/skin_white.png"
+      },
+      {
+        "name": "yellow",
+        "imgurl": "https://example.com/images/skin_yellow.png"
+      }
+    ],
+    "hairs": [
+      {
+        "name": "ponytail",
+        "imgurl": "https://example.com/images/hair_ponytail.png"
+      },
+      {
+        "name": "short",
+        "imgurl": "https://example.com/images/hair_short.png"
+      }
+    ],
+    "expressions": [
+      {
+        "name": "smile",
+        "imgurl": "https://example.com/images/expression_smile.png"
+      },
+      {
+        "name": "angry",
+        "imgurl": "https://example.com/images/expression_angry.png"
+      }
+    ]
+  },
+  "outfits": {
+    "tops": [
+      {
+        "name": "t-shirt",
+        "imgurl": "https://example.com/images/top_tshirt.png"
+      },
+      {
+        "name": "jacket",
+        "imgurl": "https://example.com/images/top_jacket.png"
+      }
+    ],
+    "bottoms": [
+      {
+        "name": "jeans",
+        "imgurl": "https://example.com/images/bottom_jeans.png"
+      },
+      {
+        "name": "shorts",
+        "imgurl": "https://example.com/images/bottom_shorts.png"
+      }
+    ],
+    "shoes": [
+      {
+        "name": "sneakers",
+        "imgurl": "https://example.com/images/shoes_sneakers.png"
+      },
+      {
+        "name": "boots",
+        "imgurl": "https://example.com/images/shoes_boots.png"
+      }
+    ]
+  },
+  "accessories": [
+    {
+      "name": "sunglasses",
+      "imgurl": "https://example.com/images/accessory_sunglasses.png"
+    },
+    {
+      "name": "hat",
+      "imgurl": "https://example.com/images/accessory_hat.png"
+    }
+  ],
+  "backgrounds": [
+    {
+      "name": "beach",
+      "imgurl": "https://example.com/images/background_beach.png"
+    },
+    {
+      "name": "city",
+      "imgurl": "https://example.com/images/background_city.png"
+    }
+  ]
+}

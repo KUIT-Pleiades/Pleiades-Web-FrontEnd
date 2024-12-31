@@ -1,0 +1,44 @@
+{
+  "onBoardingCompleted": false,
+  "character": {
+    "characterId": "char1",
+    "characterName": "Emma",
+    "characterAge": 25,
+    "face": {
+      "skinColor": {
+        "name": "white",
+        "imgurl": "/images/skin/white.png"
+      },
+      "hair": {
+        "name": "ponytail",
+        "imgurl": "/images/hair/ponytail.png"
+      },
+      "expression": {
+        "name": "smile",
+        "imgurl": "/images/expression/smile.png"
+      }
+    },
+    "outfit": {
+      "top": {
+        "name": "t-shirt",
+        "imgurl": "/images/outfit/tshirt.png"
+      },
+      "bottom": {
+        "name": "jeans",
+        "imgurl": "/images/outfit/jeans.png"
+      },
+      "shoes": {
+        "name": "sneakers",
+        "imgurl": "/images/outfit/sneakers.png"
+      }
+    },
+    "accessories": {
+      "name": "necklace",
+      "imgurl": "/images/accessories/necklace.png"
+    },
+    "background": {
+      "name": "park",
+      "imgurl": "/images/background/park.png"
+    }
+  }
+}
