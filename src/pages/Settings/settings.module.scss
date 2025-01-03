@@ -172,10 +172,11 @@ button {
 .contentArea {
     padding: 14px;
     min-height: 200px;
+    background: #FFF;
 }
 
 
-.faceGrid {
+.gridItems {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     justify-content: center;
@@ -185,7 +186,7 @@ button {
     box-sizing: border-box;
 }
 
-.faceItem {
+.item {
     aspect-ratio: 1;
     border-radius: 12px;
     background: white;
@@ -195,10 +196,12 @@ button {
 
     &:hover {
         border-color: #ccc;
+        
     }
 
     &.selected {
-        border-color: #6dd3d6;
+        box-shadow: 0 0 8px 2px rgba(139, 92, 246, 0.5);
+        
     }
 
     img {
@@ -213,39 +216,6 @@ button {
     border-radius: 12px;
     background: white;
     position: relative;
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-}
-
-.costumeGrid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: center;
-    gap: 22px;
-    padding: 14px 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.costumeItem {
-    aspect-ratio: 1;
-    border-radius: 12px;
-    background: white;
-    cursor: pointer;
-    border: 1px solid #E1E1E1;
-    padding: 8px;
-
-    &:hover {
-        border-color: #ccc;
-    }
-
-    &.selected {
-        border-color: #6dd3d6;
-    }
 
     img {
         width: 100%;

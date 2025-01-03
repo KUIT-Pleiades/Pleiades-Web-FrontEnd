@@ -16,16 +16,17 @@ import { useState } from "react";
 const Settings = () => {
   const [activeMenu, setActiveMenu] = useState("face");
   const [selectedFace, setSelectedFace] = useState(character3face);
-  const [selecttedCostume, setSelectedCostume] = useState(character1body);
+  const [selectedCostume, setSelectedCostume] = useState(character1body);
   const [selectedAccessory, setSelectedAccessory] = useState<string | null>(
     null
   );
-  const handleAccessoryClick = (accessory : string) => {
+  const handleAccessoryClick = (accessory: string) => {
     setSelectedAccessory((prev) => (prev === accessory ? null : accessory));
   };
 
-
-
+  //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
+  // 다음 버튼 클릭 시, 다음 페이지로 이동, 서버에 현재 상태 저장도록 바꿔야함
+  
   return (
     <>
       <div className={s.showCharacter}>
@@ -35,7 +36,7 @@ const Settings = () => {
         <img className={s.characterFace} src={selectedFace} alt="캐릭터3얼굴" />
         <img
           className={s.characterBody}
-          src={selecttedCostume}
+          src={selectedCostume}
           alt="캐릭터1몸"
         />
         {selectedAccessory && (
@@ -50,11 +51,16 @@ const Settings = () => {
           src={characterBackground}
           alt="캐릭터후광"
         />
-        <img className={s.resetBtn} src={resetBtn} alt="리셋 버튼" onClick={() => {
-          setSelectedFace(character3face)
-          setSelectedCostume(character1body)
-          setSelectedAccessory(null)
-        }}/>
+        <img
+          className={s.resetBtn}
+          src={resetBtn}
+          alt="리셋 버튼"
+          onClick={() => {
+            setSelectedFace(character3face);
+            setSelectedCostume(character1body);
+            setSelectedAccessory(null);
+          }}
+        />
       </div>
       <div className={s.setCharacter}>
         <div className={s.menuBar}>
@@ -85,21 +91,27 @@ const Settings = () => {
         </div>
         <div className={s.contentArea}>
           {activeMenu === "face" && (
-            <div className={s.faceGrid}>
+            <div className={s.gridItems}>
               <div
-                className={s.faceItem}
+                className={`${s.item} ${
+                  selectedFace === character3face ? s.selected : ""
+                }`}
                 onClick={() => setSelectedFace(character3face)}
               >
                 <img src={character3face} alt="캐릭터3얼굴" />
               </div>
               <div
-                className={s.faceItem}
+                className={`${s.item} ${
+                  selectedFace === character2face ? s.selected : ""
+                }`}
                 onClick={() => setSelectedFace(character2face)}
               >
                 <img src={character2face} alt="캐릭터2얼굴" />
               </div>
               <div
-                className={s.faceItem}
+                className={`${s.item} ${
+                  selectedFace === character1face ? s.selected : ""
+                }`}
                 onClick={() => setSelectedFace(character1face)}
               >
                 <img src={character1face} alt="캐릭터1얼굴" />
@@ -134,21 +146,27 @@ const Settings = () => {
             </div>
           )}
           {activeMenu === "costume" && (
-            <div className={s.costumeGrid}>
+            <div className={s.gridItems}>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedCostume === character1body ? s.selected : ""
+                }`}
                 onClick={() => setSelectedCostume(character1body)}
               >
                 <img src={character1body} alt="캐릭터1몸" />
               </div>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedCostume === character2body ? s.selected : ""
+                }`}
                 onClick={() => setSelectedCostume(character2body)}
               >
                 <img src={character2body} alt="캐릭터2몸" />
               </div>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedCostume === character3body ? s.selected : ""
+                }`}
                 onClick={() => setSelectedCostume(character3body)}
               >
                 <img src={character3body} alt="캐릭터3몸" />
@@ -183,21 +201,27 @@ const Settings = () => {
             </div>
           )}
           {activeMenu === "accessory" && (
-            <div className={s.costumeGrid}>
+            <div className={s.gridItems}>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedAccessory === catEar ? s.selected : ""
+                }`}
                 onClick={() => handleAccessoryClick(catEar)}
               >
                 <img src={catEar} alt="고양이귀" />
               </div>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedAccessory === glasses ? s.selected : ""
+                }`}
                 onClick={() => handleAccessoryClick(glasses)}
               >
                 <img src={glasses} alt="안경" />
               </div>
               <div
-                className={s.costumeItem}
+                className={`${s.item} ${
+                  selectedAccessory === earings ? s.selected : ""
+                }`}
                 onClick={() => handleAccessoryClick(earings)}
               >
                 <img src={earings} alt="귀걸이" />
