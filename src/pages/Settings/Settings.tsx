@@ -50,7 +50,11 @@ const Settings = () => {
           src={characterBackground}
           alt="캐릭터후광"
         />
-        <img className={s.resetBtn} src={resetBtn} alt="" />
+        <img className={s.resetBtn} src={resetBtn} alt="리셋 버튼" onClick={() => {
+          setSelectedFace(character3face)
+          setSelectedCostume(character1body)
+          setSelectedAccessory(null)
+        }}/>
       </div>
       <div className={s.setCharacter}>
         <div className={s.menuBar}>
