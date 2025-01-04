@@ -27,7 +27,6 @@ const VisitStationModal: React.FC<ModalProps> = ({
                 <div className={s.modalAvatar}>
                     <img src={characterAvatar} alt={`${username}'s avatar`} />
                 </div>
-                <div className={s.modalUsername}>{username}</div>
                 <div className={s.modalUserId}>(@{userId})</div>
                 <p className={s.modalMessage}>
                     {username}님의 별에 방문할까요?

@@ -1,7 +1,7 @@
 $modal-background-color: white;
 $modal-overlay-color: rgba(0, 0, 0, 0.5);
 $modal-close-color: gray;
-$modal-border-radius: 10px;
+$modal-border-radius: 12px;
 
 .modalOverlay {
   position: fixed;
@@ -37,51 +37,61 @@ $modal-border-radius: 10px;
   }
 
   &Avatar {
+    position: absolute;
+    left: 35%;
+    bottom: 70%;
     img {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       margin-bottom: 10px;
     }
-  }
-
-  &Username {
-    font-size: 16px;
-    font-weight: bold;
   }
 
   &UserId {
     font-size: 14px;
     color: gray;
     margin-bottom: 10px;
+    margin-top: 15px;
   }
 
   &Message {
     font-size: 14px;
-    margin: 10px 0;
+    margin: 15px 0;
   }
 
   &Buttons {
     display: flex;
     justify-content: space-around;
     margin-top: 10px;
+    height: 30px;
 
     &Confirm {
-      background-color: #5a3ea1;
-      color: white;
+      background-color: #402C44;
+      color: #FFFFFF;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 0;
+      margin: 0;
+      width: 45%;
+      border-radius: 12px;
       cursor: pointer;
+      font-family: "Pretendard";
+      font-size: 13px;
+      font-weight: bold;
     }
 
     &Cancel {
-      background-color: #d5c6f8;
-      color: black;
+      background-color: #C0B9DB;
+      color: #FFFFFF;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 0;
+      margin: 0;
+      width: 45%;
+      border-radius: 12px;
       cursor: pointer;
+      font-family: "Pretendard";
+      font-size: 13px;
+      font-weight: bold;
     }
   }
 }

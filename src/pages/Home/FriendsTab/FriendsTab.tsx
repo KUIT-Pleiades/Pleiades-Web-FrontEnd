@@ -5,7 +5,6 @@ import s from './FriendsTab.module.scss';
 import ShowFriendRequestsList from './ShowFriendRequestsList/ShowFriendRequestsList';
 import ShowMyFriendsList from './ShowMyFriendsList/ShowMyFriendsList';
 import ShowMyRequestsList from './ShowMyRequestsList/ShowMyRequestsList';
-//import VisitStationModal from './VisitStationModal/visitStationModal';
 
 import searchIcon from '../../../assets/searchIcon.svg';
 import hideUpArrow from '../../../assets/hideUpArrow.svg';
@@ -188,15 +187,7 @@ const FriendsTab: React.FC = () => {
                                             )
                                         )
                                 }
-                                {/* {isModalOpen && (
-                                    <VisitStationModal
-                                        username={character.characterName}
-                                        userId={character.characterId}
-                                        onConfirm={handleConfirm}
-                                        onCancel={handleCancel}
-                                        onClose={handleCloseModal}
-                                    />
-                                )} */}
+                                
                                 <div className={s.myFriendsSection}>
                                 {isShowMyFriends && <div style={{height:"10px"}}></div>}
                                     {isShowMyFriends && friendsData.MyFriends.map((friend) => (
