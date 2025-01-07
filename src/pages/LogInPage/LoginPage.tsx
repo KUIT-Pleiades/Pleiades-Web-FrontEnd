@@ -4,7 +4,7 @@ import kakao from "../../assets/kakao.svg";
 import naver from "../../assets/naver.svg";
 import { Link } from "react-router-dom";
 
-export default function LogIn() {
+export default function LogInPage() {
   return (
     <div className={s.logInPageContainer}>
       <div className={s.content}>
