@@ -1,7 +1,7 @@
 import { barContent } from "../types/types";
 import s from "./BottomBar.module.scss";
-import starIcon from "../assets/bottomBarImg/StarIcon.svg";
-import selectedStarIcon from "../assets/bottomBarImg/StarIconSelected.png";
+import starIcon from "../assets/bottomBarImg/starIcon.svg";
+import selectedStarIcon from "../assets/bottomBarImg/starIconSelected.png";
 import stationIcon from "../assets/bottomBarImg/stationIcon.svg";
 import selectedStationIcon from "../assets/bottomBarImg/stationIconSelected.png";
 import rocketIcon from "../assets/bottomBarImg/stationIcon.svg";
