@@ -1,4 +1,4 @@
-import s from "./settings.module.scss";
+import s from "./Settings.module.scss";
 import character3face from "../../assets/Character/face/character3face.png";
 import character2face from "../../assets/Character/face/character2face.png";
 import character1face from "../../assets/Character/face/character1face.png";
@@ -26,7 +26,7 @@ const Settings = () => {
 
   //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
   // 다음 버튼 클릭 시, 다음 페이지로 이동, 서버에 현재 상태 저장도록 바꿔야함
-  
+
   return (
     <>
       <div className={s.showCharacter}>

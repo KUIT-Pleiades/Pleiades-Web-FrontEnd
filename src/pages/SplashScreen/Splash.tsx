@@ -2,8 +2,19 @@ import s from "./Splash.module.scss";
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import backGroundImg1 from "../../assets/splashBackGround1.png";
 import backGroundImg2 from "../../assets/splashBackGround2.png";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Splash() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/home");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+
   return (
     <div className={s.splashContainer}>
       <img className={s.backGround1} src={backGroundImg1} alt=" " />
