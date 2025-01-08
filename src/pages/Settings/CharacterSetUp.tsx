@@ -12,8 +12,11 @@ import characterBackground from "../../assets/backgroundImg/characterBackground.
 import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import lockImg from "../../assets/lockImg.png";
 import { useState } from "react";
+import { Character } from "../../interfaces/Interfaces";
 
 interface CharacterSetUpProps {
+  character: Character;
+  onUpdateCharacter: (updates: Partial<Character>) => void
   onNext: () => void;
 }
 
@@ -29,7 +32,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   };
 
   //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
-  // 다음 버튼 클릭 시, 다음 페이지로 이동, 서버에 현재 상태 저장도록 바꿔야함
+  // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
   return (
     <>
@@ -92,7 +95,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             }`}
             onClick={() => setActiveMenu("accessory")}
           >
-            악세사리
+            아이템
           </button>
         </div>
         <div className={s.contentArea}>

@@ -4,55 +4,24 @@ import character1face from "../../assets/Character/face/character1face.png";
 import character1body from "../../assets/Character/body/character1body.png";
 import catEar from "../../assets/Character/accessory/catEar.png";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
-import { useState } from 'react';
+import { Character } from "../../interfaces/Interfaces";
 
 interface ProfileSetUpProps {
+  character: Character;
+  onUpdateCharacter: (updates: Partial<Character>) => void;
   onNext: () => void;
   onPrev: () => void;
 }
 
-const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
-  // const [profileData, setProfileData] = useState<Character>({
-  //   characterId: "",
-  //   characterName: "",
-  //   characterAge: 0,
-  //   face: {
-  //     skinColor: {
-  //       name: "", // white, yellow...
-  //       imgurl: "",
-  //     },
-  //     hair: {
-  //       name: "",
-  //       imgurl: "",
-  //     },
-  //     expression: {
-  //       name: "",
-  //       imgurl: "",
-  //     },
-  //   },
-  //   outfit: {
-  //     top: {
-  //       name: "",
-  //       imgurl: "",
-  //     },
-  //     bottom: {
-  //       name: "",
-  //       imgurl: "",
-  //     },
-  //     shoes: {
-  //       name: "",
-  //       imgurl: "",
-  //     },
-  //   },
-  //   accessories: {
-  //     name: "",
-  //     imgurl: "",
-  //   },
-  //   background: {
-  //     name: "",
-  //     imgurl: "",
-  //   },
-  // });
+const ProfileSetUp = ({
+  character,
+  onUpdateCharacter,
+  onNext,
+  onPrev,
+}: ProfileSetUpProps) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUpdateCharacter({ characterName: e.target.value });
+  };
 
   return (
     <>
@@ -76,6 +45,15 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           className={s.characterBackground}
           src={characterBackground}
           alt="캐릭터후광"
+        />
+      </div>
+      <div className={s.inputContainer}>
+        <input
+          type="text"
+          value={character.characterName || ""}
+          onChange={handleNameChange}
+          placeholder="캐릭터의 이름을 지어주세요"
+          className={s.nameInput}
         />
       </div>
     </>
