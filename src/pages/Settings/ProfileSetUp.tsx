@@ -19,9 +19,10 @@ const ProfileSetUp = ({
   onNext,
   onPrev,
 }: ProfileSetUpProps) => {
+  
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onUpdateCharacter({ characterName: e.target.value });
-  };
+  }; // 캐릭터 이름 입력
 
   return (
     <>
@@ -55,6 +56,17 @@ const ProfileSetUp = ({
           placeholder="캐릭터의 이름을 지어주세요"
           className={s.nameInput}
         />
+        <div className={s.IdContainer}>
+          <div className={s.id}>ID</div>
+          <input
+            type="text"
+            value={character.characterId || ""}
+            //onChange={handleIdChange}
+            placeholder="영문, 숫자 조합 4-10자리"
+            className={s.idInput}
+          />
+          
+        </div>
       </div>
     </>
   );
