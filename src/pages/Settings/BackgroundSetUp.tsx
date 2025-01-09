@@ -1,13 +1,15 @@
 import { Character } from "../../interfaces/Interfaces";
 
 interface BackgroundSetUpProps {
-  character: Character;
-  onUpdateCharacter: (updates: Partial<Character>) => void;
+  //character: Character;
+  //onUpdateCharacter: (updates: Partial<Character>) => void;
   onNext: () => void;
   onPrev: () => void;
 }
 
-const BackgroundSetUp = ({ character, onUpdateCharacter ,onNext, onPrev }: BackgroundSetUpProps) => {
+const BackgroundSetUp = ({
+//character, onUpdateCharacter ,
+onNext, onPrev }: BackgroundSetUpProps) => {
   return (
     <div>
       <h1>배경 설정</h1>
