@@ -5,6 +5,7 @@ import character1body from "../../assets/Character/body/character1body.png";
 import catEar from "../../assets/Character/accessory/catEar.png";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import { Character } from "../../interfaces/Interfaces";
+import React, { useState } from "react";
 
 interface ProfileSetUpProps {
   character: Character;
@@ -23,6 +24,15 @@ const ProfileSetUp = ({
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onUpdateCharacter({ characterName: e.target.value });
   }; // 캐릭터 이름 입력
+
+  const [idExists, setIdExists] = useState<boolean>(false);
+  const [buttonText, setButtonText] = useState<string>("중복확인");
+
+  const handleIdChange = () => {
+    setIdExists(!idExists);
+    setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현
+  };
+
 
   return (
     <>
@@ -65,7 +75,10 @@ const ProfileSetUp = ({
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
-          
+          <button
+            onClick={handleIdChange}
+            className={`${s.checkBtn} ${!idExists ? s.available : ''}`}
+          >{buttonText}</button>
         </div>
       </div>
     </>

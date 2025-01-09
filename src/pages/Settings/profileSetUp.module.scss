@@ -191,7 +191,33 @@ button {
 		height: 58px;
 		background: #FFF;
 		width: 100%;
-			box-sizing: border-box;
+		box-sizing: border-box;
+		color: #E1E1E1;
+
+		font-family: Pretendard;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.32px;
 	}
 
+}
+
+.checkBtn {
+	position: absolute;
+	top: 43px;
+	left: 345px;
+	color: #444;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+
+	&.available {
+		color: #C0B9DB;
+	}
 }
