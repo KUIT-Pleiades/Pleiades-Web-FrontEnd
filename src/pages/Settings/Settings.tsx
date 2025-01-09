@@ -78,8 +78,8 @@ const Settings = () => {
       )}
       {step === 2 && (
         <BackgroundSetUp
-          character={character}
-          onUpdateCharacter={updateCharacter}
+          // character={character}
+          // onUpdateCharacter={updateCharacter}
           onNext={() => setstep(3)}
           onPrev={() => setstep(1)}
         />
