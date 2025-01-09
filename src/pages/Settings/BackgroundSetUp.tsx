@@ -1,14 +1,14 @@
-import { Character } from "../../interfaces/Interfaces";
+//import { Character } from "../../interfaces/Interfaces";
 
 interface BackgroundSetUpProps {
-  //character: Character;
-  //onUpdateCharacter: (updates: Partial<Character>) => void;
   onNext: () => void;
   onPrev: () => void;
 }
+//character: Character;
+//onUpdateCharacter: (updates: Partial<Character>) => void;
 
-const BackgroundSetUp = ({
 //character, onUpdateCharacter ,
+const BackgroundSetUp = ({
 onNext, onPrev }: BackgroundSetUpProps) => {
   return (
     <div>
