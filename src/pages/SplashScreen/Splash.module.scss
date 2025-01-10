@@ -24,19 +24,34 @@
 }
 
 @keyframes jumping {
-  from {
-    margin-bottom: 60px;
+  0% {
+    margin-bottom: 100dvh;
   }
-  to {
-    margin-top: 10px;
+  20% {
+    margin-top: 5dvh;
+    margin-bottom: 0dvh;
+  }
+  40% {
+    margin-top: 0dvh;
+    margin-bottom: 3dvh;
+  }
+  60% {
+    margin-top: 2dvh;
+    margin-bottom: 0dvh;
+  }
+  80% {
+    margin-top: 0dvh;
+    margin-bottom: 1dvh;
+  }
+  100% {
+    margin: 0;
   }
 }
 
 .logo {
   animation-name: jumping;
-  animation-duration: 1.7s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
   z-index: 1;
 }
 

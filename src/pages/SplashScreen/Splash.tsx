@@ -9,7 +9,7 @@ export default function Splash() {
   const navigate = useNavigate();
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/home");
+      navigate("/login");
     }, 2000);
 
     return () => clearTimeout(timer);
