@@ -1,10 +1,10 @@
-import s from "./LogInPage.module.scss";
+import s from "./LogIn.module.scss";
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import kakao from "../../assets/kakao.svg";
 import naver from "../../assets/naver.svg";
 import { Link } from "react-router-dom";
 
-export default function LogInPage() {
+export default function LogIn() {
   return (
     <div className={s.logInPageContainer}>
       <div className={s.content}>
