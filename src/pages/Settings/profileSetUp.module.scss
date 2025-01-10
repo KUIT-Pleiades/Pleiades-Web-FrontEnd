@@ -1,223 +1,286 @@
 button {
-	background: inherit;
-	border: none;
-	box-shadow: none;
-	border-radius: 0;
-	padding: 0;
-	overflow: visible;
-	cursor: pointer
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer
 }
 
 
 .showCharacter {
-	position: relative;
-	width: clamp(430px, 100%, 1200px);
-	height: 373.55px;
-	font-family: "Pretendard", sans-serif;
+  position: relative;
+  width: clamp(430px, 100%, 1200px);
+  height: 373.55px;
+  font-family: "Pretendard", sans-serif;
 
 
 }
 
 .previousBtn {
-	position: absolute;
-	top: 32.55px;
-	left: 14px;
-	width: 53px;
-	height: 28px;
-	flex-shrink: 0;
-	border-radius: 12px;
-	background: #C0B9DB;
-	color: #ffffff;
-	z-index: 2;
-	font-family: inherit;
+  position: absolute;
+  top: 32.55px;
+  left: 14px;
+  width: 53px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #C0B9DB;
+  color: #ffffff;
+  z-index: 2;
+  font-family: inherit;
 }
 
 .pHeader {
-	position: absolute;
-	top: 37.55px;
-	left: 50%;
-	margin: 0;
-	transform: translateX(-50%);
-	font-size: 16px;
-	font-weight: 700;
-	line-height: normal;
-	letter-spacing: -0.32px;
-	z-index: 2;
+  position: absolute;
+  top: 37.55px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  z-index: 2;
 }
 
 .nextBtn {
-	position: absolute;
-	top: 32.55px;
-	right: 14px;
-	width: 53px;
-	height: 28px;
-	flex-shrink: 0;
-	border-radius: 12px;
-	background: #402C44;
-	color: #ffffff;
-	z-index: 2;
-	font-family: inherit;
+  position: absolute;
+  top: 32.55px;
+  right: 14px;
+  width: 53px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #402C44;
+  color: #ffffff;
+  z-index: 2;
+  font-family: inherit;
 }
 
 .pDescription {
-	position: absolute;
-	top: 94.55px;
-	left: 50%;
-	margin: 0;
-	transform: translateX(-50%);
-	color: #444;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 600;
-	line-height: normal;
-	letter-spacing: -0.32px;
-	z-index: 2;
-	white-space: nowrap;
+  position: absolute;
+  top: 94.55px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  color: #444;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  z-index: 2;
+  white-space: nowrap;
 }
 
 .characterFace {
-	position: absolute;
-	top: 158.55px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 155px;
-	height: 180.677px;
-	flex-shrink: 0;
-	z-index: 2;
+  position: absolute;
+  top: 158.55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 155px;
+  height: 180.677px;
+  flex-shrink: 0;
+  z-index: 2;
 }
 
 .characterBody {
-	position: absolute;
-	top: 260.08px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 113.065px;
-	height: 126.638px;
-	flex-shrink: 0;
-	z-index: 2;
+  position: absolute;
+  top: 260.08px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 113.065px;
+  height: 126.638px;
+  flex-shrink: 0;
+  z-index: 2;
 }
 
 .characterAccessory {
-	position: absolute;
-	top: 157.55px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100px;
-	height: 46.383px;
-	flex-shrink: 0;
-	z-index: 2;
+  position: absolute;
+  top: 157.55px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 46.383px;
+  flex-shrink: 0;
+  z-index: 2;
 }
 
 .characterBackground {
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100%;
-	height: 461.55px;
-	flex-shrink: 0;
-	z-index: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 461.55px;
+  flex-shrink: 0;
+  z-index: 1;
 }
 
 .inputContainer {
-	position: relative;
-	width: clamp(430px, 100%, 1200px);
-	top: 0px;
-	height: 474px;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	z-index: 2;
+  position: relative;
+  width: clamp(430px, 100%, 1200px);
+  top: 0px;
+  height: 474px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
 }
 
 .nameInput {
-	position: absolute;
-	width: 191px;
-	padding: 9.5px;
-	margin-top: 59.5px;
-	height: 23px;
-	border: none;
-	border-bottom: 2px solid #C0B9DB;
-	outline: none;
-	background-color: transparent;
-	color: #1B142A;
-	font-family: "Electrical Safety";
-	font-size: 20px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	letter-spacing: -0.4px;
-	text-align: center;
-	caret-color: #AFAFAF;
-	/* 커서의 색상, 커서의 두께는 조절 불가 */
+  position: absolute;
+  width: 191px;
+  padding: 9.5px;
+  margin-top: 59.5px;
+  height: 23px;
+  border: none;
+  border-bottom: 2px solid #C0B9DB;
+  outline: none;
+  background-color: transparent;
+  color: #1B142A;
+  font-family: "Electrical Safety";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: center;
+  caret-color: #AFAFAF;
+  /* 커서의 색상, 커서의 두께는 조절 불가 */
 
-	&::placeholder {
-		color: #AFAFAF;
-		font-style: italic;
-		font-size: 14px;
-		text-align: center;
-	}
+  &::placeholder {
+    color: #AFAFAF;
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+  }
 }
 
 
 .IdContainer {
-	position: absolute;
-	margin-top: 131px;
-	padding: 0 14px;
-	display: flex;
-	flex-direction: column;
-	width: 430px;
-	box-sizing: border-box;
+  position: absolute;
+  margin-top: 131px;
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  box-sizing: border-box;
 
-	.id {
-		position: absolute;
-		left: 14px;
-		top: 0px;
-		width: 41px;
-		color: #444;
-		font-family: "Noto Sans KR";
-		font-size: 11px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: -0.22px;
-	}
+  .id {
+    position: absolute;
+    left: 14px;
+    top: 0px;
+    width: 41px;
+    color: #444;
 
-	.idInput {
-		margin: 23px 0px;
-		width: inherit;
-		text-indent: 26px;
-		border-radius: 15px;
-		border: 1px solid #BEAADD;
-		height: 58px;
-		background: #FFF;
-		width: 100%;
-		box-sizing: border-box;
-		color: #E1E1E1;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.22px;
+  }
 
-		font-family: Pretendard;
-		font-size: 16px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: -0.32px;
-	}
+  .idInput {
+    margin: 23px 0px;
+    width: inherit;
+    text-indent: 26px;
+    border-radius: 15px;
+    border: 1px solid #BEAADD;
+    height: 58px;
+    background: #FFF;
+    width: 100%;
+    box-sizing: border-box;
+    color: #8B6193;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.32px;
+
+    &::placeholder {
+      color: #E1E1E1;
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: -0.28px;
+    }
+  }
 
 }
 
 .checkBtn {
-	position: absolute;
-	top: 43px;
-	left: 345px;
-	color: #444;
-	text-align: center;
-	font-family: Pretendard;
-	font-size: 14px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-	letter-spacing: -0.233px;
+  position: absolute;
+  top: 43px;
+  left: 345px;
+  color: #444;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.233px;
 
-	&.available {
-		color: #C0B9DB;
-	}
+  &.available {
+    color: #C0B9DB;
+  }
+}
+
+.ageContainer {
+  position: absolute;
+  margin-top: 219px;
+  padding: 0 14px;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  box-sizing: border-box;
+
+  .age {
+    position: absolute;
+    left: 14px;
+    top: 0px;
+    width: 41px;
+    color: #444;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.22px;
+  }
+
+  .ageInput {
+    margin: 23px 0px;
+    width: inherit;
+    text-indent: 26px;
+    border-radius: 15px;
+    border: 1px solid #BEAADD;
+    height: 58px;
+    background: #FFF;
+    width: 100%;
+    box-sizing: border-box;
+    color: #8B6193;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.32px;
+
+    &::placeholder {
+      color: #E1E1E1;
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      letter-spacing: -0.28px;
+    }
+  }
 }

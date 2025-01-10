@@ -25,10 +25,18 @@ const ProfileSetUp = ({
     onUpdateCharacter({ characterName: e.target.value });
   }; // 캐릭터 이름 입력
 
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUpdateCharacter({ characterId: e.target.value });
+  }; // 캐릭터 ID 입력
+
+  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUpdateCharacter({ characterAge: +e.target.value }); // 숫자가 아닐경우 에러 발생
+  }
+
   const [idExists, setIdExists] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>("중복확인");
 
-  const handleIdChange = () => {
+  const idCheck = () => {
     setIdExists(!idExists);
     setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현
   };
@@ -71,14 +79,26 @@ const ProfileSetUp = ({
           <input
             type="text"
             value={character.characterId || ""}
-            //onChange={handleIdChange}
+            onChange={handleIdChange}
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
           <button
-            onClick={handleIdChange}
-            className={`${s.checkBtn} ${!idExists ? s.available : ''}`}
-          >{buttonText}</button>
+            onClick={idCheck}
+            className={`${s.checkBtn} ${idExists ? s.available : ""}`}
+          >
+            {buttonText}
+          </button>
+        </div>
+        <div className={s.ageContainer}>
+          <div className={s.age}>생년월일</div>
+          <input
+            type="text"
+            value={character.characterAge || ""}
+            onChange={handleAgeChange}
+            placeholder="아직 디자인 중"
+            className={s.ageInput}
+          />
         </div>
       </div>
     </>
