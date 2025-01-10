@@ -28,20 +28,20 @@
     margin-bottom: 100dvh;
   }
   20% {
-    margin-top: 5dvh;
+    margin-top: 3dvh;
     margin-bottom: 0dvh;
   }
   40% {
     margin-top: 0dvh;
-    margin-bottom: 3dvh;
+    margin-bottom: 6dvh;
   }
   60% {
-    margin-top: 2dvh;
+    margin-top: 0dvh;
     margin-bottom: 0dvh;
   }
   80% {
     margin-top: 0dvh;
-    margin-bottom: 1dvh;
+    margin-bottom: 2dvh;
   }
   100% {
     margin: 0;
@@ -50,7 +50,7 @@
 
 .logo {
   animation-name: jumping;
-  animation-duration: 1s;
+  animation-duration: 0.8s;
   animation-iteration-count: 1;
   z-index: 1;
 }
@@ -76,21 +76,12 @@
   z-index: 1;
 }
 
-@keyframes fade1 {
+@keyframes fade {
   from {
+    opacity: 20%;
+  }
+  to {
     opacity: 100%;
-  }
-  to {
-    opacity: 50%;
-  }
-}
-
-@keyframes fade2 {
-  from {
-    opacity: 15%;
-  }
-  to {
-    opacity: 6%;
   }
 }
 
@@ -99,12 +90,12 @@
   bottom: 0;
   right: 0;
   z-index: 0;
-  animation-name: fade1;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
   animation-direction: alternate;
-  width: 100dvw;
-  height: 100dvw;
+  width: 90dvw;
+  height: 90dvw;
 }
 
 .backGround2 {
@@ -112,25 +103,23 @@
   top: 0;
   left: 0;
   z-index: 0;
-  animation-name: fade1;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
   animation-direction: alternate;
-  width: 100dvw;
-  height: 100dvw;
+  width: 60dvw;
+  height: 60dvw;
 }
 
 .backGround3 {
   position: absolute;
-  top: -48px;
-  right: 15%;
-  background: radial-gradient(#bbc4e1, #1b142b);
+  top: -24px;
+  right: 5%;
   width: 96px;
   height: 96px;
-  border-radius: 100px;
-  animation-name: fade2;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-name: fade;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
   animation-direction: alternate;
 }
 
@@ -138,12 +127,10 @@
   position: absolute;
   top: 60%;
   left: -48px;
-  background: radial-gradient(#bbc4e1, #1b142b);
   width: 128px;
   height: 128px;
-  border-radius: 100px;
-  animation-name: fade2;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-name: fade;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
   animation-direction: alternate;
 }

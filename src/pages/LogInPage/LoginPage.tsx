@@ -21,10 +21,10 @@ export default function LogInPage() {
           <img className={s.socialLogo} src={kakao} alt="kakao" />
           <div className={s.buttonDescription}>카카오로 시작하기</div>
         </Link>
-        <div className={s.button}>
+        <Link className={s.button} to={"/home"}>
           <img className={s.socialLogo} src={naver} alt="naver" />
           <div className={s.buttonDescription}>NAVER로 시작하기</div>
-        </div>
+        </Link>
       </div>
     </div>
   );

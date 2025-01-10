@@ -1,7 +1,9 @@
 import s from "./Splash.module.scss";
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
-import backGroundImg1 from "../../assets/splashBackGround1.png";
-import backGroundImg2 from "../../assets/splashBackGround2.png";
+import backGroundImg1 from "../../assets/splashBackGround1.svg";
+import backGroundImg2 from "../../assets/splashBackGround2.svg";
+import backGroundImg3 from "../../assets/splashBackGround3.svg";
+import backGroundImg4 from "../../assets/splashBackGround4.svg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +12,7 @@ export default function Splash() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/login");
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -19,8 +21,8 @@ export default function Splash() {
     <div className={s.splashContainer}>
       <img className={s.backGround1} src={backGroundImg1} alt=" " />
       <img className={s.backGround2} src={backGroundImg2} alt="  " />
-      <div className={s.backGround3} />
-      <div className={s.backGround4} />
+      <img className={s.backGround3} src={backGroundImg3} alt="  " />
+      <img className={s.backGround4} src={backGroundImg4} alt="  " />
       <div className={s.content}>
         <div className={s.motionSection}>
           <img
