@@ -1,4 +1,4 @@
-import s from "./LoginPage.module.scss";
+import s from "./LogInPage.module.scss";
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import kakao from "../../assets/kakao.svg";
 import naver from "../../assets/naver.svg";
