@@ -11,7 +11,7 @@
     z-index: 10;
 }
 .searchBar{
-    width: 90%;
+    width: 86%;
     height: 40px;
     background-color: #C0B9DB;
     border-radius: 20px;
@@ -20,7 +20,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     padding-left: 15px;
+    padding-right: 15px;
 
     z-index: 11;
 }

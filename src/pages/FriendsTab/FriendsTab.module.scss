@@ -33,7 +33,7 @@
 .friendsList{
     width: 100%;
     height: auto;
-    max-height: 75%;
+    max-height: 78%;
     background-color: transparent;
     margin: 0;
     padding: 0;
@@ -43,8 +43,11 @@
     flex-direction: column;
     align-items: center;
 
-    overflow-y: auto;
+    overflow-y: scroll;
 }
+// .friendsList::-webkit-scrollbar-thumb{
+//     background: #C0B9DB;
+// }
 
 .friendsList span{
     font-family: "Pretendard";
@@ -55,7 +58,7 @@
 }
 
 .friendRequests, .myFriends, .myRequests{
-    width: 90%;
+    width: 92%;
     height: auto;
 }
 

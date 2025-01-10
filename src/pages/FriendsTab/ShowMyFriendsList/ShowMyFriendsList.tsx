@@ -10,6 +10,7 @@ import VisitStationModal from '../VisitStationModal/VisitStationModal';
 import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
 import goStationSmall from '../../../assets/FriendsTab/goStationSmall.svg';
 import poke from '../../../assets/FriendsTab/poke.svg';
+import onPoke from '../../../assets/FriendsTab/onPoke.svg';
 import pokePopupStars from '../../../assets/FriendsTab/pokePopupStars.svg';
 import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.svg';
 import DeleteFriendModal from '../DeleteFriendModal/DeleteFriendModal';
@@ -72,9 +73,18 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
         <button className={s.goStationButton} onClick={handleOpenVisitStationModal}>
           <img src={goStationSmall} alt="goStationSmall" />
         </button>
-        <button className={s.pokeButton} onClick={showPokePopup}>
-          <img src={poke} alt="poke" />
-        </button>
+        {isPokePopupVisible ? 
+        (
+          <button className={s.onPokeButton}>
+            <img src={onPoke} alt='onPoke' />
+          </button>
+        )
+        :
+        (
+          <button className={s.pokeButton} onClick={showPokePopup}>
+            <img src={poke} alt="poke" />
+          </button>
+        )}
         <button className={s.deleteFriendsButton} onClick={handleOpenDeleteFriendModal}>
           <img src={deleteFriendsButton} alt='deleteFriendsButton' />
         </button>
@@ -96,12 +106,11 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
         />
       )}
       {isPokePopupVisible && (
-        <>
-          <img src={pokePopupStars} alt='pokePopupStars' className={s.pokePopupStars} />
-          <div className={s.pokePopup}>
-            {`${otherUser.Name} 님을 쿡 찔렀어요!`}
-          </div>
-        </>
+        <div className={s.pokePopup}>
+          <img src={pokePopupStars} alt='pokePopupStars' className={s.pokePopupStarsUp} />
+          {`${otherUser.Name} 님을 쿡 찔렀어요!`}
+          <img src={pokePopupStars} alt='pokePopupStars' className={s.pokePopupStarsDown} />
+        </div>
       )}
     </div>
   )
