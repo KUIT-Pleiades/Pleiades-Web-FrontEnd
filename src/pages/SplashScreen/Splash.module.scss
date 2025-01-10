@@ -25,26 +25,22 @@
 
 @keyframes jumping {
   0% {
-    margin-bottom: 100dvh;
+    transform: translateY(-100vh);
   }
   20% {
-    margin-top: 3dvh;
-    margin-bottom: 0dvh;
+    transform: translateY(3vh);
   }
   40% {
-    margin-top: 0dvh;
-    margin-bottom: 6dvh;
+    transform: translateY(-6vh);
   }
   60% {
-    margin-top: 0dvh;
-    margin-bottom: 0dvh;
+    transform: translateY(0);
   }
   80% {
-    margin-top: 0dvh;
-    margin-bottom: 2dvh;
+    transform: translateY(-2vh);
   }
   100% {
-    margin: 0;
+    transform: translateY(0);
   }
 }
 
