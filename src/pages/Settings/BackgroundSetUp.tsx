@@ -53,6 +53,9 @@ const BackgroundSetUp = ({
           <img className={s.characterAccessory} src={catEar} alt="" />
         </div>
       </div>
+      <div className={s.backgroundList}>
+        
+      </div>
     </div>
   );
 };
