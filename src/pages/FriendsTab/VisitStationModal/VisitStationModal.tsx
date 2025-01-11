@@ -9,7 +9,6 @@ interface ModalProps {
     userId: string;
     onConfirm: () => void;
     onCancel: () => void;
-    onClose: () => void;
 }
 
 const VisitStationModal: React.FC<ModalProps> = ({
@@ -17,14 +16,10 @@ const VisitStationModal: React.FC<ModalProps> = ({
     userId,
     onConfirm,
     onCancel,
-    onClose,
 }) => {
     return (
         <div className={s.modalOverlay}>
             <div className={s.modal}>
-                <button className={s.modalClose} onClick={onClose}>
-                    ✕
-                </button>
                 <div className={s.modalAvatar}>
                     <img src={characterAvatar} alt={`${username}'s avatar`} />
                 </div>

@@ -12,11 +12,18 @@ interface ShowFriendRequestsListProps {
 
 const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUser }) => {
   const [isAcceptFriendPopupVisible, setIsAcceptFriendPopupVisible] = useState(false);
+  const [isRefuseFriendPopupVisible, setIsRefuseFriendPopupVisible] = useState(false);
 
   const showAcceptFriendPopup = () => {
     setIsAcceptFriendPopupVisible(true);
     setTimeout(() => {
       setIsAcceptFriendPopupVisible(false);
+    }, 1500);
+  };
+  const showRefuseFriendPopup = () => {
+    setIsRefuseFriendPopupVisible(true);
+    setTimeout(() => {
+      setIsRefuseFriendPopupVisible(false);
     }, 1500);
   };
   
@@ -46,15 +53,22 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUs
 
         <button
           className={s.declineButton}
+          onClick={() => {
+            showRefuseFriendPopup();
+          }}
         >거절</button>
       </div>
       {isAcceptFriendPopupVisible && (
-        <>
-          <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraft} />
           <div className={s.acceptFriendPopup}>
-            {`${otherUser.Name} 님과 친구가 되었어요!`}
+            <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraftUp} />
+            {`${otherUser.Name}님과 친구가 되었어요!`}
+            <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraftDown} />
           </div>
-        </>
+      )}
+      {isRefuseFriendPopupVisible && (
+        <div className={s.refuseFriendPopup}>
+          {`${otherUser.Name}님 요청을 거절했어요`}
+        </div>
       )}
     </div>
   )

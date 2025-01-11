@@ -18,23 +18,21 @@ const SortCriteriaBox: React.FC<SortCriteriaBoxProps> = ({ sortCriteria, setSort
             {isSelectSortPopupOpen ? 
                 (
                     <div className={s.sortBySectionOpen}>
-                        <div className={s.sortCriteriaSelectButtonContainer}>
                             <button onClick={() => {
                                     setSortCriteria("최신순");
                                     setIsSelectSortPopupOpen(false);}}
-                                    className={s.sortCriteriaSelectButton}
+                                    className={s.sortCriteriaSelectButtonUpToDateOrder}
                                     {...(sortCriteria === "이름순" ? {style: {color: "#E1E1E1"}} : {})}
                             >최신순</button>
 
                             <button onClick={() => {
                                     setSortCriteria("이름순");
                                     setIsSelectSortPopupOpen(false);}}
-                                    className={s.sortCriteriaSelectButton}
+                                    className={s.sortCriteriaSelectButtonFirstNameOrder}
                                     {...(sortCriteria === "최신순" ? {style: {color: "#E1E1E1"}} : {})}
                             >이름순</button>
-                        </div>
                         <img
-                            className={s.arrow}
+                            className={s.arrowHideUp}
                             onClick={() => setIsSelectSortPopupOpen(false)}
                             src={sortHideUp}
                             alt='sortHideUp'
@@ -44,8 +42,8 @@ const SortCriteriaBox: React.FC<SortCriteriaBoxProps> = ({ sortCriteria, setSort
                 :
                 (
                     <div className={s.sortBySectionClose} onClick={() => setIsSelectSortPopupOpen(true)}>
-                        {sortCriteria}
-                        <img className={s.arrow} src={sortShowDown} alt='sortShowDown' />
+                        <button className={s.sortCriteriaText}>{sortCriteria}</button>
+                        <img className={s.arrowShowDown} src={sortShowDown} alt='sortShowDown' />
                     </div>
                 )
             }

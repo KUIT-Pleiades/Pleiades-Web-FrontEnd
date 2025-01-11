@@ -59,6 +59,9 @@ const FriendsTab: React.FC = () => {
             friendsData?.MyRequests?.length === 0
         ) {
             setHasNoFriend(true); // 친구 없음
+            setIsShowFriendRequests(false);
+            setIsShowMyFriends(false);
+            setIsShowMyRequests(false);
         } else {
             setHasNoFriend(false); // 친구 있음
         }
@@ -171,8 +174,8 @@ const FriendsTab: React.FC = () => {
             {/*================================ 친구가 없을 때 ================================*/}
             {hasNoFriend &&
                 <div className={s.noFriend}>
-                    <p>아직 친구가 없어요...</p>
-                    <p>ID를 검색해 친구를 추가해 보세요!</p>
+                    <p className={s.noFriendFirstText}>아직 친구가 없어요...</p>
+                    <p className={s.noFriendSecondText}>ID를 검색해 친구를 추가해 보세요!</p>
                     <img src={pleiadesLogo} alt="pleiadesLogo" width={176} />
                 </div>
             }

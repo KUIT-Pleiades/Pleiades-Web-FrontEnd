@@ -18,6 +18,8 @@
     border-radius: 100%;
     overflow: hidden;
     background-color: #E4D0E5;
+    width: 34px;
+    height: 34px;
 }
 
 .nameId{
@@ -74,6 +76,20 @@
     background-color: transparent;
     margin-left: 11px;
 }
+.showDeleteFriendModalButton{
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: #FFFFFF;
+    color: #8B6193;
+    border-radius: 12px;
+    width: 78px;
+    height: 28px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    font-family: "Pretendard";
+    font-weight: 500;
+    font-size: 13px;
+}
 
 .pokePopup {
     position: fixed;
@@ -83,7 +99,7 @@
     background: #ffffff;
     border: none;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     padding: 0;
     width: 70%;
     height: 50px;
@@ -96,7 +112,7 @@
     flex-direction: column;
     justify-content: center;
     z-index: 1000;
-    animation: fadeInOut 1.6s ease-in-out;
+    animation: fadeInOut 1.5s ease-in-out;
   
     @keyframes fadeInOut {
         0% {
