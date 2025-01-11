@@ -1,49 +1,22 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import s from "./app.module.scss";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Splash from "./pages/SplashScreen/Splash";
+import Home from "./pages/Home/Home";
+import Rocket from "./pages/Rocket/Rocket";
 import Settings from "./pages/Settings/Settings";
+import Station from "./pages/Station/Station";
+import LogIn from "./pages/LogIn/LogIn";
 
-function App() {
-  const [count, setCount] = useState(0);
-  const [showMain, setShowMain] = useState(true);
-
-  const handleClick = () => {
-    setShowMain(false);
-  };
-
+export default function App() {
   return (
-    <>
-      {showMain ? (
-        <>
-          <div>
-            <a href="https://vite.dev" target="_blank">
-              <img src={viteLogo} className="logo" alt="Vite logo" />
-            </a>
-            <a href="https://react.dev" target="_blank">
-              <img src={reactLogo} className="logo react" alt="React logo" />
-            </a>
-          </div>
-          <h1>Vite + React</h1>
-          <div className="card">
-            <button onClick={() => setCount((count) => count + 1)}>
-              count is {count}
-            </button>
-            <p>
-              Edit <code>src/App.tsx</code> and save to test HMR
-            </p>
-          </div>
-          <p className="read-the-docs">
-            Click on the Vite and React logos to learn more
-          </p>
-          <p className={s.pTag}>Pretendard 적용 됐는지 글씨체 확인 바람</p>
-          <button onClick={handleClick}>Settings 보기</button>
-        </>
-      ) : (
-        <Settings />
-      )}
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Splash />} />
+        <Route path="/login" element={<LogIn />}></Route>
+        <Route path="home" element={<Home />}></Route>
+        <Route path="rocket" element={<Rocket />}></Route>
+        <Route path="settings" element={<Settings />}></Route>
+        <Route path="station" element={<Station />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

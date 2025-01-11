@@ -1,0 +1,39 @@
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  width: 84%;
+  height: 9dvh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0% 8%;
+  background-color: #f8f8fa;
+}
+
+.barItem {
+  width: 16%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.icon {
+  width: 80%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.itemTag {
+  width: 100%;
+  font-family: "Pretendard";
+  font-size: 12px;
+  font-weight: 500;
+  color: #292229;
+  text-align: center;
+  margin-top: 1dvh;
+  margin-bottom: 1dvh;
+}

@@ -1,6 +1,6 @@
 .logInPageContainer {
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   position: relative;
   background-image: url("../../assets/logInBackGround.png");
   background-size: cover;
@@ -21,15 +21,15 @@
 }
 
 .logo {
-  margin-top: 50vh;
+  margin-top: 32dvh;
 }
 
 .subTitle {
   font-family: "NanumSquareRound";
   font-size: 15px;
   text-align: center;
-  margin-top: 4vh;
-  margin-bottom: 2vh;
+  margin-top: 4dvh;
+  margin-bottom: 2dvh;
   color: #ffffff;
 }
 
@@ -38,14 +38,14 @@
   font-size: 36px;
   text-align: center;
   margin-top: 0;
-  margin-bottom: 10vh;
+  margin-bottom: 8dvh;
   color: #e4d0e5;
 }
 
 .button {
   position: relative;
-  width: 93vw;
-  height: 4vh;
+  width: 93dvw;
+  height: 5dvh;
   border: 1px solid #beaadd;
   border-radius: 100px;
   margin: 5px;
@@ -53,11 +53,12 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 }
 
 .socialLogo {
   position: absolute;
-  left: 6vw;
+  left: 6dvw;
 }
 
 .buttonDescription {
