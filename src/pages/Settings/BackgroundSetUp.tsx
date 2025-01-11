@@ -3,12 +3,11 @@ import s from "./backgroundSetUp.module.scss";
 import character1face from "../../assets/Character/face/character1face.png";
 import character1body from "../../assets/Character/body/character1body.png";
 import catEar from "../../assets/Character/accessory/catEar.png";
-import { Character } from "../../interfaces/Interfaces";
+//import { Character } from "../../interfaces/Interfaces";
 //import React, { useState } from "react";
+import background_Field from "../../assets/backgroundImg/Background_Field.png"
 
 interface BackgroundSetUpProps {
-  character: Character;
-  onUpdateCharacter: (updates: Partial<Character>) => void;
   onNext: () => void;
   onPrev: () => void;
 }
@@ -17,13 +16,18 @@ interface BackgroundSetUpProps {
 
 //character, onUpdateCharacter ,
 const BackgroundSetUp = ({
-  character,
-  onUpdateCharacter,
+  //character,
+  //onUpdateCharacter,
   onNext,
   onPrev,
 }: BackgroundSetUpProps) => {
+
+  const backgroundStyle = {
+    backgroundImage: `url(${background_Field})`,
+  };
+
   return (
-    <>
+    <div style={backgroundStyle} className={s.background}>
       <div className={s.showCharacter}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
@@ -32,16 +36,24 @@ const BackgroundSetUp = ({
         <button className={s.nextBtn} onClick={onNext}>
           완료
         </button>
-        <p className={s.pDescription}>내 캐릭터에 어울리는 배경을 골라보세요!</p>
-        <img
-          className={s.characterFace}
-          src={character1face}
-          alt="캐릭터3얼굴"
-        />
-        <img className={s.characterBody} src={character1body} alt="캐릭터1몸" />
-        <img className={s.characterAccessory} src={catEar} alt="" />
+        <p className={s.pDescription}>
+          내 캐릭터에 어울리는 배경을 골라보세요!
+        </p>
+        <div className={s.character}>
+          <img
+            className={s.characterFace}
+            src={character1face}
+            alt="캐릭터3얼굴"
+          />
+          <img
+            className={s.characterBody}
+            src={character1body}
+            alt="캐릭터1몸"
+          />
+          <img className={s.characterAccessory} src={catEar} alt="" />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

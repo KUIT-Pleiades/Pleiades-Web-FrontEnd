@@ -1,3 +1,12 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100vw;
+	overflow: hidden;
+}
+
 button {
 	background: inherit;
 	border: none;
@@ -8,14 +17,21 @@ button {
 	cursor: pointer
 }
 
+.background{
+	background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+}
+
 
 .showCharacter {
 	position: relative;
 	width: clamp(430px, 100%, 1200px);
 	height: 373.55px;
 	font-family: "Pretendard", sans-serif;
-
-
 }
 
 .previousBtn {
@@ -73,6 +89,10 @@ button {
 	letter-spacing: -0.32px;
 	z-index: 2;
 	white-space: nowrap;
+}
+
+.character{
+	position: relative;
 }
 
 .characterFace {
