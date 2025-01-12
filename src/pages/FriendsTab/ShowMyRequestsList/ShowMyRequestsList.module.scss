@@ -84,6 +84,7 @@
     justify-content: center;
     z-index: 1000;
     animation: fadeInOut 1.5s ease-in-out;
+    opacity: 0;
   
     @keyframes fadeInOut {
         0% {
