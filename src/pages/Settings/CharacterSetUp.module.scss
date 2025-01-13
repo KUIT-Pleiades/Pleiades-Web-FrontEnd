@@ -8,10 +8,15 @@ button {
     cursor: pointer
 }
 
+.characterSetUpContainer{
+    width: clamp(375px, 100dvw, 428px);
+    height: clamp(667px, 100dvh, 926px);
+}
+
 .showCharacter {
     font-family: "Pretendard";
     position: relative;
-    width: clamp(430px, 100%, 100%);
+    width: 100%;
     height: 461.55px;
 }
 
@@ -109,7 +114,7 @@ button {
 }
 
 .setCharacter {
-    width: clamp(430px, 100%, 100%);
+    width: 100%;
     background: #FFF;
     font-family: "Pretendard";
     box-shadow: 0px -4px 4px 0px rgba(41, 34, 41, 0.10);

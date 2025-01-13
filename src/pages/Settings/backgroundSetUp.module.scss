@@ -23,8 +23,8 @@ button {
 	margin: 0;
 	padding: 0;
 	min-height: 100vh;
-	width: 100vw;
-	max-width: 1200px;
+	width: clamp(375px, 100dvw, 428px);
+    height: clamp(667px, 100dvh, 926px);
 	display: flex;
 	flex-direction: column;
 }
@@ -32,7 +32,7 @@ button {
 
 .showCharacter {
 	position: relative;
-	width: clamp(430px, 100%, 1200px);
+	width: 100%;
 	height: 373.55px;
 	font-family: "Pretendard", sans-serif;
 	display: flex;

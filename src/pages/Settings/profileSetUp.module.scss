@@ -8,10 +8,14 @@ button {
   cursor: pointer
 }
 
+.profileSetUpContainer{
+  width: clamp(375px, 100dvw, 428px);
+  height: clamp(667px, 100dvh, 926px);
+}
 
 .showCharacter {
   position: relative;
-  width: clamp(430px, 100%, 1200px);
+  width: 100%;
   height: 373.55px;
   font-family: "Pretendard", sans-serif;
 
@@ -120,7 +124,7 @@ button {
 
 .inputContainer {
   position: relative;
-  width: clamp(430px, 100%, 1200px);
+  width: 100%;
   top: 0px;
   height: 474px;
   display: flex;
@@ -165,7 +169,7 @@ button {
   padding: 0 14px;
   display: flex;
   flex-direction: column;
-  width: 430px;
+  width: 100%;
   box-sizing: border-box;
 
   .id {
@@ -185,7 +189,6 @@ button {
 
   .idInput {
     margin: 23px 0px;
-    width: inherit;
     text-indent: 26px;
     border-radius: 15px;
     border: 1px solid #BEAADD;
@@ -217,7 +220,7 @@ button {
 .checkBtn {
   position: absolute;
   top: 43px;
-  left: 345px;
+  right: 40px;
   color: #444;
   text-align: center;
   font-family: Pretendard;
@@ -238,7 +241,7 @@ button {
   padding: 0 14px;
   display: flex;
   flex-direction: column;
-  width: 430px;
+  width: 100%;
   box-sizing: border-box;
 
   .age {

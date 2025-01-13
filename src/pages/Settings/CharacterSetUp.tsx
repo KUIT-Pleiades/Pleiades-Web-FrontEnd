@@ -35,7 +35,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
   return (
-    <>
+    <div className={s.characterSetUpContainer}>
       <div className={s.showCharacter}>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>
@@ -266,7 +266,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

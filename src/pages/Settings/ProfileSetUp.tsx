@@ -43,7 +43,7 @@ const ProfileSetUp = ({
 
 
   return (
-    <>
+    <div className={s.profileSetUpContainer}>
       <div className={s.showCharacter}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
@@ -101,7 +101,7 @@ const ProfileSetUp = ({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
