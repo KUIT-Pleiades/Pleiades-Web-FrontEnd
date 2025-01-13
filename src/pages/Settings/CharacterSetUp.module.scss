@@ -10,7 +10,6 @@ button {
 
 .showCharacter {
     font-family: "Pretendard";
-
     position: relative;
     width: clamp(430px, 100%, 100%);
     height: 461.55px;
@@ -39,6 +38,7 @@ button {
     border-radius: 12px;
     background: #402C44;
     color: #ffffff;
+    z-index: 2;
 }
 
 .pDescription {
@@ -95,7 +95,7 @@ button {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    height: 100%;
+    height: 461.55px;
     flex-shrink: 0;
     z-index: 1;
 }
