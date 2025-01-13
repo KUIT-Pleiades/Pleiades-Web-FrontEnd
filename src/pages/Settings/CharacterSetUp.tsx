@@ -71,7 +71,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           }}
         />
       </div>
-      <div className={s.setCharacter}>
+      <div className={s.setCharacter }>
         <div className={s.menuBar}>
           <button
             className={`${s.menuItem} ${

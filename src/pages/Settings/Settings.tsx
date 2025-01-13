@@ -5,7 +5,7 @@ import BackgroundSetUp from "./BackgroundSetUp";
 import { Character } from "../../interfaces/Interfaces";
 
 const Settings = () => {
-  const [step, setstep] = useState(0);
+  const [step, setStep] = useState(0);
 
   const initialCharacter: Character = {
     characterId: "",
@@ -60,28 +60,34 @@ const Settings = () => {
   }; // 캐릭터 정보 업데이트
 
   return (
-    <div>
+    <div
+      style={{
+        width: "clamp(375px, 100dvw, 428px)",
+        height: "auto",
+        minHeight: "100vh",
+      }}
+    >
       {step === 0 && (
         <CharacterSetUp
           character={character}
           onUpdateCharacter={updateCharacter}
-          onNext={() => setstep(1)}
+          onNext={() => setStep(1)}
         />
       )}
       {step === 1 && (
         <ProfileSetUp
           character={character}
           onUpdateCharacter={updateCharacter}
-          onNext={() => setstep(2)}
-          onPrev={() => setstep(0)}
+          onNext={() => setStep(2)}
+          onPrev={() => setStep(0)}
         />
       )}
       {step === 2 && (
         <BackgroundSetUp
           // character={character}
           // onUpdateCharacter={updateCharacter}
-          onNext={() => setstep(3)}
-          onPrev={() => setstep(1)}
+          onNext={() => setStep(3)}
+          onPrev={() => setStep(1)}
         />
       )}
     </div>
