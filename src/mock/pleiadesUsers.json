@@ -1,0 +1,32 @@
+{
+    "pleiadesUsers": [
+        {
+            "Id": "user1",
+            "Name": "가길동"
+        },
+        {
+            "Id": "user2",
+            "Name": "나길동"
+        },
+        {
+            "Id": "user3",
+            "Name": "다길동"
+        },
+        {
+            "Id": "user4",
+            "Name": "라길동"
+        },
+        {
+            "Id": "user5",
+            "Name": "마길동"
+        },
+        {
+            "Id": "user6",
+            "Name": "바길동"
+        },
+        {
+            "Id": "user7",
+            "Name": "사길동"
+        }
+    ]
+}
