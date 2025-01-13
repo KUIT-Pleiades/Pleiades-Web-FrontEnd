@@ -10,7 +10,8 @@ button {
 
 .characterSetUpContainer{
     width: clamp(375px, 100dvw, 428px);
-    height: clamp(667px, 100dvh, 926px);
+    height: auto;
+    min-height: 100vh;
 }
 
 .showCharacter {
