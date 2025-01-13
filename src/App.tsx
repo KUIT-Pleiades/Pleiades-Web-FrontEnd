@@ -6,6 +6,7 @@ import Settings from "./pages/Settings/Settings";
 import Station from "./pages/Station/Station";
 import LogIn from "./pages/LogIn/LogIn";
 import NaverLogin from "./pages/LogIn/NaverLogin";
+import FriendsTab from "./pages/FriendsTab/FriendsTab";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="rocket" element={<Rocket />}></Route>
         <Route path="settings" element={<Settings />}></Route>
         <Route path="station" element={<Station />}></Route>
+        <Route path="friendtab" element={<FriendsTab />}></Route>
       </Routes>
     </BrowserRouter>
   );
