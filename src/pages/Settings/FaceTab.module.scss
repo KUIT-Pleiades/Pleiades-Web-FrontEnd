@@ -1,7 +1,7 @@
 .faceTabContainer {
+	
 	width: clamp(375px, 100dvw, 428px);
-	height: auto;
-	min-height: 100vh;
+	
 }
 
 .faceTab {
@@ -30,10 +30,8 @@
 	justify-content: center;
 	gap: 22px;
 	padding: 14px 20px;
-	width: 100%;
-	box-sizing: border-box;
-	overflow-y: auto; // 스크롤 활성화
-	-webkit-overflow-scrolling: touch; // iOS 스크롤 부드럽게
+	height: 200px;
+	overflow-y: auto;
 }
 
 .item {
