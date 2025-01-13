@@ -1,7 +1,5 @@
 import s from "./CharacterSetUp.module.scss";
 import character3face from "../../assets/Character/face/character3face.png";
-import character2face from "../../assets/Character/face/character2face.png";
-import character1face from "../../assets/Character/face/character1face.png";
 import character1body from "../../assets/Character/body/character1body.png";
 import character2body from "../../assets/Character/body/character2body.png";
 import character3body from "../../assets/Character/body/character3body.png";
@@ -13,6 +11,8 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import lockImg from "../../assets/lockImg.png";
 import { useState } from "react";
 import { Character } from "../../interfaces/Interfaces";
+import FaceTab from "./FaceTab";
+
 
 interface CharacterSetUpProps {
   character: Character;
@@ -99,60 +99,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           </button>
         </div>
         <div className={s.contentArea}>
-          {activeMenu === "face" && (
-            <div className={s.gridItems}>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character3face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character3face)}
-              >
-                <img src={character3face} alt="캐릭터3얼굴" />
-              </div>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character2face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character2face)}
-              >
-                <img src={character2face} alt="캐릭터2얼굴" />
-              </div>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character1face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character1face)}
-              >
-                <img src={character1face} alt="캐릭터1얼굴" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-            </div>
+          {activeMenu === "face" && (<FaceTab />
           )}
           {activeMenu === "costume" && (
             <div className={s.gridItems}>
