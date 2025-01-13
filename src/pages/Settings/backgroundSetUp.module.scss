@@ -25,6 +25,8 @@ button {
 	min-height: 100vh;
 	width: clamp(375px, 100dvw, 428px);
     height: clamp(667px, 100dvh, 926px);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-top: env(safe-area-inset-top);
 	display: flex;
 	flex-direction: column;
 }
