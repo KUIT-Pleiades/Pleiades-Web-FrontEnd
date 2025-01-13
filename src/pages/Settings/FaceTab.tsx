@@ -58,22 +58,24 @@ const FaceTab = () => {
           표정
         </button>
       </div>
-      <div className={s.gridItems}>
-        {filteredFaceImages.map((image) => (
-          <div
-            key={image.id}
-            className={`${s.item} ${
-              (image.tags === "피부" && image === selectedSkin) ||
-              (image.tags === "머리" && image === selectedHair) ||
-              (image.tags === "표정" && image === selectedFace)
-                ? s.selected
-                : ""
-            }`}
-            onClick={() => handleImageClick(image)}
-          >
-            <img src={image.src} alt={`${image.tags} 이미지`} />
-          </div>
-        ))}
+      <div className={s.faceTabContent}>
+        <div className={s.gridItems}>
+          {filteredFaceImages.map((image) => (
+            <div
+              key={image.id}
+              className={`${s.item} ${
+                (image.tags === "피부" && image === selectedSkin) ||
+                (image.tags === "머리" && image === selectedHair) ||
+                (image.tags === "표정" && image === selectedFace)
+                  ? s.selected
+                  : ""
+              }`}
+              onClick={() => handleImageClick(image)}
+            >
+              <img src={image.src} alt={`${image.tags} 이미지`} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
