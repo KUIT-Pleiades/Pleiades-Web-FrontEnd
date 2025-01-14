@@ -8,25 +8,29 @@ button {
     cursor: pointer
 }
 
+p{
+    margin: 0;
+}
+
 .characterSetUpContainer{
-    width: clamp(375px, 100dvw, 428px);
-    height: auto;
-    min-height: 100vh;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .showCharacter {
     font-family: "Pretendard";
     position: relative;
     width: 100%;
-    height: 461.55px;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pHeader {
     position: absolute;
-    top: 37.55px;
-    left: 50%;
-    margin: 0;
-    transform: translateX(-50%);
+    top: 5%;
     font-size: 16px;
     font-weight: 700;
     line-height: normal;
@@ -36,7 +40,7 @@ button {
 
 .nextBtn {
     position: absolute;
-    top: 32.55px;
+    top: 4%;
     right: 14px;
     width: 53px;
     height: 28px;
@@ -49,10 +53,7 @@ button {
 
 .pDescription {
     position: absolute;
-    top: 94.55px;
-    left: 50%;
-    margin: 0;
-    transform: translateX(-50%);
+    top: 15%;
     color: #444;
     font-size: 16px;
     font-style: normal;
@@ -60,6 +61,19 @@ button {
     line-height: normal;
     letter-spacing: -0.32px;
     z-index: 2;
+}
+
+.characterContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    img{
+        position: absolute;
+        width: 70%;
+        margin-top: 15%;
+    }
 }
 
 .characterFace {
@@ -108,21 +122,26 @@ button {
 
 .resetBtn {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 0px;
+    right: 5%;
     cursor: pointer;
     z-index: 2;
 }
 
 .setCharacter {
-    width: 100%;
     background: #FFF;
     font-family: "Pretendard";
     box-shadow: 0px -4px 4px 0px rgba(41, 34, 41, 0.10);
+    position: absolute;
+    width: 100%;
+    height: 40%;
+    bottom: 0px;
+    margin-bottom: 10px;
 }
 
 .menuBar {
-    height: 49px;
+    height: 18%;
+    width: 100%;
     display: flex;
     justify-content: center;
     background-color: #ffffff;

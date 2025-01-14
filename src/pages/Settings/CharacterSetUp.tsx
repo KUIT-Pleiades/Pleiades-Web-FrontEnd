@@ -6,12 +6,15 @@ import character3body from "../../assets/Character/body/character3body.png";
 import catEar from "../../assets/Character/accessory/catEar.png";
 import glasses from "../../assets/Character/accessory/glasses.png";
 import earings from "../../assets/Character/accessory/earings.png";
-import characterBackground from "../../assets/backgroundImg/characterBackground.png";
+//import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import lockImg from "../../assets/lockImg.png";
 import { useState } from "react";
 import { Character } from "../../interfaces/Interfaces";
 import FaceTab from "./FaceTab";
+import skin01 from "../../assets/Character/face/skin/skin01.png";
+import hair01 from "../../assets/Character/face/hair/hair01.png";
+import face01 from "../../assets/Character/face/face/face01.png";
 
 
 interface CharacterSetUpProps {
@@ -27,6 +30,11 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [selectedAccessory, setSelectedAccessory] = useState<string | null>(
     null
   );
+
+  const [skin, setSkin] = useState<string>(skin01); // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
+  const [face, setFace] = useState<string>(face01);
+  const [hair, setHair] = useState<string>(hair01);
+
   const handleAccessoryClick = (accessory: string) => {
     setSelectedAccessory((prev) => (prev === accessory ? null : accessory));
   };
@@ -42,12 +50,11 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           다음
         </button>
         <p className={s.pDescription}>내 캐릭터는 어떤 모습인가요?</p>
-        <img className={s.characterFace} src={selectedFace} alt="캐릭터3얼굴" />
-        <img
-          className={s.characterBody}
-          src={selectedCostume}
-          alt="캐릭터1몸"
-        />
+        <div className={s.characterContainer}>
+          <img className={s.characterSkin} src={skin} alt="skin01" />
+          <img className={s.characterface} src={face} alt="face01" />
+          <img className={s.characterhair} src={hair} alt="hair01" />
+        </div>
         {selectedAccessory && (
           <img
             className={s.characterAccessory}
@@ -55,11 +62,6 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             alt=""
           />
         )}
-        <img
-          className={s.characterBackground}
-          src={characterBackground}
-          alt="캐릭터후광"
-        />
         <img
           className={s.resetBtn}
           src={resetBtn}
@@ -71,7 +73,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           }}
         />
       </div>
-      <div className={s.setCharacter }>
+      <div className={s.setCharacter}>
         <div className={s.menuBar}>
           <button
             className={`${s.menuItem} ${
@@ -99,8 +101,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           </button>
         </div>
         <div className={s.contentArea}>
-          {activeMenu === "face" && (<FaceTab />
-          )}
+          {activeMenu === "face" && <FaceTab />}
           {activeMenu === "costume" && (
             <div className={s.gridItems}>
               <div
