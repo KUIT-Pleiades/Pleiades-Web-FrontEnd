@@ -1,5 +1,4 @@
 import s from "./CharacterSetUp.module.scss";
-import character3face from "../../assets/Character/face/character3face.png";
 import character1body from "../../assets/Character/body/character1body.png";
 import character2body from "../../assets/Character/body/character2body.png";
 import character3body from "../../assets/Character/body/character3body.png";
