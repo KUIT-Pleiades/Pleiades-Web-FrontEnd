@@ -25,7 +25,6 @@ interface CharacterSetUpProps {
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
-  const [selectedFace, setSelectedFace] = useState(character3face);
   const [selectedCostume, setSelectedCostume] = useState(character1body);
   const [selectedAccessory, setSelectedAccessory] = useState<string | null>(
     null
@@ -67,7 +66,9 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           src={resetBtn}
           alt="리셋 버튼"
           onClick={() => {
-            setSelectedFace(character3face);
+            setSkin(skin01);
+            setFace(face01);
+            setHair(hair01);
             setSelectedCostume(character1body);
             setSelectedAccessory(null);
           }}
