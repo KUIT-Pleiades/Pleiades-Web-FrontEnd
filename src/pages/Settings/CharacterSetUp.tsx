@@ -5,7 +5,7 @@ import character3body from "../../assets/Character/body/character3body.png";
 import catEar from "../../assets/Character/accessory/catEar.png";
 import glasses from "../../assets/Character/accessory/glasses.png";
 import earings from "../../assets/Character/accessory/earings.png";
-//import characterBackground from "../../assets/backgroundImg/characterBackground.png";
+import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import lockImg from "../../assets/lockImg.png";
 import { useState } from "react";
@@ -53,6 +53,11 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           <img className={s.characterface} src={face} alt="face01" />
           <img className={s.characterhair} src={hair} alt="hair01" />
         </div>
+        <img
+          className={s.characterBackground}
+          src={characterBackground}
+          alt="캐릭터후광"
+        />
         {selectedAccessory && (
           <img
             className={s.characterAccessory}

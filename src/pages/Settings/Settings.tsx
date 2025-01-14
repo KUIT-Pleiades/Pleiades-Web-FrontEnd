@@ -64,6 +64,7 @@ const Settings = () => {
       style={{
         width: "clamp(375px, 100dvw, 428px)",
         height: "max(667px, min(100dvh, 926px))",
+        position: "relative",
       }}
     >
       {step === 0 && (
