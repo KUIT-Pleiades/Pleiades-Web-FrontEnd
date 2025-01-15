@@ -14,9 +14,16 @@ export default function NaverLogin() {
     const handleLogin = async () => {
       if (authCode) {
         const tokenData = await naverLogInRequest(authCode, "Auth");
-        window.localStorage.setItem("pleiadesTokenNA", tokenData.accessToken);
-        window.localStorage.setItem("pleiadesTokenNR", tokenData.refreshToken);
-        setLoginState("Success");
+        if (tokenData == null) {
+          navigate("/login");
+        } else {
+          window.localStorage.setItem("pleiadesTokenNA", tokenData.accessToken);
+          window.localStorage.setItem(
+            "pleiadesTokenNR",
+            tokenData.refreshToken
+          );
+          setLoginState("Success");
+        }
       } else {
         setLoginState("Fail");
         navigate("/login");

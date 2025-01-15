@@ -30,5 +30,10 @@ export async function naverLogInRequest(authCode: string, codeType: codeType) {
     body: JSON.stringify({ code: authCode, type: codeType }),
   });
   const data: AuthToken = await response.json(); //로그인 완료 시 유저 정보 Promise 객체 반환
+  const status = await response.status;
+  if (status == 401) {
+    //다시 로그인하세요 모달
+    return null;
+  }
   return data;
 }
