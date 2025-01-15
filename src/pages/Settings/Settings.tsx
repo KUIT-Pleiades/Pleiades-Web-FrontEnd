@@ -2,12 +2,10 @@ import { useState } from "react";
 import CharacterSetUp from "./CharacterSetUp";
 import ProfileSetUp from "./ProfileSetUp";
 import BackgroundSetUp from "./BackgroundSetUp";
-import { useCharacterStore } from "../../store/useCharacterStore";
 
 
 const Settings = () => {
   const [step, setStep] = useState(0);
-  const { character, updateCharacter } = useCharacterStore();
 
   return (
     <div
@@ -19,15 +17,11 @@ const Settings = () => {
     >
       {step === 0 && (
         <CharacterSetUp
-          character={character}
-          onUpdateCharacter={updateCharacter}
           onNext={() => setStep(1)}
         />
       )}
       {step === 1 && (
         <ProfileSetUp
-          character={character}
-          onUpdateCharacter={updateCharacter}
           onNext={() => setStep(2)}
           onPrev={() => setStep(0)}
         />
