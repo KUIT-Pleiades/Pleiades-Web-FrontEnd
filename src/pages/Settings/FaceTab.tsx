@@ -1,9 +1,11 @@
 import { useState, useCallback, useMemo } from "react";
 import { FaceImages, FaceItem } from "../../assets/ImageData/FaceImage";
+import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./FaceTab.module.scss";
 
 const FaceTab = () => {
   const [faceTab, setFaceTab] = useState("전체");
+  const { character, updateCharacter } = useCharacterStore();
 
   const [selectedSkin, setSelectedSkin] = useState(FaceImages[0]);
   const [selectedHair, setSelectedHair] = useState(FaceImages[8]);
@@ -14,21 +16,51 @@ const FaceTab = () => {
       return FaceImages;
     }
     return FaceImages.filter((image) => image.tags === faceTab);
-  }, [faceTab]); // faceTab이 변경될 때만 재계산
+  }, [faceTab]);
 
-  const handleImageClick = useCallback((image: FaceItem) => {
-    switch (image.tags) {
-      case "피부":
-        setSelectedSkin(image);
-        break;
-      case "머리":
-        setSelectedHair(image);
-        break;
-      case "표정":
-        setSelectedFace(image);
-        break;
-    }
-  }, []);
+  const handleImageClick = useCallback(
+    (image: FaceItem) => {
+      switch (image.tags) {
+        case "피부":
+          setSelectedSkin(image);
+          updateCharacter({
+            face: {
+              ...character.face,
+              skinColor: {
+                name: String(image.id),
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+        case "머리":
+          setSelectedHair(image);
+          updateCharacter({
+            face: {
+              ...character.face,
+              hair: {
+                name: String(image.id),
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+        case "표정":
+          setSelectedFace(image);
+          updateCharacter({
+            face: {
+              ...character.face,
+              expression: {
+                name: String(image.id),
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+      }
+    },
+    [character.face, updateCharacter]
+  );
 
   return (
     <div className={s.faceTabContainer}>
