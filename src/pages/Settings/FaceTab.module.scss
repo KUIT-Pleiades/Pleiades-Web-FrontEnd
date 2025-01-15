@@ -12,7 +12,7 @@
 .faceTab {
 	display: flex;
 	gap: 24px;
-	margin-top: 12px;
+	height: 32px;
 	margin-left: 14px;
 
 	button {
@@ -34,7 +34,7 @@
 	grid-template-columns: repeat(4, 1fr);
 	justify-content: center;
 	gap: 22px;
-	padding: 14px 20px;
+	padding: 10px 20px;
 	box-sizing: border-box;
 }
 
