@@ -6,18 +6,17 @@ import FaceTab from "./FaceTab";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import OutFitTab from "./OutFitTab";
 
-
 interface CharacterSetUpProps {
   onNext: () => void;
 }
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
-  
+
   const { character, resetCharacter } = useCharacterStore();
 
   // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
-  
+
   //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
   // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
@@ -45,27 +44,21 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             src={character.face.hair.imgurl}
             alt="hair"
           />
-          {character.outfit.top.imgurl && (
-            <img
-              className={s.characterTop}
-              src={character.outfit.top.imgurl}
-              alt="top"
-            />
-          )}
-          {character.outfit.bottom.imgurl && (
-            <img
-              className={s.characterBottom}
-              src={character.outfit.bottom.imgurl}
-              alt="bottom"
-            />
-          )}
-          {character.outfit.shoes.imgurl && (
-            <img
-              className={s.characterShoes}
-              src={character.outfit.shoes.imgurl}
-              alt="shoes"
-            />
-          )}
+          <img
+            className={s.characterTop}
+            src={character.outfit.top.imgurl}
+            alt="top"
+          />
+          <img
+            className={s.characterBottom}
+            src={character.outfit.bottom.imgurl}
+            alt="bottom"
+          />
+          <img
+            className={s.characterShoes}
+            src={character.outfit.shoes.imgurl}
+            alt="shoes"
+          />
         </div>
         <img
           className={s.characterBackground}
