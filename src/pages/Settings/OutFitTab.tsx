@@ -3,7 +3,7 @@ import { OutfitImages, OutfitItem } from "../../assets/ImageData/OutfitImage";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./FaceTab.module.scss";
 
-const OutFitTab = () => {
+const OutfitTab = () => {
 	const [outfitTab, setOutfitTab] = useState("전체");
 	const { character, updateCharacter } = useCharacterStore();
 
@@ -109,4 +109,4 @@ const OutFitTab = () => {
   );
 };
 
-export default OutFitTab;
+export default OutfitTab;
