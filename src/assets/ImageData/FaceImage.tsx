@@ -10,11 +10,13 @@ import hair01 from "../Character/face/hair/hair01.png";
 import hair02 from "../Character/face/hair/hair02.png";
 import hair03 from "../Character/face/hair/hair03.png";
 import hair04 from "../Character/face/hair/hair04.png";
+import hair05 from "../Character/face/hair/hair05.png";
 
 import face01 from "../Character/face/face/face01.png";
 import face02 from "../Character/face/face/face02.png";
 import face03 from "../Character/face/face/face03.png";
 import face04 from "../Character/face/face/face04.png";
+import face05 from "../Character/face/face/face05.png";
 
 export interface FaceItem {
   name: string;
@@ -37,12 +39,14 @@ const images = {
     hair02,
     hair03,
     hair04,
+    hair05
   },
   face: {
     face01,
     face02,
     face03,
     face04,
+    face05,
   },
 };
 // FaceImages 배열 생성

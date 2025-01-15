@@ -76,20 +76,21 @@ p {
   }
 }
 
-// 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
+
+// 레이어 순서: 액세서리>얼굴>상의>하의>신발>머리>피부
 .characterSkin{
   z-index: 1 ;
 }
-.characterShoes{
+.characterHair {
   z-index: 2;
 }
-.characterBottom{
+.characterShoes{
   z-index: 3;
 }
-.characterTop {
+.characterBottom{
   z-index: 4;
 }
-.characterHair{
+.characterTop {
   z-index: 5;
 }
 .characterFace{

@@ -5,7 +5,7 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import { useState } from "react";
 import { Character } from "../../interfaces/Interfaces";
 import FaceTab from "./FaceTab";
-import OutfitTab from "./OutFitTab";
+import OutfitTab from "./OutfitTab";
 // import skin01 from "../../assets/Character/face/skin/skin01.png";
 // import hair01 from "../../assets/Character/face/hair/hair01.png";
 // import face01 from "../../assets/Character/face/face/face01.png";
