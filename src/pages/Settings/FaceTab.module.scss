@@ -1,15 +1,15 @@
-.faceTabContainer {
+.tabContainer {
 	width: clamp(375px, 100dvw, 428px);
 }
 
-.faceTabContent{
+.tabContent{
 	height: 200px;
 	overflow-y: auto;
-	padding-bottom: 10px;
+	padding-bottom: 20px;
 	box-sizing: border-box;
 }
 
-.faceTab {
+.tab {
 	display: flex;
 	gap: 24px;
 	height: 32px;

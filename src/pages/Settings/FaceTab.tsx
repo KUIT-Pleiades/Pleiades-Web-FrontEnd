@@ -57,8 +57,8 @@ const FaceTab = () => {
   );
 
   return (
-    <div className={s.faceTabContainer}>
-      <div className={s.faceTab}>
+    <div className={s.tabContainer}>
+      <div className={s.tab}>
         <button
           onClick={() => setFaceTab("전체")}
           className={faceTab === "전체" ? s.active : ""}
@@ -84,7 +84,7 @@ const FaceTab = () => {
           표정
         </button>
       </div>
-      <div className={s.faceTabContent}>
+      <div className={s.tabContent}>
         <div className={s.gridItems}>
           {filteredFaceImages.map((image) => (
             <div

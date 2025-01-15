@@ -76,6 +76,30 @@ p {
   }
 }
 
+// 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
+.characterSkin{
+  z-index: 1 ;
+}
+.characterShoes{
+  z-index: 2;
+}
+.characterBottom{
+  z-index: 3;
+}
+.characterTop {
+  z-index: 4;
+}
+.characterHair{
+  z-index: 5;
+}
+.characterFace{
+  z-index: 6;
+}
+.characterAccessory{
+  z-index: 7;
+}
+
+
 
 .characterBackground {
   position: absolute;
@@ -104,6 +128,7 @@ p {
   height: 40%;
   bottom: 0px;
   margin-bottom: 15px;
+  z-index: 8;
 }
 
 .menuBar {

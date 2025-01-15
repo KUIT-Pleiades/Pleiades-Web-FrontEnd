@@ -5,6 +5,7 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import { useState } from "react";
 import { Character } from "../../interfaces/Interfaces";
 import FaceTab from "./FaceTab";
+import OutfitTab from "./OutFitTab";
 // import skin01 from "../../assets/Character/face/skin/skin01.png";
 // import hair01 from "../../assets/Character/face/hair/hair01.png";
 // import face01 from "../../assets/Character/face/face/face01.png";
@@ -36,9 +37,42 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         </button>
         <p className={s.pDescription}>내 캐릭터는 어떤 모습인가요?</p>
         <div className={s.characterContainer}>
-          <img className={s.characterSkin} src={character.face.skinColor.imgurl} alt="skin" />
-          <img className={s.characterface} src={character.face.expression.imgurl} alt="face" />
-          <img className={s.characterhair} src={character.face.hair.imgurl} alt="hair" />
+          <img
+            className={s.characterSkin}
+            src={character.face.skinColor.imgurl}
+            alt="skin"
+          />
+          <img
+            className={s.characterFace}
+            src={character.face.expression.imgurl}
+            alt="face"
+          />
+          <img
+            className={s.characterHair}
+            src={character.face.hair.imgurl}
+            alt="hair"
+          />
+          {character.outfit.top.imgurl && (
+            <img
+              className={s.characterTop}
+              src={character.outfit.top.imgurl}
+              alt="top"
+            />
+          )}
+          {character.outfit.bottom.imgurl && (
+            <img
+              className={s.characterBottom}
+              src={character.outfit.bottom.imgurl}
+              alt="bottom"
+            />
+          )}
+          {character.outfit.shoes.imgurl && (
+            <img
+              className={s.characterShoes}
+              src={character.outfit.shoes.imgurl}
+              alt="shoes"
+            />
+          )}
         </div>
         <img
           className={s.characterBackground}
@@ -81,6 +115,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         </div>
         <div className={s.contentArea}>
           {activeMenu === "face" && <FaceTab />}
+          {activeMenu === "costume" && <OutfitTab />}
         </div>
       </div>
     </div>
