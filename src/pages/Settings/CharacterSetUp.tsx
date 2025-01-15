@@ -4,7 +4,7 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import { useState } from "react";
 import FaceTab from "./FaceTab";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import OutfitTab from "./OutfitTab";
+import OutFitTab from "./OutFitTab";
 
 
 interface CharacterSetUpProps {
@@ -108,7 +108,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         </div>
         <div className={s.contentArea}>
           {activeMenu === "face" && <FaceTab />}
-          {activeMenu === "costume" && <OutfitTab />}
+          {activeMenu === "costume" && <OutFitTab />}
         </div>
       </div>
     </div>
