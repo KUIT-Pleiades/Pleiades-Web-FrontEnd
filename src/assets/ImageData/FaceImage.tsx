@@ -17,7 +17,7 @@ import face03 from "../Character/face/face/face03.png";
 import face04 from "../Character/face/face/face04.png";
 
 export interface FaceItem {
-  id: number;
+  name: string;
   src: string;
   tags: string;
 }
@@ -47,18 +47,18 @@ const images = {
 };
 // FaceImages 배열 생성
 export const FaceImages: FaceItem[] = [
-  ...Object.values(images.skin).map((src, index) => ({
-    id: index + 1,
+  ...Object.entries(images.skin).map(([key, src]) => ({
+    name: key,
     src,
     tags: "피부",
   })),
-  ...Object.values(images.hair).map((src, index) => ({
-    id: index + 8,
+  ...Object.entries(images.hair).map(([key, src]) => ({
+    name: key,
     src,
     tags: "머리",
   })),
-  ...Object.values(images.face).map((src, index) => ({
-    id: index + 12,
+  ...Object.entries(images.face).map(([key, src]) => ({
+    name: key,
     src,
     tags: "표정",
   })),

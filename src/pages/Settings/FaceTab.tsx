@@ -7,10 +7,6 @@ const FaceTab = () => {
   const [faceTab, setFaceTab] = useState("전체");
   const { character, updateCharacter } = useCharacterStore();
 
-  const [selectedSkin, setSelectedSkin] = useState(FaceImages[0]);
-  const [selectedHair, setSelectedHair] = useState(FaceImages[8]);
-  const [selectedFace, setSelectedFace] = useState(FaceImages[9]);
-
   const filteredFaceImages = useMemo(() => {
     if (faceTab === "전체") {
       return FaceImages;
@@ -22,36 +18,34 @@ const FaceTab = () => {
     (image: FaceItem) => {
       switch (image.tags) {
         case "피부":
-          setSelectedSkin(image);
+          
           updateCharacter({
             face: {
               ...character.face,
               skinColor: {
-                name: String(image.id),
+                name: image.name,
                 imgurl: image.src,
               },
             },
           });
           break;
         case "머리":
-          setSelectedHair(image);
           updateCharacter({
             face: {
               ...character.face,
               hair: {
-                name: String(image.id),
+                name: image.name,
                 imgurl: image.src,
               },
             },
           });
           break;
         case "표정":
-          setSelectedFace(image);
           updateCharacter({
             face: {
               ...character.face,
               expression: {
-                name: String(image.id),
+                name: image.name,
                 imgurl: image.src,
               },
             },
@@ -94,11 +88,11 @@ const FaceTab = () => {
         <div className={s.gridItems}>
           {filteredFaceImages.map((image) => (
             <div
-              key={image.id}
+              key={image.name}
               className={`${s.item} ${
-                (image.tags === "피부" && image === selectedSkin) ||
-                (image.tags === "머리" && image === selectedHair) ||
-                (image.tags === "표정" && image === selectedFace)
+                (image.tags === "피부" && image.src === character.face.skinColor.imgurl) ||
+                (image.tags === "머리" && image.src === character.face.hair.imgurl) ||
+                (image.tags === "표정" && image.src === character.face.expression.imgurl)
                   ? s.selected
                   : ""
               }`}
