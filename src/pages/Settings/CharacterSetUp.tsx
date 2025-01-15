@@ -1,7 +1,4 @@
 import s from "./CharacterSetUp.module.scss";
-import character3face from "../../assets/Character/face/character3face.png";
-import character2face from "../../assets/Character/face/character2face.png";
-import character1face from "../../assets/Character/face/character1face.png";
 import character1body from "../../assets/Character/body/character1body.png";
 import character2body from "../../assets/Character/body/character2body.png";
 import character3body from "../../assets/Character/body/character3body.png";
@@ -13,6 +10,11 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import lockImg from "../../assets/lockImg.png";
 import { useState } from "react";
 import { Character } from "../../interfaces/Interfaces";
+import FaceTab from "./FaceTab";
+import skin01 from "../../assets/Character/face/skin/skin01.png";
+import hair01 from "../../assets/Character/face/hair/hair01.png";
+import face01 from "../../assets/Character/face/face/face01.png";
+
 
 interface CharacterSetUpProps {
   character: Character;
@@ -22,11 +24,15 @@ interface CharacterSetUpProps {
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
-  const [selectedFace, setSelectedFace] = useState(character3face);
   const [selectedCostume, setSelectedCostume] = useState(character1body);
   const [selectedAccessory, setSelectedAccessory] = useState<string | null>(
     null
   );
+
+  const [skin, setSkin] = useState<string>(skin01); // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
+  const [face, setFace] = useState<string>(face01);
+  const [hair, setHair] = useState<string>(hair01);
+
   const handleAccessoryClick = (accessory: string) => {
     setSelectedAccessory((prev) => (prev === accessory ? null : accessory));
   };
@@ -35,18 +41,22 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
   return (
-    <>
+    <div className={s.characterSetUpContainer}>
       <div className={s.showCharacter}>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>
           다음
         </button>
         <p className={s.pDescription}>내 캐릭터는 어떤 모습인가요?</p>
-        <img className={s.characterFace} src={selectedFace} alt="캐릭터3얼굴" />
+        <div className={s.characterContainer}>
+          <img className={s.characterSkin} src={skin} alt="skin01" />
+          <img className={s.characterface} src={face} alt="face01" />
+          <img className={s.characterhair} src={hair} alt="hair01" />
+        </div>
         <img
-          className={s.characterBody}
-          src={selectedCostume}
-          alt="캐릭터1몸"
+          className={s.characterBackground}
+          src={characterBackground}
+          alt="캐릭터후광"
         />
         {selectedAccessory && (
           <img
@@ -56,16 +66,13 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           />
         )}
         <img
-          className={s.characterBackground}
-          src={characterBackground}
-          alt="캐릭터후광"
-        />
-        <img
           className={s.resetBtn}
           src={resetBtn}
           alt="리셋 버튼"
           onClick={() => {
-            setSelectedFace(character3face);
+            setSkin(skin01);
+            setFace(face01);
+            setHair(hair01);
             setSelectedCostume(character1body);
             setSelectedAccessory(null);
           }}
@@ -99,61 +106,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           </button>
         </div>
         <div className={s.contentArea}>
-          {activeMenu === "face" && (
-            <div className={s.gridItems}>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character3face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character3face)}
-              >
-                <img src={character3face} alt="캐릭터3얼굴" />
-              </div>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character2face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character2face)}
-              >
-                <img src={character2face} alt="캐릭터2얼굴" />
-              </div>
-              <div
-                className={`${s.item} ${
-                  selectedFace === character1face ? s.selected : ""
-                }`}
-                onClick={() => setSelectedFace(character1face)}
-              >
-                <img src={character1face} alt="캐릭터1얼굴" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-              <div className={s.lockedItem}>
-                <img src={lockImg} alt="잠금이미지" />
-              </div>
-            </div>
-          )}
+          {activeMenu === "face" && <FaceTab />}
           {activeMenu === "costume" && (
             <div className={s.gridItems}>
               <div
@@ -266,7 +219,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
