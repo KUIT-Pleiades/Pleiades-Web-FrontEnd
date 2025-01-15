@@ -1,11 +1,3 @@
-html,
-body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100vw;
-	overflow: hidden;
-}
 
 button {
 	background: inherit;
@@ -17,74 +9,76 @@ button {
 	cursor: pointer
 }
 
+p {
+  margin: 0;
+}
+
 .background {
 	background-repeat: no-repeat;
-	background-size: 100% 100vh;
+	background-size: 100% 100%;
 	margin: 0;
 	padding: 0;
-	min-height: 100vh;
-	width: 100vw;
-	max-width: 1200px;
+	width: 100%;
+  height: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
 
 .showCharacter {
-	position: relative;
-	width: clamp(430px, 100%, 1200px);
-	height: 373.55px;
-	font-family: "Pretendard", sans-serif;
-	display: flex;
-	justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 55%;
+  font-family: "Pretendard", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .previousBtn {
-	position: absolute;
-	top: 32.55px;
-	left: 14px;
-	width: 53px;
-	height: 28px;
-	flex-shrink: 0;
-	border-radius: 12px;
-	background: #C0B9DB;
-	color: #ffffff;
-	z-index: 2;
-	font-family: inherit;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 53px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #C0B9DB;
+  color: #ffffff;
+  z-index: 2;
+  font-family: inherit;
 }
 
 .pHeader {
-	position: absolute;
-	top: 37.55px;
-	margin: 0;
-	z-index: 2;
-	color: #FFF;
+  position: absolute;
+  top: 6%;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  z-index: 2;
+  color: #FFF;
 	text-align: center;
 	font-family: Pretendard;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-	letter-spacing: -0.32px;
 }
 
 .nextBtn {
-	position: absolute;
-	top: 32.55px;
-	right: 14px;
-	width: 53px;
-	height: 28px;
-	flex-shrink: 0;
-	border-radius: 12px;
-	background: #402C44;
-	color: #ffffff;
-	z-index: 2;
-	font-family: inherit;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 53px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #402C44;
+  color: #ffffff;
+  z-index: 2;
 }
 
 .pDescription {
 	position: absolute;
-	top: 94.55px;
+  top: 17%;
 	margin: 0;
 	z-index: 2;
 	white-space: nowrap;
@@ -99,44 +93,23 @@ button {
 	letter-spacing: -0.32px;
 }
 
-.character {
-	position: relative;
-	display: flex;
-	justify-content: center;
-}
+.characterContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 
-.characterFace {
-	position: absolute;
-	top: 158.55px;
-	width: 155px;
-	height: 180.677px;
-	flex-shrink: 0;
-	z-index: 2;
-}
-
-.characterBody {
-	position: absolute;
-	top: 260.08px;
-
-	width: 113.065px;
-	height: 126.638px;
-	flex-shrink: 0;
-	z-index: 2;
-}
-
-.characterAccessory {
-	position: absolute;
-	top: 157.55px;
-
-	width: 100px;
-	height: 46.383px;
-	flex-shrink: 0;
-	z-index: 2;
+  img {
+    position: absolute;
+    width: 90%;
+    top: 15%;
+  }
 }
 
 .backgroundList{
 	background-color: #FFF;
 	width: 100%;
-	height: 260px;
+	height: 30%;
 	margin-top: auto;
 }

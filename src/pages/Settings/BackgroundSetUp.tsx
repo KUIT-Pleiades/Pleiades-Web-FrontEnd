@@ -1,8 +1,8 @@
 import s from "./backgroundSetUp.module.scss";
 //import profile from '../../mock/character1.json'
-import character1face from "../../assets/Character/face/character1face.png";
-import character1body from "../../assets/Character/body/character1body.png";
-import catEar from "../../assets/Character/accessory/catEar.png";
+import skin01 from "../../assets/Character/face/skin/skin01.png";
+import hair01 from "../../assets/Character/face/hair/hair01.png";
+import face01 from "../../assets/Character/face/face/face01.png";
 //import { Character } from "../../interfaces/Interfaces";
 //import React, { useState } from "react";
 import background_Field from "../../assets/backgroundImg/Background_Field.png"
@@ -39,23 +39,13 @@ const BackgroundSetUp = ({
         <p className={s.pDescription}>
           내 캐릭터에 어울리는 배경을 골라보세요!
         </p>
-        <div className={s.character}>
-          <img
-            className={s.characterFace}
-            src={character1face}
-            alt="캐릭터3얼굴"
-          />
-          <img
-            className={s.characterBody}
-            src={character1body}
-            alt="캐릭터1몸"
-          />
-          <img className={s.characterAccessory} src={catEar} alt="" />
+        <div className={s.characterContainer}>
+          <img className={s.characterSkin} src={skin01} alt="skin01" />
+          <img className={s.characterface} src={face01} alt="face01" />
+          <img className={s.characterhair} src={hair01} alt="hair01" />
         </div>
       </div>
-      <div className={s.backgroundList}>
-        
-      </div>
+      <div className={s.backgroundList}></div>
     </div>
   );
 };
