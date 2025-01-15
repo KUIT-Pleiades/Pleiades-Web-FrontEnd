@@ -33,7 +33,7 @@ export interface Character {
       imgurl: string;
     };
   };
-  accessories: {
+  accessories: {   
     name: string; // 악세서리
     imgurl: string;
   };
