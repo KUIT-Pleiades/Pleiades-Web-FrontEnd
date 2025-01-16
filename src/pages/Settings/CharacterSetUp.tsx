@@ -5,6 +5,7 @@ import { useState } from "react";
 import FaceTab from "./FaceTab";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import OutFitTab from "./OutFitTab";
+import ItemTab from "./ItemTab";
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -92,9 +93,9 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           </button>
           <button
             className={`${s.menuItem} ${
-              activeMenu === "accessory" ? s.active : s.inactive
+              activeMenu === "item" ? s.active : s.inactive
             }`}
-            onClick={() => setActiveMenu("accessory")}
+            onClick={() => setActiveMenu("item")}
           >
             아이템
           </button>
@@ -102,6 +103,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         <div className={s.contentArea}>
           {activeMenu === "face" && <FaceTab />}
           {activeMenu === "costume" && <OutFitTab />}
+          {activeMenu === "item" && <ItemTab />}
         </div>
       </div>
     </div>

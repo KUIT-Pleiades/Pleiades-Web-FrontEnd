@@ -50,7 +50,7 @@ export const ItemImages: Item[] = [
   ...Object.entries(images.face).map(([key, src]) => ({
     name: key,
     src,
-    tags: "목",
+    tags: "얼굴",
   })),
   ...Object.entries(images.ear).map(([key, src]) => ({
     name: key,
