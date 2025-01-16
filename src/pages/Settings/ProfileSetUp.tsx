@@ -1,8 +1,8 @@
 import s from './profileSetUp.module.scss';
 //import profile from '../../mock/character1.json'
-import character1face from "../../assets/Character/face/character1face.png";
-import character1body from "../../assets/Character/body/character1body.png";
-import catEar from "../../assets/Character/accessory/catEar.png";
+import skin01 from "../../assets/Character/face/skin/skin01.png";
+import hair01 from "../../assets/Character/face/hair/hair01.png";
+import face01 from "../../assets/Character/face/face/face01.png";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import { Character } from "../../interfaces/Interfaces";
 import React, { useState } from "react";
@@ -43,7 +43,7 @@ const ProfileSetUp = ({
 
 
   return (
-    <>
+    <div className={s.profileSetUpContainer}>
       <div className={s.showCharacter}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
@@ -53,13 +53,11 @@ const ProfileSetUp = ({
           다음
         </button>
         <p className={s.pDescription}>내 캐릭터에 이름과 나이를 지어주세요!</p>
-        <img
-          className={s.characterFace}
-          src={character1face}
-          alt="캐릭터3얼굴"
-        />
-        <img className={s.characterBody} src={character1body} alt="캐릭터1몸" />
-        <img className={s.characterAccessory} src={catEar} alt="" />
+        <div className={s.characterContainer}>
+          <img className={s.characterSkin} src={skin01} alt="skin01" />
+          <img className={s.characterface} src={face01} alt="face01" />
+          <img className={s.characterhair} src={hair01} alt="hair01" />
+        </div>
         <img
           className={s.characterBackground}
           src={characterBackground}
@@ -101,7 +99,7 @@ const ProfileSetUp = ({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
