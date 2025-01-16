@@ -4,7 +4,10 @@ import { codeType } from "../types/types";
 export async function kakaoLoginRequest() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/kakao`;
-  const response = await fetch(requestURL, { method: "GET" });
+  const response = await fetch(requestURL, {
+    method: "GET",
+    credentials: "include",
+  });
   const data: AuthToken = await response.json(); //로그인 완료 시 access 토큰, refresh 토큰 반환
   window.localStorage.setItem("pleiadesTokenKA", data.accessToken);
   window.localStorage.setItem("pleiadesTokenKR", data.refreshToken);
@@ -17,7 +20,7 @@ export function naverLogInRedirect() {
   const randInt = Math.floor(Math.random() * 900) + 100;
   const stateString = `${timeStamp}${randInt}`;
   const CALLBACK_URL = `${CLIENT_URL}/naverlogin`;
-  const CLIENT_ID: string = import.meta.env.VITE_CLIENT_ID;
+  const CLIENT_ID: string = import.meta.env.VITE_NAVER_CLIENT_ID;
   const naverLogInURL: string = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=${stateString}&redirect_uri=${CALLBACK_URL}`;
   return naverLogInURL;
 }
