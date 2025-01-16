@@ -19,8 +19,7 @@ export default function LogIn() {
   };
 
   const kakaoLogin = () => {
-    const kakaoRefreshToken = window.localStorage.getItem("pleiadesTokenKR");
-    kakaoLoginRequest(kakaoRefreshToken);
+    kakaoLoginRequest();
   };
 
   return (

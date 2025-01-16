@@ -1,9 +1,9 @@
 import { AuthToken } from "../interfaces/Interfaces";
 import { codeType } from "../types/types";
 
-export async function kakaoLoginRequest(refreshToken: string | null) {
+export async function kakaoLoginRequest() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
-  const requestURL = `${BASE_URL}/auth/login/kakao?request=${refreshToken}`;
+  const requestURL = `${BASE_URL}/auth/login/kakao`;
   const response = await fetch(requestURL, { method: "GET" });
   const data: AuthToken = await response.json(); //로그인 완료 시 access 토큰, refresh 토큰 반환
   window.localStorage.setItem("pleiadesTokenKA", data.accessToken);
