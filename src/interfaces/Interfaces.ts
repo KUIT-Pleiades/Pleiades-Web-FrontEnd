@@ -1,3 +1,9 @@
+/** Auth Token interface */
+export interface AuthToken {
+  accessToken: string;
+  refreshToken: string;
+}
+
 /** Interfaces For User & Character */
 
 /** 캐릭터 설정이 끝난 후 서버에 전송할 때, 캐릭터 값 서버에서 받아올 때 사용 */
@@ -33,7 +39,7 @@ export interface Character {
       imgurl: string;
     };
   };
-  accessories: {   
+  accessories: {
     name: string; // 악세서리
     imgurl: string;
   };

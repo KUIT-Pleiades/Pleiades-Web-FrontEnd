@@ -1,4 +1,4 @@
-import { barContent } from "../types/types";
+import { BarContent } from "../types/types";
 import s from "./BottomBar.module.scss";
 import starIcon from "../assets/bottomBarImg/starIcon.svg";
 import selectedStarIcon from "../assets/bottomBarImg/starIconSelected.png";
@@ -11,7 +11,7 @@ import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.png"
 import BottomBarItem from "./BottomBarItem";
 
 export default function BottomBar() {
-  const bottomBarContents: barContent[] = [
+  const bottomBarContents: BarContent[] = [
     {
       tag: "별",
       defaultImg: starIcon,
