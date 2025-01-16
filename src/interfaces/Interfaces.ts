@@ -39,9 +39,27 @@ export interface Character {
       imgurl: string;
     };
   };
-  accessories: {
-    name: string; // 악세서리
-    imgurl: string;
+  item: {
+    head: {
+      name: string;
+      imgurl: string;
+    };
+    face: {
+      name: string;
+      imgurl: string;
+    };
+    ear: {
+      name: string;
+      imgurl: string;
+    };
+    neck: {
+      name: string;
+      imgurl: string;
+    };
+    hand: {
+      name: string;
+      imgurl: string;
+    };
   };
   background: {
     name: string; // 배경
