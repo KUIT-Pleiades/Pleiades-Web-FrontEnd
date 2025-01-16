@@ -60,6 +60,41 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             src={character.outfit.shoes.imgurl}
             alt="shoes"
           />
+          {character.item.head.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.head.imgurl}
+              alt="headItem"
+            />
+          )}
+          {character.item.face.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.face.imgurl}
+              alt="faceItem"
+            />
+          )}
+          {character.item.ear.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.ear.imgurl}
+              alt="earItem"
+            />
+          )}
+          {character.item.neck.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.neck.imgurl}
+              alt="neckItem"
+            />
+          )}
+          {character.item.hand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.hand.imgurl}
+              alt="handItem"
+            />
+          )}
         </div>
         <img
           className={s.characterBackground}
