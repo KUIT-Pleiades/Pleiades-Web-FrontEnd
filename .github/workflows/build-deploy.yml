@@ -31,7 +31,7 @@ jobs:
       run: |
         echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
         echo "VITE_CLIENT_URL=${{ secrets.VITE_CLIENT_URL }}" >> .env
-        echo "VITE_CLIENT_ID=${{ secrets.VITE_CLIENT_ID }}" >> .env
+        echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
     - run: npm run build --if-present
     - uses: awact/s3-action@master
       with:
