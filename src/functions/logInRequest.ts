@@ -17,7 +17,7 @@ export function naverLogInRedirect() {
   const randInt = Math.floor(Math.random() * 900) + 100;
   const stateString = `${timeStamp}${randInt}`;
   const CALLBACK_URL = `${CLIENT_URL}/naverlogin`;
-  const CLIENT_ID: string = import.meta.env.VITE_CLIENT_ID;
+  const CLIENT_ID: string = import.meta.env.VITE_NAVER_CLIENT_ID;
   const naverLogInURL: string = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=${stateString}&redirect_uri=${CALLBACK_URL}`;
   return naverLogInURL;
 }
