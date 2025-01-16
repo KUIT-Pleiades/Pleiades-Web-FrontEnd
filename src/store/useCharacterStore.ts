@@ -39,7 +39,13 @@ const initialCharacter: Character = {
     bottom: { name: "", imgurl: bottom01 },
     shoes: { name: "", imgurl: shoes },
   },
-  accessories: { name: "", imgurl: "" },
+  item: {
+    head: { name: "", imgurl: "" },
+    face: { name: "", imgurl: "" },
+    ear: { name: "", imgurl: "" },
+    neck: { name: "", imgurl: "" },
+    hand: { name: "", imgurl: "" },
+  },
   background: { name: "", imgurl: "" },
 };
 
