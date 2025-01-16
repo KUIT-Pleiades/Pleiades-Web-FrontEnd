@@ -80,4 +80,4 @@ export const FaceImages: FaceItem[] = [
   })),
 ];
 
-export const faceCategories = ["전체", "피부색", "머리", "표정"];
+//export const faceCategories = ["전체", "피부색", "머리", "표정"];
