@@ -6,7 +6,7 @@ export async function kakaoLoginRequest() {
   const requestURL = `${BASE_URL}/auth/login/kakao`;
   const response = await fetch(requestURL, {
     method: "GET",
-    credentials: "include",
+    credentials: "omit",
   });
   const data: AuthToken = await response.json(); //로그인 완료 시 access 토큰, refresh 토큰 반환
   window.localStorage.setItem("pleiadesTokenKA", data.accessToken);
