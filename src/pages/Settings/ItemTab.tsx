@@ -8,6 +8,60 @@ const ItemTab = () => {
 
   const handleImageClick = useCallback(
     (image: Item) => {
+      const isEquipped =
+        (image.tags === "머리" && image.src === character.item.head.imgurl) ||
+        (image.tags === "얼굴" && image.src === character.item.face.imgurl) ||
+        (image.tags === "귀" && image.src === character.item.ear.imgurl) ||
+        (image.tags === "목" && image.src === character.item.neck.imgurl) ||
+        (image.tags === "손" && image.src === character.item.hand.imgurl);
+
+      // 이미 착용중이면 해제
+      if (isEquipped) {
+        switch (image.tags) {
+          case "머리":
+            updateCharacter({
+              item: {
+                ...character.item,
+                head: { name: "", imgurl: "" },
+              },
+            });
+            break;
+          case "얼굴":
+            updateCharacter({
+              item: {
+                ...character.item,
+                face: { name: "", imgurl: "" },
+              },
+            });
+            break;
+          case "귀":
+            updateCharacter({
+              item: {
+                ...character.item,
+                ear: { name: "", imgurl: "" },
+              },
+            });
+            break;
+          case "목":
+            updateCharacter({
+              item: {
+                ...character.item,
+                neck: { name: "", imgurl: "" },
+              },
+            });
+            break;
+          case "손":
+            updateCharacter({
+              item: {
+                ...character.item,
+                hand: { name: "", imgurl: "" },
+              },
+            });
+            break;
+        }
+        return;
+      }
+
       switch (image.tags) {
         case "머리":
           updateCharacter({
