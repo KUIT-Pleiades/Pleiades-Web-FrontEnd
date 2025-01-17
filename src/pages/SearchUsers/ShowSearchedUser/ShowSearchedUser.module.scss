@@ -1,0 +1,70 @@
+.userContainer {
+    //width: 100vw;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8fa;
+    //border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-right: 12px;
+    margin-left: 12px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
+}
+
+.profileSection {
+    display: flex;
+    align-items: center;
+}
+.profileImageContainer{
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    margin-right: 16px;
+    //object-fit: cover;
+    overflow: hidden;
+    background-color: #BBC4E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.userName {
+    font-size: 16px;
+    font-family: "ElectricalSafety";
+    color: #444444;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 2px;
+}
+
+.userId {
+    font-size: 11px;
+    font-family: "Pretendard";
+    color: #808080;
+    margin: 0;
+}
+
+.requestButton {
+    background-color: #6246ea;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #4e38b6;
+    }
+}

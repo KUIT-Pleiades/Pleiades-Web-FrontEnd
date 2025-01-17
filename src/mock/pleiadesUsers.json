@@ -1,24 +1,24 @@
 {
     "pleiadesUsers": [
         {
-            "Id": "user1",
-            "Name": "가길동"
+            "Id": "friend12",
+            "Name": "길봉태"
         },
         {
-            "Id": "user2",
-            "Name": "나길동"
+            "Id": "friend1",
+            "Name": "홍길동"
         },
         {
-            "Id": "user3",
-            "Name": "다길동"
+            "Id": "friend2",
+            "Name": "이영희"
         },
         {
-            "Id": "user4",
-            "Name": "라길동"
+            "Id": "friend3",
+            "Name": "박지민"
         },
         {
-            "Id": "user5",
-            "Name": "마길동"
+            "Id": "friend8",
+            "Name": "박창식"
         },
         {
             "Id": "user6",
