@@ -10,12 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     overflow-y: scroll;
 }
-// .friendsList::-webkit-scrollbar-thumb{
-//     background: #C0B9DB;
-// }
 
 .friendsList span{
     font-family: "Pretendard";
