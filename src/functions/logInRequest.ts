@@ -29,6 +29,9 @@ export async function naverLogInRequest(authCode: string, codeType: codeType) {
   const requestURL = `${BASE_URL}/auth/login/naver/callback`;
   const response = await fetch(requestURL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ code: authCode, type: codeType }),
   });
   const data: AuthToken = await response.json(); //로그인 완료 시 유저 정보 Promise 객체 반환
