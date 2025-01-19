@@ -18,6 +18,46 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
     isMyFriend,
 }) => {
     const [isRequestSend, setIsRequestSend] = useState(false);
+    const [isCompleteRequestPopupVisible, setIsCompleteRequestPopupVisible] = useState(false);
+
+    const showCompleteRequestPopup = () => {
+        setIsCompleteRequestPopupVisible(true);
+        setTimeout(() => {
+            setIsCompleteRequestPopupVisible(false);
+          }, 1500);
+    };
+
+    const RenderButtons = () => {
+        if(isMyFriend) {
+            return (
+                <button className={s.requestButton}>별 방문</button>
+            )
+        }else{
+            if(isRequestSend) {
+                return (
+                    <button
+                        className={s.cancelRequestButton}
+                        onClick={() => {
+                            onRequestFriend(id, true);
+                            setIsRequestSend(false); }} >
+                        요청취소
+                    </button>
+                )
+            } else {
+                return (
+                    <button
+                        className={s.requestButton}
+                        onClick={() => {
+                            onRequestFriend(id, false);
+                            setIsRequestSend(true);
+                            showCompleteRequestPopup(); }} >
+                        친구요청
+                    </button>
+                )
+            }
+        }
+    }
+
     return (
         <div className={s.userContainer}>
             <div className={s.profileSection}>
@@ -33,29 +73,13 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <p className={s.userId}>(@{id})</p>
                 </div>
             </div>
-            {isRequestSend ? 
-            (
-                <button
-                    className={s.requestButton}
-                    onClick={() => {
-                        onRequestFriend(id, true);
-                        setIsRequestSend(false);
-                    }}
-                >
-                    요청취소
-                </button>
-            ):(
-                <button
-                    className={s.requestButton}
-                    onClick={() => {
-                        onRequestFriend(id, false);
-                        setIsRequestSend(true);
-                    }}
-                >
-                    {isMyFriend ? '별 방문':'친구요청'}
-                </button>
+            <RenderButtons />
+            {isCompleteRequestPopupVisible && (
+                <div className={s.completeRequestPopup}>
+                    <p className={s.completeRequestPopupTitle}>친구 요청을 완료했어요!</p>
+                    <p className={s.completeRequestPopupText}>요청 중인 친구에서 확인할 수 있어요</p>
+                </div>
             )}
-            
         </div>
     );
 };

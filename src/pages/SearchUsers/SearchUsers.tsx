@@ -70,6 +70,7 @@ const SearchUsers: React.FC = () => {
 
     const handleSearchSubmit = () => {
         console.log('Search submitted:', searchValue);
+
     };
 
     const handleRequestFriend = (id: string, isCancelRequest: boolean) => {
@@ -93,7 +94,7 @@ const SearchUsers: React.FC = () => {
                 </div>
             </div>
             {/*================================ 검색창 부분 ==================================*/}
-            <div>
+            <div className={s.searchBarContainer}>
                 <SearchUsersBar
                     value={searchValue}
                     onChange={handleInputChange}
@@ -101,6 +102,7 @@ const SearchUsers: React.FC = () => {
                     onBlur={handleInputBlur}
                     onSubmit={handleSearchSubmit}
                 />
+                <button className={s.cancelSearchButton}>취소</button>
             </div>
             {/*================================ 텍스트 및 로고 ================================*/}
             {showInstruction && (
