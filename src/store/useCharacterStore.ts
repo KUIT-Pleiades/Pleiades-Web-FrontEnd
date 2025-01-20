@@ -6,7 +6,7 @@ import hair01 from "../assets/Character/face/hair/hair01.png";
 import face01 from "../assets/Character/face/face/face01.png";
 import top01 from "../assets/Character/outfit/top/top01.png";
 import bottom01 from "../assets/Character/outfit/bottom/bottom01.png";
-import shoes from "../assets/Character/outfit/shoes/shoes01.png";
+import shoes01 from "../assets/Character/outfit/shoes/shoes01.png";
 
 
 interface CharacterStore {
@@ -37,7 +37,7 @@ const initialCharacter: Character = {
   outfit: {
     top: { name: "top01", imgurl: top01 },
     bottom: { name: "bottom01", imgurl: bottom01 },
-    shoes: { name: "shoes", imgurl: shoes },
+    shoes: { name: "shoes01", imgurl: shoes01 },
   },
   item: {
     head: { name: "", imgurl: "" },
