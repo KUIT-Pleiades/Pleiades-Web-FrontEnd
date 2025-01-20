@@ -14,6 +14,7 @@ import hair05 from "../Character/face/hair/hair05.png";
 import hair06 from "../Character/face/hair/hair06.png";
 import hair07 from "../Character/face/hair/hair07.png";
 import hair08 from "../Character/face/hair/hair08.png";
+import hair09 from "../Character/face/hair/hair09.png";
 
 import face01 from "../Character/face/face/face01.png";
 import face02 from "../Character/face/face/face02.png";
@@ -23,6 +24,7 @@ import face05 from "../Character/face/face/face05.png";
 import face06 from "../Character/face/face/face06.png";
 import face07 from "../Character/face/face/face07.png";
 import face08 from "../Character/face/face/face08.png";
+import face09 from "../Character/face/face/face09.png";
 
 export interface FaceItem {
   name: string;
@@ -49,6 +51,7 @@ const images = {
     hair06,
     hair07,
     hair08,
+    hair09,
   },
   face: {
     face01,
@@ -59,6 +62,7 @@ const images = {
     face06,
     face07,
     face08,
+    face09,
   },
 };
 // FaceImages 배열 생성

@@ -9,8 +9,10 @@ import faceItem01 from "../Character/item/face/faceItem01.png";
 import earItem01 from "../Character/item/ear/earItem01.png";
 
 import neckItem01 from "../Character/item/neck/neckItem01.png";
+import neckItem02 from "../Character/item/neck/neckItem02.png";
 
 import handItem01 from "../Character/item/hand/handItem01.png";
+import bag01 from "../Character/item/hand/bag01.png";
 
 
 export interface Item {
@@ -35,9 +37,11 @@ const images = {
   },
   neck: {
     neckItem01,
+    neckItem02,
   },
   hand: {
     handItem01,
+    bag01,
   },
 };
 
