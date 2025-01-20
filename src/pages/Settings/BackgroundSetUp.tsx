@@ -1,23 +1,13 @@
 import s from "./backgroundSetUp.module.scss";
-//import profile from '../../mock/character1.json'
-import skin01 from "../../assets/Character/face/skin/skin01.png";
-import hair01 from "../../assets/Character/face/hair/hair01.png";
-import face01 from "../../assets/Character/face/face/face01.png";
-//import { Character } from "../../interfaces/Interfaces";
-//import React, { useState } from "react";
 import background_Field from "../../assets/backgroundImg/Background_Field.png"
+import { useCharacterStore } from "../../store/useCharacterStore";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
   onPrev: () => void;
 }
-//character: Character;
-//onUpdateCharacter: (updates: Partial<Character>) => void;
 
-//character, onUpdateCharacter ,
 const BackgroundSetUp = ({
-  //character,
-  //onUpdateCharacter,
   onNext,
   onPrev,
 }: BackgroundSetUpProps) => {
@@ -25,6 +15,8 @@ const BackgroundSetUp = ({
   const backgroundStyle = {
     backgroundImage: `url(${background_Field})`,
   };
+
+  const { character } = useCharacterStore();
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -40,9 +32,71 @@ const BackgroundSetUp = ({
           내 캐릭터에 어울리는 배경을 골라보세요!
         </p>
         <div className={s.characterContainer}>
-          <img className={s.characterSkin} src={skin01} alt="skin01" />
-          <img className={s.characterface} src={face01} alt="face01" />
-          <img className={s.characterhair} src={hair01} alt="hair01" />
+          <img
+            className={s.characterSkin}
+            src={character.face.skinColor.imgurl}
+            alt="skin"
+          />
+          <img
+            className={s.characterFace}
+            src={character.face.expression.imgurl}
+            alt="face"
+          />
+          <img
+            className={s.characterHair}
+            src={character.face.hair.imgurl}
+            alt="hair"
+          />
+          <img
+            className={s.characterTop}
+            src={character.outfit.top.imgurl}
+            alt="top"
+          />
+          <img
+            className={s.characterBottom}
+            src={character.outfit.bottom.imgurl}
+            alt="bottom"
+          />
+          <img
+            className={s.characterShoes}
+            src={character.outfit.shoes.imgurl}
+            alt="shoes"
+          />
+          {character.item.head.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.head.imgurl}
+              alt="headItem"
+            />
+          )}
+          {character.item.face.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.face.imgurl}
+              alt="faceItem"
+            />
+          )}
+          {character.item.ear.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.ear.imgurl}
+              alt="earItem"
+            />
+          )}
+          {character.item.neck.imgurl && (
+            <img
+              className={s.characterItem}
+              src={character.item.neck.imgurl}
+              alt="neckItem"
+            />
+          )}
+          {character.item.hand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.hand.imgurl}
+              alt="handItem"
+            />
+          )}
         </div>
       </div>
       <div className={s.backgroundList}></div>
