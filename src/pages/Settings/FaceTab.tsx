@@ -1,38 +1,64 @@
 import { useState, useCallback, useMemo } from "react";
 import { FaceImages, FaceItem } from "../../assets/ImageData/FaceImage";
+import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./FaceTab.module.scss";
 
 const FaceTab = () => {
   const [faceTab, setFaceTab] = useState("전체");
-
-  const [selectedSkin, setSelectedSkin] = useState(FaceImages[0]);
-  const [selectedHair, setSelectedHair] = useState(FaceImages[8]);
-  const [selectedFace, setSelectedFace] = useState(FaceImages[9]);
+  const { character, updateCharacter } = useCharacterStore();
 
   const filteredFaceImages = useMemo(() => {
     if (faceTab === "전체") {
       return FaceImages;
     }
     return FaceImages.filter((image) => image.tags === faceTab);
-  }, [faceTab]); // faceTab이 변경될 때만 재계산
+  }, [faceTab]);
 
-  const handleImageClick = useCallback((image: FaceItem) => {
-    switch (image.tags) {
-      case "피부":
-        setSelectedSkin(image);
-        break;
-      case "머리":
-        setSelectedHair(image);
-        break;
-      case "표정":
-        setSelectedFace(image);
-        break;
-    }
-  }, []);
+  const handleImageClick = useCallback(
+    (image: FaceItem) => {
+      switch (image.tags) {
+        case "피부":
+          
+          updateCharacter({
+            face: {
+              ...character.face,
+              skinColor: {
+                name: image.name,
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+        case "머리":
+          updateCharacter({
+            face: {
+              ...character.face,
+              hair: {
+                name: image.name,
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+        case "표정":
+          updateCharacter({
+            face: {
+              ...character.face,
+              expression: {
+                name: image.name,
+                imgurl: image.src,
+              },
+            },
+          });
+          break;
+      }
+    },
+    [character.face, updateCharacter]
+  );
 
   return (
-    <div className={s.faceTabContainer}>
-      <div className={s.faceTab}>
+    <div className={s.tabContainer}>
+      <div className={s.tab}>
         <button
           onClick={() => setFaceTab("전체")}
           className={faceTab === "전체" ? s.active : ""}
@@ -58,15 +84,15 @@ const FaceTab = () => {
           표정
         </button>
       </div>
-      <div className={s.faceTabContent}>
+      <div className={s.tabContent}>
         <div className={s.gridItems}>
           {filteredFaceImages.map((image) => (
             <div
-              key={image.id}
+              key={image.name}
               className={`${s.item} ${
-                (image.tags === "피부" && image === selectedSkin) ||
-                (image.tags === "머리" && image === selectedHair) ||
-                (image.tags === "표정" && image === selectedFace)
+                (image.tags === "피부" && image.src === character.face.skinColor.imgurl) ||
+                (image.tags === "머리" && image.src === character.face.hair.imgurl) ||
+                (image.tags === "표정" && image.src === character.face.expression.imgurl)
                   ? s.selected
                   : ""
               }`}

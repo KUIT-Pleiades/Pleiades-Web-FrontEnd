@@ -84,12 +84,33 @@ p {
   justify-content: center;
   width: 100%;
   height: 100%;
-
   img {
     position: absolute;
     width: 70%;
     top: 15%;
   }
+}
+// 레이어 순서: 액세서리>얼굴>상의>하의>신발>머리>피부
+.characterSkin{
+  z-index: 1 ;
+}
+.characterHair {
+  z-index: 2;
+}
+.characterShoes{
+  z-index: 3;
+}
+.characterBottom{
+  z-index: 4;
+}
+.characterTop {
+  z-index: 5;
+}
+.characterFace{
+  z-index: 6;
+}
+.characterItem{
+  z-index: 7;
 }
 
 .characterBackground {
