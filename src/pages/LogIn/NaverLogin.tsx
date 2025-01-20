@@ -12,7 +12,7 @@ export default function NaverLogin() {
 
   useEffect(() => {
     const handleLogin = async () => {
-      if (authCode) {
+      if (authCode !== null) {
         const tokenData = await naverLogInRequest(authCode, "Auth");
         if (tokenData == null) {
           navigate("/login");
