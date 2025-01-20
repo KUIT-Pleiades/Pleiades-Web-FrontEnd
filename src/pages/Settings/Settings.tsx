@@ -2,6 +2,7 @@ import { useState } from "react";
 import CharacterSetUp from "./CharacterSetUp";
 import ProfileSetUp from "./ProfileSetUp";
 import BackgroundSetUp from "./BackgroundSetUp";
+import CharacterInfo from "./characterInfo/CharacterInfo"
 
 
 const Settings = () => {
@@ -29,6 +30,11 @@ const Settings = () => {
       {step === 2 && (
         <BackgroundSetUp onNext={() => setStep(3)} onPrev={() => setStep(1)} />
       )}
+      {step === 3 && (
+        <CharacterInfo />
+      )
+        
+      }
     </div>
   );
 };

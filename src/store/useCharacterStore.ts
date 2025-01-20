@@ -22,22 +22,22 @@ const initialCharacter: Character = {
   characterAge: 0,
   face: {
     skinColor: {
-      name: "",
+      name: "skin01",
       imgurl: skin01,
     },
     hair: {
-      name: "",
+      name: "hair01",
       imgurl: hair01,
     },
     expression: {
-      name: "",
+      name: "face01",
       imgurl: face01,
     },
   },
   outfit: {
-    top: { name: "", imgurl: top01 },
-    bottom: { name: "", imgurl: bottom01 },
-    shoes: { name: "", imgurl: shoes },
+    top: { name: "top01", imgurl: top01 },
+    bottom: { name: "bottom01", imgurl: bottom01 },
+    shoes: { name: "shoes", imgurl: shoes },
   },
   item: {
     head: { name: "", imgurl: "" },
