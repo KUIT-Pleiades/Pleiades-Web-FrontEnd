@@ -1,5 +1,5 @@
 import s from "./backgroundSetUp.module.scss";
-import background_Field from "../../assets/backgroundImg/Background_Field.png"
+import background01 from "../../assets/backgroundImg/starBackroundImg/backgroundImg03.png";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
 interface BackgroundSetUpProps {
@@ -13,7 +13,7 @@ const BackgroundSetUp = ({
 }: BackgroundSetUpProps) => {
 
   const backgroundStyle = {
-    backgroundImage: `url(${background_Field})`,
+    backgroundImage: `url(${background01})`,
   };
 
   const { character } = useCharacterStore();

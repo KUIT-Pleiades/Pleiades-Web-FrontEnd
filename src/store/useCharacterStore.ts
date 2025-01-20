@@ -7,7 +7,7 @@ import face01 from "../assets/Character/face/face/face01.png";
 import top01 from "../assets/Character/outfit/top/top01.png";
 import bottom01 from "../assets/Character/outfit/bottom/bottom01.png";
 import shoes01 from "../assets/Character/outfit/shoes/shoes01.png";
-import background01 from "../assets/backgroundImg/Background_Field.png"
+import background01 from "../assets/backgroundImg/starBackroundImg/backgroundImg01.png"
 
 
 interface CharacterStore {
