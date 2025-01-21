@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //import { Character } from "../../interfaces/Interfaces";
 import s from "./ShowTotalFriendsList.module.scss";
 
@@ -37,24 +37,28 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
     const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
     const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
     const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
-    if (
-        friendsData?.FriendRequests?.length === 0 &&
-        friendsData?.MyFriends?.length === 0 &&
-        friendsData?.MyRequests?.length === 0
-    ) {
+    useEffect(() => {
+      if(friendsData?.FriendRequests?.length === 0){
         setIsShowFriendRequests(false);
+      }
+      if(friendsData?.MyFriends?.length === 0){
         setIsShowMyFriends(false);
+      }
+      if(friendsData?.MyRequests?.length === 0){
         setIsShowMyRequests(false);
-    }
+      }
+  }, [friendsData]);
 
   return (
     <div className={s.friendsList}>
       {/*============= 받은 친구 요청 리스트 =============*/}
       <div className={s.friendRequests}>
-        <div className={s.friendRequestsHead}>
+        <div
+          className={s.friendRequestsHead}
+          onClick={() => setIsShowFriendRequests(!isShowFriendRequests)}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowFriendRequests(!isShowFriendRequests)}
           >
             {isShowFriendRequests ? (
               <img src={hideUpArrow} alt="hideUpArrow" />
@@ -73,13 +77,16 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
             ))}
           </div>
         )}
+        {!isShowFriendRequests && <div className={s.devideSection}></div>}
       </div>
       {/*============= 내 친구 리스트 =============*/}
       <div className={s.myFriends}>
-        <div className={s.myFriendsHead}>
+        <div
+          className={s.myFriendsHead}
+          onClick={() => setIsShowMyFriends(!isShowMyFriends)}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowMyFriends(!isShowMyFriends)}
           >
             {isShowMyFriends ? (
               <img src={hideUpArrow} alt="hideUpArrow" />
@@ -110,13 +117,16 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
             </div>
           </>
         )}
+        {!isShowMyFriends && <div className={s.devideSection}></div>}
       </div>
       {/*============= 내가 친구 요청 보낸 리스트 =============*/}
       <div className={s.myRequests}>
-        <div className={s.myRequestsHead}>
+        <div
+          className={s.myRequestsHead}
+          onClick={() => setIsShowMyRequests(!isShowMyRequests)}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowMyRequests(!isShowMyRequests)}
           >
             {isShowMyRequests ? (
               <img src={hideUpArrow} alt="hideUpArrow" />

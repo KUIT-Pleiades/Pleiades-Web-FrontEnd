@@ -5,39 +5,40 @@
     overflow: hidden;
     padding: 0;
     margin: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     background-color: #F8F8FA;
 }
 
 // 헤더 컨테이너 스타일
 .headContainer {
     width: 100%;
-    height: 9%;
+    height: 6.7125rem;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 0 0 18px 0;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    padding: 0 0 1.25rem 0;
     margin: 0;
-    background-color: #FFFFFF;
+    background-color: #FFF;
 
     .title {
-        padding: 0;
-        margin: 0;
 
-        .titleName,
-        .titleWelcome {
-            font-family: "Pretendard";
-            font-size: 16px;
+        .titleName{
             color: #1B142A;
-            font-weight: bold;
+            text-align: center;
+            font-family: "Pretendard";
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: -0.02rem;
         }
     }
 }
 
 // 친구 없음 화면 스타일
 .noFriend {
-    font-family: "Pretendard";
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -48,14 +49,26 @@
     transform: translate(-50%, -50%);
 
     .noFriendFirstText {
-        font-weight: 500;
-        font-size: 16px;
         color: #1B142A;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.02rem;
+        margin-bottom: 1.12rem;
     }
 
     .noFriendSecondText {
+        color: #444;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 0.8125rem;
+        font-style: normal;
         font-weight: 400;
-        font-size: 13px;
-        color: #444444;
+        line-height: normal;
+        letter-spacing: -0.01625rem;
+        margin-bottom: 2.69rem;
     }
 }

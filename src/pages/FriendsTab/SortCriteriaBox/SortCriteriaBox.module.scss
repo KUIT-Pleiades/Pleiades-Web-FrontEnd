@@ -8,55 +8,60 @@
 
 // Sort section (open and close)
 .sortBySectionOpen, .sortBySectionClose {
-    width: 78px;
+    width: 4.88rem;
     position: absolute;
     right: 0;
     margin: 0;
     padding: 0;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     z-index: 90;
 }
 
 .sortBySectionOpen {
-    background-color: #FFFFFF;
-    height: 47px;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+    background-color: #FFF;
+    height: 2.94rem;
+    box-shadow: 0px 0px 5px 0px rgba(41, 34, 41, 0.20);
 }
 
 // Sort buttons
 .sortCriteriaSelectButtonUpToDateOrder, .sortCriteriaSelectButtonFirstNameOrder {
     background-color: transparent;
     border: none;
-    font-family: "Pretendard";
-    font-size: 13px;
     margin: 0;
     padding: 0;
     position: absolute;
-    width: 53px;
-    height: 16px;
+    width: 3rem;
+    height: 1rem;
+    color: #444;
+    font-family: "Pretendard";
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01875rem;
 }
 
 .sortCriteriaSelectButtonUpToDateOrder {
-    left: 3px;
-    top: 6px;
+    left: 0.41rem;
+    top: 0.31rem;
 }
 
 .sortCriteriaSelectButtonFirstNameOrder {
-    left: 3px;
-    top: 24px;
+    left: 0.41rem;
+    top: 1.56rem;
 }
 
 // Arrows
 .arrowHideUp {
     position: absolute;
-    left: 50px;
-    top: 5px;
+    left: 3.25rem;
+    top: 0.37rem;
 }
 
 .arrowShowDown {
     position: absolute;
-    left: 50px;
-    top: 5px;
+    left: 3.25rem;
+    top: 0.37rem;
 }
 
 // Sort section (closed)
@@ -66,16 +71,20 @@
 
 // Sort criteria text
 .sortCriteriaText {
-    font-family: "Pretendard";
-    font-size: 13px;
-    color: #444444;
+    color: #444;
+    font-family: Pretendard;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01875rem;
     background-color: transparent;
     border: none;
     margin: 0;
     padding: 0;
-    width: 53px;
-    height: 16px;
+    width: 3rem;
+    height: 1rem;
     position: absolute;
-    left: 3px;
-    top: 6px;
+    left: 0.41rem;
+    top: 0.31rem;
 }

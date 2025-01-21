@@ -19,50 +19,58 @@
     border-radius: 50%;
     overflow: hidden;
     background-color: #E4D0E5;
-    width: 34px;
-    height: 34px;
+    width: 2.12rem;
+    height: 2.12rem;
 }
 
 .nameId {
-    margin-left: 8px;
-
+    margin: 0;
+    margin-left: 0.5rem;
+    height: 2.12rem;
+    
     p {
         margin: 0;
         padding: 0;
 
         &:nth-child(1) {
+            top: 0;
+            color: #444;
             font-family: "Pretendard";
-            font-size: 15px;
-            color: #444444;
-            font-weight: bold;
-            margin-bottom: 2px;
+            font-size: 0.9375rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 0.13rem;
         }
 
         &:nth-child(2) {
+            bottom: 0;
+            color: #444;
             font-family: "Pretendard";
-            font-size: 11px;
-            color: #444444;
+            font-size: 0.6875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: -0.01375rem;
         }
     }
 }
 
-// Button container and cancel button
-.buttonContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
 .cancelButton {
-    width: 62px;
-    height: 28px;
+    width: 3.88rem;
+    height: 1.75rem;
     border: none;
-    color: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 0.75rem;
+    color: #FFF;
+    text-align: center;
     font-family: "Pretendard";
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.01456rem;
+    margin-left: 0.63rem;
     background-color: #C0B9DB;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
 }
 
 // Cancel request popup styling
@@ -71,16 +79,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    border-radius: 0.75rem;
+    filter: drop-shadow(0px 0px 35px rgba(0, 0, 0, 0.25));
+    // filter: drop-shadow(0px 0px 20px rgba(41, 34, 41, 0.25));
     width: 70%;
-    height: 5%;
-    font-family: "Pretendard";
-    font-weight: bold;
-    font-size: 15px;
+    min-width: 17.9rem;
+    height: 3.06rem;
     color: #1B142A;
     text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -18,30 +18,40 @@
 .profileImage {
     border-radius: 50%;
     overflow: hidden;
-    background-color: #E4D0E5;
-    width: 34px;
-    height: 34px;
+    background-color: #BBC4E1;
+    width: 2.12rem;
+    height: 2.12rem;
 }
 
 .nameId {
-    margin-left: 8px;
-
+    margin: 0;
+    margin-left: 0.5rem;
+    height: 2.12rem;
+    
     p {
         margin: 0;
         padding: 0;
 
         &:nth-child(1) {
+            top: 0;
+            color: #444;
             font-family: "Pretendard";
-            font-size: 15px;
-            color: #444444;
-            font-weight: bold;
-            margin-bottom: 2px;
+            font-size: 0.9375rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 0.13rem;
         }
 
         &:nth-child(2) {
+            bottom: 0;
+            color: #444;
             font-family: "Pretendard";
-            font-size: 11px;
-            color: #444444;
+            font-size: 0.6875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            letter-spacing: -0.01375rem;
         }
     }
 }
@@ -53,15 +63,19 @@
 }
 
 .acceptButton, .declineButton {
-    width: 62px;
-    height: 28px;
+    width: 3.88rem;
+    height: 1.75rem;
     border: none;
-    color: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 0.75rem;
+    color: #FFF;
+    text-align: center;
     font-family: "Pretendard";
-    font-size: 14px;
-    font-weight: bold;
-    margin-left: 10px;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.01456rem;
+    margin-left: 0.63rem;
 
     &.acceptButton {
         background-color: #402C44;
@@ -78,21 +92,26 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    border-radius: 0.75rem;
+    filter: drop-shadow(0px 0px 35px rgba(0, 0, 0, 0.25));
+    // filter: drop-shadow(0px 0px 20px rgba(41, 34, 41, 0.25));
     width: 70%;
-    height: 50px;
-    font-family: "ElectricalSafety";
-    font-weight: 400;
-    font-size: 15px;
+    min-width: 17.9rem;
+    height: 3.06rem;
     color: #1B142A;
     text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     animation: fadeInOut 1.5s ease-in-out;
+    opacity: 0;
 
     @keyframes fadeInOut {
         0% {
@@ -111,19 +130,17 @@
 }
 
 .acceptFriendPopupSpacecraftUp {
-    position: fixed;
-    top: -33px;
-    left: -15px;
-    width: 38px;
-    height: 31px;
+    position: absolute;
+    top: -65%; /* 팝업 상단 기준으로 약간 위로 배치 */
+    left: -5%; /* 팝업 왼쪽 기준으로 약간 왼쪽으로 배치 */
+    width: 2.34712rem;
     z-index: 1001;
 }
 
 .acceptFriendPopupSpacecraftDown {
-    position: fixed;
-    bottom: -30px;
-    right: 5px;
-    width: 38px;
-    height: 31px;
+    position: absolute;
+    bottom: -65%; /* 팝업 하단 기준으로 약간 아래로 배치 */
+    right: 1%; /* 팝업 오른쪽 기준으로 약간 오른쪽으로 배치 */
+    width: 2.34712rem;
     z-index: 1001;
 }

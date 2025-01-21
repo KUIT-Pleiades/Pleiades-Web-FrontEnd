@@ -22,35 +22,36 @@ interface FriendsData {
 
 const FriendsTab: React.FC = () => {
     const [character, setCharacter] = useState<Character | null>(null);
-    const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
+    const [friendsData, setFriendsData] = useState<FriendsData>({
+        FriendRequests: [],
+        MyFriends: [],
+        MyRequests: [],
+    });
 
     //친구 있는지 없는지
-    const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
+    //const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
     const handleDeleteFriend = () => {
         //친구 삭제
     }
 
     useEffect(() => {
-        fetch("/src/mock/character1.json")
-            .then((res) => res.json())
-            .then((data) => {setCharacter(data)})
-            .catch((err) => {console.error(err)});
-        fetch("/src/mock/socialInfo.json")
-            .then((res) => res.json())
-            .then((data) => {setFriendsData(data)})
-            .catch((err) => {console.error(err)});
+            fetch("/src/mock/character1.json")
+                .then((res) => res.json())
+                .then((data) => {setCharacter(data)})
+                .catch((err) => {console.error(err)});
+            fetch("/src/mock/socialInfo.json")
+                .then((res) => res.json())
+                .then((data) => {setFriendsData(data)})
+                .catch((err) => {console.error(err)});
     }, []);
-    useEffect(() => {
-        if (
-            friendsData?.FriendRequests?.length === 0 &&
-            friendsData?.MyFriends?.length === 0 &&
-            friendsData?.MyRequests?.length === 0
-        ) {
-            setHasNoFriend(true); // 친구 없음
-        } else {
-            setHasNoFriend(false); // 친구 있음
-        }
+
+    const hasNoFriend = React.useMemo(() => {
+        return (
+            friendsData.FriendRequests.length === 0 &&
+            friendsData.MyFriends.length === 0 &&
+            friendsData.MyRequests.length === 0
+        );
     }, [friendsData]);
 
     if (!character || !friendsData) return <div>Loading...</div>;
@@ -60,8 +61,7 @@ const FriendsTab: React.FC = () => {
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
                 <div className={s.title}>
-                    <span className={s.titleName}>{character?.characterName}</span>
-                    <span className={s.titleWelcome}>님의 친구목록</span>
+                    <span className={s.titleName}>{character?.characterName}님의 친구목록</span>
                 </div>
             </div>
             {/*================================ 검색창 부분 ==================================*/}
