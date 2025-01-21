@@ -1,19 +1,17 @@
-.friendsList{
+// Friends list container
+.friendsList {
     width: 100%;
-    height: auto;
     max-height: 78%;
     background-color: transparent;
-    margin: 0;
-    padding: 0;
-    margin-top: 15px;
-    padding-top: 10px;
+    margin: 15px 0 0;
+    padding: 10px 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
 }
 
-.friendsList span{
+.friendsList span {
     font-family: "Pretendard";
     font-size: 16px;
     color: #444444;
@@ -21,59 +19,54 @@
     margin-left: 10px;
 }
 
-.friendRequests, .myFriends, .myRequests{
+// Section containers
+.friendRequests, .myFriends, .myRequests {
     width: 92%;
     height: auto;
 }
 
-.friendRequestsHead, .myFriendsHead, .myRequestsHead{
-    //width: 290px;
+// Section headers
+.friendRequestsHead, .myFriendsHead, .myRequestsHead {
     width: 100%;
     height: 19px;
     margin-bottom: 10px;
     display: flex;
-    flex-direction: row;
     align-items: flex-end;
     border-bottom: 1px solid #C0B9DB;
     padding-bottom: 8px;
 }
 
-.showHideButton{
+.showHideButton {
     background-color: transparent;
     margin: 0;
     padding: 0;
     border: none;
 }
 
-.friendRequestsSection, .myFriendsSection, .myRequestsSection{
+// Sections content
+.friendRequestsSection, .myFriendsSection, .myRequestsSection {
     width: 100%;
-    height: auto;
     margin-bottom: 21px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    //border: 1px solid black;
     gap: 10px;
 }
-.friendRequestsSection div:first-child{
+
+.friendRequestsSection div:first-child,
+.myRequestsSection div:first-child,
+.myFriendsSection div:first-child {
     margin-top: 5px;
-}
-.myRequestsSection div:first-child{
-    margin-top: 5px;
-}
-.myFriendsSection div:first-child{
-    margin-top: 3px;
 }
 
-.friendRequest, .myFriend, .myRequest{
-    //border: 1px solid gray;
+.friendRequest, .myFriend, .myRequest {
     width: 100%;
     height: 43px;
 }
 
-.sortCriteriaBoxContainer{
-    //border: 1px solid black;
+// Sort criteria box
+.sortCriteriaBoxContainer {
     width: 100%;
     height: 20px;
     display: flex;

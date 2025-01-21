@@ -1,55 +1,71 @@
-.container{
+// Container styling
+.container {
     width: 100%;
     position: relative;
     margin: 0;
     padding: 0;
 }
 
-.sortBySectionOpen, .sortBySectionClose{
+// Sort section (open and close)
+.sortBySectionOpen, .sortBySectionClose {
     width: 78px;
     position: absolute;
     right: 0;
     margin: 0;
     padding: 0;
-}
-.sortBySectionOpen{
-    background-color: #FFFFFF;
-    height: 47px;
     border-radius: 12px;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     z-index: 90;
 }
-.sortCriteriaSelectButtonUpToDateOrder, .sortCriteriaSelectButtonFirstNameOrder{
+
+.sortBySectionOpen {
+    background-color: #FFFFFF;
+    height: 47px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+}
+
+// Sort buttons
+.sortCriteriaSelectButtonUpToDateOrder, .sortCriteriaSelectButtonFirstNameOrder {
     background-color: transparent;
     border: none;
-    margin: 0;
-    padding: 0;
     font-family: "Pretendard";
     font-size: 13px;
+    margin: 0;
+    padding: 0;
     position: absolute;
     width: 53px;
     height: 16px;
 }
-.sortCriteriaSelectButtonUpToDateOrder{
+
+.sortCriteriaSelectButtonUpToDateOrder {
     left: 3px;
     top: 6px;
 }
-.sortCriteriaSelectButtonFirstNameOrder{
+
+.sortCriteriaSelectButtonFirstNameOrder {
     left: 3px;
     top: 24px;
 }
-.arrowHideUp{
+
+// Arrows
+.arrowHideUp {
     position: absolute;
     left: 50px;
     top: 5px;
 }
 
-.sortBySectionClose{
-    border-radius: 12px;
-    z-index: 90;
+.arrowShowDown {
+    position: absolute;
+    left: 50px;
+    top: 5px;
 }
 
-.sortCriteriaText{
+// Sort section (closed)
+.sortBySectionClose {
+    background-color: transparent;
+}
+
+// Sort criteria text
+.sortCriteriaText {
     font-family: "Pretendard";
     font-size: 13px;
     color: #444444;
@@ -62,9 +78,4 @@
     position: absolute;
     left: 3px;
     top: 6px;
-}
-.arrowShowDown{
-    position: absolute;
-    left: 50px;
-    top: 5px;
 }

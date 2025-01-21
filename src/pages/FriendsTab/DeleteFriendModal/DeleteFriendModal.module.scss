@@ -1,8 +1,10 @@
+// SCSS variables
 $modal-background-color: white;
 $modal-overlay-color: rgba(0, 0, 0, 0.5);
 $modal-close-color: gray;
 $modal-border-radius: 12px;
 
+// Modal overlay styles
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -16,6 +18,7 @@ $modal-border-radius: 12px;
   z-index: 1000;
 }
 
+// Modal styles
 .modal {
   background: $modal-background-color;
   border-radius: $modal-border-radius;
@@ -30,6 +33,7 @@ $modal-border-radius: 12px;
     top: -10%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     img {
       width: 100px;
       height: 100px;
@@ -42,8 +46,7 @@ $modal-border-radius: 12px;
     font-size: 11px;
     color: #808080;
     font-family: "Pretendard";
-    margin-bottom: 10px;
-    margin-top: 15px;
+    margin: 15px 0 10px;
   }
 
   &Message {
@@ -64,10 +67,8 @@ $modal-border-radius: 12px;
       background-color: #402C44;
       color: #FFFFFF;
       border: none;
-      padding: 0;
-      margin: 0;
       width: 45%;
-      border-radius: 12px;
+      border-radius: $modal-border-radius;
       cursor: pointer;
       font-family: "Pretendard";
       font-size: 13px;
@@ -78,10 +79,8 @@ $modal-border-radius: 12px;
       background-color: #C0B9DB;
       color: #FFFFFF;
       border: none;
-      padding: 0;
-      margin: 0;
       width: 45%;
-      border-radius: 12px;
+      border-radius: $modal-border-radius;
       cursor: pointer;
       font-family: "Pretendard";
       font-size: 13px;

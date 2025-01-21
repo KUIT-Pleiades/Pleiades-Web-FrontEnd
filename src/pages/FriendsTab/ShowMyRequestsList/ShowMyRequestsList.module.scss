@@ -1,4 +1,5 @@
-.container{
+// Container styling
+.container {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -8,48 +9,50 @@
     align-items: center;
 }
 
-.userInfoContainer{
+// User info container
+.userInfoContainer {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
-.profileImage{
-    border-radius: 100%;
+.profileImage {
+    border-radius: 50%;
     overflow: hidden;
     background-color: #E4D0E5;
     width: 34px;
     height: 34px;
 }
 
-.nameId{
+.nameId {
     margin-left: 8px;
-}
-.nameId p{
-    margin: 0;
-    padding: 0;
-}
-.nameId p:nth-child(1){
-    font-family: "Pretendard";
-    font-size: 15px;
-    color: #444444;
-    font-weight: bold;
-    margin-bottom: 2px;
-}
-.nameId p:nth-child(2){
-    font-family: "Pretendard";
-    font-size: 11px;
-    color: #444444;
+
+    p {
+        margin: 0;
+        padding: 0;
+
+        &:nth-child(1) {
+            font-family: "Pretendard";
+            font-size: 15px;
+            color: #444444;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        &:nth-child(2) {
+            font-family: "Pretendard";
+            font-size: 11px;
+            color: #444444;
+        }
+    }
 }
 
-.buttonContainer{
-    padding: 0;
-    margin: 0;
+// Button container and cancel button
+.buttonContainer {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
-.cancelButton{
+
+.cancelButton {
     width: 62px;
     height: 28px;
     border: none;
@@ -62,16 +65,15 @@
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
 }
 
+// Cancel request popup styling
 .cancelRequestPopup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ffffff;
-    border: none;
+    background: #FFFFFF;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    padding: 0;
     width: 70%;
     height: 5%;
     font-family: "Pretendard";
@@ -80,22 +82,18 @@
     color: #1B142A;
     text-align: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
     z-index: 1000;
     animation: fadeInOut 1.5s ease-in-out;
     opacity: 0;
-  
+
     @keyframes fadeInOut {
         0% {
             opacity: 0;
             transform: translate(-50%, -60%);
         }
-        10% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        90% {
+        10%, 90% {
             opacity: 1;
             transform: translate(-50%, -50%);
         }

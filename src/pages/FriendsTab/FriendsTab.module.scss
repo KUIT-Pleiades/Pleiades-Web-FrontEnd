@@ -1,4 +1,5 @@
-.container{
+// 전체 컨테이너 스타일
+.container {
     position: relative;
     border: none;
     overflow: hidden;
@@ -8,29 +9,34 @@
     height: 100vh;
     background-color: #F8F8FA;
 }
-.headContainer{
+
+// 헤더 컨테이너 스타일
+.headContainer {
     width: 100%;
     height: 9%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding: 0;
+    padding: 0 0 18px 0;
     margin: 0;
-    padding-bottom: 18px;
     background-color: #FFFFFF;
-}
-.title{
-    padding: 0;
-    margin: 0;
-}
-.titleName, .titleWelcome{
-    font-family: "Pretendard";
-    font-size: 16px;
-    color: #1B142A;
-    font-weight: bold;
+
+    .title {
+        padding: 0;
+        margin: 0;
+
+        .titleName,
+        .titleWelcome {
+            font-family: "Pretendard";
+            font-size: 16px;
+            color: #1B142A;
+            font-weight: bold;
+        }
+    }
 }
 
-.noFriend{
+// 친구 없음 화면 스타일
+.noFriend {
     font-family: "Pretendard";
     width: 100%;
     display: flex;
@@ -40,17 +46,16 @@
     bottom: 0;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-.noFriendFirstText{
-    font-family: "Pretendard";
-    font-weight: 500;
-    font-size: 16px;
-    color: #1B142A;
-}
-.noFriendSecondText{
-    font-family: "Pretendard";
-    font-weight: 400;
-    font-size: 13px;
-    color: #444444;
-}
 
+    .noFriendFirstText {
+        font-weight: 500;
+        font-size: 16px;
+        color: #1B142A;
+    }
+
+    .noFriendSecondText {
+        font-weight: 400;
+        font-size: 13px;
+        color: #444444;
+    }
+}
