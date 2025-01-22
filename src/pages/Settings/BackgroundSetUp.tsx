@@ -101,6 +101,9 @@ const BackgroundSetUp = ({
         </div>
       </div>
       <div className={s.backgroundList}>
+        <div className={s.bottomBar}>
+          <div className={s.bar}></div>
+        </div>
         <BackgroundTab />
       </div>
     </div>
