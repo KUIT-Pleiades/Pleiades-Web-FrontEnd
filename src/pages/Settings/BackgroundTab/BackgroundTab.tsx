@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { starBackImages, starBackImg } from "../../../assets/ImageData/BackgroundImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import s from "../FaceTab.module.scss"
+import s from "./backgroundTab.module.scss"
 
 const BackgroundTab = () => {
   const { character, updateCharacter } = useCharacterStore();
