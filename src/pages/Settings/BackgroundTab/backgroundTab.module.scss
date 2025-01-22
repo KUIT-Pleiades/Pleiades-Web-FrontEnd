@@ -33,14 +33,14 @@
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	justify-content: center;
-	gap: 22px;
+	gap: 15px;
 	padding: 10px 20px;
 	box-sizing: border-box;
 }
 
 .item {
 	aspect-ratio: 1;
-	border-radius: 12px;
+	border-radius: 10%;
 	background: white;
 	cursor: pointer;
 	border: 1px solid #E1E1E1;
