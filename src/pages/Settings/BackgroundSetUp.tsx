@@ -1,6 +1,6 @@
 import s from "./backgroundSetUp.module.scss";
-import background01 from "../../assets/backgroundImg/starBackroundImg/backgroundImg03.png";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import BackgroundTab from "./BackgroundTab/BackgroundTab";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
@@ -12,11 +12,12 @@ const BackgroundSetUp = ({
   onPrev,
 }: BackgroundSetUpProps) => {
 
+  const { character } = useCharacterStore();
+
   const backgroundStyle = {
-    backgroundImage: `url(${background01})`,
+    backgroundImage: `url(${character.background.imgurl})`,
   };
 
-  const { character } = useCharacterStore();
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -99,7 +100,9 @@ const BackgroundSetUp = ({
           )}
         </div>
       </div>
-      <div className={s.backgroundList}></div>
+      <div className={s.backgroundList}>
+        <BackgroundTab />
+      </div>
     </div>
   );
 };
