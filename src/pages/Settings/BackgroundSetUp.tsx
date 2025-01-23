@@ -1,6 +1,7 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import BackgroundTab from "./BackgroundTab/BackgroundTab";
+import { useState } from "react";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
@@ -18,10 +19,12 @@ const BackgroundSetUp = ({
     backgroundImage: `url(${character.background.imgurl})`,
   };
 
+  const [showList, setShowList] = useState(true);
+
 
   return (
     <div style={backgroundStyle} className={s.background}>
-      <div className={s.showCharacter}>
+      <div className={s.showCharacter} onClick={() => setShowList(false)}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
         </button>
@@ -100,11 +103,19 @@ const BackgroundSetUp = ({
           )}
         </div>
       </div>
-      <div className={s.backgroundList}>
+      <div
+        className={s.backgroundList}
+        onClick={() => setShowList(true)}
+        style={{
+          transition: "transform 0.3s ease-in-out",
+          transform: showList ? "translateY(0)" : "translateY(90%)",
+          overflow: "hidden",
+        }}
+      >
         <div className={s.bottomBar}>
           <div className={s.bar}></div>
         </div>
-        <BackgroundTab />
+        {showList && <BackgroundTab />}
       </div>
     </div>
   );
