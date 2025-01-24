@@ -1,6 +1,8 @@
 import s from "./backgroundSetUp.module.scss";
-import background_Field from "../../assets/backgroundImg/Background_Field.png"
 import { useCharacterStore } from "../../store/useCharacterStore";
+
+import { useState } from "react";
+import BackgroundTab from "./BackgroundTab";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
@@ -12,15 +14,18 @@ const BackgroundSetUp = ({
   onPrev,
 }: BackgroundSetUpProps) => {
 
+  const { character } = useCharacterStore();
+
   const backgroundStyle = {
-    backgroundImage: `url(${background_Field})`,
+    backgroundImage: `url(${character.background.imgurl})`,
   };
 
-  const { character } = useCharacterStore();
+  const [showList, setShowList] = useState(true);
+
 
   return (
     <div style={backgroundStyle} className={s.background}>
-      <div className={s.showCharacter}>
+      <div className={s.showCharacter} onClick={() => setShowList(false)}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
         </button>
@@ -69,17 +74,17 @@ const BackgroundSetUp = ({
               alt="headItem"
             />
           )}
-          {character.item.face.imgurl && (
+          {character.item.eyes.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.face.imgurl}
+              src={character.item.eyes.imgurl}
               alt="faceItem"
             />
           )}
-          {character.item.ear.imgurl && (
+          {character.item.ears.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.ear.imgurl}
+              src={character.item.ears.imgurl}
               alt="earItem"
             />
           )}
@@ -90,16 +95,50 @@ const BackgroundSetUp = ({
               alt="neckItem"
             />
           )}
-          {character.item.hand.name && (
+          {character.item.leftWrist.name && (
             <img
               className={s.characterItem}
-              src={character.item.hand.imgurl}
+              src={character.item.leftWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightWrist.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.leftHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.leftHand.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightHand.imgurl}
               alt="handItem"
             />
           )}
         </div>
       </div>
-      <div className={s.backgroundList}></div>
+      <div
+        className={s.backgroundList}
+        onClick={() => setShowList(true)}
+        style={{
+          transition: "transform 0.3s ease-in-out",
+          transform: showList ? "translateY(0)" : "translateY(90%)",
+          overflow: "hidden",
+        }}
+      >
+        <div className={s.bottomBar}>
+          <div className={s.bar}></div>
+        </div>
+        {showList && <BackgroundTab />}
+      </div>
     </div>
   );
 };

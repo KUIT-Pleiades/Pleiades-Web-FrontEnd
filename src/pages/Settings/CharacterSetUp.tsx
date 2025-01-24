@@ -2,10 +2,10 @@ import s from "./CharacterSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import { useState } from "react";
-import FaceTab from "./FaceTab";
+import FaceTab from "./characterSetUpTab/FaceTab";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import OutFitTab from "./OutFitTab";
-import ItemTab from "./ItemTab";
+import OutFitTab from "./characterSetUpTab/OutFitTab";
+import ItemTab from "./characterSetUpTab/ItemTab";
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -67,17 +67,17 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
               alt="headItem"
             />
           )}
-          {character.item.face.imgurl && (
+          {character.item.eyes.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.face.imgurl}
+              src={character.item.eyes.imgurl}
               alt="faceItem"
             />
           )}
-          {character.item.ear.imgurl && (
+          {character.item.ears.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.ear.imgurl}
+              src={character.item.ears.imgurl}
               alt="earItem"
             />
           )}
@@ -88,10 +88,31 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
               alt="neckItem"
             />
           )}
-          {character.item.hand.name && (
+          {character.item.leftWrist.name && (
             <img
               className={s.characterItem}
-              src={character.item.hand.imgurl}
+              src={character.item.leftWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightWrist.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.leftHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.leftHand.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightHand.imgurl}
               alt="handItem"
             />
           )}
