@@ -100,7 +100,24 @@ const OutFitTab = () => {
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <img src={image.src} alt={`${image.tags} 이미지`} />
+              <img
+                src={image.src}
+                alt={`${image.tags} 이미지`}
+                style={{
+                  ...(image.tags === "상의" && {
+                    transform: "scale(2)",
+                    paddingBottom: "40%",
+                  }),
+                  ...(image.tags === "하의" && {
+                    transform: "scale(2)",
+                    paddingBottom: "100%",
+                  }),
+                  ...(image.tags === "신발" && {
+                    transform: "scale(4)",
+                    paddingBottom: "90%",
+                  }),
+                }}
+              />
             </div>
           ))}
         </div>

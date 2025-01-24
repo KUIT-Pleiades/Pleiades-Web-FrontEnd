@@ -18,7 +18,6 @@ const FaceTab = () => {
     (image: FaceItem) => {
       switch (image.tags) {
         case "피부":
-          
           updateCharacter({
             face: {
               ...character.face,
@@ -90,15 +89,31 @@ const FaceTab = () => {
             <div
               key={image.name}
               className={`${s.item} ${
-                (image.tags === "피부" && image.src === character.face.skinColor.imgurl) ||
-                (image.tags === "머리" && image.src === character.face.hair.imgurl) ||
-                (image.tags === "표정" && image.src === character.face.expression.imgurl)
+                (image.tags === "피부" &&
+                  image.src === character.face.skinColor.imgurl) ||
+                (image.tags === "머리" &&
+                  image.src === character.face.hair.imgurl) ||
+                (image.tags === "표정" &&
+                  image.src === character.face.expression.imgurl)
                   ? s.selected
                   : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <img src={image.src} alt={`${image.tags} 이미지`} />
+              <img
+                src={image.src}
+                alt={`${image.tags} 이미지`}
+                style={{
+                  ...(image.tags === "머리" && {
+                    transform: "scale(1.5)",
+                    paddingTop: "15%",
+                  }),
+                  ...(image.tags === "표정" && {
+                    transform: "scale(2)",
+                    paddingTop: "15%",
+                  }),
+                }}
+              />
             </div>
           ))}
         </div>
