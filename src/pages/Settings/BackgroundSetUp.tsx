@@ -2,7 +2,7 @@ import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
 import { useState } from "react";
-import BackgroundTab from "./backgroundTab/BackgroundTab";
+import BackgroundTab from "./BackgroundTab";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
