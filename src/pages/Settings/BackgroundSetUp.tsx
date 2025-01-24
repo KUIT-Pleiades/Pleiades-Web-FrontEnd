@@ -1,7 +1,8 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-//import BackgroundTab from "./backgroundTab/BackgroundTab";
+
 import { useState } from "react";
+import BackgroundTab from "./backgroundTab/BackgroundTab";
 
 interface BackgroundSetUpProps {
   onNext: () => void;
@@ -136,7 +137,7 @@ const BackgroundSetUp = ({
         <div className={s.bottomBar}>
           <div className={s.bar}></div>
         </div>
-        {/* {showList && <BackgroundTab />} */}
+        {showList && <BackgroundTab />}
       </div>
     </div>
   );
