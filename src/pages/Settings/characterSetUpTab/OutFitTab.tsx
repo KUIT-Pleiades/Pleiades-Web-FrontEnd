@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
-import { OutfitImages, OutfitItem } from "../../assets/ImageData/OutfitImage";
-import { useCharacterStore } from "../../store/useCharacterStore";
-import s from "./FaceTab.module.scss";
+import { OutfitImages, OutfitItem } from "../../../assets/ImageData/OutfitImage";
+import { useCharacterStore } from "../../../store/useCharacterStore";
+import s from "./characterSetUptab.module.scss";
 
 const OutFitTab = () => {
 	const [outfitTab, setOutfitTab] = useState("전체");

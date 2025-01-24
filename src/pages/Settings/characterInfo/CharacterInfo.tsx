@@ -45,17 +45,26 @@ const CharacterDisplay: React.FC = () => {
           {character.item.head.name && (
             <p>머리 아이템: {character.item.head.name}</p>
           )}
-          {character.item.face.name && (
-            <p>얼굴 아이템: {character.item.face.name}</p>
+          {character.item.eyes.name && (
+            <p>눈 아이템: {character.item.eyes.name}</p>
           )}
-          {character.item.ear.name && (
-            <p>귀 아이템: {character.item.ear.name}</p>
+          {character.item.ears.name && (
+            <p>귀 아이템: {character.item.ears.name}</p>
           )}
           {character.item.neck.name && (
-            <p>목걸이: {character.item.neck.name}</p>
+            <p>목 아이템: {character.item.neck.name}</p>
           )}
-          {character.item.hand.name && (
-            <p>손 아이템: {character.item.hand.name}</p>
+          {character.item.leftWrist.name && (
+            <p>왼 손목 아이템: {character.item.leftWrist.name}</p>
+          )}
+          {character.item.rightWrist.name && (
+            <p>오른 손목 아이템: {character.item.rightWrist.name}</p>
+          )}
+          {character.item.leftHand.name && (
+            <p>왼손 아이템: {character.item.leftHand.name}</p>
+          )}
+          {character.item.rightHand.name && (
+            <p>오른손 아이템: {character.item.rightHand.name}</p>
           )}
         </div>
       </div>

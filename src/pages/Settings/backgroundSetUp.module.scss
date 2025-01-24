@@ -1,12 +1,11 @@
-
 button {
-	background: inherit;
-	border: none;
-	box-shadow: none;
-	border-radius: 0;
-	padding: 0;
-	overflow: visible;
-	cursor: pointer
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer
 }
 
 p {
@@ -14,14 +13,14 @@ p {
 }
 
 .background {
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	margin: 0;
-	padding: 0;
-	width: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
   height: 100%;
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -59,8 +58,8 @@ p {
   letter-spacing: -0.32px;
   z-index: 2;
   color: #FFF;
-	text-align: center;
-	font-family: Pretendard;
+  text-align: center;
+  font-family: Pretendard;
 }
 
 .nextBtn {
@@ -77,20 +76,20 @@ p {
 }
 
 .pDescription {
-	position: absolute;
+  position: absolute;
   top: 17%;
-	margin: 0;
-	z-index: 2;
-	white-space: nowrap;
-	color: #FFF;
+  margin: 0;
+  z-index: 2;
+  white-space: nowrap;
+  color: #FFF;
 
-	text-align: center;
-	font-family: Pretendard;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 600;
-	line-height: normal;
-	letter-spacing: -0.32px;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.32px;
 }
 
 .characterContainer {
@@ -103,36 +102,58 @@ p {
   img {
     position: absolute;
     width: 90%;
-    top: 15%;
+    top: 20%;
   }
 }
 
 // 레이어 순서: 액세서리>얼굴>상의>하의>신발>머리>피부
-.characterSkin{
-  z-index: 1 ;
+.characterSkin {
+  z-index: 1;
 }
+
 .characterHair {
   z-index: 2;
 }
-.characterShoes{
+
+.characterShoes {
   z-index: 3;
 }
-.characterBottom{
+
+.characterBottom {
   z-index: 4;
 }
+
 .characterTop {
   z-index: 5;
 }
-.characterFace{
+
+.characterFace {
   z-index: 6;
 }
-.characterItem{
+
+.characterItem {
   z-index: 7;
 }
 
-.backgroundList{
-	background-color: #FFF;
-	width: 100%;
-	height: 30%;
-	margin-top: auto;
+.backgroundList {
+  background-color: #FFF;
+  width: 100%;
+  height: 30%;
+  margin-top: auto;
+  z-index: 10;
+}
+
+.bottomBar {
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .bar {
+    width: 20%;
+    height: 3px;
+    flex-shrink: 0;
+    border-radius: 100px;
+    background: #C9C6C9;
+  }
 }
