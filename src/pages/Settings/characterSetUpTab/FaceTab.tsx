@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
-import { FaceImages, FaceItem } from "../../assets/ImageData/FaceImage";
-import { useCharacterStore } from "../../store/useCharacterStore";
-import s from "./FaceTab.module.scss";
+import { FaceImages, FaceItem } from "../../../assets/ImageData/FaceImage";
+import { useCharacterStore } from "../../../store/useCharacterStore";
+import s from "./characterSetUptab.module.scss";
 
 const FaceTab = () => {
   const [faceTab, setFaceTab] = useState("전체");

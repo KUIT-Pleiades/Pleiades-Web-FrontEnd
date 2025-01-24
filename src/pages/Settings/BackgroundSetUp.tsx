@@ -1,6 +1,6 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import BackgroundTab from "./BackgroundTab/BackgroundTab";
+import BackgroundTab from "./backgroundTab/BackgroundTab";
 import { useState } from "react";
 
 interface BackgroundSetUpProps {
@@ -73,17 +73,17 @@ const BackgroundSetUp = ({
               alt="headItem"
             />
           )}
-          {character.item.face.imgurl && (
+          {character.item.eyes.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.face.imgurl}
+              src={character.item.eyes.imgurl}
               alt="faceItem"
             />
           )}
-          {character.item.ear.imgurl && (
+          {character.item.ears.imgurl && (
             <img
               className={s.characterItem}
-              src={character.item.ear.imgurl}
+              src={character.item.ears.imgurl}
               alt="earItem"
             />
           )}
@@ -94,10 +94,31 @@ const BackgroundSetUp = ({
               alt="neckItem"
             />
           )}
-          {character.item.hand.name && (
+          {character.item.leftWrist.name && (
             <img
               className={s.characterItem}
-              src={character.item.hand.imgurl}
+              src={character.item.leftWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightWrist.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightWrist.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.leftHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.leftHand.imgurl}
+              alt="handItem"
+            />
+          )}
+          {character.item.rightHand.name && (
+            <img
+              className={s.characterItem}
+              src={character.item.rightHand.imgurl}
               alt="handItem"
             />
           )}

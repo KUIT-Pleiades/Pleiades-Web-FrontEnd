@@ -44,11 +44,11 @@ export interface Character {
       name: string;
       imgurl: string;
     };
-    face: {
+    eyes: {
       name: string;
       imgurl: string;
     };
-    ear: {
+    ears: {
       name: string;
       imgurl: string;
     };
@@ -56,7 +56,19 @@ export interface Character {
       name: string;
       imgurl: string;
     };
-    hand: {
+    leftWrist: {
+      name: string;
+      imgurl: string;
+    };
+    rightWrist: {
+      name: string;
+      imgurl: string;
+    };
+    leftHand: {
+      name: string;
+      imgurl: string;
+    };
+    rightHand: {
       name: string;
       imgurl: string;
     };

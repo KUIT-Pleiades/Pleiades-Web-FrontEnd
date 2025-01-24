@@ -1,74 +1,69 @@
-import headItem01 from "../Character/item/head/headItem01.png";
-import headItem02 from "../Character/item/head/headItem02.png";
-import headItem03 from "../Character/item/head/headItem03.png";
-import headItem04 from "../Character/item/head/headItem04.png";
-import headItem05 from "../Character/item/head/headItem05.png";
+import acc1_01 from "../Character/item/head/headItem01.png";
+import fas1_01 from "../Character/item/head/headItem02.png";
+import fas1_02 from "../Character/item/head/headItem03.png";
+import acc1_03 from "../Character/item/head/headItem04.png";
+import fas1_03 from "../Character/item/head/headItem05.png";
 
-import faceItem01 from "../Character/item/face/faceItem01.png";
+import acc2_01 from "../Character/item/face/faceItem01.png";
 
-import earItem01 from "../Character/item/ear/earItem01.png";
+import acc3_01 from "../Character/item/ear/earItem01.png";
 
-import neckItem01 from "../Character/item/neck/neckItem01.png";
-import neckItem02 from "../Character/item/neck/neckItem02.png";
+import fas5_01 from "../Character/item/neck/neckItem01.png";
+import acc6_02 from "../Character/item/neck/neckItem02.png";
 
-import handItem01 from "../Character/item/hand/handItem01.png";
-import bag01 from "../Character/item/hand/bag01.png";
+import acc5_01 from "../Character/item/hand/handItem01.png";
+import fas7_01 from "../Character/item/hand/bag01.png"; //왼손
+
+// const imgURL =
+//   "https://ipfs.io/ipfs/bafybeiawxfbv3rwoihqaoddfufd6j6gyly4vpeh5oedbdqj6akmyqyxi34/acc2_01.png";
+
+
+// ** 세부카테고리 **
+// acc 악세서리: 작게 포인트 주는 아이템 
+// >> 머리띠, 안경, 시계, 귀걸이, 선글라스 등
+// fas 패션: 의상에 준하며 착장 전체에 영향을 줌
+// >> 가방, 모자, 목도리 등
+// etc 기타: 들고다니는 거
+// >> 커피, 휴대폰, 풍선 등
+
+// ** 코드 **
+// 1: 머리에 쓰는 것
+// 2: 눈에 쓰는 것
+// 3: 귀에 걸치는 것
+// 4: 목에 걸치는 것
+// 5: 화면 왼쪽 손목
+// 6: 화면 오른쪽 손목
+// 7: 화면 왼쪽 손
+// 8: 화면 오른쪽 손목
 
 
 export interface Item {
   name: string;
   src: string;
   tags: string;
+  code: string;
 }
 
 const images = {
-  head: {
-    headItem01,
-    headItem02,
-    headItem03,
-    headItem04,
-    headItem05,
-  },
-  face: {
-    faceItem01,
-  },
-  ear: {
-    earItem01,
-  },
-  neck: {
-    neckItem01,
-    neckItem02,
-  },
-  hand: {
-    handItem01,
-    bag01,
-  },
+  acc1_01,
+  fas1_01,
+  fas1_02,
+  acc2_01,
+  fas1_03,
+  acc1_03,
+  acc3_01,
+  fas5_01,
+  acc6_02,
+  acc5_01,
+  fas7_01,
 };
 
 export const ItemImages: Item[] = [
-  ...Object.entries(images.head).map(([key, src]) => ({
+  ...Object.entries(images).map(([key, src]) => ({
     name: key,
     src,
-    tags: "머리",
-  })),
-  ...Object.entries(images.face).map(([key, src]) => ({
-    name: key,
-    src,
-    tags: "얼굴",
-  })),
-  ...Object.entries(images.ear).map(([key, src]) => ({
-    name: key,
-    src,
-    tags: "귀",
-  })),
-  ...Object.entries(images.neck).map(([key, src]) => ({
-    name: key,
-    src,
-    tags: "목",
-  })),
-  ...Object.entries(images.hand).map(([key, src]) => ({
-    name: key,
-    src,
-    tags: "손",
-  })),
-];
+    tags: key.slice(0,3),
+    code: key.slice(3,4)
+  }))
+]; 
+

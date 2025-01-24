@@ -42,10 +42,13 @@ const initialCharacter: Character = {
   },
   item: {
     head: { name: "", imgurl: "" },
-    face: { name: "", imgurl: "" },
-    ear: { name: "", imgurl: "" },
+    eyes: { name: "", imgurl: "" },
+    ears: { name: "", imgurl: "" },
     neck: { name: "", imgurl: "" },
-    hand: { name: "", imgurl: "" },
+    leftWrist: { name: "", imgurl: "" },
+    rightWrist: { name: "", imgurl: "" },
+    leftHand: { name: "", imgurl: "" },
+    rightHand: { name: "", imgurl: "" },
   },
   background: { name: "background01", imgurl: background01 },
 };
