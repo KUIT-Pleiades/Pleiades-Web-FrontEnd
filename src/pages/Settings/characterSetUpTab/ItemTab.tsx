@@ -12,8 +12,8 @@ const imageStyles: { [key: string]: React.CSSProperties } = {
   fas1_03: { transform: "scale(1.5)", paddingTop: "22%" },
   acc1_03: { transform: "scale(1.8)", paddingTop: "30%" },
   acc3_01: { transform: "scale(2)", paddingTop: "10%" },
-  fas5_01: { transform: "scale(2)", paddingBottom: "40%" },
-  acc6_02: { transform: "scale(4)", paddingBottom: "15%" },
+  fas4_01: { transform: "scale(2)", paddingBottom: "40%" },
+  acc4_01: { transform: "scale(4)", paddingBottom: "15%" },
   acc5_01: { transform: "scale(5)", paddingBottom: "39%", paddingLeft: "21%" },
   fas7_01: { transform: "scale(2)", paddingBottom: "40%", paddingLeft: "20%" },
 };
