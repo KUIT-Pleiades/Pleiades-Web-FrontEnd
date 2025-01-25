@@ -7,6 +7,7 @@ import face01 from "../assets/Character/face/face/face01.png";
 import top01 from "../assets/Character/outfit/top/top01.png";
 import bottom01 from "../assets/Character/outfit/bottom/bottom01.png";
 import shoes01 from "../assets/Character/outfit/shoes/shoes01.png";
+import background01 from "../assets/backgroundImg/starBackroundImg/backgroundImg01.png"
 
 
 interface CharacterStore {
@@ -41,12 +42,15 @@ const initialCharacter: Character = {
   },
   item: {
     head: { name: "", imgurl: "" },
-    face: { name: "", imgurl: "" },
-    ear: { name: "", imgurl: "" },
+    eyes: { name: "", imgurl: "" },
+    ears: { name: "", imgurl: "" },
     neck: { name: "", imgurl: "" },
-    hand: { name: "", imgurl: "" },
+    leftWrist: { name: "", imgurl: "" },
+    rightWrist: { name: "", imgurl: "" },
+    leftHand: { name: "", imgurl: "" },
+    rightHand: { name: "", imgurl: "" },
   },
-  background: { name: "", imgurl: "" },
+  background: { name: "background01", imgurl: background01 },
 };
 
 export const useCharacterStore = create<CharacterStore>((set) => ({ // 캐릭터 store 생성
