@@ -6,7 +6,7 @@ import s from "./ShowTotalFriendsList.module.scss";
 import ShowFriendRequestsList from "../ShowFriendRequestsList/ShowFriendRequestsList";
 import ShowMyFriendsList from "../ShowMyFriendsList/ShowMyFriendsList";
 import ShowMyRequestsList from "../ShowMyRequestsList/ShowMyRequestsList";
-import SortCriteriaBox from "../SortCriteriaBox/SortCriteriaBox";
+import SortCriteriaBox from "../../../components/SortCriteriaBox/SortCriteriaBox";
 
 // image files
 import hideUpArrow from "../../../assets/FriendsTab/hideUpArrow.svg";
