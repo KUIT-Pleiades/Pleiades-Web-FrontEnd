@@ -8,8 +8,8 @@ import acc2_01 from "../Character/item/face/faceItem01.png";
 
 import acc3_01 from "../Character/item/ear/earItem01.png";
 
-import fas5_01 from "../Character/item/neck/neckItem01.png";
-import acc6_02 from "../Character/item/neck/neckItem02.png";
+import fas4_01 from "../Character/item/neck/neckItem01.png";
+import acc4_02 from "../Character/item/neck/neckItem02.png";
 
 import acc5_01 from "../Character/item/hand/handItem01.png";
 import fas7_01 from "../Character/item/hand/bag01.png"; //왼손
@@ -52,8 +52,8 @@ const images = {
   fas1_03,
   acc1_03,
   acc3_01,
-  fas5_01,
-  acc6_02,
+  fas4_01,
+  acc4_02,
   acc5_01,
   fas7_01,
 };
