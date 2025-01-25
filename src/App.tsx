@@ -21,7 +21,7 @@ export default function App() {
         <Route path="rocket" element={<Rocket />}></Route>
         <Route path="settings" element={<Settings />}></Route>
         <Route path="station" element={<Station />}>
-          <Route path="stationlist" element={<ShowStationList />} />
+          <Route index element={<ShowStationList />} />
         </Route>
         <Route path="friendtab" element={<FriendsTab />}></Route>
         <Route path="searchusers" element={<SearchUsers />}></Route>
