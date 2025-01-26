@@ -190,7 +190,7 @@ export interface Station {
   name: string;
   backgroundImg: string;
   numOfUsers: number;
-  createdAt: string;
+  createdAt: number;
 }
 
 export interface Stations {
