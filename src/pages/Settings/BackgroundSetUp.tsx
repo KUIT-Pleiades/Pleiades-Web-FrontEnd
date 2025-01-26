@@ -1,7 +1,7 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
 
 interface BackgroundSetUpProps {
@@ -18,18 +18,11 @@ const BackgroundSetUp = ({
 
   const backgroundStyle = {
     backgroundImage: `url(${character.background.imgurl})`,
+    overflow: "hidden",
   };
 
   const [showList, setShowList] = useState(true);
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    
-    // 컴포넌트가 언마운트될 때 원래 상태로 복구
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
 
 
   return (
