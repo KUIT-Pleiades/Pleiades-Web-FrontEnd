@@ -1,0 +1,106 @@
+.container {
+    position: relative;
+    border: none;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../../assets/StationList/stationListBackGround.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.headContainer {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 0.23rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.title {
+    width: 92%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.titleText {
+    color: #FFF;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.02rem;
+    //margin-left: 0.87rem;
+}
+.titleButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 3rem;
+    //margin-right: 0.91rem;
+}
+.searchStationButton{
+    
+}
+.createStationButton{
+
+}
+
+
+.separator {
+    border-bottom: 1px solid #E1E1E1;
+    width: 92%;
+    //height: 2rem;
+    padding-bottom: 0.94rem;
+    position: relative;
+}
+.totalNumOfStations {
+    color: #CBCCCB;
+    font-family: Pretendard;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 1.65rem;
+}
+.sortCriteriaBoxContainer {
+    position: absolute;
+    right: -0.75rem;
+    bottom: 2.28rem;
+}
+
+.stationListWrapper {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 4.7rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+  
+.stationListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 92%;
+    margin-top: 1rem;
+    gap: 0.94rem 0;
+}
+
+.stationDisplayWrapper {
+    width: 48%;
+    //aspect-ratio: 121 / 104;
+}
