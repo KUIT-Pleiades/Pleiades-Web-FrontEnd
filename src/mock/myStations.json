@@ -2,33 +2,59 @@
   "stations": [
     {
       "id": "1",
-      "name": "재즈 라운지",
+      "name": "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥",
       "backgroundImg": "jazz_lounge_bg.jpg",
-      "numOfUsers": 3
+      "numOfUsers": 3,
+      "createdAt": "2025-01-26T12:00:00Z"
     },
     {
       "id": "2",
-      "name": "클래식 홀",
+      "name": "aaaAAArrrRRR",
       "backgroundImg": "classical_hall_bg.jpg",
-      "numOfUsers": 4
+      "numOfUsers": 4,
+      "createdAt": "2025-01-25T12:00:00Z"
     },
     {
       "id": "3",
       "name": "K-POP 스테이션",
       "backgroundImg": "kpop_station_bg.jpg",
-      "numOfUsers": 6
+      "numOfUsers": 6,
+      "createdAt": "2025-01-24T12:00:00Z"
     },
     {
       "id": "4",
       "name": "힙합 스튜디오",
       "backgroundImg": "hiphop_studio_bg.jpg",
-      "numOfUsers": 4
+      "numOfUsers": 4,
+      "createdAt": "2025-01-23T12:00:00Z"
     },
     {
       "id": "5",
       "name": "록 카페",
       "backgroundImg": "rock_cafe_bg.jpg",
-      "numOfUsers": 2
+      "numOfUsers": 2,
+      "createdAt": "2025-01-22T12:00:00Z"
+    },
+    {
+      "id": "6",
+      "name": "록 카페",
+      "backgroundImg": "rock_cafe_bg.jpg",
+      "numOfUsers": 2,
+      "createdAt": "2025-01-21T12:00:00Z"
+    },
+    {
+      "id": "7",
+      "name": "록 카페",
+      "backgroundImg": "rock_cafe_bg.jpg",
+      "numOfUsers": 2,
+      "createdAt": "2025-01-29T12:00:00Z"
+    },
+    {
+      "id": "8",
+      "name": "록 카페",
+      "backgroundImg": "rock_cafe_bg.jpg",
+      "numOfUsers": 2,
+      "createdAt": "2025-01-29T11:00:00Z"
     }
   ]
 }
