@@ -45,6 +45,7 @@
 	cursor: pointer;
 	border: 1px solid #E1E1E1;
 	padding: 8px;
+	overflow: hidden;
 
 	&:hover {
 		border-color: #ccc;

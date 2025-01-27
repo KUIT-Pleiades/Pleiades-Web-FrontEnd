@@ -18,9 +18,11 @@ const BackgroundSetUp = ({
 
   const backgroundStyle = {
     backgroundImage: `url(${character.background.imgurl})`,
+    overflow: "hidden",
   };
 
   const [showList, setShowList] = useState(true);
+
 
 
   return (

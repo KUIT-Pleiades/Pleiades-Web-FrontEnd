@@ -1,40 +1,63 @@
-import s from './profileSetUp.module.scss';
+import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState } from "react";
-import { useCharacterStore } from '../../store/useCharacterStore';
+import { useCharacterStore } from "../../store/useCharacterStore";
 
 interface ProfileSetUpProps {
   onNext: () => void;
   onPrev: () => void;
 }
 
-const ProfileSetUp = ({
-  onNext,
-  onPrev,
-}: ProfileSetUpProps) => {
-  
+const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { character, updateCharacter } = useCharacterStore();
+  const [isValidId, setIsValidId] = useState<boolean>(false);
+  const [idExists, setIdExists] = useState<boolean>(false);
+  const [buttonText, setButtonText] = useState<string>("중복확인");
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateCharacter({ characterName: e.target.value });
   };
 
+  // ID 유효성 검사 함수
+  const validateId = (id: string): boolean => {
+    // 영문, 숫자 조합 4-10자리 검사
+    const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,10}$/;
+    return idRegex.test(id);
+  };
+
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCharacter({ characterId: e.target.value });
+    const newId = e.target.value;
+    updateCharacter({ characterId: newId });
+    setIsValidId(validateId(newId));
+    // ID가 변경되면 중복확인 상태 초기화
+    setIdExists(false);
+    setButtonText("중복확인");
   };
 
   const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateCharacter({ characterAge: +e.target.value });
   };
 
-  const [idExists, setIdExists] = useState<boolean>(false);
-  const [buttonText, setButtonText] = useState<string>("중복확인");
-
   const idCheck = () => {
     setIdExists(!idExists);
-    setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현
+    setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현, 바뀌기만 함
   };
 
+
+//   // 초기 상태
+// isValidId = false (버튼 비활성화)
+// idExists = false (중복확인 안 된 상태)
+// buttonText = "중복확인"
+
+// // ID 입력이 유효할 때
+// isValidId = true (버튼 활성화)
+// idExists = false (아직 중복확인 안 함)
+// buttonText = "중복확인"
+
+// // 중복확인 버튼 클릭 후
+// isValidId = true (버튼 활성화 유지)
+// idExists = true (중복확인 완료)
+// buttonText = "사용가능"
 
   return (
     <div className={s.profileSetUpContainer}>
@@ -158,9 +181,11 @@ const ProfileSetUp = ({
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
+          <div className={s.AvailableID}>사용 가능한 ID입니다.</div>
           <button
             onClick={idCheck}
             className={`${s.checkBtn} ${idExists ? s.available : ""}`}
+            disabled={!isValidId}
           >
             {buttonText}
           </button>
