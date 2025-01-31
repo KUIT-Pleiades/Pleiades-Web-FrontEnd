@@ -26,7 +26,7 @@ export default function Splash() {
       <img className={s.backGround4} src={backGroundImg4} alt="  " />
       <div className={s.content}>
         <div className={s.motionSection}>
-          <Suspense fallback={<div></div>}>
+          <Suspense fallback={""}>
             <Logo />
           </Suspense>
         </div>

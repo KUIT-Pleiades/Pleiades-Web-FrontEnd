@@ -1,5 +1,26 @@
 body {
   margin: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scrollbar-width: 0.5vh;
+  scrollbar-color: #c0b9db;
+  overflow: overlay;
+}
+
+::-webkit-scrollbar {
+  width: 0.5vh;
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #c0b9db;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 10px;
+  background: #402c44;
 }
 
 /*Pretendard*/

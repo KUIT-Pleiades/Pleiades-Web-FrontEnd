@@ -3,23 +3,20 @@ import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import kakao from "../../assets/kakao.svg";
 import naver from "../../assets/naver.svg";
 import {
-  kakaoLoginRequest,
+  kakaoLogInRedirect,
   naverLogInRedirect,
-  naverLogInRequest,
 } from "../../functions/logInRequest";
+import { useEffect } from "react";
 
 export default function LogIn() {
+  useEffect(() => {}, []);
+
   const naverLogIn = () => {
-    const naverRefreshToken = window.localStorage.getItem("pleiadesTokenNR");
-    if (naverRefreshToken) {
-      naverLogInRequest(naverRefreshToken, "Refresh");
-    } else {
-      window.location.href = naverLogInRedirect();
-    }
+    window.location.href = naverLogInRedirect();
   };
 
   const kakaoLogin = () => {
-    kakaoLoginRequest();
+    kakaoLogInRedirect();
   };
 
   return (

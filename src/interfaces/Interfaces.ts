@@ -1,7 +1,6 @@
 /** Auth Token interface */
 export interface AuthToken {
   accessToken: string;
-  refreshToken: string;
 }
 
 /** Interfaces For User & Character */
