@@ -14,7 +14,7 @@ export function setRequest(
 ) {
   const credentials: RequestCredentials | undefined = "include";
   if (body !== null) {
-    const header = {
+    const request = {
       method: method,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -23,9 +23,9 @@ export function setRequest(
       credentials: credentials,
       body: JSON.stringify(body),
     };
-    return header;
+    return request;
   } else {
-    const header = {
+    const request = {
       method: method,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -33,6 +33,6 @@ export function setRequest(
       },
       credentials: credentials,
     };
-    return header;
+    return request;
   }
 }
