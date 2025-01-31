@@ -5,11 +5,23 @@ import backGroundImg3 from "../../assets/splashBackGround3.svg";
 import backGroundImg4 from "../../assets/splashBackGround4.svg";
 import { useNavigate } from "react-router-dom";
 
-export default function Error() {
+interface ErrorPageProps {
+  title: string;
+  subTitle: string;
+  destination: string;
+  buttonDescription: string;
+}
+
+export default function Error({
+  title,
+  subTitle,
+  destination,
+  buttonDescription,
+}: ErrorPageProps) {
   const navigate = useNavigate();
 
   const goHome = () => {
-    navigate("/home");
+    navigate(destination);
   };
   return (
     <div className={s.splashContainer}>
@@ -18,10 +30,10 @@ export default function Error() {
       <img className={s.backGround3} src={backGroundImg3} alt="  " />
       <img className={s.backGround4} src={backGroundImg4} alt="  " />
       <div className={s.content}>
-        <p className={s.subTitle}>앗! 잘못된 접근이에요</p>
-        <p className={s.title}>경로를 확인해주세요</p>
+        <p className={s.subTitle}>{subTitle}</p>
+        <p className={s.title}>{title}</p>
         <button className={s.homeButton} onClick={goHome}>
-          홈으로 돌아가기
+          {buttonDescription}
         </button>
       </div>
     </div>
