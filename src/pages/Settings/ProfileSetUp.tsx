@@ -14,8 +14,6 @@ interface BirthDateType {
   day: string;
 }
 
-
-
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { character, updateCharacter } = useCharacterStore();
   const [isValidId, setIsValidId] = useState<boolean>(false);
@@ -28,6 +26,18 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     month: "",
     day: "",
   });
+
+  const isFormComplete = () => {
+    return (
+      character.characterName && // 이름 입력 확인
+      character.characterId && // ID 입력 확인
+      idExists && // ID 중복 확인 완료
+      birthDate.year && // 생년 입력 확인
+      birthDate.month && // 월 입력 확인
+      birthDate.day && // 일 입력 확인
+      isValidBirthDate() // 생년월일 유효성 확인
+    );
+  };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateCharacter({ characterName: e.target.value });
@@ -52,7 +62,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const idCheck = () => {
     setIdExists(!idExists);
     setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현, 바뀌기만 함
-    if (idExists) {
+    if (!idExists) {
       setIdExists(true);
       setButtonText("사용가능");
       setIdCheckMessage("사용 가능한 ID입니다.");
@@ -100,28 +110,43 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       [type]: value,
     }));
 
+    const newBirthDate = {
+      ...birthDate,
+      [type]: value,
+    };
 
+    if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
+      try {
+        const birthDateTime = new Date(
+          Number(newBirthDate.year),
+          Number(newBirthDate.month) - 1,
+          Number(newBirthDate.day)
+        );
+
+        if (!isNaN(birthDateTime.getTime())) {
+          updateCharacter({ birthDate: birthDateTime });
+        }
+      } catch (error) {
+        console.error("Invalid date:", error);
+      }
+    }
     
-        const newBirthDate = {
-          ...birthDate,
-          [type]: value,
-        };
+  };
 
-        if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
-          try {
-            const birthDateTime = new Date(
-              Number(newBirthDate.year),
-              Number(newBirthDate.month) - 1,
-              Number(newBirthDate.day)
-            );
+  const isValidBirthDate = () => {
+    const date = new Date(
+      Number(birthDate.year),
+      Number(birthDate.month) - 1,
+      Number(birthDate.day)
+    );
+    return !isNaN(date.getTime());
+  };
 
-            if (!isNaN(birthDateTime.getTime())) {
-              updateCharacter({ birthDate: birthDateTime });
-            }
-          } catch (error) {
-            console.error("Invalid date:", error);
-          }
-      
+  const handleNext = () => {
+    if (isFormComplete()) {
+      onNext();
+    } else {
+      alert("정보를 모두 입력해 주세요");
     }
   };
 
@@ -134,7 +159,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           이전
         </button>
         <p className={s.pHeader}>캐릭터 설정하기</p>
-        <button className={s.nextBtn} onClick={onNext}>
+        <button className={s.nextBtn} onClick={handleNext}>
           다음
         </button>
         <p className={s.pDescription}>내 캐릭터에 이름과 나이를 지어주세요!</p>
