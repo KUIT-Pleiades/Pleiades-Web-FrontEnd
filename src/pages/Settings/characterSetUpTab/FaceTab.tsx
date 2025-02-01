@@ -39,7 +39,7 @@ const FaceTab = () => {
             },
           });
           break;
-        case "표정":
+        case "얼굴":
           updateCharacter({
             face: {
               ...character.face,
@@ -77,10 +77,10 @@ const FaceTab = () => {
           머리
         </button>
         <button
-          className={faceTab === "표정" ? s.active : ""}
-          onClick={() => setFaceTab("표정")}
+          className={faceTab === "얼굴" ? s.active : ""}
+          onClick={() => setFaceTab("얼굴")}
         >
-          표정
+          얼굴
         </button>
       </div>
       <div className={s.tabContent}>
@@ -93,7 +93,7 @@ const FaceTab = () => {
                   image.src === character.face.skinColor.imgurl) ||
                 (image.tags === "머리" &&
                   image.src === character.face.hair.imgurl) ||
-                (image.tags === "표정" &&
+                (image.tags === "얼굴" &&
                   image.src === character.face.expression.imgurl)
                   ? s.selected
                   : ""
@@ -108,7 +108,7 @@ const FaceTab = () => {
                     transform: "scale(1.5)",
                     paddingTop: "15%",
                   }),
-                  ...(image.tags === "표정" && {
+                  ...(image.tags === "얼굴" && {
                     transform: "scale(2)",
                     paddingTop: "15%",
                   }),

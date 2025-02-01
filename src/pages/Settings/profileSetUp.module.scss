@@ -226,8 +226,15 @@ p {
 
 }
 
-.AvailableID{
+.AvailableID {
   position: absolute;
+  color: var(--color-8-id, #8B6193);
+  font-family: Pretendard;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  right: 14px;
 }
 
 .checkBtn {

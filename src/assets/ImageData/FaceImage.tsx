@@ -96,7 +96,7 @@ export const FaceImages: FaceItem[] = [
   ...Object.entries(images.face).map(([key, src]) => ({
     name: key,
     src,
-    tags: "표정",
+    tags: "얼굴",
   })),
 ];
 
