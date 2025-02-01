@@ -234,13 +234,14 @@ p {
   font-weight: 400;
   line-height: normal;
   right: 14px;
+
   &.available {
-      color: var(--color-8-id, #8B6193); // 사용 가능할 때의 색상
-    }
-  
-    &.unavailable {
-      color: #FF6767; // 사용 불가능할 때의 색상
-    }
+    color: var(--color-8-id, #8B6193); // 사용 가능할 때의 색상
+  }
+
+  &.unavailable {
+    color: #FF6767; // 사용 불가능할 때의 색상
+  }
 }
 
 .checkBtn {
@@ -299,21 +300,23 @@ p {
 
   .ageInput {
     margin: 23px 0px;
-    width: inherit;
-    text-indent: 26px;
     border-radius: 15px;
     border: 1px solid #BEAADD;
     height: 58px;
     background: #FFF;
     width: 100%;
     box-sizing: border-box;
-    color: #8B6193;
+    letter-spacing: -0.32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--Gray4, #858585);
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    letter-spacing: -0.32px;
+    padding-right: 10px;
 
     &::placeholder {
       color: #E1E1E1;
@@ -325,59 +328,36 @@ p {
       letter-spacing: -0.28px;
     }
   }
-}
 
-.birthDateWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-}
-
-.birthDateContainer {
-  background: white;
-  border-radius: 16px;
-  padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-  .dateInput {
+  input {
     border: none;
     text-align: center;
     font-size: 16px;
     color: #9370DB;
-    width: 60px;
-
-    &::placeholder {
-      color: #9370DB;
-      opacity: 0.7;
-    }
-
-    &:focus {
-      outline: none;
-    }
-
-    &:first-child {
-      width: 80px;
-    }
+    width: 20px;
+    height: 40px;
+    text-align: right;
+    font-family: Pretendard;
+    
   }
 
-  .dateDivider {
-    color: #9370DB;
-    margin: 0 8px;
+    .yearInput {
+      width: 40px;
+    }
+
+  div{
+    width: 12px;
+  }
+
+  .divider {
+    color: var(--gray-7, #E1E1E1);
+    font-family: Pretendard;
     font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 28px 0 49px;
   }
-}
 
-.dateLabels {
-  display: flex;
-  justify-content: space-around;
-  padding: 0 20px;
 
-  span {
-    color: #9370DB;
-    font-size: 14px;
-  }
 }
