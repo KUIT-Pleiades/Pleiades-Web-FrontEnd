@@ -94,16 +94,19 @@ const SearchUsers: React.FC = () => {
                 </div>
             </div>
             {/*================================ 검색창 부분 ==================================*/}
-            <div className={s.searchBarContainer}>
-                <SearchUsersBar
-                    value={searchValue}
-                    onChange={handleInputChange}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                    onSubmit={handleSearchSubmit}
-                />
+            <div className={s.searchSection}>
+                <div className={s.searchBarContainer}>
+                    <SearchUsersBar
+                        value={searchValue}
+                        onChange={handleInputChange}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        onSubmit={handleSearchSubmit}
+                    />
+                </div>
                 <button className={s.cancelSearchButton}>취소</button>
             </div>
+            
             {/*================================ 텍스트 및 로고 ================================*/}
             {showInstruction && (
                 <div className={s.instruction}>

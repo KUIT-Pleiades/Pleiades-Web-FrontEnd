@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 //import { Character } from "../../interfaces/Interfaces";
 import s from "./ShowTotalFriendsList.module.scss";
 
@@ -11,10 +11,13 @@ import SortCriteriaBox from "../../../components/SortCriteriaBox/SortCriteriaBox
 // image files
 import hideUpArrow from "../../../assets/FriendsTab/hideUpArrow.svg";
 import showDownArrow from "../../../assets/FriendsTab/showDownArrow.svg";
+import toggleDown from "../../../assets/FriendsTab/toggleDown.svg";
+import toggleUp from "../../../assets/FriendsTab/toggleUp.svg";
 
 interface Friend {
   Id: string;
   Name: string;
+  Since: number;
 }
 
 interface FriendsData {
@@ -32,8 +35,6 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   friendsData,
   handleDeleteFriend,
 }) => {
-    const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
-
     const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
     const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
     const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
@@ -47,14 +48,31 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
         setIsShowMyRequests(false);
     }
 
+    const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
+
+    const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
+    const sortedFriends = useMemo(() => {
+      const friendsCopy = [...friendsData.MyFriends];
+  
+      if (sortCriteria === "최신순") {
+        return friendsCopy.sort((a, b) => b.Since - a.Since);
+      } else if (sortCriteria === "이름순") {
+        return friendsCopy.sort((a, b) => a.Name.localeCompare(b.Name, "ko-KR", { sensitivity: "base" }));
+      }
+  
+      return friendsCopy;
+    }, [friendsData.MyFriends, sortCriteria]);
   return (
     <div className={s.friendsList}>
       {/*============= 받은 친구 요청 리스트 =============*/}
       <div className={s.friendRequests}>
-        <div className={s.friendRequestsHead}>
+        <div
+          className={s.friendRequestsHead}
+          onClick={() => setIsShowFriendRequests(!isShowFriendRequests)}
+          style={!isShowFriendRequests ? { marginBottom: "1.44rem" } : {}}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowFriendRequests(!isShowFriendRequests)}
           >
             {isShowFriendRequests ? (
               <img src={hideUpArrow} alt="hideUpArrow" />
@@ -76,10 +94,13 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
       </div>
       {/*============= 내 친구 리스트 =============*/}
       <div className={s.myFriends}>
-        <div className={s.myFriendsHead}>
+        <div
+          className={s.myFriendsHead}
+          style={!isShowMyFriends ? { marginBottom: "1.44rem" } : {}}
+          onClick={() => setIsShowMyFriends(!isShowMyFriends)}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowMyFriends(!isShowMyFriends)}
           >
             {isShowMyFriends ? (
               <img src={hideUpArrow} alt="hideUpArrow" />
@@ -91,7 +112,7 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
         </div>
 
         {friendsData?.MyFriends && isShowMyFriends && (
-          <>
+          <div className={s.myFriendsSectionContainer}>
             <div className={s.sortCriteriaBoxContainer}>
               <SortCriteriaBox
                 sortCriteria={sortCriteria}
@@ -99,7 +120,7 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
               />
             </div>
             <div className={s.myFriendsSection}>
-              {friendsData.MyFriends.map((friend) => (
+              {sortedFriends.slice(0, showAllFriends ? sortedFriends.length : 7).map((friend) => (
                 <div key={friend.Id} className={s.myFriend}>
                   <ShowMyFriendsList
                     otherUser={friend}
@@ -108,15 +129,29 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
                 </div>
               ))}
             </div>
-          </>
+            {sortedFriends.length > 7 && (
+              <button
+                className={s.toggleButton}
+                onClick={() => setShowAllFriends((prev) => !prev)}
+              >
+                {showAllFriends ? "접기" : "더보기"}
+                {showAllFriends ?
+                  <img src={toggleUp} alt="toggleUp" className={s.toggleIcon} /> :
+                  <img src={toggleDown} alt="toggleDown" className={s.toggleIcon} />
+                }
+              </button>
+            )}
+          </div>
         )}
       </div>
       {/*============= 내가 친구 요청 보낸 리스트 =============*/}
       <div className={s.myRequests}>
-        <div className={s.myRequestsHead}>
+        <div
+          className={s.myRequestsHead}
+          onClick={() => setIsShowMyRequests(!isShowMyRequests)}
+        >
           <button
             className={s.showHideButton}
-            onClick={() => setIsShowMyRequests(!isShowMyRequests)}
           >
             {isShowMyRequests ? (
               <img src={hideUpArrow} alt="hideUpArrow" />

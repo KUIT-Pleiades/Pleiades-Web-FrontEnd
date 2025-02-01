@@ -18,28 +18,34 @@
     border-radius: 100%;
     overflow: hidden;
     background-color: #E4D0E5;
-    width: 34px;
-    height: 34px;
+    width: 2.1875rem;
+    height: 2.1875rem;
 }
 
 .nameId{
-    margin-left: 8px;
+    margin-left: 0.44rem;
 }
 .nameId p{
     margin: 0;
     padding: 0;
 }
 .nameId p:nth-child(1){
+    color: var(--gray-22, #444);
     font-family: "Pretendard";
-    font-size: 15px;
-    color: #444444;
-    font-weight: bold;
-    margin-bottom: 2px;
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 0.19rem;
 }
 .nameId p:nth-child(2){
+    color: var(--gray-22, #444);
     font-family: "Pretendard";
-    font-size: 11px;
-    color: #444444;
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01375rem;
 }
 
 .buttonContainer{
@@ -50,21 +56,26 @@
     justify-content: space-between;
 }
 .acceptButton, .declineButton{
-    width: 62px;
-    height: 28px;
+    width: 3.875rem;
+    height: 2.1875rem;
     border: none;
     color: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 1.88rem;
+    color: #FFF;
+    text-align: center;
     font-family: "Pretendard";
-    font-size: 14px;
-    font-weight: bold;
-    margin-left: 10px;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.01456rem;
+    margin-left: 0.63rem;
 }
 .acceptButton{
-    background-color: #402C44;
+    background-color: var(--color-21, #402C44);
 }
 .declineButton{
-    background-color: #C0B9DB;
+    background-color: var(--color-5-main, #C0B9DB);
 }
 
 .acceptFriendPopup, .refuseFriendPopup {
@@ -72,18 +83,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ffffff;
+    background: var(--gray-9, #EDEFFF);
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: 0.75rem;
+    box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
     padding: 0;
     width: 70%;
-    height: 50px;
-    font-family: "ElectricalSafety";
-    font-weight: 400;
-    font-size: 15px;
-    color: #1B142A;
+    height: 3.0625rem;
+    color: var(--gray-11, #17151C);
     text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     display: flex;
     flex-direction: column;
     justify-content: center;

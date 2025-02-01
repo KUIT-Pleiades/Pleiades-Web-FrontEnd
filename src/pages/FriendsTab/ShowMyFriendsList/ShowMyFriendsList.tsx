@@ -3,12 +3,10 @@ import s from './ShowMyFriendsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
 
 // components
-import VisitStationModal from '../VisitStationModal/VisitStationModal';
 import DeleteFriendModal from '../DeleteFriendModal/DeleteFriendModal';
 
 //image files
 import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
-import goStationSmall from '../../../assets/FriendsTab/goStationSmall.svg';
 import poke from '../../../assets/FriendsTab/poke.svg';
 import onPoke from '../../../assets/FriendsTab/onPoke.svg';
 import pokePopupStars from '../../../assets/FriendsTab/pokePopupStars.svg';
@@ -20,76 +18,67 @@ interface ShowMyFriendsListProps {
 }
 
 const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handleDeleteFriend }) => {
-  const [isVisitStationModalOpen, setIsVisitStationModalOpen] = useState(false);
   const [onDeleteMode, setOnDeleteMode] = useState(false);
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
   const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
-    const handleOpenVisitStationModal = () => setIsVisitStationModalOpen(true);
-    const handleCloseVisitStationModal = () => setIsVisitStationModalOpen(false);
-    const handleConfirm = () => {
-        //console.log("네! 갈래요 선택");
-        handleCloseVisitStationModal();
-    };
-    const handleCancel = () => {
-        //console.log("안 갈래요 선택");
-        handleCloseVisitStationModal();
-    };
+  const handleGoStation = () => {
+    //go to station
+  }
 
-    const handleOpenDeleteFriendModal = () => setIsDeleteFriendModalOpen(true);
-    const handleCloseDeleteFriendModal = () => setIsDeleteFriendModalOpen(false);
-    const handleDelete = () => {
-      handleDeleteFriend();
-      handleCloseDeleteFriendModal();
-      setOnDeleteMode(false);
-    };
-    const handleDeleteCancel = () => {
-      //console.log("안 갈래요 선택");
-      handleCloseDeleteFriendModal();
-      setOnDeleteMode(false);
-    };
+  const handleOpenDeleteFriendModal = () => setIsDeleteFriendModalOpen(true);
+  const handleCloseDeleteFriendModal = () => setIsDeleteFriendModalOpen(false);
+  const handleDelete = () => {
+    handleDeleteFriend();
+    handleCloseDeleteFriendModal();
+    setOnDeleteMode(false);
+  };
+  const handleDeleteCancel = () => {
+    handleCloseDeleteFriendModal();
+    setOnDeleteMode(false);
+  };
 
-    const showPokePopup = () => {
-      setIsPokePopupVisible(true);
-      setTimeout(() => {
-        setIsPokePopupVisible(false);
-      }, 1500);
-    };
+  const showPokePopup = () => {
+    setIsPokePopupVisible(true);
+    setTimeout(() => {
+      setIsPokePopupVisible(false);
+    }, 1500);
+  };
 
-    const RenderButtons = () => {
-      if (onDeleteMode) {
-        return (
-          <button
-            className={s.showDeleteFriendModalButton}
-            onClick={handleOpenDeleteFriendModal}
-          >친구 삭제</button>
-        );
-      }
+  const RenderButtons = () => {
+    if (onDeleteMode) {
       return (
-        <>
-          <button className={s.goStationButton} onClick={handleOpenVisitStationModal}>
-            <img src={goStationSmall} alt="goStationSmall" />
-          </button>
-          {isPokePopupVisible ? (
-            <button className={s.onPokeButton}>
-              <img src={onPoke} alt="onPoke" />
-            </button>
-          ) : (
-            <button className={s.pokeButton} onClick={showPokePopup}>
-              <img src={poke} alt="poke" />
-            </button>
-          )}
-        </>
+        <button
+          className={s.showDeleteFriendModalButton}
+          onClick={handleOpenDeleteFriendModal}
+        >친구 삭제</button>
       );
-    };
+    }
+    return (
+      <>
+        {isPokePopupVisible ? (
+          <button className={s.onPokeButton}>
+            <img src={onPoke} alt="onPoke" className={s.pokeImg} />
+          </button>
+        ) : (
+          <button className={s.pokeButton} onClick={showPokePopup}>
+            <img src={poke} alt="poke" className={s.pokeImg} />
+          </button>
+        )}
+      </>
+    );
+  };
 
   return (
     <div className={s.container}>
 
-      <div className={s.userInfoContainer}>
+      <div
+        className={s.userInfoContainer}
+        onClick={handleGoStation}
+      >
         {/*============= 프로필 사진 =============*/}
         <div className={s.profileImage}>
-          <img src={profileImageSmall} alt="profileImageSmall" width={34} />
+          <img src={profileImageSmall} alt="profileImageSmall" />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
@@ -97,6 +86,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
           <p>@{otherUser.Id}</p>
         </div>
       </div>
+      <div className={s.emptySpace} onClick={handleGoStation} />
       {/*============= 버튼 =============*/}
       <div className={s.buttonContainer}>
         <RenderButtons />
@@ -109,14 +99,6 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
           <img src={deleteFriendsButton} alt='deleteFriendsButton' />
         </button>
       </div>
-      {isVisitStationModalOpen && (
-        <VisitStationModal
-          username={otherUser.Name}
-          userId={otherUser.Id}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-        />
-      )}
       {isDeleteFriendModalOpen && (
         <DeleteFriendModal
           username={otherUser.Name}

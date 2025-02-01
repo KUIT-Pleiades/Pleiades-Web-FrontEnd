@@ -31,8 +31,17 @@
     font-weight: bold;
 }
 
+.searchSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .searchBarContainer{
-    //width: 50%;
+    width: 100%;
+    padding-left: 2rem;
+    padding-right: 1.2rem;
     display: flex;
     align-items: center;
 }
@@ -40,6 +49,14 @@
     width: 10%;
     padding: 0;
     margin: 0;
+    margin-right: 0.38rem;
+    color: var(--gray-22, #444);
+    font-family: "Pretendard";
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01625rem;
 }
 
 .instruction{
