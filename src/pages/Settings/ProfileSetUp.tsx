@@ -8,11 +8,15 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
+
+
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { character, updateCharacter } = useCharacterStore();
   const [isValidId, setIsValidId] = useState<boolean>(false);
   const [idExists, setIdExists] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>("중복확인");
+  const [idCheckMessage, setIdCheckMessage] = useState<string>("");
+  const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateCharacter({ characterName: e.target.value });
@@ -34,13 +38,21 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     setButtonText("중복확인");
   };
 
-  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCharacter({ characterAge: +e.target.value });
-  };
+  
 
   const idCheck = () => {
     setIdExists(!idExists);
     setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현, 바뀌기만 함
+    if (idExists) {
+      setIdExists(true);
+      setButtonText("사용가능");
+      setIdCheckMessage("사용 가능한 ID입니다.");
+    } else {
+      setIdExists(false);
+      setButtonText("중복확인");
+      setIdCheckMessage("이미 사용중인 ID입니다.");
+    }
+    setIsIdChecked(true);
   };
 
 
@@ -181,7 +193,15 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
-          <div className={s.AvailableID}>사용 가능한 ID입니다.</div>
+          {isIdChecked && ( // 중복 확인 버튼을 눌렀을 때만 메시지 표시
+            <div
+              className={`${s.idCheckMessage} ${
+                idExists ? s.available : s.unavailable
+              }`}
+            >
+              {idCheckMessage}
+            </div>
+          )}
           <button
             onClick={idCheck}
             className={`${s.checkBtn} ${idExists ? s.available : ""}`}
@@ -194,8 +214,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           <div className={s.age}>생년월일</div>
           <input
             type="text"
-            value={character.characterAge || ""}
-            onChange={handleAgeChange}
+            
             placeholder="아직 디자인 중"
             className={s.ageInput}
           />

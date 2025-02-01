@@ -20,7 +20,7 @@ const initialCharacter: Character = {
   // 초기 캐릭터 상태 -> 디자이너, pm 과 상의
   characterId: "",
   characterName: "",
-  characterAge: 0,
+  birthDate: null,
   face: {
     skinColor: {
       name: "skin01",

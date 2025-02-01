@@ -9,7 +9,7 @@ export interface AuthToken {
 export interface Character {
   characterId: string;
   characterName: string;
-  characterAge: number;
+  birthDate: Date | null;
   face: {
     skinColor: {
       name: string; // white, yellow...

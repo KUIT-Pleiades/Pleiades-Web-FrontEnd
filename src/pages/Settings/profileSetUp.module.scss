@@ -139,7 +139,7 @@ p {
   display: flex;
   align-items: center;
   flex-direction: column;
-  z-index: 2;
+  z-index: 10;
 }
 
 .nameInput {
@@ -226,15 +226,21 @@ p {
 
 }
 
-.AvailableID {
+.idCheckMessage {
   position: absolute;
-  color: var(--color-8-id, #8B6193);
   font-family: Pretendard;
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   right: 14px;
+  &.available {
+      color: var(--color-8-id, #8B6193); // 사용 가능할 때의 색상
+    }
+  
+    &.unavailable {
+      color: #FF6767; // 사용 불가능할 때의 색상
+    }
 }
 
 .checkBtn {
@@ -318,5 +324,60 @@ p {
       line-height: normal;
       letter-spacing: -0.28px;
     }
+  }
+}
+
+.birthDateWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.birthDateContainer {
+  background: white;
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  .dateInput {
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    color: #9370DB;
+    width: 60px;
+
+    &::placeholder {
+      color: #9370DB;
+      opacity: 0.7;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:first-child {
+      width: 80px;
+    }
+  }
+
+  .dateDivider {
+    color: #9370DB;
+    margin: 0 8px;
+    font-size: 16px;
+  }
+}
+
+.dateLabels {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20px;
+
+  span {
+    color: #9370DB;
+    font-size: 14px;
   }
 }
