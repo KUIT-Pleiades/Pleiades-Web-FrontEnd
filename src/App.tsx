@@ -9,6 +9,9 @@ import NaverLogin from "./pages/LogIn/NaverLogin";
 import FriendsTab from "./pages/FriendsTab/FriendsTab";
 import SearchUsers from "./pages/SearchUsers/SearchUsers";
 import ShowStationList from "./pages/Station/ShowStationsList/ShowStationList";
+import Error from "./pages/PageManagement/Error";
+import KakaoLogin from "./pages/LogIn/KakaoLogin";
+import AuthHandler from "./pages/PageManagement/AuthHandler";
 
 export default function App() {
   return (
@@ -16,15 +19,40 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/login" element={<LogIn />}></Route>
-        <Route path="naverlogin" element={<NaverLogin />}></Route>
-        <Route path="home" element={<Home />}></Route>
-        <Route path="rocket" element={<Rocket />}></Route>
-        <Route path="settings" element={<Settings />}></Route>
-        <Route path="station" element={<Station />}>
-          <Route index element={<ShowStationList />} />
+        <Route path="naverlogin" element={<NaverLogin />} />
+        <Route path="kakaologin" element={<KakaoLogin />} />
+        <Route
+          path="/loginfail"
+          element={
+            <Error
+              title="다시 로그인해주세요"
+              subTitle="앗! 로그인에 실패했어요"
+              destination="/login"
+              buttonDescription="로그인 화면으로 이동"
+            />
+          }
+        />
+        <Route element={<AuthHandler />}>
+          <Route path="home" element={<Home />}></Route>
+          <Route path="rocket" element={<Rocket />}></Route>
+          <Route path="settings" element={<Settings />}></Route>
+          <Route path="station" element={<Station />}>
+            <Route path="stationlist" element={<ShowStationList />} />
+          </Route>
+          <Route path="friendtab" element={<FriendsTab />}></Route>
+          <Route path="searchusers" element={<SearchUsers />}></Route>
         </Route>
-        <Route path="friendtab" element={<FriendsTab />}></Route>
-        <Route path="searchusers" element={<SearchUsers />}></Route>
+        <Route
+          path="*"
+          element={
+            <Error
+              title="경로를 확인해주세요"
+              subTitle="앗! 잘못된 접근이에요"
+              destination="/home"
+              buttonDescription="홈으로 이동"
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

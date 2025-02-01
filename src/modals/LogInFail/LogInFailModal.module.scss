@@ -1,0 +1,43 @@
+.modalBackGround {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: #00000050;
+  z-index: 2;
+}
+
+.modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: calc(50% - 20dvw);
+  left: 20%;
+  width: 60%;
+  aspect-ratio: 1.5;
+  background: #ffffff;
+  border-radius: 20px;
+}
+
+.title {
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-size: 1em;
+  color: #1b142b;
+  padding-bottom: 2em;
+}
+
+.button {
+  font-family: "Pretendard";
+  font-weight: 800;
+  font-size: 0.5em;
+  width: 15em;
+  height: 4em;
+  border-radius: 12px;
+  background: #e4d0e5;
+  color: #1b142b;
+  z-index: 2;
+}

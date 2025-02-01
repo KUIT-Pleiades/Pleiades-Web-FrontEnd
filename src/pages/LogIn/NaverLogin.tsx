@@ -2,35 +2,34 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { naverLogInRequest } from "../../functions/logInRequest";
 import { LogInState } from "../../types/types";
+import { useAuth } from "../../store/authStore";
 
 export default function NaverLogin() {
   const navigate = useNavigate();
   const url = useLocation();
-  const urlParams = new URLSearchParams(url.search);
-  const authCode = urlParams.get("code");
+  const { setToken } = useAuth();
   const [loginState, setLoginState] = useState<LogInState>("Pending");
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(url.search);
+    const authCode = urlParams.get("code");
     const handleLogin = async () => {
-      if (authCode) {
-        const tokenData = await naverLogInRequest(authCode, "Auth");
+      if (authCode !== null) {
+        const tokenData = await naverLogInRequest(authCode);
         if (tokenData == null) {
-          navigate("/login");
+          navigate("/loginfail");
         } else {
-          window.localStorage.setItem("pleiadesTokenNA", tokenData.accessToken);
-          window.localStorage.setItem(
-            "pleiadesTokenNR",
-            tokenData.refreshToken
-          );
+          setToken(tokenData.accessToken);
           setLoginState("Success");
+          navigate("/home");
         }
       } else {
         setLoginState("Fail");
-        navigate("/login");
+        navigate("/loginfail");
       }
     };
     handleLogin();
-  }, [authCode, navigate]);
+  }, [navigate, setToken, url.search]);
 
   return <div>{loginState}</div>;
 }

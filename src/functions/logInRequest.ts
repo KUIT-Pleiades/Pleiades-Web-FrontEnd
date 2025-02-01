@@ -1,24 +1,37 @@
 import { AuthToken } from "../interfaces/Interfaces";
-import { codeType } from "../types/types";
+import { setRequest } from "./manageAuth";
 
-export async function kakaoLoginRequest() {
+export function kakaoLogInRedirect() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/kakao`;
-  window.location.href = requestURL
+  window.location.href = requestURL;
+}
+
+export async function kakaoLogInRequest(emailhash: string) {
+  const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
+  const requestURL = `${BASE_URL}/auth/login/kakao/temp?hash=${emailhash}`;
+  const response = await fetch(requestURL, { method: "GET" });
+  const status = response.status;
+  if (status == 401) {
+    //다시 로그인하세요 모달
+    return null;
+  }
+  const data: AuthToken = await response.json();
+  return data;
 }
 
 export function naverLogInRedirect() {
   const CLIENT_URL: string = import.meta.env.VITE_CLIENT_URL;
   const timeStamp = new Date().getTime();
   const randInt = Math.floor(Math.random() * 900) + 100;
-  const stateString = `${timeStamp}${randInt}`;
-  const CALLBACK_URL = `${CLIENT_URL}/naverlogin`;
+  const stateString = encodeURI(`${timeStamp}${randInt}`);
+  const CALLBACK_URL = encodeURI(`${CLIENT_URL}/login/naverlogin`);
   const CLIENT_ID: string = import.meta.env.VITE_NAVER_CLIENT_ID;
   const naverLogInURL: string = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=${stateString}&redirect_uri=${CALLBACK_URL}`;
   return naverLogInURL;
 }
 
-export async function naverLogInRequest(authCode: string, codeType: codeType) {
+export async function naverLogInRequest(authCode: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/naver/callback`;
   const response = await fetch(requestURL, {
@@ -26,13 +39,26 @@ export async function naverLogInRequest(authCode: string, codeType: codeType) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ code: authCode, type: codeType }),
+    credentials: "include",
+    body: JSON.stringify({ code: authCode }),
   });
-  const data: AuthToken = await response.json(); //로그인 완료 시 유저 정보 Promise 객체 반환
-  const status = await response.status;
+  const status = response.status;
   if (status == 401) {
     //다시 로그인하세요 모달
     return null;
   }
+  const data: AuthToken = await response.json();
   return data;
+}
+
+export async function autoLogInRequest(accessToken: string) {
+  if (accessToken === null) return false;
+  const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
+  const requestURL = `${BASE_URL}/auth`;
+  const response = await fetch(
+    requestURL,
+    setRequest("GET", accessToken, null)
+  );
+
+  return response.json();
 }
