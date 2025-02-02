@@ -262,7 +262,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           type="text"
           value={character.characterName || ""}
           onChange={handleNameChange}
-          placeholder="캐릭터의 이름을 지어주세요"
+          placeholder="15자 이하로 입력"
           className={s.nameInput}
         />
         <div className={s.IdContainer}>
