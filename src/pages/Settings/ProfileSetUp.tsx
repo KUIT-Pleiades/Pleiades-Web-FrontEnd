@@ -130,7 +130,6 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         console.error("Invalid date:", error);
       }
     }
-    
   };
 
   const isValidBirthDate = () => {
@@ -150,8 +149,6 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     }
   };
 
-  
-
   return (
     <div className={s.profileSetUpContainer}>
       <div className={s.showCharacter}>
@@ -167,6 +164,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           <img
             className={s.characterSkin}
             src={character.face.skinColor.imgurl}
+            // src={`https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/${character.face.skinColor.name}.png`}
             alt="skin"
           />
           <img
