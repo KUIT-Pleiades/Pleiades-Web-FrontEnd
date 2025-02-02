@@ -12,7 +12,7 @@
 .tab {
 	display: flex;
 	gap: 24px;
-	height: 32px;
+	height: 40px;
 	margin-left: 14px;
 
 	button {
@@ -34,7 +34,7 @@
 	grid-template-columns: repeat(4, 1fr);
 	justify-content: center;
 	gap: 22px;
-	padding: 10px 20px;
+	padding: 0px 20px 10px 20px;
 	box-sizing: border-box;
 }
 

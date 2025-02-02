@@ -1,9 +1,8 @@
-import React from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { Character } from "../../../interfaces/Interfaces";
 
 
-const CharacterDisplay: React.FC = () => {
+export default function CharacterDisplay() {
   // Zustand store에서 character 상태 가져오기
   const character: Character = useCharacterStore((state) => state.character);
 
@@ -87,4 +86,3 @@ const CharacterDisplay: React.FC = () => {
   );
 };
 
-export default CharacterDisplay;
