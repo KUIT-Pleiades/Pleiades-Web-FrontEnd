@@ -16,47 +16,64 @@
     align-items: flex-end;
     padding: 0;
     margin: 0;
-    padding-bottom: 18px;
-    background-color: #FFFFFF;
-    margin-bottom: 18px;
+    padding-bottom: 1.25rem;
+    background-color: #FFF;
+    margin-bottom: 1.125rem;
 }
 .title{
     padding: 0;
     margin: 0;
 }
-.titleName, .titleWelcome{
-    font-family: "Pretendard";
-    font-size: 16px;
-    color: #1B142A;
-    font-weight: bold;
+.titleName, .titleText{
+    color: var(--gray-11, #17151C);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.02rem;
 }
 
 .searchBarContainer{
     padding-left: 2rem;
     padding-right: 2rem;
+    margin-bottom: 1.3125rem;
 }
 
 .noFriend{
-    font-family: "Pretendard";
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
-    bottom: 0;
+    //bottom: 10.67rem;
+    bottom: 5rem;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 .noFriendFirstText{
-    font-family: "Pretendard";
-    font-weight: 500;
-    font-size: 16px;
-    color: #1B142A;
+    color: var(--gray-11, #17151C);
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.02rem;
+
+    margin-bottom: 1.12rem;
 }
 .noFriendSecondText{
-    font-family: "Pretendard";
+    color: var(--gray-22, #444);
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 0.8125rem;
+    font-style: normal;
     font-weight: 400;
-    font-size: 13px;
-    color: #444444;
+    line-height: normal;
+    letter-spacing: -0.01625rem;
+
+    margin-bottom: 2.75rem;
 }
 
