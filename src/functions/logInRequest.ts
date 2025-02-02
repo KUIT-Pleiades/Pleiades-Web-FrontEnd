@@ -1,5 +1,5 @@
-import { AuthToken } from "../interfaces/Interfaces";
-import { setRequest } from "./manageAuth";
+import { AuthToken, Character } from "../interfaces/Interfaces";
+import { fetchRequest } from "./fetchRequest";
 
 export function kakaoLogInRedirect() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
@@ -33,7 +33,7 @@ export function naverLogInRedirect() {
 
 export async function naverLogInRequest(authCode: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
-  const requestURL = `${BASE_URL}/auth/login/naver/callback`;
+  const requestURL = `${BASE_URL}/auth/login/naver`;
   const response = await fetch(requestURL, {
     method: "POST",
     headers: {
@@ -51,14 +51,9 @@ export async function naverLogInRequest(authCode: string) {
   return data;
 }
 
-export async function autoLogInRequest(accessToken: string) {
-  if (accessToken === null) return false;
-  const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
-  const requestURL = `${BASE_URL}/auth`;
-  const response = await fetch(
-    requestURL,
-    setRequest("GET", accessToken, null)
-  );
-
-  return response.json();
+export async function autoLogInRequest() {
+  const response = fetchRequest<Character>("/auth", "GET", null);
+  if (response === null) {
+    return null;
+  }
 }

@@ -7,74 +7,29 @@ export interface AuthToken {
 
 /** 캐릭터 설정이 끝난 후 서버에 전송할 때, 캐릭터 값 서버에서 받아올 때 사용 */
 export interface Character {
-  characterId: string;
-  characterName: string;
-  birthDate: Date | null;
+  userId: string;
+  username: string;
+  birthDate: string;
+  backgroundName: string;
   face: {
-    skinColor: {
-      name: string; // white, yellow...
-      imgurl: string; // 이미지 주소
-    };
-    hair: {
-      name: string; // 머리 스타일, ex) 포니테일
-      imgurl: string; // 이미지 주소
-    };
-    expression: {
-      name: string; // 표정(눈, 코, 입)
-      imgurl: string;
-    };
+    skinColor: string;
+    hair: string;
+    expression: string;
   };
   outfit: {
-    top: {
-      name: string; // 상의
-      imgurl: string;
-    };
-    bottom: {
-      name: string; // 하의
-      imgurl: string;
-    };
-    shoes: {
-      name: string; // 신발
-      imgurl: string;
-    };
+    top: string;
+    bottom: string;
+    shoes: string;
   };
   item: {
-    head: {
-      name: string;
-      imgurl: string;
-    };
-    eyes: {
-      name: string;
-      imgurl: string;
-    };
-    ears: {
-      name: string;
-      imgurl: string;
-    };
-    neck: {
-      name: string;
-      imgurl: string;
-    };
-    leftWrist: {
-      name: string;
-      imgurl: string;
-    };
-    rightWrist: {
-      name: string;
-      imgurl: string;
-    };
-    leftHand: {
-      name: string;
-      imgurl: string;
-    };
-    rightHand: {
-      name: string;
-      imgurl: string;
-    };
-  };
-  background: {
-    name: string; // 배경
-    imgurl: string;
+    head: string;
+    eyes: string;
+    ears: string;
+    neck: string;
+    leftWrist: string;
+    rightWrist: string;
+    leftHand: string;
+    rightHand: string;
   };
 }
 
