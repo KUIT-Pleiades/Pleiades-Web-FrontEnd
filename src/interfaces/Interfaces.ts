@@ -214,6 +214,7 @@ export interface StationDetails {
 export interface OtherUser {
   Id: string;
   Name: string;
+  Since: number;
 }
 
 export interface Social {

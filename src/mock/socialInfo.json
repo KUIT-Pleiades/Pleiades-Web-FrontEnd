@@ -2,27 +2,57 @@
   "FriendRequests": [
     {
       "Id": "friend12",
-      "Name": "길봉태"
+      "Name": "길봉태",
+      "Since": 1706782496
     }
   ],
   "MyFriends": [
     {
       "Id": "friend1",
-      "Name": "홍길동"
+      "Name": "홍길동",
+      "Since": 1706782491
     },
     {
       "Id": "friend2",
-      "Name": "이영희"
+      "Name": "이영희",
+      "Since": 1706782492
     },
     {
       "Id": "friend3",
-      "Name": "박지민"
+      "Name": "박지민",
+      "Since": 1706782493
+    },
+    {
+      "Id": "friend4",
+      "Name": "김지민",
+      "Since": 1706782494
+    },
+    {
+      "Id": "friend5",
+      "Name": "유지민",
+      "Since": 1706782495
+    },
+    {
+      "Id": "friend6",
+      "Name": "최지민",
+      "Since": 1706782496
+    },
+    {
+      "Id": "friend7",
+      "Name": "고지민",
+      "Since": 1706782497
+    },
+    {
+      "Id": "friend8",
+      "Name": "엄지민",
+      "Since": 1706782498
     }
   ],
   "MyRequests": [
     {
-      "Id": "friend8",
-      "Name": "박창식"
+      "Id": "friend80",
+      "Name": "박창식",
+      "Since": 1706782496
     }
   ]
 }

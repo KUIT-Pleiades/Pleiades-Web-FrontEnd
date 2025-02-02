@@ -18,6 +18,7 @@
     margin: 0;
     padding-bottom: 18px;
     background-color: #FFFFFF;
+    margin-bottom: 18px;
 }
 .title{
     padding: 0;
@@ -28,6 +29,11 @@
     font-size: 16px;
     color: #1B142A;
     font-weight: bold;
+}
+
+.searchBarContainer{
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .noFriend{

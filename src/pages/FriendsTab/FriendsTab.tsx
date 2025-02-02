@@ -8,10 +8,12 @@ import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
 
 // image files
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
+import { useNavigate } from 'react-router-dom';
 
 interface Friend {
     Id: string;
     Name: string;
+    Since: number;
 }
 
 interface FriendsData {
@@ -21,6 +23,7 @@ interface FriendsData {
 }
 
 const FriendsTab: React.FC = () => {
+    const navigate = useNavigate();
     const [character, setCharacter] = useState<Character | null>(null);
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
 
@@ -65,9 +68,10 @@ const FriendsTab: React.FC = () => {
                 </div>
             </div>
             {/*================================ 검색창 부분 ==================================*/}
-            <div onClick={() => {
-                //navigate("/search");
-            }}>
+            <div
+                onClick={() => {navigate("/searchusers");}}
+                className={s.searchBarContainer}
+            >
                 <SearchUsersBar />
             </div>
             {/*================================ 친구 목록 부분 ================================*/}
