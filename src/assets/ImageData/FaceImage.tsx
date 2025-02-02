@@ -1,12 +1,28 @@
-import skin01 from "../Character/face/skin/skin01.png"
-import skin02 from "../Character/face/skin/skin02.png";
-import skin03 from "../Character/face/skin/skin03.png";
-import skin04 from "../Character/face/skin/skin04.png";
-import skin05 from "../Character/face/skin/skin05.png";
-import skin06 from "../Character/face/skin/skin06.png";
-import skin07 from "../Character/face/skin/skin07.png";
+//import skin01 from "../Character/face/skin/skin01.png";
+const skin01 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_01.png";
+const skin02 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_02.png";
+const skin03 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_03.png";
+const skin04 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_04.png";
+const skin05 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_05.png";
+const skin06 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_06.png";
+const skin07 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/skin_07.png";
+// import skin02 from "../Character/face/skin/skin02.png";
+// import skin03 from "../Character/face/skin/skin03.png";
+// import skin04 from "../Character/face/skin/skin04.png";
+// import skin05 from "../Character/face/skin/skin05.png";
+// import skin06 from "../Character/face/skin/skin06.png";
+// import skin07 from "../Character/face/skin/skin07.png";
 
-import hair01 from "../Character/face/hair/hair01.png";
+//import hair01 from "../Character/face/hair/hair01.png";
+const hair01 =
+  "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/hair_01.png";
 import hair02 from "../Character/face/hair/hair02.png";
 import hair03 from "../Character/face/hair/hair03.png";
 import hair04 from "../Character/face/hair/hair04.png";
@@ -80,7 +96,7 @@ export const FaceImages: FaceItem[] = [
   ...Object.entries(images.face).map(([key, src]) => ({
     name: key,
     src,
-    tags: "표정",
+    tags: "얼굴",
   })),
 ];
 

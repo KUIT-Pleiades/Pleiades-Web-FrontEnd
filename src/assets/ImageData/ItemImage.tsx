@@ -14,8 +14,15 @@ import acc4_01 from "../Character/item/neck/neckItem02.png";
 import acc5_01 from "../Character/item/hand/handItem01.png";
 import fas7_01 from "../Character/item/hand/bag01.png"; //왼손
 
-// const imgURL =
-//   "https://ipfs.io/ipfs/bafybeiawxfbv3rwoihqaoddfufd6j6gyly4vpeh5oedbdqj6akmyqyxi34/acc2_01.png";
+// const acc1_01 = "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/acc1_01.png";
+
+// const fas1_01 =
+//   "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/fas1_01.png";
+
+
+// const fas1_02 =
+//   "https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/fas1_02.png";
+
 
 
 // ** 세부카테고리 **

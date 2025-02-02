@@ -14,7 +14,14 @@ const CharacterDisplay: React.FC = () => {
       {/* 기본 정보 */}
       <div className="character-basic-info">
         <p>이름: {character.characterName}</p>
-        <p>나이: {character.characterAge}</p>
+        <p>
+          나이:{" "}
+          {character.birthDate
+            ? `${character.birthDate.getFullYear()}-${
+                character.birthDate.getMonth() + 1
+              }-${character.birthDate.getDate()}`
+            : ""}
+        </p>
         <p>ID: {character.characterId}</p>
       </div>
 

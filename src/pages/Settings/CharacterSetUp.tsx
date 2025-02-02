@@ -137,7 +137,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             }`}
             onClick={() => setActiveMenu("face")}
           >
-            얼굴
+            캐릭터
           </button>
           <button
             className={`${s.menuItem} ${
