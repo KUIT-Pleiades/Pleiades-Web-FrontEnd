@@ -8,3 +8,5 @@ export type BarContent = {
 export type LogInState = "Pending" | "Success" | "Fail";
 
 export type codeType = "Auth" | "Refresh";
+
+export type Methods = "GET" | "POST" | "PUT" | "DELETE";
