@@ -33,10 +33,19 @@ export interface Character {
   };
 }
 
+export interface CharacterImg {
+  userId: string;
+  profile: string;
+  character: string;
+}
+
 /** 유저정보표시 */
 export interface User {
-  onBoardingCompleted: boolean;
-  character: Character;
+  userId: string;
+  userName: string;
+  birthDate: string;
+  starBackground: string;
+  character: string;
 }
 
 /** 캐릭터 선택화면에서 선택가능한 아이템 목록 받아올 때 사용*/
