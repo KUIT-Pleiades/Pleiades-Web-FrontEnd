@@ -6,7 +6,6 @@ import starBackground05 from "../backgroundImg/starBackroundImg/backgroundImg05.
 
 export interface starBackImg{
 	name: string;
-	src: string;
 }
 
 const images = {
@@ -20,8 +19,7 @@ const images = {
 };
 
 export const starBackImages: starBackImg[] = [
-	...Object.entries(images.starBack).map(([keyof, src]) => ({
+	...Object.entries(images.starBack).map(([keyof]) => ({
 		name: keyof,
-		src,
 	})),
 ]

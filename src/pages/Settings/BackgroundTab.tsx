@@ -9,15 +9,11 @@ const BackgroundTab = () => {
   const handleImageClick = useCallback(
     (image: starBackImg) => {
       updateCharacter({
-        background: {
-          ...character.background,
-          name: image.name,
-          imgurl: image.src,
-        },
+        backgroundName: image.name,
       });
     },
-    [character.background, updateCharacter]
-  )
+    [updateCharacter]
+  );
 
   return (
     <div className={s.tabContainer}>
@@ -27,13 +23,13 @@ const BackgroundTab = () => {
             <div
               key={image.name}
               className={`${s.item} ${
-                  image.src === character.background.imgurl
+                  image.name === character.backgroundName
                   ? s.selected
                   : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <img src={image.src} alt={`${image.name} 이미지`} />
+              <img src={image.name} alt={`${image.name} 이미지`} />
             </div>
           ))}
         </div>
