@@ -8,7 +8,7 @@ export interface AuthToken {
 /** 캐릭터 설정이 끝난 후 서버에 전송할 때, 캐릭터 값 서버에서 받아올 때 사용 */
 export interface Character {
   userId: string;
-  username: string;
+  userName: string;
   birthDate: string;
   backgroundName: string;
   face: {
