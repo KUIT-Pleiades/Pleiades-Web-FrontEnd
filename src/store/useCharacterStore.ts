@@ -19,7 +19,7 @@ interface CharacterStore {
 const initialCharacter: Character = {
   // 초기 캐릭터 상태 -> 디자이너, pm 과 상의
   userId: "",
-  username: "",
+  userName: "",
   birthDate: "",
   backgroundName: "background_01",
   face: {

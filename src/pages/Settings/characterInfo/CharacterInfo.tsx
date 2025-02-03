@@ -12,7 +12,7 @@ export default function CharacterDisplay() {
 
       {/* 기본 정보 */}
       <div className="character-basic-info">
-        <p>이름: {character.username}</p>
+        <p>이름: {character.userName}</p>
         <p>
           나이:{character.birthDate}
         </p>
