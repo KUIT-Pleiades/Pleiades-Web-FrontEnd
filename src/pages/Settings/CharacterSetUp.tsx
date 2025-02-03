@@ -7,6 +7,8 @@ import { useCharacterStore } from "../../store/useCharacterStore";
 import OutFitTab from "./characterSetUpTab/OutFitTab";
 import ItemTab from "./characterSetUpTab/ItemTab";
 
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+
 interface CharacterSetUpProps {
   onNext: () => void;
 }
@@ -17,9 +19,6 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const { character, resetCharacter } = useCharacterStore();
 
   // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
-
-  //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
-  // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
   return (
     <div className={s.characterSetUpContainer}>
@@ -32,38 +31,38 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={character.face.skinColor}
+            src={`${IMG_BASE_URL}${character.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={character.face.expression}
+            src={`${IMG_BASE_URL}${character.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={character.face.hair}
+            src={`${IMG_BASE_URL}${character.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={character.outfit.top}
+            src={`${IMG_BASE_URL}${character.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={character.outfit.bottom}
+            src={`${IMG_BASE_URL}${character.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={character.outfit.shoes}
+            src={`${IMG_BASE_URL}${character.outfit.shoes}.png`}
             alt="shoes"
           />
           {character.item.head && (
             <img
               className={s.characterItem}
-              src={character.item.head}
+              src={`${IMG_BASE_URL}${character.item.head}.png`}
               alt="headItem"
             />
           )}

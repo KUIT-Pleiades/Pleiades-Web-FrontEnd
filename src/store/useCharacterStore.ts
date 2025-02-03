@@ -23,14 +23,14 @@ const initialCharacter: Character = {
   birthDate: "",
   backgroundName: "background_01",
   face: {
-    skinColor: "skin01",
-    hair: "hair01",
-    expression: "face01",
+    skinColor: "skin_01",
+    hair: "hair_01",
+    expression: "face_01",
   },
   outfit: {
-    top: "top01",
-    bottom: "bottom01",
-    shoes: "shoes01",
+    top: "top_01",
+    bottom: "bottom_01",
+    shoes: "shoes_01",
   },
   item: {
     head: "",
