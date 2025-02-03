@@ -21,7 +21,7 @@ p {
 .showCharacter {
   position: absolute;
   width: 100%;
-  height: 55%;
+  height: 40%;
   font-family: "Pretendard", sans-serif;
   display: flex;
   flex-direction: column;
@@ -31,23 +31,23 @@ p {
 
 .previousBtn {
   position: absolute;
-  top: 5%;
+  top: 7.5%;
   left: 5%;
   width: 62px;
-    height: 35px;
+  height: 35px;
   flex-shrink: 0;
   border-radius: 19px;
   background: #C0B9DB;
   color: #ffffff;
   z-index: 2;
   font-family: "Pretendard";
-    font-size: 14px;
-    font-weight: bold;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .pHeader {
   position: absolute;
-  top: 7%;
+  top: 10%;
   font-size: 16px;
   font-weight: 700;
   line-height: normal;
@@ -57,7 +57,7 @@ p {
 
 .nextBtn {
   position: absolute;
-  top: 5.5%;
+  top: 7.5%;
   right: 5%;
   width: 62px;
   height: 35px;
@@ -74,7 +74,7 @@ p {
 
 .pDescription {
   position: absolute;
-  top: 19%;
+  top: 23%;
   color: #444;
   font-size: 16px;
   font-style: normal;
@@ -141,7 +141,7 @@ p {
   position: absolute;
   width: 100%;
   bottom: 0px;
-  height: 50%;
+  height: 60%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -152,8 +152,8 @@ p {
   position: absolute;
   width: 191px;
   padding: 9.5px;
-  margin-top: 59.5px;
-  height: 23px;
+  top: 11%;
+  height: 5%;
   border: none;
   border-bottom: 2px solid #C0B9DB;
   outline: none;
@@ -171,7 +171,7 @@ p {
 
   &::placeholder {
     color: #AFAFAF;
-    
+
     font-size: 14px;
     text-align: center;
   }
@@ -180,7 +180,7 @@ p {
 
 .IdContainer {
   position: absolute;
-  margin-top: 131px;
+  top: 25%;
   padding: 0 14px;
   display: flex;
   flex-direction: column;
@@ -219,6 +219,12 @@ p {
     line-height: normal;
     letter-spacing: -0.32px;
 
+    &:focus {
+      outline: none; // 기본 포커스 테두리 제거
+      border: 1px solid #9370DB; // 포커스 시 보라색 테두리
+
+    }
+
     &::placeholder {
       color: #E1E1E1;
       font-family: Pretendard;
@@ -229,6 +235,8 @@ p {
       letter-spacing: -0.28px;
     }
   }
+
+
 
 }
 
@@ -283,7 +291,7 @@ p {
 
 .ageContainer {
   position: absolute;
-  margin-top: 219px;
+  top: 45%;
   padding: 0 14px;
   display: flex;
   flex-direction: column;
@@ -304,36 +312,7 @@ p {
     letter-spacing: -0.22px;
   }
 
-  .ageInput {
-    margin: 23px 0px;
-    border-radius: 15px;
-    border: 1px solid #BEAADD;
-    height: 58px;
-    background: #FFF;
-    width: 100%;
-    box-sizing: border-box;
-    letter-spacing: -0.32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--Gray4, #858585);
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding-right: 10px;
 
-    &::placeholder {
-      color: #E1E1E1;
-      font-family: Pretendard;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      letter-spacing: -0.28px;
-    }
-  }
 
   input {
     border: none;
@@ -341,34 +320,106 @@ p {
     font-size: 16px;
     color: #9370DB;
     width: 20px;
-    
+
     text-align: right;
     font-family: Pretendard;
 
     &:focus {
-        outline: none; // 기본 포커스 테두리 제거
-        border: 1px solid #9370DB; // 포커스 시 보라색 테두리
-        border-radius: 5px;
+      outline: none; // 기본 포커스 테두리 제거
+      border: 1px solid #9370DB; // 포커스 시 보라색 테두리
+      border-radius: 5px;
     }
   }
 
-    .yearInput {
-      width: 40px;
+}
+
+:global {
+  .react-calendar {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: "Pretendard", sans-serif;
+
+    button {
+      margin: 0;
+      border: 0;
+      outline: none;
     }
 
-  div{
-    width: 12px;
+    &__navigation {
+      display: flex;
+      height: 44px;
+      margin-bottom: 1em;
+
+      button {
+        min-width: 44px;
+        background: none;
+        color: #402C44;
+        font-family: "Pretendard", sans-serif;
+
+        &:disabled {
+          background-color: #f0f0f0;
+        }
+
+        &:enabled:hover,
+        &:enabled:focus {
+          background-color: #C0B9DB;
+          color: white;
+        }
+      }
+    }
+
+    &__month-view__weekdays {
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.75em;
+
+      abbr {
+        text-decoration: none;
+        color: #402C44;
+      }
+    }
+
+    &__tile {
+      max-width: 100%;
+      padding: 10px 6.6667px;
+      background: none;
+      text-align: center;
+      line-height: 16px;
+      font-size: 14px;
+      color: #402C44;
+
+      &:enabled:hover,
+      &:enabled:focus {
+        background-color: #C0B9DB;
+        color: white;
+      }
+
+      &--now {
+        background: #BEAADD;
+        color: white;
+      }
+
+      &--active {
+        background: #402C44 !important;
+        color: white !important;
+
+        &:enabled:hover,
+        &:enabled:focus {
+          background: #8B6193 !important;
+        }
+      }
+    }
+
+    &__month-view__days__day {
+      &--weekend {
+        color: #8B6193;
+      }
+
+      &--neighboringMonth {
+        color: #C0B9DB;
+      }
+    }
   }
-
-  .divider {
-    color: var(--gray-7, #E1E1E1);
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: 0 20px 0 40px;
-  }
-
-
 }

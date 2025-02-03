@@ -1,7 +1,11 @@
+import Calendar from "react-calendar";
+//import "react-calendar/dist/Calendar.css";
 import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
+
+
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -23,11 +27,11 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const [buttonText, setButtonText] = useState<string>("중복확인");
   const [idCheckMessage, setIdCheckMessage] = useState<string>("");
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
-  // const [birthDate, setBirthDate] = useState<BirthDateType>({
-  //   year: "",
-  //   month: "",
-  //   day: "",
-  // });
+
+  type DatePiece = Date | null;
+  type SelectedDate = DatePiece | [DatePiece, DatePiece];
+
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
 
   const isFormComplete = () => {
     return (
@@ -76,73 +80,6 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     }
     setIsIdChecked(true);
   };
-
-  //   // 초기 상태
-  // isValidId = false (버튼 비활성화)
-  // idExists = false (중복확인 안 된 상태)
-  // buttonText = "중복확인"
-
-  // // ID 입력이 유효할 때
-  // isValidId = true (버튼 활성화)
-  // idExists = false (아직 중복확인 안 함)
-  // buttonText = "중복확인"
-
-  // // 중복확인 버튼 클릭 후
-  // isValidId = true (버튼 활성화 유지)
-  // idExists = true (중복확인 완료)
-  // buttonText = "사용가능"
-
-  // 생년월일 입력 핸들러
-  // const handleBirthDateChange = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   type: keyof BirthDateType
-  // ) => {
-  //   let value = e.target.value.replace(/[^0-9]/g, "");
-
-  //   // 길이 제한
-  //   if (type === "year" && value.length > 4) {
-  //     value = value.slice(0, 4);
-  //   }
-  //   if ((type === "month" || type === "day") && value.length > 2) {
-  //     value = value.slice(0, 2);
-  //   }
-
-  //   // 먼저 입력값 업데이트
-  //   setBirthDate((prev) => ({
-  //     ...prev,
-  //     [type]: value,
-  //   }));
-
-  //   const newBirthDate = {
-  //     ...birthDate,
-  //     [type]: value,
-  //   };
-
-  //   if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
-  //     try {
-  //       const birthDateTime = new Date(
-  //         Number(newBirthDate.year),
-  //         Number(newBirthDate.month) - 1,
-  //         Number(newBirthDate.day)
-  //       );
-
-  //       if (!isNaN(birthDateTime.getTime())) {
-  //         updateCharacter({ birthDate: birthDateTime });
-  //       }
-  //     } catch (error) {
-  //       console.error("Invalid date:", error);
-  //     }
-  //   }
-  // };
-
-  // const isValidBirthDate = () => {
-  //   const date = new Date(
-  //     Number(birthDate.year),
-  //     Number(birthDate.month) - 1,
-  //     Number(birthDate.day)
-  //   );
-  //   return !isNaN(date.getTime());
-  // };
 
   const handleNext = () => {
     if (isFormComplete()) {
@@ -293,29 +230,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         </div>
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
-          {/* <div className={s.ageInput}>
-            <input
-              type="text"
-              value={birthDate.year}
-              onChange={(e) => handleBirthDateChange(e, "year")}
-              className={s.yearInput}
-            />
-            <div>년</div>
-            <div className={s.divider}>/</div>
-            <input
-              type="text"
-              value={birthDate.month}
-              onChange={(e) => handleBirthDateChange(e, "month")}
-            />
-            <div>월</div>
-            <div className={s.divider}>/</div>
-            <input
-              type="text"
-              value={birthDate.day}
-              onChange={(e) => handleBirthDateChange(e, "day")}
-            />
-            <div>일</div>
-          </div> */}
+          <Calendar onChange={setSelectedDate} value={selectedDate} />
         </div>
       </div>
     </div>
