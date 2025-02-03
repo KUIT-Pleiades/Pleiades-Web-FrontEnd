@@ -21,10 +21,7 @@ const FaceTab = () => {
           updateCharacter({
             face: {
               ...character.face,
-              skinColor: {
-                name: image.name,
-                imgurl: image.src,
-              },
+              skinColor: image.name,
             },
           });
           break;
@@ -32,10 +29,7 @@ const FaceTab = () => {
           updateCharacter({
             face: {
               ...character.face,
-              hair: {
-                name: image.name,
-                imgurl: image.src,
-              },
+              hair: image.name,
             },
           });
           break;
@@ -43,10 +37,7 @@ const FaceTab = () => {
           updateCharacter({
             face: {
               ...character.face,
-              expression: {
-                name: image.name,
-                imgurl: image.src,
-              },
+              expression: image.name,
             },
           });
           break;
@@ -90,11 +81,11 @@ const FaceTab = () => {
               key={image.name}
               className={`${s.item} ${
                 (image.tags === "피부" &&
-                  image.src === character.face.skinColor.imgurl) ||
+                  image.name === character.face.skinColor) ||
                 (image.tags === "머리" &&
-                  image.src === character.face.hair.imgurl) ||
+                  image.name === character.face.hair) ||
                 (image.tags === "얼굴" &&
-                  image.src === character.face.expression.imgurl)
+                  image.name === character.face.expression)
                   ? s.selected
                   : ""
               }`}

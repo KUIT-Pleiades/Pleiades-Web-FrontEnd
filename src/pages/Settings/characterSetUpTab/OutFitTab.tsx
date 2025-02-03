@@ -21,10 +21,7 @@ const OutFitTab = () => {
 					updateCharacter({
 						outfit: {
 							...character.outfit,
-							top: {
-								name: image.name,
-								imgurl: image.src,
-							},
+							top:  image.name,
 						},
 					});
 					break;
@@ -32,10 +29,8 @@ const OutFitTab = () => {
 					updateCharacter({
 						outfit: {
 							...character.outfit,
-							bottom: {
-								name: image.name,
-								imgurl: image.src,
-							},
+							bottom: image.name,
+								
 						},
 					});
 					break;
@@ -43,10 +38,7 @@ const OutFitTab = () => {
 					updateCharacter({
 						outfit: {
 							...character.outfit,
-							shoes: {
-								name: image.name,
-								imgurl: image.src,
-							},
+							shoes: image.name,
 						},
 					});
 					break;
@@ -90,11 +82,10 @@ const OutFitTab = () => {
               key={image.name}
               className={`${s.item} ${
                 (image.tags === "상의" &&
-                  image.src === character.outfit.top.imgurl) ||
+                  image.name === character.outfit.top) ||
                 (image.tags === "하의" &&
-                  image.src === character.outfit.bottom.imgurl) ||
-                (image.tags === "신발" &&
-                  image.src === character.outfit.shoes.imgurl)
+                  image.name === character.outfit.bottom) ||
+                (image.tags === "신발" && image.name === character.outfit.shoes)
                   ? s.selected
                   : ""
               }`}

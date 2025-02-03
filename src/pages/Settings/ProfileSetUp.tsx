@@ -8,11 +8,11 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
-interface BirthDateType {
-  year: string;
-  month: string;
-  day: string;
-}
+// interface BirthDateType {
+//   year: string;
+//   month: string;
+//   day: string;
+// }
 
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { character, updateCharacter } = useCharacterStore();
@@ -21,26 +21,27 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const [buttonText, setButtonText] = useState<string>("중복확인");
   const [idCheckMessage, setIdCheckMessage] = useState<string>("");
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
-  const [birthDate, setBirthDate] = useState<BirthDateType>({
-    year: "",
-    month: "",
-    day: "",
-  });
+  // const [birthDate, setBirthDate] = useState<BirthDateType>({
+  //   year: "",
+  //   month: "",
+  //   day: "",
+  // });
 
   const isFormComplete = () => {
     return (
-      character.characterName && // 이름 입력 확인
-      character.characterId && // ID 입력 확인
-      idExists && // ID 중복 확인 완료
-      birthDate.year && // 생년 입력 확인
-      birthDate.month && // 월 입력 확인
-      birthDate.day && // 일 입력 확인
-      isValidBirthDate() // 생년월일 유효성 확인
+      character.username && // 이름 입력 확인
+      character.userId && // ID 입력 확인
+      idExists
+      // && // ID 중복 확인 완료
+      // birthDate.year && // 생년 입력 확인
+      // birthDate.month && // 월 입력 확인
+      // birthDate.day && // 일 입력 확인
+      // isValidBirthDate() // 생년월일 유효성 확인
     );
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCharacter({ characterName: e.target.value });
+    updateCharacter({ username: e.target.value });
   };
 
   // ID 유효성 검사 함수
@@ -52,7 +53,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newId = e.target.value;
-    updateCharacter({ characterId: newId });
+    updateCharacter({ userId: newId });
     setIsValidId(validateId(newId));
     // ID가 변경되면 중복확인 상태 초기화
     setIdExists(false);
@@ -90,56 +91,56 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   // buttonText = "사용가능"
 
   // 생년월일 입력 핸들러
-  const handleBirthDateChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: keyof BirthDateType
-  ) => {
-    let value = e.target.value.replace(/[^0-9]/g, "");
+  // const handleBirthDateChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   type: keyof BirthDateType
+  // ) => {
+  //   let value = e.target.value.replace(/[^0-9]/g, "");
 
-    // 길이 제한
-    if (type === "year" && value.length > 4) {
-      value = value.slice(0, 4);
-    }
-    if ((type === "month" || type === "day") && value.length > 2) {
-      value = value.slice(0, 2);
-    }
+  //   // 길이 제한
+  //   if (type === "year" && value.length > 4) {
+  //     value = value.slice(0, 4);
+  //   }
+  //   if ((type === "month" || type === "day") && value.length > 2) {
+  //     value = value.slice(0, 2);
+  //   }
 
-    // 먼저 입력값 업데이트
-    setBirthDate((prev) => ({
-      ...prev,
-      [type]: value,
-    }));
+  //   // 먼저 입력값 업데이트
+  //   setBirthDate((prev) => ({
+  //     ...prev,
+  //     [type]: value,
+  //   }));
 
-    const newBirthDate = {
-      ...birthDate,
-      [type]: value,
-    };
+  //   const newBirthDate = {
+  //     ...birthDate,
+  //     [type]: value,
+  //   };
 
-    if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
-      try {
-        const birthDateTime = new Date(
-          Number(newBirthDate.year),
-          Number(newBirthDate.month) - 1,
-          Number(newBirthDate.day)
-        );
+  //   if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
+  //     try {
+  //       const birthDateTime = new Date(
+  //         Number(newBirthDate.year),
+  //         Number(newBirthDate.month) - 1,
+  //         Number(newBirthDate.day)
+  //       );
 
-        if (!isNaN(birthDateTime.getTime())) {
-          updateCharacter({ birthDate: birthDateTime });
-        }
-      } catch (error) {
-        console.error("Invalid date:", error);
-      }
-    }
-  };
+  //       if (!isNaN(birthDateTime.getTime())) {
+  //         updateCharacter({ birthDate: birthDateTime });
+  //       }
+  //     } catch (error) {
+  //       console.error("Invalid date:", error);
+  //     }
+  //   }
+  // };
 
-  const isValidBirthDate = () => {
-    const date = new Date(
-      Number(birthDate.year),
-      Number(birthDate.month) - 1,
-      Number(birthDate.day)
-    );
-    return !isNaN(date.getTime());
-  };
+  // const isValidBirthDate = () => {
+  //   const date = new Date(
+  //     Number(birthDate.year),
+  //     Number(birthDate.month) - 1,
+  //     Number(birthDate.day)
+  //   );
+  //   return !isNaN(date.getTime());
+  // };
 
   const handleNext = () => {
     if (isFormComplete()) {
@@ -163,88 +164,87 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={character.face.skinColor.imgurl}
-            // src={`https://gateway.pinata.cloud/ipfs/bafybeigoq2wasnxjcmt7ricrmrp6jju5mui5rcigqj4o3sv6k23ch7rzhi/${character.face.skinColor.name}.png`}
+            src={character.face.skinColor}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={character.face.expression.imgurl}
+            src={character.face.expression}
             alt="expression"
           />
           <img
             className={s.characterHair}
-            src={character.face.hair.imgurl}
+            src={character.face.hair}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={character.outfit.top.imgurl}
+            src={character.outfit.top}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={character.outfit.bottom.imgurl}
+            src={character.outfit.bottom}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={character.outfit.shoes.imgurl}
+            src={character.outfit.shoes}
             alt="shoes"
           />
-          {character.item.head.imgurl && (
+          {character.item.head && (
             <img
               className={s.characterItem}
-              src={character.item.head.imgurl}
+              src={character.item.head}
               alt="headItem"
             />
           )}
-          {character.item.eyes.imgurl && (
+          {character.item.eyes && (
             <img
               className={s.characterItem}
-              src={character.item.eyes.imgurl}
+              src={character.item.eyes}
               alt="faceItem"
             />
           )}
-          {character.item.ears.imgurl && (
+          {character.item.ears && (
             <img
               className={s.characterItem}
-              src={character.item.ears.imgurl}
+              src={character.item.ears}
               alt="earItem"
             />
           )}
-          {character.item.neck.imgurl && (
+          {character.item.neck && (
             <img
               className={s.characterItem}
-              src={character.item.neck.imgurl}
+              src={character.item.neck}
               alt="neckItem"
             />
           )}
-          {character.item.leftWrist.name && (
+          {character.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={character.item.leftWrist.imgurl}
+              src={character.item.leftWrist}
               alt="handItem"
             />
           )}
-          {character.item.rightWrist.name && (
+          {character.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={character.item.rightWrist.imgurl}
+              src={character.item.rightWrist}
               alt="handItem"
             />
           )}
-          {character.item.leftHand.name && (
+          {character.item.leftHand && (
             <img
               className={s.characterItem}
-              src={character.item.leftHand.imgurl}
+              src={character.item.leftHand}
               alt="handItem"
             />
           )}
-          {character.item.rightHand.name && (
+          {character.item.rightHand && (
             <img
               className={s.characterItem}
-              src={character.item.rightHand.imgurl}
+              src={character.item.rightHand}
               alt="handItem"
             />
           )}
@@ -258,7 +258,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       <div className={s.inputContainer}>
         <input
           type="text"
-          value={character.characterName || ""}
+          value={character.username || ""}
           onChange={handleNameChange}
           placeholder="15자 이하로 입력"
           className={s.nameInput}
@@ -267,7 +267,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           <div className={s.id}>ID</div>
           <input
             type="text"
-            value={character.characterId || ""}
+            value={character.userId || ""}
             onChange={handleIdChange}
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
@@ -291,7 +291,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         </div>
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
-          <div className={s.ageInput}>
+          {/* <div className={s.ageInput}>
             <input
               type="text"
               value={birthDate.year}
@@ -313,7 +313,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
               onChange={(e) => handleBirthDateChange(e, "day")}
             />
             <div>일</div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

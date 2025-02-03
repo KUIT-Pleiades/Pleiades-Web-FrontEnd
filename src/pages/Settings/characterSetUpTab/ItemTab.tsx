@@ -48,8 +48,8 @@ const ItemTab = () => {
       const itemKey = itemMap[image.code];
       if (!itemKey) return false;
       return (
-        image.src ===
-        character.item[itemKey as keyof typeof character.item].imgurl
+        image.name ===
+        character.item[itemKey as keyof typeof character.item]
       );
     },
     [character]
@@ -68,7 +68,6 @@ const ItemTab = () => {
           ...character.item,
           [itemKey]: {
             name: isEquipped ? "" : image.name,
-            imgurl: isEquipped ? "" : image.src,
           },
         },
       });
