@@ -3,6 +3,7 @@ import { starBackImages, starBackImg } from "../../assets/ImageData/BackgroundIm
 import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./backgroundTab.module.scss"
 
+
 const BackgroundTab = () => {
   const { character, updateCharacter } = useCharacterStore();
 
@@ -23,13 +24,14 @@ const BackgroundTab = () => {
             <div
               key={image.name}
               className={`${s.item} ${
-                  image.name === character.backgroundName
-                  ? s.selected
-                  : ""
+                image.name === character.backgroundName ? s.selected : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <img src={image.name} alt={`${image.name} 이미지`} />
+              <img
+                src={image.src}
+                alt={`${image.name} 이미지`}
+              />
             </div>
           ))}
         </div>

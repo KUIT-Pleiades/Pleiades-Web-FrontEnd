@@ -9,6 +9,8 @@ interface BackgroundSetUpProps {
   onPrev: () => void;
 }
 
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+
 const BackgroundSetUp = ({
   onNext,
   onPrev,
@@ -17,7 +19,7 @@ const BackgroundSetUp = ({
   const { character } = useCharacterStore();
 
   const backgroundStyle = {
-    backgroundImage: `url(${character.backgroundName})`,
+    backgroundImage: `url(${IMG_BASE_URL}${character.backgroundName}.png)`,
     overflow: "hidden",
   };
 
@@ -41,87 +43,87 @@ const BackgroundSetUp = ({
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={character.face.skinColor}
+            src={`${IMG_BASE_URL}${character.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={character.face.expression}
+            src={`${IMG_BASE_URL}${character.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={character.face.hair}
+            src={`${IMG_BASE_URL}${character.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={character.outfit.top}
+            src={`${IMG_BASE_URL}${character.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={character.outfit.bottom}
+            src={`${IMG_BASE_URL}${character.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={character.outfit.shoes}
+            src={`${IMG_BASE_URL}${character.outfit.shoes}.png`}
             alt="shoes"
           />
           {character.item.head && (
             <img
               className={s.characterItem}
-              src={character.item.head}
+              src={`${IMG_BASE_URL}${character.item.head}.png`}
               alt="headItem"
             />
           )}
-          {character.item.eyes&& (
+          {character.item.eyes && (
             <img
               className={s.characterItem}
-              src={character.item.eyes}
+              src={`${IMG_BASE_URL}${character.item.eyes}.png`}
               alt="faceItem"
             />
           )}
           {character.item.ears && (
             <img
               className={s.characterItem}
-              src={character.item.ears}
+              src={`${IMG_BASE_URL}${character.item.ears}.png`}
               alt="earItem"
             />
           )}
           {character.item.neck && (
             <img
               className={s.characterItem}
-              src={character.item.neck}
+              src={`${IMG_BASE_URL}${character.item.neck}.png`}
               alt="neckItem"
             />
           )}
           {character.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={character.item.leftWrist}
+              src={`${IMG_BASE_URL}${character.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
           {character.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={character.item.rightWrist}
+              src={`${IMG_BASE_URL}${character.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
           {character.item.leftHand && (
             <img
               className={s.characterItem}
-              src={character.item.leftHand}
+              src={`${IMG_BASE_URL}${character.item.leftHand}.png`}
               alt="handItem"
             />
           )}
           {character.item.rightHand && (
             <img
               className={s.characterItem}
-              src={character.item.rightHand}
+              src={`${IMG_BASE_URL}${character.item.rightHand}.png`}
               alt="handItem"
             />
           )}
