@@ -40,7 +40,7 @@ const ShowStationList: React.FC = () => {
     <div className={s.container}>
       <div className={s.headContainer}>
         <div className={s.title}>
-          <div className={s.titleText}>{character?.characterName}님 어디로 떠나볼까요?</div>
+          <div className={s.titleText}>{character?.userName}님 어디로 떠나볼까요?</div>
           <div className={s.titleButtons}>
             <button className={s.searchStationButton}>
               <img src={searchIcon} alt="searchIcon" />
