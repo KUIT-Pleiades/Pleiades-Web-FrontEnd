@@ -69,49 +69,49 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {character.item.eyes && (
             <img
               className={s.characterItem}
-              src={character.item.eyes}
+              src={`${IMG_BASE_URL}${character.item.eyes}.png`}
               alt="faceItem"
             />
           )}
           {character.item.ears && (
             <img
               className={s.characterItem}
-              src={character.item.ears}
+              src={`${IMG_BASE_URL}${character.item.ears}.png`}
               alt="earItem"
             />
           )}
           {character.item.neck && (
             <img
               className={s.characterItem}
-              src={character.item.neck}
+              src={`${IMG_BASE_URL}${character.item.neck}.png`}
               alt="neckItem"
             />
           )}
           {character.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={character.item.leftWrist}
+              src={`${IMG_BASE_URL}${character.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
           {character.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={character.item.rightWrist}
+              src={`${IMG_BASE_URL}${character.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
           {character.item.leftHand && (
             <img
               className={s.characterItem}
-              src={character.item.leftHand}
+              src={`${IMG_BASE_URL}${character.item.leftHand}.png`}
               alt="handItem"
             />
           )}
           {character.item.rightHand && (
             <img
               className={s.characterItem}
-              src={character.item.rightHand}
+              src={`${IMG_BASE_URL}${character.item.rightHand}.png`}
               alt="handItem"
             />
           )}

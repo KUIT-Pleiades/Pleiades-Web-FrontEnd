@@ -48,8 +48,7 @@ const ItemTab = () => {
       const itemKey = itemMap[image.code];
       if (!itemKey) return false;
       return (
-        image.name ===
-        character.item[itemKey as keyof typeof character.item]
+        image.name === character.item[itemKey as keyof typeof character.item]
       );
     },
     [character]
@@ -66,9 +65,7 @@ const ItemTab = () => {
       updateCharacter({
         item: {
           ...character.item,
-          [itemKey]: {
-            name: isEquipped ? "" : image.name,
-          },
+          [itemKey]: isEquipped ? "" : image.name, // 객체 대신 직접 문자열 저장
         },
       });
     },
