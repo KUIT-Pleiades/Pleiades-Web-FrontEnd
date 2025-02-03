@@ -29,7 +29,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const isFormComplete = () => {
     return (
-      character.username && // 이름 입력 확인
+      character.userName && // 이름 입력 확인
       character.userId && // ID 입력 확인
       idExists
       // && // ID 중복 확인 완료
@@ -41,7 +41,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCharacter({ username: e.target.value });
+    updateCharacter({ userName: e.target.value });
   };
 
   // ID 유효성 검사 함수
@@ -258,7 +258,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       <div className={s.inputContainer}>
         <input
           type="text"
-          value={character.username || ""}
+          value={character.userName || ""}
           onChange={handleNameChange}
           placeholder="15자 이하로 입력"
           className={s.nameInput}
