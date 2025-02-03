@@ -48,6 +48,34 @@ export interface User {
   character: string;
 }
 
+export interface UserInfo {
+  userId: string;
+  userName: string;
+  birthDate: string;
+  starBackground: string;
+  character: string;
+  face: {
+    skinColor: string;
+    hair: string;
+    expression: string;
+  };
+  outfit: {
+    top: string;
+    bottom: string;
+    shoes: string;
+  };
+  item: {
+    head: string;
+    eyes: string;
+    ears: string;
+    neck: string;
+    leftWrist: string;
+    rightWrist: string;
+    leftHand: string;
+    rightHand: string;
+  };
+}
+
 /** 캐릭터 선택화면에서 선택가능한 아이템 목록 받아올 때 사용*/
 export interface AvailableItems {
   faces: {
