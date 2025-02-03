@@ -12,7 +12,7 @@
 .tab {
 	display: flex;
 	gap: 24px;
-	height: 32px;
+	height: 35px;
 	margin-left: 14px;
 
 	button {
@@ -25,6 +25,7 @@
 
 		&.active {
 			color: #444;
+			font-weight: bold;
 		}
 	}
 }
@@ -34,26 +35,27 @@
 	grid-template-columns: repeat(4, 1fr);
 	justify-content: center;
 	gap: 22px;
-	padding: 10px 20px;
+	padding: 5px 20px 10px 20px;
 	box-sizing: border-box;
 }
 
 .item {
 	aspect-ratio: 1;
-	border-radius: 12px;
+	border-radius: 5px;
 	background: white;
 	cursor: pointer;
-	border: 1px solid #E1E1E1;
+	
 	padding: 8px;
 	overflow: hidden;
+	box-shadow : 0px 0px 4px 0.5px rgba(41, 34, 41, 0.20);
 
-	&:hover {
-		border-color: #ccc;
+	// &:hover {
+	// 	border-color: #ccc;
 
-	}
+	// }
 
 	&.selected {
-		box-shadow: 0 0 8px 2px rgba(139, 92, 246, 0.5);
+		box-shadow: 0 0 4px 1px rgba(139, 92, 246, 0.5);
 
 	}
 

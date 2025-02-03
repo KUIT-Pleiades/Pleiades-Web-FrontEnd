@@ -18,6 +18,7 @@ export default function Home() {
 
   return (
     <div>
+      {userData?.birthDate}
       <Outlet />
       <BottomBar />
     </div>
