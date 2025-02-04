@@ -13,6 +13,7 @@ import AuthHandler from "./pages/PageManagement/AuthHandler";
 import CharacterSettings from "./pages/CharacterSettings/CharacterSettings";
 import Setting from "./pages/Setting/Setting";
 import Market from "./pages/Market/Market";
+import MyStar from "./pages/Home/MyStar";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
         />
         <Route element={<AuthHandler />}>
           <Route path="home" element={<Home />}>
+            <Route path="mystar" element={<MyStar />}></Route>
             <Route
               path="charactersetting"
               element={<CharacterSettings />}

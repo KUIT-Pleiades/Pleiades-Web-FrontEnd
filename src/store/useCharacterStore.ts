@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Character } from "../interfaces/Interfaces";
+import { UserInfo } from "../interfaces/Interfaces";
 
 // import skin_01 from "../assets/Character/face/skin/skin01.png";
 // import hair_01 from "../assets/Character/face/hair/hair01.png";
@@ -10,17 +10,19 @@ import { Character } from "../interfaces/Interfaces";
 // import background_01 from "../assets/backgroundImg/starBackroundImg/backgroundImg01.png"
 
 interface CharacterStore {
-  character: Character; // 캐릭터 상태
-  updateCharacter: (updates: Partial<Character>) => void; // 캐릭터 업데이트 함수
-  resetCharacter: () => void; // 캐릭터 초기화 함수
+  userInfo: UserInfo; // 캐릭터 상태
+  updateUserInfo: (updates: Partial<UserInfo>) => void; // 캐릭터 업데이트 함수
+  resetUserInfo: () => void; // 캐릭터 초기화 함수
 }
 
-const initialCharacter: Character = {
+const initialUserInfo: UserInfo = {
   // 초기 캐릭터 상태 -> 디자이너, pm 과 상의
   userId: "",
   userName: "",
   birthDate: "",
-  backgroundName: "background_01",
+  starBackground: "",
+  character: "",
+  profile: "",
   face: {
     skinColor: "skin_01",
     hair: "hair_01",
@@ -45,10 +47,10 @@ const initialCharacter: Character = {
 
 export const useCharacterStore = create<CharacterStore>((set) => ({
   // 캐릭터 store 생성
-  character: initialCharacter,
-  updateCharacter: (updates) =>
+  userInfo: initialUserInfo,
+  updateUserInfo: (updates) =>
     set((state) => ({
-      character: { ...state.character, ...updates },
+      userInfo: { ...state.userInfo, ...updates },
     })),
-  resetCharacter: () => set({ character: initialCharacter }),
+  resetUserInfo: () => set({ userInfo: initialUserInfo }),
 }));

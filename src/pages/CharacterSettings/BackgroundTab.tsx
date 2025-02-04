@@ -1,43 +1,44 @@
 import { useCallback } from "react";
-import { starBackImages, starBackImg } from "../../assets/ImageData/BackgroundImage";
+import {
+  starBackImages,
+  starBackImg,
+} from "../../assets/ImageData/BackgroundImage";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import s from "./backgroundTab.module.scss"
-
+import s from "./backgroundTab.module.scss";
 
 const BackgroundTab = () => {
-  const { character, updateCharacter } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
 
   const handleImageClick = useCallback(
     (image: starBackImg) => {
-      updateCharacter({
-        backgroundName: image.name,
+      updateUserInfo({
+        starBackground: image.starBackground,
       });
     },
-    [updateCharacter]
+    [updateUserInfo]
   );
 
   return (
     <div className={s.tabContainer}>
       <div className={s.tabContent}>
         <div className={s.gridItems}>
-          {starBackImages.map((image) => (
+          {starBackImages.map((image, idx) => (
             <div
-              key={image.name}
+              key={idx}
               className={`${s.item} ${
-                image.name === character.backgroundName ? s.selected : ""
+                image.starBackground === userInfo.starBackground
+                  ? s.selected
+                  : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
-              <img
-                src={image.src}
-                alt={`${image.name} 이미지`}
-              />
+              <img src={image.src} alt={`${image.starBackground} 이미지`} />
             </div>
           ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default BackgroundTab;

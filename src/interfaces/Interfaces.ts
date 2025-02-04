@@ -54,6 +54,7 @@ export interface UserInfo {
   birthDate: string;
   starBackground: string;
   character: string;
+  profile: string;
   face: {
     skinColor: string;
     hair: string;
