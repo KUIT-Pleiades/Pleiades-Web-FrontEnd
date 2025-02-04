@@ -5,7 +5,7 @@ button {
   border-radius: 0;
   padding: 0;
   overflow: visible;
-  cursor: pointer
+  cursor: pointer;
 }
 
 p {
@@ -30,7 +30,7 @@ p {
 
 .pHeader {
   position: absolute;
-  top: 6%;
+  top: 7%;
   font-size: 16px;
   font-weight: 700;
   line-height: normal;
@@ -40,20 +40,23 @@ p {
 
 .nextBtn {
   position: absolute;
-  top: 5%;
+  top: 5.5%;
   right: 5%;
-  width: 53px;
-  height: 28px;
+  width: 62px;
+  height: 35px;
   flex-shrink: 0;
-  border-radius: 12px;
-  background: #402C44;
+  border-radius: 19px;
+  background: #402c44;
   color: #ffffff;
   z-index: 2;
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .pDescription {
   position: absolute;
-  top: 17%;
+  top: 19%;
   color: #444;
   font-size: 16px;
   font-style: normal;
@@ -76,38 +79,35 @@ p {
   }
 }
 
-
 // 레이어 순서: 액세서리>얼굴>상의>하의>신발>머리>피부
-.characterSkin{
-  z-index: 1 ;
+.characterSkin {
+  z-index: 1;
 }
 .characterHair {
   z-index: 2;
 }
-.characterShoes{
+.characterShoes {
   z-index: 3;
 }
-.characterBottom{
+.characterBottom {
   z-index: 4;
 }
 .characterTop {
   z-index: 5;
 }
-.characterFace{
+.characterFace {
   z-index: 6;
 }
-.characterItem{
+.characterItem {
   z-index: 7;
 }
-
-
 
 .characterBackground {
   position: absolute;
   left: 50%;
+  top: 10%;
   transform: translateX(-50%);
   width: 100%;
-  height: 461.55px;
   flex-shrink: 0;
   z-index: -1;
 }
@@ -121,9 +121,9 @@ p {
 }
 
 .setCharacter {
-  background: #FFF;
+  background: #fff;
   font-family: "Pretendard";
-  box-shadow: 0px -4px 4px 0px rgba(41, 34, 41, 0.10);
+  box-shadow: 0px -4px 4px 0px rgba(41, 34, 41, 0.1);
   position: absolute;
   width: 100%;
   height: 40%;
@@ -149,50 +149,49 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #5F5F5F;
+  color: #5f5f5f;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.32px;
 
   &.active {
-    color: #1B142A;
+    color: #1b142a;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
     letter-spacing: -0.32px;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 1px;
       left: 0;
       width: 100%;
       height: 3px;
       border-radius: 100px;
-      background: #402C44;
+      background: #402c44;
     }
   }
 
   &.inactive {
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0px;
       left: 0;
       width: 100%;
       height: 1px;
-      background: #E1E1E1;
+      background: #e1e1e1;
     }
   }
 }
 
 .contentArea {
   //padding: 14px;
-  min-height: 200px;
-  background: #FFF;
+  height: 82%;
+  background: #fff;
 }
-
 
 .gridItems {
   display: grid;
@@ -209,17 +208,15 @@ p {
   border-radius: 12px;
   background: white;
   cursor: pointer;
-  border: 1px solid #E1E1E1;
+  border: 1px solid #e1e1e1;
   padding: 8px;
 
   &:hover {
     border-color: #ccc;
-
   }
 
   &.selected {
     box-shadow: 0 0 8px 2px rgba(139, 92, 246, 0.5);
-
   }
 
   img {

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import BottomBar from "../../pageLayout/BottomBar";
 
-export default function Rocket() {
+export default function Market() {
   return (
     <div>
       <Outlet />

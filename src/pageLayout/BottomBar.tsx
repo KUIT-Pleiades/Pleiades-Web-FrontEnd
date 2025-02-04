@@ -25,16 +25,16 @@ export default function BottomBar() {
       link: "/station",
     },
     {
-      tag: "로켓",
+      tag: "상점",
       defaultImg: rocketIcon,
       selectedImg: selectedRocketIcon,
-      link: "/rocket",
+      link: "/market",
     },
     {
       tag: "설정",
       defaultImg: settingIcon,
       selectedImg: selectedSettingIcon,
-      link: "/settings",
+      link: "/setting",
     },
   ];
 

@@ -9,21 +9,17 @@ interface BackgroundSetUpProps {
   onPrev: () => void;
 }
 
-const BackgroundSetUp = ({
-  onNext,
-  onPrev,
-}: BackgroundSetUpProps) => {
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-  const { character } = useCharacterStore();
+const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
+  const { userInfo } = useCharacterStore();
 
   const backgroundStyle = {
-    backgroundImage: `url(${character.background.imgurl})`,
+    backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
     overflow: "hidden",
   };
 
   const [showList, setShowList] = useState(true);
-
-
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -41,87 +37,87 @@ const BackgroundSetUp = ({
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={character.face.skinColor.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={character.face.expression.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={character.face.hair.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={character.outfit.top.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={character.outfit.bottom.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={character.outfit.shoes.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
             alt="shoes"
           />
-          {character.item.head.imgurl && (
+          {userInfo.item.head && (
             <img
               className={s.characterItem}
-              src={character.item.head.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
               alt="headItem"
             />
           )}
-          {character.item.eyes.imgurl && (
+          {userInfo.item.eyes && (
             <img
               className={s.characterItem}
-              src={character.item.eyes.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
               alt="faceItem"
             />
           )}
-          {character.item.ears.imgurl && (
+          {userInfo.item.ears && (
             <img
               className={s.characterItem}
-              src={character.item.ears.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
               alt="earItem"
             />
           )}
-          {character.item.neck.imgurl && (
+          {userInfo.item.neck && (
             <img
               className={s.characterItem}
-              src={character.item.neck.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
               alt="neckItem"
             />
           )}
-          {character.item.leftWrist.name && (
+          {userInfo.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={character.item.leftWrist.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightWrist.name && (
+          {userInfo.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={character.item.rightWrist.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.leftHand.name && (
+          {userInfo.item.leftHand && (
             <img
               className={s.characterItem}
-              src={character.item.leftHand.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightHand.name && (
+          {userInfo.item.rightHand && (
             <img
               className={s.characterItem}
-              src={character.item.rightHand.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
               alt="handItem"
             />
           )}

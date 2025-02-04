@@ -32,7 +32,7 @@ const itemMap: { [key: string]: string } = {
 
 const ItemTab = () => {
   const [itemTab, setItemTab] = useState("전체");
-  const { character, updateCharacter } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
 
   // 미리 분류된 이미지 캐싱
   const filteredItemImages = useMemo(() => {
@@ -48,11 +48,10 @@ const ItemTab = () => {
       const itemKey = itemMap[image.code];
       if (!itemKey) return false;
       return (
-        image.src ===
-        character.item[itemKey as keyof typeof character.item].imgurl
+        image.name === userInfo.item[itemKey as keyof typeof userInfo.item]
       );
     },
-    [character]
+    [userInfo]
   );
 
   // 아이템 클릭 핸들러 단순화
@@ -63,17 +62,14 @@ const ItemTab = () => {
 
       const isEquipped = isItemEquipped(image);
 
-      updateCharacter({
+      updateUserInfo({
         item: {
-          ...character.item,
-          [itemKey]: {
-            name: isEquipped ? "" : image.name,
-            imgurl: isEquipped ? "" : image.src,
-          },
+          ...userInfo.item,
+          [itemKey]: isEquipped ? "" : image.name, // 객체 대신 직접 문자열 저장
         },
       });
     },
-    [character.item, updateCharacter, isItemEquipped]
+    [userInfo.item, updateUserInfo, isItemEquipped]
   );
 
   return (

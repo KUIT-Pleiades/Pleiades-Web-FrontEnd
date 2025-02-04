@@ -8,7 +8,7 @@ export interface AuthToken {
 /** 캐릭터 설정이 끝난 후 서버에 전송할 때, 캐릭터 값 서버에서 받아올 때 사용 */
 export interface Character {
   userId: string;
-  username: string;
+  userName: string;
   birthDate: string;
   backgroundName: string;
   face: {
@@ -33,10 +33,48 @@ export interface Character {
   };
 }
 
+export interface CharacterImg {
+  userId: string;
+  profile: string;
+  character: string;
+}
+
 /** 유저정보표시 */
 export interface User {
-  onBoardingCompleted: boolean;
-  character: Character;
+  userId: string;
+  userName: string;
+  birthDate: string;
+  starBackground: string;
+  character: string;
+}
+
+export interface UserInfo {
+  userId: string;
+  userName: string;
+  birthDate: string;
+  starBackground: string;
+  character: string;
+  profile: string;
+  face: {
+    skinColor: string;
+    hair: string;
+    expression: string;
+  };
+  outfit: {
+    top: string;
+    bottom: string;
+    shoes: string;
+  };
+  item: {
+    head: string;
+    eyes: string;
+    ears: string;
+    neck: string;
+    leftWrist: string;
+    rightWrist: string;
+    leftHand: string;
+    rightHand: string;
+  };
 }
 
 /** 캐릭터 선택화면에서 선택가능한 아이템 목록 받아올 때 사용*/

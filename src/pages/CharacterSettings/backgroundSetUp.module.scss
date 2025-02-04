@@ -39,19 +39,20 @@ p {
   position: absolute;
   top: 5%;
   left: 5%;
-  width: 53px;
-  height: 28px;
+  width: 62px;
+  height: 35px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 19px;
   background: #C0B9DB;
   color: #ffffff;
   z-index: 2;
-  font-family: inherit;
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-weight: bold;
 }
-
 .pHeader {
   position: absolute;
-  top: 6%;
+  top: 7%;
   font-size: 16px;
   font-weight: 700;
   line-height: normal;
@@ -64,20 +65,23 @@ p {
 
 .nextBtn {
   position: absolute;
-  top: 5%;
+  top: 5.5%;
   right: 5%;
-  width: 53px;
-  height: 28px;
+  width: 62px;
+  height: 35px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 19px;
   background: #402C44;
   color: #ffffff;
   z-index: 2;
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .pDescription {
   position: absolute;
-  top: 17%;
+  top: 19%;
   margin: 0;
   z-index: 2;
   white-space: nowrap;

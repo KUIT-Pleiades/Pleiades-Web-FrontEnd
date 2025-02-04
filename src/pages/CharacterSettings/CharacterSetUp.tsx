@@ -7,6 +7,8 @@ import { useCharacterStore } from "../../store/useCharacterStore";
 import OutFitTab from "./characterSetUpTab/OutFitTab";
 import ItemTab from "./characterSetUpTab/ItemTab";
 
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+
 interface CharacterSetUpProps {
   onNext: () => void;
 }
@@ -14,12 +16,9 @@ interface CharacterSetUpProps {
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
 
-  const { character, resetCharacter } = useCharacterStore();
+  const { userInfo, resetUserInfo } = useCharacterStore();
 
   // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
-
-  //  서버에서 받아온 데이터로 캐릭터 설정하도록 바꿔야함
-  // 다음 버튼 클릭 시, 다음 페이지로 이동, 현재 상태를 저장
 
   return (
     <div className={s.characterSetUpContainer}>
@@ -32,87 +31,87 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={character.face.skinColor.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={character.face.expression.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={character.face.hair.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={character.outfit.top.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={character.outfit.bottom.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={character.outfit.shoes.imgurl}
+            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
             alt="shoes"
           />
-          {character.item.head.imgurl && (
+          {userInfo.item.head && (
             <img
               className={s.characterItem}
-              src={character.item.head.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
               alt="headItem"
             />
           )}
-          {character.item.eyes.imgurl && (
+          {userInfo.item.eyes && (
             <img
               className={s.characterItem}
-              src={character.item.eyes.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
               alt="faceItem"
             />
           )}
-          {character.item.ears.imgurl && (
+          {userInfo.item.ears && (
             <img
               className={s.characterItem}
-              src={character.item.ears.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
               alt="earItem"
             />
           )}
-          {character.item.neck.imgurl && (
+          {userInfo.item.neck && (
             <img
               className={s.characterItem}
-              src={character.item.neck.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
               alt="neckItem"
             />
           )}
-          {character.item.leftWrist.name && (
+          {userInfo.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={character.item.leftWrist.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightWrist.name && (
+          {userInfo.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={character.item.rightWrist.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.leftHand.name && (
+          {userInfo.item.leftHand && (
             <img
               className={s.characterItem}
-              src={character.item.leftHand.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightHand.name && (
+          {userInfo.item.rightHand && (
             <img
               className={s.characterItem}
-              src={character.item.rightHand.imgurl}
+              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
               alt="handItem"
             />
           )}
@@ -126,7 +125,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           className={s.resetBtn}
           src={resetBtn}
           alt="리셋 버튼"
-          onClick={resetCharacter}
+          onClick={resetUserInfo}
         />
       </div>
       <div className={s.setCharacter}>
