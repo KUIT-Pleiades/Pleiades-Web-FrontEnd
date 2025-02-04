@@ -11,21 +11,15 @@ interface BackgroundSetUpProps {
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const BackgroundSetUp = ({
-  onNext,
-  onPrev,
-}: BackgroundSetUpProps) => {
-
-  const { character } = useCharacterStore();
+const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
+  const { userInfo } = useCharacterStore();
 
   const backgroundStyle = {
-    backgroundImage: `url(${IMG_BASE_URL}${character.backgroundName}.png)`,
+    backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
     overflow: "hidden",
   };
 
   const [showList, setShowList] = useState(true);
-
-
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -43,87 +37,87 @@ const BackgroundSetUp = ({
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${character.face.skinColor}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={`${IMG_BASE_URL}${character.face.expression}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${character.face.hair}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={`${IMG_BASE_URL}${character.outfit.top}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={`${IMG_BASE_URL}${character.outfit.bottom}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${character.outfit.shoes}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
             alt="shoes"
           />
-          {character.item.head && (
+          {userInfo.item.head && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.head}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
               alt="headItem"
             />
           )}
-          {character.item.eyes && (
+          {userInfo.item.eyes && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.eyes}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
               alt="faceItem"
             />
           )}
-          {character.item.ears && (
+          {userInfo.item.ears && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.ears}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
               alt="earItem"
             />
           )}
-          {character.item.neck && (
+          {userInfo.item.neck && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.neck}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
               alt="neckItem"
             />
           )}
-          {character.item.leftWrist && (
+          {userInfo.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.leftWrist}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightWrist && (
+          {userInfo.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.rightWrist}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.leftHand && (
+          {userInfo.item.leftHand && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.leftHand}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightHand && (
+          {userInfo.item.rightHand && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.rightHand}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
               alt="handItem"
             />
           )}

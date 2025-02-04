@@ -7,7 +7,7 @@ const background_04 = `${IMG_BASE_URL}background_04.png`;
 const background_05 = `${IMG_BASE_URL}background_05.png`;
 
 export interface starBackImg {
-  name: string;
+  starBackground: string;
   src: string;
 }
 
@@ -23,7 +23,7 @@ const images = {
 
 export const starBackImages: starBackImg[] = [
   ...Object.entries(images.starBack).map(([keyof, src]) => ({
-    name: keyof,
-    src,
+    starBackground: keyof,
+    src: src,
   })),
 ];
