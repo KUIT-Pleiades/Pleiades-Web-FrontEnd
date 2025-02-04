@@ -1,10 +1,9 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { Character } from "../../../interfaces/Interfaces";
-
+import { UserInfo } from "../../../interfaces/Interfaces";
 
 export default function CharacterDisplay() {
   // Zustand store에서 character 상태 가져오기
-  const character: Character = useCharacterStore((state) => state.character);
+  const character: UserInfo = useCharacterStore((state) => state.userInfo);
 
   return (
     <div className="character-display">
@@ -13,9 +12,7 @@ export default function CharacterDisplay() {
       {/* 기본 정보 */}
       <div className="character-basic-info">
         <p>이름: {character.userName}</p>
-        <p>
-          나이:{character.birthDate}
-        </p>
+        <p>나이:{character.birthDate}</p>
         <p>ID: {character.userId}</p>
       </div>
 
@@ -43,18 +40,10 @@ export default function CharacterDisplay() {
       <div className="character-items">
         <h3>장착 아이템</h3>
         <div className="items-details">
-          {character.item.head && (
-            <p>머리 아이템: {character.item.head}</p>
-          )}
-          {character.item.eyes && (
-            <p>눈 아이템: {character.item.eyes}</p>
-          )}
-          {character.item.ears  && (
-            <p>귀 아이템: {character.item.ears}</p>
-          )}
-          {character.item.neck && (
-            <p>목 아이템: {character.item.neck}</p>
-          )}
+          {character.item.head && <p>머리 아이템: {character.item.head}</p>}
+          {character.item.eyes && <p>눈 아이템: {character.item.eyes}</p>}
+          {character.item.ears && <p>귀 아이템: {character.item.ears}</p>}
+          {character.item.neck && <p>목 아이템: {character.item.neck}</p>}
           {character.item.leftWrist && (
             <p>왼 손목 아이템: {character.item.leftWrist}</p>
           )}
@@ -71,13 +60,12 @@ export default function CharacterDisplay() {
       </div>
 
       {/* 배경 */}
-      {character.backgroundName && (
+      {character.starBackground && (
         <div className="character-background">
           <h3>배경</h3>
-          <p>배경: {character.backgroundName}</p>
+          <p>배경: {character.starBackground}</p>
         </div>
       )}
     </div>
   );
-};
-
+}
