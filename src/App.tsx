@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Splash from "./pages/SplashScreen/Splash";
 import Home from "./pages/Home/Home";
-import Rocket from "./pages/Rocket/Rocket";
-import Settings from "./pages/Settings/Settings";
 import Station from "./pages/Station/Station";
 import LogIn from "./pages/LogIn/LogIn";
 import NaverLogin from "./pages/LogIn/NaverLogin";
@@ -12,6 +10,10 @@ import ShowStationList from "./pages/Station/ShowStationsList/ShowStationList";
 import Error from "./pages/PageManagement/Error";
 import KakaoLogin from "./pages/LogIn/KakaoLogin";
 import AuthHandler from "./pages/PageManagement/AuthHandler";
+import CharacterSettings from "./pages/CharacterSettings/CharacterSettings";
+import Setting from "./pages/Setting/Setting";
+import Market from "./pages/Market/Market";
+import MyStar from "./pages/Home/MyStar";
 
 export default function App() {
   return (
@@ -33,9 +35,15 @@ export default function App() {
           }
         />
         <Route element={<AuthHandler />}>
-          <Route path="home" element={<Home />}></Route>
-          <Route path="rocket" element={<Rocket />}></Route>
-          <Route path="settings" element={<Settings />}></Route>
+          <Route path="home" element={<Home />}>
+            <Route path="mystar" element={<MyStar />}></Route>
+            <Route
+              path="charactersetting"
+              element={<CharacterSettings />}
+            ></Route>
+          </Route>
+          <Route path="market" element={<Market />}></Route>
+          <Route path="setting" element={<Setting />}></Route>
           <Route path="station" element={<Station />}>
             <Route path="stationlist" element={<ShowStationList />} />
           </Route>

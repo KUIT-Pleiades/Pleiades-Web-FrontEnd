@@ -1,11 +1,11 @@
 import { useState, useCallback, useMemo } from "react";
-import { FaceImages, FaceItem } from "../../../assets/ImageData/FaceImage"
+import { FaceImages, FaceItem } from "../../../assets/ImageData/FaceImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./characterSetUptab.module.scss";
 
 const FaceTab = () => {
   const [faceTab, setFaceTab] = useState("전체");
-  const { character, updateCharacter } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
 
   const filteredFaceImages = useMemo(() => {
     if (faceTab === "전체") {
@@ -18,32 +18,32 @@ const FaceTab = () => {
     (image: FaceItem) => {
       switch (image.tags) {
         case "피부":
-          updateCharacter({
+          updateUserInfo({
             face: {
-              ...character.face,
+              ...userInfo.face,
               skinColor: image.name,
             },
           });
           break;
         case "머리":
-          updateCharacter({
+          updateUserInfo({
             face: {
-              ...character.face,
+              ...userInfo.face,
               hair: image.name,
             },
           });
           break;
         case "얼굴":
-          updateCharacter({
+          updateUserInfo({
             face: {
-              ...character.face,
+              ...userInfo.face,
               expression: image.name,
             },
           });
           break;
       }
     },
-    [character.face, updateCharacter]
+    [userInfo.face, updateUserInfo]
   );
 
   return (
@@ -81,11 +81,10 @@ const FaceTab = () => {
               key={image.name}
               className={`${s.item} ${
                 (image.tags === "피부" &&
-                  image.name === character.face.skinColor) ||
-                (image.tags === "머리" &&
-                  image.name === character.face.hair) ||
+                  image.name === userInfo.face.skinColor) ||
+                (image.tags === "머리" && image.name === userInfo.face.hair) ||
                 (image.tags === "얼굴" &&
-                  image.name === character.face.expression)
+                  image.name === userInfo.face.expression)
                   ? s.selected
                   : ""
               }`}

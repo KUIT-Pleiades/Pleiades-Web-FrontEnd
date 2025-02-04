@@ -1,7 +1,7 @@
-import { Character } from "../interfaces/Interfaces";
+import { User } from "../interfaces/Interfaces";
 import { fetchRequest } from "./fetchRequest";
 
-export async function getCharacter() {
-  const userData = fetchRequest<Character>("/home/me", "GET", null);
+export async function getUser() {
+  const userData = await fetchRequest<User>("/home", "GET", null);
   return userData;
 }

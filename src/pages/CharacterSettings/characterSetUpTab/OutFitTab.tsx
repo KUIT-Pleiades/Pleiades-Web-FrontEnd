@@ -1,53 +1,55 @@
 import { useState, useCallback, useMemo } from "react";
-import { OutfitImages, OutfitItem } from "../../../assets/ImageData/OutfitImage";
+import {
+  OutfitImages,
+  OutfitItem,
+} from "../../../assets/ImageData/OutfitImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./characterSetUptab.module.scss";
 
 const OutFitTab = () => {
-	const [outfitTab, setOutfitTab] = useState("전체");
-	const { character, updateCharacter } = useCharacterStore();
+  const [outfitTab, setOutfitTab] = useState("전체");
+  const { userInfo, updateUserInfo } = useCharacterStore();
 
-	const filteredOutfitImages = useMemo(() => {
-		if (outfitTab === "전체") {
-			return OutfitImages;
-		}
-		return OutfitImages.filter((image) => image.tags === outfitTab);
-	}, [outfitTab]);
+  const filteredOutfitImages = useMemo(() => {
+    if (outfitTab === "전체") {
+      return OutfitImages;
+    }
+    return OutfitImages.filter((image) => image.tags === outfitTab);
+  }, [outfitTab]);
 
-	const handleImageClick = useCallback(
-		(image: OutfitItem) => {
-			switch (image.tags) {
-				case "상의":
-					updateCharacter({
-						outfit: {
-							...character.outfit,
-							top:  image.name,
-						},
-					});
-					break;
-				case "하의":
-					updateCharacter({
-						outfit: {
-							...character.outfit,
-							bottom: image.name,
-								
-						},
-					});
-					break;
-				case "신발":
-					updateCharacter({
-						outfit: {
-							...character.outfit,
-							shoes: image.name,
-						},
-					});
-					break;
-			}
-		},
-		[character.outfit, updateCharacter]
-	);
+  const handleImageClick = useCallback(
+    (image: OutfitItem) => {
+      switch (image.tags) {
+        case "상의":
+          updateUserInfo({
+            outfit: {
+              ...userInfo.outfit,
+              top: image.name,
+            },
+          });
+          break;
+        case "하의":
+          updateUserInfo({
+            outfit: {
+              ...userInfo.outfit,
+              bottom: image.name,
+            },
+          });
+          break;
+        case "신발":
+          updateUserInfo({
+            outfit: {
+              ...userInfo.outfit,
+              shoes: image.name,
+            },
+          });
+          break;
+      }
+    },
+    [userInfo.outfit, updateUserInfo]
+  );
 
-	return (
+  return (
     <div className={s.tabContainer}>
       <div className={s.tab}>
         <button
@@ -81,11 +83,10 @@ const OutFitTab = () => {
             <div
               key={image.name}
               className={`${s.item} ${
-                (image.tags === "상의" &&
-                  image.name === character.outfit.top) ||
+                (image.tags === "상의" && image.name === userInfo.outfit.top) ||
                 (image.tags === "하의" &&
-                  image.name === character.outfit.bottom) ||
-                (image.tags === "신발" && image.name === character.outfit.shoes)
+                  image.name === userInfo.outfit.bottom) ||
+                (image.tags === "신발" && image.name === userInfo.outfit.shoes)
                   ? s.selected
                   : ""
               }`}

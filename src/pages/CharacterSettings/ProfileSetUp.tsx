@@ -21,7 +21,7 @@ interface ProfileSetUpProps {
 // }
 
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
-  const { character, updateCharacter } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
   const [isValidId, setIsValidId] = useState<boolean>(false);
   const [idExists, setIdExists] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>("중복확인");
@@ -35,8 +35,8 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const isFormComplete = () => {
     return (
-      character.userName && // 이름 입력 확인
-      character.userId && // ID 입력 확인
+      userInfo.userName && // 이름 입력 확인
+      userInfo.userId && // ID 입력 확인
       idExists
       // && // ID 중복 확인 완료
       // birthDate.year && // 생년 입력 확인
@@ -47,7 +47,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateCharacter({ userName: e.target.value });
+    updateUserInfo({ userName: e.target.value });
   };
 
   // ID 유효성 검사 함수
@@ -59,7 +59,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newId = e.target.value;
-    updateCharacter({ userId: newId });
+    updateUserInfo({ userId: newId });
     setIsValidId(validateId(newId));
     // ID가 변경되면 중복확인 상태 초기화
     setIdExists(false);
@@ -103,87 +103,87 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${character.face.skinColor}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
             alt="skin"
           />
           <img
             className={s.characterFace}
-            src={`${IMG_BASE_URL}${character.face.expression}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
             alt="face"
           />
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${character.face.hair}.png`}
+            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
             alt="hair"
           />
           <img
             className={s.characterTop}
-            src={`${IMG_BASE_URL}${character.outfit.top}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
             alt="top"
           />
           <img
             className={s.characterBottom}
-            src={`${IMG_BASE_URL}${character.outfit.bottom}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
             alt="bottom"
           />
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${character.outfit.shoes}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
             alt="shoes"
           />
-          {character.item.head && (
+          {userInfo.item.head && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.head}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
               alt="headItem"
             />
           )}
-          {character.item.eyes && (
+          {userInfo.item.eyes && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.eyes}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
               alt="faceItem"
             />
           )}
-          {character.item.ears && (
+          {userInfo.item.ears && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.ears}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
               alt="earItem"
             />
           )}
-          {character.item.neck && (
+          {userInfo.item.neck && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.neck}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
               alt="neckItem"
             />
           )}
-          {character.item.leftWrist && (
+          {userInfo.item.leftWrist && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.leftWrist}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightWrist && (
+          {userInfo.item.rightWrist && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.rightWrist}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
               alt="handItem"
             />
           )}
-          {character.item.leftHand && (
+          {userInfo.item.leftHand && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.leftHand}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
               alt="handItem"
             />
           )}
-          {character.item.rightHand && (
+          {userInfo.item.rightHand && (
             <img
               className={s.characterItem}
-              src={`${IMG_BASE_URL}${character.item.rightHand}.png`}
+              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
               alt="handItem"
             />
           )}
@@ -197,7 +197,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       <div className={s.inputContainer}>
         <input
           type="text"
-          value={character.userName || ""}
+          value={userInfo.userName || ""}
           onChange={handleNameChange}
           placeholder="15자 이하로 입력"
           className={s.nameInput}
@@ -206,7 +206,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           <div className={s.id}>ID</div>
           <input
             type="text"
-            value={character.userId || ""}
+            value={userInfo.userId || ""}
             onChange={handleIdChange}
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
