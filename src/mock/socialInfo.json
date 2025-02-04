@@ -4,6 +4,76 @@
       "Id": "friend12",
       "Name": "길봉태",
       "Since": 1706782496
+    },
+    {
+      "Id": "friend13",
+      "Name": "김철수",
+      "Since": 1706782497
+    },
+    {
+      "Id": "friend14",
+      "Name": "이영석",
+      "Since": 1706782498
+    },
+    {
+      "Id": "friend15",
+      "Name": "박진호",
+      "Since": 1706782499
+    },
+    {
+      "Id": "friend16",
+      "Name": "정민수",
+      "Since": 1706782500
+    },
+    {
+      "Id": "friend17",
+      "Name": "한가영",
+      "Since": 1706782501
+    },
+    {
+      "Id": "friend18",
+      "Name": "서윤아",
+      "Since": 1706782502
+    },
+    {
+      "Id": "friend19",
+      "Name": "문재성",
+      "Since": 1706782503
+    },
+    {
+      "Id": "friend20",
+      "Name": "장하준",
+      "Since": 1706782504
+    },
+    {
+      "Id": "friend21",
+      "Name": "오민호",
+      "Since": 1706782505
+    },
+    {
+      "Id": "friend22",
+      "Name": "최성원",
+      "Since": 1706782506
+    },
+    {
+      "Id": "friend23",
+      "Name": "안세진",
+      "Since": 1706782507
+    },
+    {
+      "Id": "friend24",
+      "Name": "유다은",
+      "Since": 1706782508
+    },
+    {
+      "Id": "friend25",
+      "Name": "배지훈",
+      "Since": 1706782509
+    },
+    {
+      "Id": "friend26",
+      "Name": "강수연",
+      "Since": 1706782510
     }
   ],
   "MyFriends": [
@@ -46,6 +116,51 @@
       "Id": "friend8",
       "Name": "엄지민",
       "Since": 1706782498
+    },
+    {
+      "Id": "friend9",
+      "Name": "강지민",
+      "Since": 1706782499
+    },
+    {
+      "Id": "friend10",
+      "Name": "윤지민",
+      "Since": 1706782500
+    },
+    {
+      "Id": "friend11",
+      "Name": "배지민",
+      "Since": 1706782501
+    },
+    {
+      "Id": "friend12",
+      "Name": "손지민",
+      "Since": 1706782502
+    },
+    {
+      "Id": "friend13",
+      "Name": "서지민",
+      "Since": 1706782503
+    },
+    {
+      "Id": "friend14",
+      "Name": "문지민",
+      "Since": 1706782504
+    },
+    {
+      "Id": "friend15",
+      "Name": "하지민",
+      "Since": 1706782505
+    },
+    {
+      "Id": "friend16",
+      "Name": "이준호",
+      "Since": 1706782506
+    },
+    {
+      "Id": "friend17",
+      "Name": "정윤수",
+      "Since": 1706782507
     }
   ],
   "MyRequests": [
@@ -53,6 +168,76 @@
       "Id": "friend80",
       "Name": "박창식",
       "Since": 1706782496
+    },
+    {
+      "Id": "friend81",
+      "Name": "윤도현",
+      "Since": 1706782497
+    },
+    {
+      "Id": "friend82",
+      "Name": "강민준",
+      "Since": 1706782498
+    },
+    {
+      "Id": "friend83",
+      "Name": "김서연",
+      "Since": 1706782499
+    },
+    {
+      "Id": "friend84",
+      "Name": "오현석",
+      "Since": 1706782500
+    },
+    {
+      "Id": "friend85",
+      "Name": "최한별",
+      "Since": 1706782501
+    },
+    {
+      "Id": "friend86",
+      "Name": "안지우",
+      "Since": 1706782502
+    },
+    {
+      "Id": "friend87",
+      "Name": "배서윤",
+      "Since": 1706782503
+    },
+    {
+      "Id": "friend88",
+      "Name": "박세진",
+      "Since": 1706782504
+    },
+    {
+      "Id": "friend89",
+      "Name": "장태희",
+      "Since": 1706782505
+    },
+    {
+      "Id": "friend90",
+      "Name": "강지훈",
+      "Since": 1706782506
+    },
+    {
+      "Id": "friend91",
+      "Name": "이채연",
+      "Since": 1706782507
+    },
+    {
+      "Id": "friend92",
+      "Name": "윤하영",
+      "Since": 1706782508
+    },
+    {
+      "Id": "friend93",
+      "Name": "손지혁",
+      "Since": 1706782509
+    },
+    {
+      "Id": "friend94",
+      "Name": "문재훈",
+      "Since": 1706782510
     }
   ]
 }

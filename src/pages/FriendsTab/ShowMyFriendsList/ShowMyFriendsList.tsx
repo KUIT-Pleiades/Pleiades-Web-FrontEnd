@@ -15,10 +15,11 @@ import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.
 interface ShowMyFriendsListProps {
     otherUser: OtherUser;
     handleDeleteFriend: () => void;
+    onActionFriendId: string;
+    setOnActionFriendId: (friendId: string) => void;
 }
 
-const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handleDeleteFriend }) => {
-  const [onDeleteMode, setOnDeleteMode] = useState(false);
+const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handleDeleteFriend, onActionFriendId, setOnActionFriendId }) => {
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
   const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
@@ -31,22 +32,23 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
   const handleDelete = () => {
     handleDeleteFriend();
     handleCloseDeleteFriendModal();
-    setOnDeleteMode(false);
+    setOnActionFriendId("");
   };
   const handleDeleteCancel = () => {
     handleCloseDeleteFriendModal();
-    setOnDeleteMode(false);
+    setOnActionFriendId("");
   };
 
   const showPokePopup = () => {
     setIsPokePopupVisible(true);
     setTimeout(() => {
       setIsPokePopupVisible(false);
+      setOnActionFriendId("");
     }, 1500);
   };
 
   const RenderButtons = () => {
-    if (onDeleteMode) {
+    if (onActionFriendId === otherUser.Id && !isPokePopupVisible) {
       return (
         <button
           className={s.showDeleteFriendModalButton}
@@ -61,7 +63,13 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
             <img src={onPoke} alt="onPoke" className={s.pokeImg} />
           </button>
         ) : (
-          <button className={s.pokeButton} onClick={showPokePopup}>
+          <button
+            className={s.pokeButton}
+            onClick={() => {
+              showPokePopup();
+              setOnActionFriendId(otherUser.Id);
+            }}
+          >
             <img src={poke} alt="poke" className={s.pokeImg} />
           </button>
         )}
@@ -94,7 +102,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
         <button
           className={s.deleteFriendsButton}
           onClick={() => {
-            setOnDeleteMode(!onDeleteMode);
+            setOnActionFriendId(otherUser.Id);
           }}>
           <img src={deleteFriendsButton} alt='deleteFriendsButton' />
         </button>
