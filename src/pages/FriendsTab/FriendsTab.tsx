@@ -63,7 +63,7 @@ const FriendsTab: React.FC = () => {
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
                 <div className={s.title}>
-                    <span className={s.titleName}>{character?.characterName}</span>
+                    <span className={s.titleName}>{character?.userName}</span>
                     <span className={s.titleText}>님의 친구목록</span>
                 </div>
             </div>
