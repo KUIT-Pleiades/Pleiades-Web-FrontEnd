@@ -42,6 +42,7 @@ export default function BottomBar() {
     <div className={s.bottomBar}>
       {bottomBarContents.map((item) => (
         <BottomBarItem
+          key={item.tag}
           itemTag={item.tag}
           defaultImg={item.defaultImg}
           selectedImg={item.selectedImg}
