@@ -233,7 +233,6 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           <Calendar
             onChange={setSelectedDate}
             value={selectedDate}
-            view="month"
             formatDay={(_, date) => date.getDate().toString()}
           />
         </div>
