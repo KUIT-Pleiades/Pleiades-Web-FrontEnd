@@ -20,7 +20,7 @@ const initialUserInfo: UserInfo = {
   userId: "",
   userName: "",
   birthDate: "",
-  starBackground: "",
+  starBackground: "background_01",
   character: "",
   profile: "",
   face: {
