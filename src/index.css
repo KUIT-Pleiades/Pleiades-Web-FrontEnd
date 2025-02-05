@@ -113,3 +113,11 @@ body {
   src: local("ElectricalSafetyBold"),
     url(./fonts/ElectricalSafety/ElectricalSafetyBold.woff) format("woff");
 }
+
+@font-face {
+  font-family: "ElectricalSafety";
+  font-weight: 500;
+  font-display: swap;
+  src: local("ElectricalSafetyRegular"),
+    url(./fonts/ElectricalSafety/ElectricalSafetyRegular.woff) format("woff");
+}
