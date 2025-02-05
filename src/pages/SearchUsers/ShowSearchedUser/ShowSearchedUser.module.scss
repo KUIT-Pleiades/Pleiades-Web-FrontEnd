@@ -53,16 +53,8 @@
     margin: 0;
 }
 
-.requestButton {
-    background-color: #402C44;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 12px;
-    width: 28%;
-    height: 32px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: "Pretendard";
+.visitStarButton{
+
 }
 .cancelRequestButton {
     background-color: #C0B9DB;
@@ -75,6 +67,21 @@
     font-weight: 500;
     font-family: "Pretendard";
 }
+.acceptRequestButton{
+    
+}
+.requestButton {
+    background-color: #402C44;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    width: 28%;
+    height: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: "Pretendard";
+}
+
 
 .completeRequestPopup{
     position: fixed;

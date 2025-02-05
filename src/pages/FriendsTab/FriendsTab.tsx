@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Character } from '../../interfaces/Interfaces';
 import s from './FriendsTab.module.scss';
+import characterData from '../../mock/character1.json';
+import friendsExampleData from '../../mock/socialInfo.json';
 
 // components
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
@@ -35,14 +37,23 @@ const FriendsTab: React.FC = () => {
     }
 
     useEffect(() => {
-        fetch("/src/mock/character1.json")
-            .then((res) => res.json())
-            .then((data) => {setCharacter(data)})
-            .catch((err) => {console.error(err)});
-        fetch("/src/mock/socialInfo.json")
-            .then((res) => res.json())
-            .then((data) => {setFriendsData(data)})
-            .catch((err) => {console.error(err)});
+        setCharacter(characterData);
+        setFriendsData(friendsExampleData);
+
+        // const getCharacter = async () => {
+        //     const response = await fetch("/src/mock/character1.json");
+        //     setCharacter(await response.json());
+        // }
+        // getCharacter()
+
+        // fetch("/src/mock/character1.json")
+        //     .then((res) => res.json())
+        //     .then((data) => {setCharacter(data)})
+        //     .catch((err) => {console.error(err)});
+        // fetch("/src/mock/socialInfo.json")
+        //     .then((res) => res.json())
+        //     .then((data) => {setFriendsData(data)})
+        //     .catch((err) => {console.error(err)});
     }, []);
     useEffect(() => {
         if (
@@ -91,4 +102,4 @@ const FriendsTab: React.FC = () => {
     )
 }
 
-export default FriendsTab
+export default FriendsTab;

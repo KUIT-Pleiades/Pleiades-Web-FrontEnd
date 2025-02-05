@@ -1,41 +1,26 @@
 {
-  "characterId": "char1",
-  "characterName": "Emma",
-  "characterAge": 25,
+  "userId": "char1",
+  "userName": "Emma",
+  "birthDate": "2002-02-09",
+  "backgroundName": "park",
   "face": {
-    "skinColor": {
-      "name": "white",
-      "imgurl": "/images/skin/white.png"
-    },
-    "hair": {
-      "name": "ponytail",
-      "imgurl": "/images/hair/ponytail.png"
-    },
-    "expression": {
-      "name": "smile",
-      "imgurl": "/images/expression/smile.png"
-    }
+    "skinColor": "white",
+    "hair": "ponytail",
+    "expression": "smile"
   },
   "outfit": {
-    "top": {
-      "name": "t-shirt",
-      "imgurl": "/images/outfit/tshirt.png"
-    },
-    "bottom": {
-      "name": "jeans",
-      "imgurl": "/images/outfit/jeans.png"
-    },
-    "shoes": {
-      "name": "sneakers",
-      "imgurl": "/images/outfit/sneakers.png"
-    }
+    "top": "t-shirt",
+    "bottom": "jeans",
+    "shoes": "sneakers"
   },
-  "accessories": {
-    "name": "necklace",
-    "imgurl": "/images/accessories/necklace.png"
-  },
-  "background": {
-    "name": "park",
-    "imgurl": "/images/background/park.png"
+  "item": {
+    "head": "none",
+    "eyes": "none",
+    "ears": "none",
+    "neck": "necklace",
+    "leftWrist": "none",
+    "rightWrist": "none",
+    "leftHand": "none",
+    "rightHand": "none"
   }
 }
