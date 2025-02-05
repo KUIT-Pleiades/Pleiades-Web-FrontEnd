@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 //import { Character } from "../../interfaces/Interfaces";
 import s from "./ShowTotalFriendsList.module.scss";
 
@@ -38,15 +38,20 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
     const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
     const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
     const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
-    if (
-        friendsData?.FriendRequests?.length === 0 &&
-        friendsData?.MyFriends?.length === 0 &&
-        friendsData?.MyRequests?.length === 0
-    ) {
-        setIsShowFriendRequests(false);
-        setIsShowMyFriends(false);
-        setIsShowMyRequests(false);
-    }
+
+    useEffect(() => {
+        if (
+            friendsData?.FriendRequests?.length === 0 &&
+            friendsData?.MyFriends?.length === 0 &&
+            friendsData?.MyRequests?.length === 0
+        ) {
+            setIsShowFriendRequests(false);
+            setIsShowMyFriends(false);
+            setIsShowMyRequests(false);
+        }
+    }, [friendsData]);
+
+    const [onActionFriendId, setOnActionFriendId] = useState<string>("");
 
     const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
 
@@ -125,6 +130,8 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
                   <ShowMyFriendsList
                     otherUser={friend}
                     handleDeleteFriend={() => handleDeleteFriend(friend.Id)}
+                    onActionFriendId={onActionFriendId}
+                    setOnActionFriendId={setOnActionFriendId}
                   />
                 </div>
               ))}
