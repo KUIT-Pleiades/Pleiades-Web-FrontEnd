@@ -3,6 +3,7 @@ import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import pokePopupStars from "../../assets/FriendsTab/pokePopupStars.svg";
 
 
 
@@ -21,6 +22,8 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const [buttonText, setButtonText] = useState<string>("중복확인");
   const [idCheckMessage, setIdCheckMessage] = useState<string>("");
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
   type DatePiece = Date | null;
   type SelectedDate = DatePiece | [DatePiece, DatePiece];
@@ -80,31 +83,38 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       updateUserInfo({ birthDate: formattedDate });
     }
   };
-
-  const handleCalendarChange = useCallback((date: SelectedDate) => {
-    setSelectedDate(date);
-    handleDateChange(date as Date);
-  }, []);
+  
 
   const handleNext = () => {
   if (!userInfo.userName?.trim()) {
-    alert("이름을 입력해주세요.");
+    setErrorMessage("이름을 입력해주세요.");
+    showErrorPopup();
     return;
   }
   if (!userInfo.userId) {
-    alert("ID를 입력해주세요.");
+    setErrorMessage("ID를 입력해주세요."); 
+    showErrorPopup();
     return;
   }
   if (!idExists) {
-    alert("ID 중복확인을 해주세요.");
+    setErrorMessage("ID 중복확인이 필요합니다."); 
+    showErrorPopup();
     return;
   }
   if (!userInfo.birthDate) {
-    alert("생년월일을 선택해주세요.");
+    setErrorMessage("생년월일을 선택해주세요."); 
+    showErrorPopup();
     return;
   }
-  onNext();
-};
+    onNext();
+  };
+  
+  const showErrorPopup = () => {
+    setIsPokePopupVisible(true);
+    setTimeout(() => {
+      setIsPokePopupVisible(false);
+    }, 1500);
+  };
 
   return (
     <div className={s.profileSetUpContainer}>
@@ -228,7 +238,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
-          {isIdChecked && ( // 중복 확인 버튼을 눌렀을 때만 메시지 표시
+          {isIdChecked && (
             <div
               className={`${s.idCheckMessage} ${
                 idExists ? s.available : s.unavailable
@@ -248,12 +258,30 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
           <Calendar
-            onChange={handleCalendarChange}
+            onChange={(date) => {
+              setSelectedDate(date);
+              handleDateChange(date as Date);
+            }}
             value={selectedDate}
             formatDay={(_, date) => date.getDate().toString()}
           />
         </div>
       </div>
+      {isPokePopupVisible && (
+        <div className={s.pokePopup}>
+          <img
+            src={pokePopupStars}
+            alt="pokePopupStars"
+            className={s.pokePopupStarsUp}
+          />
+          {`${errorMessage}`}
+          <img
+            src={pokePopupStars}
+            alt="pokePopupStars"
+            className={s.pokePopupStarsDown}
+          />
+        </div>
+      )}
     </div>
   );
 };
