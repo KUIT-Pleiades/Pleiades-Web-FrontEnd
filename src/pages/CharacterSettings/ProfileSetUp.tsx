@@ -1,7 +1,7 @@
 import Calendar from "react-calendar";
 import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
 
@@ -28,13 +28,15 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
 
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = e.target.value;
-    if (newName.length <= 15) {
-      // 15자 제한
-      updateUserInfo({ userName: newName });
-    }
-  };
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newName = e.target.value.trim();
+      if (newName.length <= 15) {
+        updateUserInfo({ userName: newName });
+      }
+    },
+    [updateUserInfo]
+  );
 
   // ID 유효성 검사 함수
   const validateId = (id: string): boolean => {
@@ -43,18 +45,20 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     return idRegex.test(id);
   };
 
-  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newId = e.target.value;
-    updateUserInfo({ userId: newId });
-    setIsValidId(validateId(newId));
-    // ID가 변경되면 중복확인 상태 초기화
-    setIdExists(false);
-    setButtonText("중복확인");
-  };
+  const handleIdChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newId = e.target.value;
+      updateUserInfo({ userId: newId });
+      setIsValidId(validateId(newId));
+      setIdExists(false);
+      setButtonText("중복확인");
+    },
+    [updateUserInfo]
+  );
 
-  const idCheck = () => {
+  const memoizedIdCheck = useCallback(() => {
     setIdExists(!idExists);
-    setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현, 바뀌기만 함
+    setButtonText(idExists ? "중복확인" : "사용가능");
     if (!idExists) {
       setIdExists(true);
       setButtonText("사용가능");
@@ -65,9 +69,10 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       setIdCheckMessage("이미 사용중인 ID입니다.");
     }
     setIsIdChecked(true);
-  };
+  }, [idExists]);
 
-  const handleDateChange = (date: Date | Date[]) => {
+
+  const handleDateChange = (date: SelectedDate) => {
     // date가 배열이 아닌 단일 Date 객체인 경우에만 처리
     if (date instanceof Date) {
       // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환
@@ -75,6 +80,11 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       updateUserInfo({ birthDate: formattedDate });
     }
   };
+
+  const handleCalendarChange = useCallback((date: SelectedDate) => {
+    setSelectedDate(date);
+    handleDateChange(date as Date);
+  }, []);
 
   const handleNext = () => {
   if (!userInfo.userName?.trim()) {
@@ -228,7 +238,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             </div>
           )}
           <button
-            onClick={idCheck}
+            onClick={memoizedIdCheck}
             className={`${s.checkBtn} ${idExists ? s.available : ""}`}
             disabled={!isValidId}
           >
@@ -238,10 +248,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
           <Calendar
-            onChange={(date) => {
-              setSelectedDate(date);
-              handleDateChange(date as Date);
-            }}
+            onChange={handleCalendarChange}
             value={selectedDate}
             formatDay={(_, date) => date.getDate().toString()}
           />
