@@ -35,8 +35,9 @@ export default function App() {
           }
         />
         <Route element={<AuthHandler />}>
-          <Route path="home" element={<Home />}>
-            <Route path="mystar" element={<MyStar />}></Route>
+          <Route path="onboarding" element={<CharacterSettings />}></Route>
+          <Route path="/home" element={<Home />}>
+            <Route index element={<MyStar />} />
             <Route
               path="charactersetting"
               element={<CharacterSettings />}

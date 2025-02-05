@@ -15,7 +15,7 @@ export default function BottomBarItem({
   link,
 }: BottomBarItemProps) {
   const location = useLocation();
-  const isSelected = location.pathname == link;
+  const isSelected = location.pathname.includes(link);
 
   return (
     <Link className={s.barItem} to={link}>

@@ -1,5 +1,5 @@
-import { AuthToken, Character } from "../interfaces/Interfaces";
-import { fetchRequest } from "./fetchRequest";
+import { AuthToken } from "../interfaces/Interfaces";
+import { useAuth } from "../store/authStore";
 
 export function kakaoLogInRedirect() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
@@ -52,8 +52,46 @@ export async function naverLogInRequest(authCode: string) {
 }
 
 export async function autoLogInRequest() {
-  const response = fetchRequest<Character>("/auth", "GET", null);
-  if (response === null) {
-    return null;
-  }
+  const { authorization, setToken } = useAuth.getState();
+  const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
+  const requestURL = `${BASE_URL}/auth`;
+  const refreshURL = `${BASE_URL}/auth/refresh`;
+  const response1 = await fetch(requestURL, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authorization}`,
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+  if (response1.status === 200) {
+    return true;
+  } else if (response1.status === 401) {
+    const refreshResponse = await fetch(refreshURL, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${authorization}`,
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!refreshResponse.ok) {
+      return false; // refresh 실패 → 로그인 실패 처리
+    }
+
+    const newAccessToken: AuthToken = await refreshResponse.json();
+    setToken(newAccessToken.accessToken);
+
+    const { authorization: newAuthorization } = useAuth.getState();
+    const response2 = await fetch(requestURL, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${newAuthorization}`,
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return response2.status === 200;
+  } else return false;
 }

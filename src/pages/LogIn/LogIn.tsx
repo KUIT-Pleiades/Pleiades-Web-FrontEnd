@@ -3,13 +3,32 @@ import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import kakao from "../../assets/kakao.svg";
 import naver from "../../assets/naver.svg";
 import {
+  autoLogInRequest,
   kakaoLogInRedirect,
   naverLogInRedirect,
 } from "../../functions/logInRequest";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LogIn() {
-  useEffect(() => {}, []);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleAutoLogIn = async () => {
+      try {
+        const status = await autoLogInRequest();
+        if (status) {
+          navigate("/home");
+        } else {
+          navigate("/login");
+        }
+      } catch {
+        console.log("Not Expected Data");
+        navigate("/login");
+      }
+    };
+    handleAutoLogIn();
+  }, [navigate]);
 
   const naverLogIn = () => {
     window.location.href = naverLogInRedirect();
