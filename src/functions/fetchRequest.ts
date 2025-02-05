@@ -1,10 +1,3 @@
-// accessToken은 전역상태 관리 라이브러리를 통해 메모리에 저장하는게 안전
-// refreshToken은 쿠키를 이용해서 저장하는게 안전
-// 현재는 둘 다 로컬스토리지에 저장해버려서
-// console.log(window.localStorage.getItem("pleiadesTokenNR"))
-// 하면 토큰 다 보임
-// 수정해야함
-
 import { AuthToken } from "../interfaces/Interfaces";
 import { useAuth } from "../store/authStore";
 import { Methods } from "../types/types";
@@ -47,20 +40,25 @@ export const fetchRequest = async <T>(
     }
   }
 
-  async function refresh(): Promise<AuthToken> {
+  async function refresh(): Promise<AuthToken | null> {
     // access 토큰 refresh 받는 url
     const refreshUrl = `${BASEURL}/auth/refresh`;
     const req = setRequest("GET", null);
     const response = await fetch(refreshUrl, req);
+    if (response.headers.get("content-type") !== "application/json")
+      return null;
     return response.json();
   }
 
   const req = setRequest(method, body);
   const response1 = await fetch(requestURL, req);
+  if (response1.headers.get("content-type") !== "application/json") {
+    return null;
+  }
   if (response1.status === 401) {
     const refreshedAccessToken = await refresh();
-    setToken(refreshedAccessToken.accessToken);
     if (refreshedAccessToken !== null) {
+      setToken(refreshedAccessToken.accessToken);
       const response2 = await fetch(requestURL, req);
       return response2.json() as Promise<T>;
     } else {
