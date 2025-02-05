@@ -230,7 +230,12 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         </div>
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
-          <Calendar onChange={setSelectedDate} value={selectedDate} />
+          <Calendar
+            onChange={setSelectedDate}
+            value={selectedDate}
+            view="month"
+            formatDay={(_, date) => date.getDate().toString()}
+          />
         </div>
       </div>
     </div>
