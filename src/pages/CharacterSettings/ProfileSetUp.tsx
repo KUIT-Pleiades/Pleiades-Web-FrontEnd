@@ -1,5 +1,4 @@
 import Calendar from "react-calendar";
-//import "react-calendar/dist/Calendar.css";
 import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState } from "react";
@@ -14,11 +13,6 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
-// interface BirthDateType {
-//   year: string;
-//   month: string;
-//   day: string;
-// }
 
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -33,21 +27,13 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
 
-  const isFormComplete = () => {
-    return (
-      userInfo.userName && // 이름 입력 확인
-      userInfo.userId && // ID 입력 확인
-      idExists
-      // && // ID 중복 확인 완료
-      // birthDate.year && // 생년 입력 확인
-      // birthDate.month && // 월 입력 확인
-      // birthDate.day && // 일 입력 확인
-      // isValidBirthDate() // 생년월일 유효성 확인
-    );
-  };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateUserInfo({ userName: e.target.value });
+    const newName = e.target.value;
+    if (newName.length <= 15) {
+      // 15자 제한
+      updateUserInfo({ userName: newName });
+    }
   };
 
   // ID 유효성 검사 함수
@@ -81,13 +67,34 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     setIsIdChecked(true);
   };
 
-  const handleNext = () => {
-    if (isFormComplete()) {
-      onNext();
-    } else {
-      alert("정보를 모두 입력해 주세요");
+  const handleDateChange = (date: Date | Date[]) => {
+    // date가 배열이 아닌 단일 Date 객체인 경우에만 처리
+    if (date instanceof Date) {
+      // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환
+      const formattedDate = date.toISOString().split("T")[0];
+      updateUserInfo({ birthDate: formattedDate });
     }
   };
+
+  const handleNext = () => {
+  if (!userInfo.userName?.trim()) {
+    alert("이름을 입력해주세요.");
+    return;
+  }
+  if (!userInfo.userId) {
+    alert("ID를 입력해주세요.");
+    return;
+  }
+  if (!idExists) {
+    alert("ID 중복확인을 해주세요.");
+    return;
+  }
+  if (!userInfo.birthDate) {
+    alert("생년월일을 선택해주세요.");
+    return;
+  }
+  onNext();
+};
 
   return (
     <div className={s.profileSetUpContainer}>
@@ -231,7 +238,10 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
           <Calendar
-            onChange={setSelectedDate}
+            onChange={(date) => {
+              setSelectedDate(date);
+              handleDateChange(date as Date);
+            }}
             value={selectedDate}
             formatDay={(_, date) => date.getDate().toString()}
           />
