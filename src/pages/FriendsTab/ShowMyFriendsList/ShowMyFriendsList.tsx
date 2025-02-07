@@ -3,25 +3,22 @@ import s from './ShowMyFriendsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
 
 // components
-import DeleteFriendModal from '../DeleteFriendModal/DeleteFriendModal';
+import DeleteFriendModal from '../../../components/DeleteFriendModal/DeleteFriendModal';
 
 //image files
 import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
-import poke from '../../../assets/FriendsTab/poke.svg';
-import onPoke from '../../../assets/FriendsTab/onPoke.svg';
-import pokePopupStars from '../../../assets/FriendsTab/pokePopupStars.svg';
 import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.svg';
+import SignalButton from '../../../components/SignalButton/SignalButton';
 
 interface ShowMyFriendsListProps {
     otherUser: OtherUser;
-    handleDeleteFriend: () => void;
+    handleDeleteFriend: (id: string) => void;
     onActionFriendId: string;
     setOnActionFriendId: (friendId: string) => void;
 }
 
 const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handleDeleteFriend, onActionFriendId, setOnActionFriendId }) => {
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
-  const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
   const handleGoStation = () => {
     //go to station
@@ -29,8 +26,8 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
 
   const handleOpenDeleteFriendModal = () => setIsDeleteFriendModalOpen(true);
   const handleCloseDeleteFriendModal = () => setIsDeleteFriendModalOpen(false);
-  const handleDelete = () => {
-    handleDeleteFriend();
+  const handleDelete = (id: string) => {
+    handleDeleteFriend(id);
     handleCloseDeleteFriendModal();
     setOnActionFriendId("");
   };
@@ -39,16 +36,12 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
     setOnActionFriendId("");
   };
 
-  const showPokePopup = () => {
-    setIsPokePopupVisible(true);
-    setTimeout(() => {
-      setIsPokePopupVisible(false);
-      setOnActionFriendId("");
-    }, 1500);
+  const handleSignal = (id: string) => {
+    console.log('signal', id);
   };
 
   const RenderButtons = () => {
-    if (onActionFriendId === otherUser.Id && !isPokePopupVisible) {
+    if (onActionFriendId === otherUser.Id) {
       return (
         <button
           className={s.showDeleteFriendModalButton}
@@ -57,23 +50,10 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
       );
     }
     return (
-      <>
-        {isPokePopupVisible ? (
-          <button className={s.onPokeButton}>
-            <img src={onPoke} alt="onPoke" className={s.pokeImg} />
-          </button>
-        ) : (
-          <button
-            className={s.pokeButton}
-            onClick={() => {
-              showPokePopup();
-              setOnActionFriendId(otherUser.Id);
-            }}
-          >
-            <img src={poke} alt="poke" className={s.pokeImg} />
-          </button>
-        )}
-      </>
+      <SignalButton
+        onClickSignal={() => handleSignal(otherUser.Id)}
+        name={otherUser.Name}
+      />
     );
   };
 
@@ -97,12 +77,17 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
       <div className={s.emptySpace} onClick={handleGoStation} />
       {/*============= 버튼 =============*/}
       <div className={s.buttonContainer}>
+        
         <RenderButtons />
 
         <button
           className={s.deleteFriendsButton}
           onClick={() => {
-            setOnActionFriendId(otherUser.Id);
+            if (onActionFriendId === otherUser.Id) {
+              setOnActionFriendId("");
+            }else{
+              setOnActionFriendId(otherUser.Id);
+            }
           }}>
           <img src={deleteFriendsButton} alt='deleteFriendsButton' />
         </button>
@@ -114,13 +99,6 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
           onClose={handleDeleteCancel}
           onDelete={handleDelete}
         />
-      )}
-      {isPokePopupVisible && (
-        <div className={s.pokePopup}>
-          <img src={pokePopupStars} alt='pokePopupStars' className={s.pokePopupStarsUp} />
-          {`${otherUser.Name}님을 쿡 찔렀어요!`}
-          <img src={pokePopupStars} alt='pokePopupStars' className={s.pokePopupStarsDown} />
-        </div>
       )}
     </div>
   )

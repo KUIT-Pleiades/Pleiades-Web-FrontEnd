@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import s from './SearchUsers.module.scss';
 import { useNavigate } from 'react-router-dom';
-import friendsExampleData from '../../mock/socialInfo.json';
 import pleiadesAllUsers from '../../mock/pleiadesUsers.json';
-import recentResearchHistory from '../../mock/recentSearchUsers.json';
+import friendsExampleData from '../../mock/socialInfo.json';
 
 // components
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
-import ShowSearchedUser from './ShowSearchedUser/ShowSearchedUser';
 
 // image files
-import userProfileImg from '../../assets/SearchUsers/searchedUserProfileImg.png';
-import ShowRecentSearchUsers from './ShowRecentSearchUsers/ShowRecentSearchUsers';
+import RecentSearch from './RecentSearch/RecentSearch';
+import SearchResults from './SearchResults/SearchResults';
 
 interface Friend {
     Id: string;
@@ -33,7 +31,6 @@ const SearchUsers: React.FC = () => {
     const navigate = useNavigate();
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
     const [users, setUsers] = useState<User[]>([]);
-    const [recentSearches, setRecentSearches] = useState<User[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
     const [showNoResultMessage, setShowNoResultMessage] = useState(false);
     const [showRecentSearches, setShowRecentSearches] = useState(true);
@@ -42,7 +39,6 @@ const SearchUsers: React.FC = () => {
     useEffect(() => {
         setFriendsData(friendsExampleData);
         setUsers(pleiadesAllUsers.pleiadesUsers);
-        setRecentSearches(recentResearchHistory.recentSearchUsers);
         // fetch("/src/mock/socialInfo.json")
         //     .then((res) => res.json())
         //     .then((data) => {setFriendsData(data)})
@@ -55,12 +51,7 @@ const SearchUsers: React.FC = () => {
         //     .then((res) => res.json())
         //     .then((data) => {setRecentSearches(data.recentSearchUsers)})
         //     .catch((err) => {console.error(err)});
-        }, []);
-
-    const handleRemoveRecentSearch = (id: string) => {
-        // 최근 검색 기록 삭제
-        console.log('Remove recent search:', id);
-    }
+    }, []);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -69,6 +60,7 @@ const SearchUsers: React.FC = () => {
         if(value === ''){
             setFilteredUsers([]);
             setShowRecentSearches(true);
+            setShowNoResultMessage(false);
         }else {
             const results = users.filter(user =>
                 user.Id.toLowerCase().includes(value.toLowerCase())
@@ -84,9 +76,11 @@ const SearchUsers: React.FC = () => {
     };
     const handleInputFocus = () => {
         //if(searchValue !== '') setShowRecentSearches(false);
+        setShowNoResultMessage(false);
     };
 
     const handleInputBlur = () => {
+        setShowNoResultMessage(false);
         if (searchValue === '' && filteredUsers.length === 0) {
             setShowRecentSearches(true);
         }
@@ -97,36 +91,29 @@ const SearchUsers: React.FC = () => {
 
     };
 
-    const handleRequestFriend = async (id: string, isCancelRequest: boolean) => {
-        // 친구 요청 보내거나 취소한 경우 서버에 보내는 로직
-        
-        // try {
-        //   const response = await fetch(`/api/friends/${id}`, {
-        //     method: isCancelRequest ? "DELETE" : "POST",
-        //   });
-      
-        //   if (response.ok) {
-        //     setFriendsData(prevData => {
-        //       if (!prevData) return prevData;
-      
-        //       return {
-        //         ...prevData,
-        //         MyRequests: isCancelRequest
-        //           ? prevData.MyRequests.filter(req => req.Id !== id) // 요청 취소하면 리스트에서 제거
-        //           : [...prevData.MyRequests, { Id: id, Name: "새로운 친구" }] // 요청 보내면 추가
-        //       };
-        //     });
-        //   }
-        // } catch (error) {
-        //   console.error("친구 요청 처리 중 오류 발생:", error);
-        // }
-        console.log(`Friend request ${isCancelRequest ? 'cancelled' : 'sent'} to user ${id}`);
+    const handleSendRequestFriend = async (id: string) => {
+        console.log(id); //요청 보내기
+    };
+    const handleWithdrawRequestFriend = async (id: string) => {
+        console.log(id); //요청 철회
+    };
+    const handleRefuseRequestFriend = async (id: string) => {
+        console.log(id); //요청 거절
+    };
+    const handlePoke = (id: string) => {
+        console.log(id); //쿡 찌르기
+    };
+    const handleDeleteFriend = (id: string) => {
+        console.log(id); //친구 삭제
+    }
+
+    const handleRecentSearchClick = (id: string) => {
+        setSearchValue(id);
+        setShowRecentSearches(false);
+        setFilteredUsers(users.filter(user => user.Id.toLowerCase().includes(id.toLowerCase())));
     };
 
-    // const isMyFriend = (id: string): boolean => {
-    //     return friendsData?.MyFriends.some(friend => friend.Id === id) || false;
-    // };
-    const getFriendStatus = (id: string, friendsData: FriendsData | null) => {
+    const getFriendStatus = (id: string) => {
         if (!friendsData) return { isFriend: false, isRequested: false, isReceivedRequest: false };
 
         const isFriend = friendsData.MyFriends.some(friend => friend.Id === id);
@@ -134,7 +121,7 @@ const SearchUsers: React.FC = () => {
         const isReceivedRequest = friendsData.FriendRequests.some(request => request.Id === id);
       
         return { isFriend, isRequested, isReceivedRequest };
-      };
+    };
     
     return (
         <div className={s.container}>
@@ -156,44 +143,30 @@ const SearchUsers: React.FC = () => {
                     >취소</button>
                 </div>
             </div>
-            
             {/*============================== 최근 검색 기록 ================================*/}
-            {showRecentSearches && (
-                <div className={s.recentSearchContainer}>
-                    <span className={s.recentSearchTitle}>최근 검색</span>
-                    <div className={s.separator} />
-                    {recentSearches.map(user => (
-                    <ShowRecentSearchUsers
-                        key={user.Id}
-                        id={user.Id}
-                        name={user.Name}
-                        profileImage={userProfileImg}
-                        onRemove={(id) => handleRemoveRecentSearch(id)}
-                        onClick={(id) => console.log(`Clicked user ${id}`)}
-                    />
-                    ))}
-                </div>
-            )}
+
+            {showRecentSearches && (<RecentSearch onUserClick={handleRecentSearchClick} />)}
+
             {/*================================ 검색 결과 ================================*/}
             {filteredUsers.length > 0 && (
                 <div className={s.searchResultContainer}>
-                    {filteredUsers.map(user => {
-                        const { isFriend, isRequested, isReceivedRequest } = getFriendStatus(user.Id, friendsData);
-                        return(
-                            <ShowSearchedUser
-                                key={user.Id}
-                                id={user.Id}
-                                name={user.Name}
-                                profileImage={userProfileImg}
-                                isFriend={isFriend}
-                                isRequested={isRequested}
-                                isReceivedRequest={isReceivedRequest}
-                                onRequestFriend={handleRequestFriend}
-                            />
-                        );
-                    })}
+                    <div className={s.searchResultTitle}>
+                        <span className={s.searchResultTitleText}>{`검색결과 (${filteredUsers.length})`}</span>
+                    </div>
+                    <SearchResults 
+                        filteredUsers={filteredUsers}
+                        handleSendRequestFriend={handleSendRequestFriend}
+                        handleWithdrawRequestFriend={handleWithdrawRequestFriend}
+                        handleRefuseRequestFriend={handleRefuseRequestFriend}
+                        handlePoke={handlePoke}
+                        handleDeleteFriend={handleDeleteFriend}
+                        getFriendStatus={getFriendStatus}
+                    />
                 </div>
+                
             )}
+            
+            {/*============================== 검색 결과 없음 ================================*/}
             {showNoResultMessage && (
                 <div className={s.noResultModal}>
                     <span className={s.noResultModalFirstText}>검색한 ID가 존재하지 않아요!</span>

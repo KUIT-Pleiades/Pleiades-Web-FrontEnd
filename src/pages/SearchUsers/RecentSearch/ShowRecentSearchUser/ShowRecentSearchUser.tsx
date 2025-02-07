@@ -1,19 +1,19 @@
 import React from 'react';
-import s from './ShowRecentSearchUsers.module.scss';
+import s from './ShowRecentSearchUser.module.scss';
 
-import recentSearchUserRemove from '../../../assets/SearchUsers/recentSearchUserRemove.svg';
+import recentSearchUserRemove from '../../../../assets/SearchUsers/recentSearchUserRemove.svg';
 
 interface RecentSearchUserProps {
   id: string;
   name: string;
   profileImage?: string;
   onRemove: (id: string) => void;
-  onClick: (id: string) => void;
+  onClick: () => void;
 }
 
-const ShowRecentSearchUsers: React.FC<RecentSearchUserProps> = ({ id, name, profileImage, onRemove, onClick }) => {
+const ShowRecentSearchUser: React.FC<RecentSearchUserProps> = ({ id, name, profileImage, onRemove, onClick }) => {
   return (
-    <div className={s.userContainer} onClick={() => onClick(id)}>
+    <div className={s.userContainer} onClick={() => onClick()}>
       {/* 프로필 이미지 */}
       <div className={s.profileImageContainer}>
         <img src={profileImage} alt={`${name}'s profile`} className={s.profileImage} />
@@ -29,7 +29,6 @@ const ShowRecentSearchUsers: React.FC<RecentSearchUserProps> = ({ id, name, prof
       <button onClick={(e) => {
         e.stopPropagation(); // 부모 클릭 이벤트 방지
         onRemove(id);
-        console.log('Remove button clicked');
       }} className={s.removeButton}>
         <img src={recentSearchUserRemove} alt='remove' />
       </button>
@@ -37,4 +36,4 @@ const ShowRecentSearchUsers: React.FC<RecentSearchUserProps> = ({ id, name, prof
   );
 };
 
-export default ShowRecentSearchUsers;
+export default ShowRecentSearchUser;
