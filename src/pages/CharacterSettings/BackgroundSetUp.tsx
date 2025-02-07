@@ -1,5 +1,6 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import openBtn from "../../assets/btnImg/openBtn.png"
 
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
@@ -125,18 +126,21 @@ const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
       </div>
       <div
         className={s.backgroundList}
-        onClick={() => setShowList(true)}
         style={{
           transition: "transform 0.3s ease-in-out",
-          transform: showList ? "translateY(0)" : "translateY(90%)",
+          transform: showList ? "translateY(0)" : "translateY(100%)",
           overflow: "hidden",
         }}
       >
-        <div className={s.bottomBar}>
-          <div className={s.bar}></div>
-        </div>
         {showList && <BackgroundTab />}
       </div>
+      {!showList && (
+        <div className={s.bottomBar}>
+          <div className={s.openBtn} onClick={() => setShowList(true)}>
+            <img src={openBtn} alt="" style={{width: "14px"}} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

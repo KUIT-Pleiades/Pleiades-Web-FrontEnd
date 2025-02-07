@@ -105,8 +105,9 @@ p {
 
   img {
     position: absolute;
-    width: 90%;
-    top: 20%;
+    height: 125%;
+    max-width: 100%;
+    top: 30%;
   }
 }
 
@@ -140,18 +141,22 @@ p {
 }
 
 .backgroundList {
+  position: absolute;
   background-color: #FFF;
   width: 100%;
-  height: 30%;
-  margin-top: auto;
+  height: 16%;
+  top: 84%;
   z-index: 10;
 }
 
 .bottomBar {
-  height: 20px;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
 
   .bar {
     width: 20%;
@@ -160,4 +165,14 @@ p {
     border-radius: 100px;
     background: #C9C6C9;
   }
+}
+
+.openBtn{
+  width: 45px;
+    height: 30px;
+    border-radius: 30px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
