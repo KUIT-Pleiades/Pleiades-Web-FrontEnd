@@ -137,7 +137,7 @@ const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
       {!showList && (
         <div className={s.bottomBar}>
           <div className={s.openBtn} onClick={() => setShowList(true)}>
-            <img src={openBtn} alt="" style={{width: "14px"}} />
+            <img src={openBtn} alt="" style={{width: "14px", marginTop:"9px"}} />
           </div>
         </div>
       )}
