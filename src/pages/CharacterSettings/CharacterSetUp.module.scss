@@ -72,9 +72,10 @@ p {
   justify-content: center;
   width: 100%;
   height: 100%;
+
   img {
     position: absolute;
-    width: 70%;
+    height: 95%;
     top: 15%;
   }
 }
@@ -83,21 +84,27 @@ p {
 .characterSkin {
   z-index: 1;
 }
+
 .characterHair {
   z-index: 2;
 }
+
 .characterShoes {
   z-index: 3;
 }
+
 .characterBottom {
   z-index: 4;
 }
+
 .characterTop {
   z-index: 5;
 }
+
 .characterFace {
   z-index: 6;
 }
+
 .characterItem {
   z-index: 7;
 }
@@ -107,7 +114,8 @@ p {
   left: 50%;
   top: 10%;
   transform: translateX(-50%);
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
   flex-shrink: 0;
   z-index: -1;
 }
@@ -128,7 +136,7 @@ p {
   width: 100%;
   height: 40%;
   bottom: 0px;
-  margin-bottom: 15px;
+  margin-bottom: 5%;
   z-index: 8;
 }
 

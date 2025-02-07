@@ -1,7 +1,11 @@
+import Calendar from "react-calendar";
 import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import pokePopupStars from "../../assets/FriendsTab/pokePopupStars.svg";
+
+
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -10,11 +14,6 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
-// interface BirthDateType {
-//   year: string;
-//   month: string;
-//   day: string;
-// }
 
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -23,28 +22,24 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const [buttonText, setButtonText] = useState<string>("중복확인");
   const [idCheckMessage, setIdCheckMessage] = useState<string>("");
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
-  // const [birthDate, setBirthDate] = useState<BirthDateType>({
-  //   year: "",
-  //   month: "",
-  //   day: "",
-  // });
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
-  const isFormComplete = () => {
-    return (
-      userInfo.userName && // 이름 입력 확인
-      userInfo.userId && // ID 입력 확인
-      idExists
-      // && // ID 중복 확인 완료
-      // birthDate.year && // 생년 입력 확인
-      // birthDate.month && // 월 입력 확인
-      // birthDate.day && // 일 입력 확인
-      // isValidBirthDate() // 생년월일 유효성 확인
-    );
-  };
+  type DatePiece = Date | null;
+  type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateUserInfo({ userName: e.target.value });
-  };
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
+
+
+  const handleNameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newName = e.target.value.trim();
+      if (newName.length <= 15) {
+        updateUserInfo({ userName: newName });
+      }
+    },
+    [updateUserInfo]
+  );
 
   // ID 유효성 검사 함수
   const validateId = (id: string): boolean => {
@@ -53,18 +48,20 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     return idRegex.test(id);
   };
 
-  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newId = e.target.value;
-    updateUserInfo({ userId: newId });
-    setIsValidId(validateId(newId));
-    // ID가 변경되면 중복확인 상태 초기화
-    setIdExists(false);
-    setButtonText("중복확인");
-  };
+  const handleIdChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newId = e.target.value;
+      updateUserInfo({ userId: newId });
+      setIsValidId(validateId(newId));
+      setIdExists(false);
+      setButtonText("중복확인");
+    },
+    [updateUserInfo]
+  );
 
-  const idCheck = () => {
+  const memoizedIdCheck = useCallback(() => {
     setIdExists(!idExists);
-    setButtonText(idExists ? "중복확인" : "사용가능"); // 아직 서버와 연결되지 않아서 단순히 디자인만 구현, 바뀌기만 함
+    setButtonText(idExists ? "중복확인" : "사용가능");
     if (!idExists) {
       setIdExists(true);
       setButtonText("사용가능");
@@ -75,81 +72,48 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       setIdCheckMessage("이미 사용중인 ID입니다.");
     }
     setIsIdChecked(true);
+  }, [idExists]);
+
+
+  const handleDateChange = (date: SelectedDate) => {
+    // date가 배열이 아닌 단일 Date 객체인 경우에만 처리
+    if (date instanceof Date) {
+      // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환
+      const formattedDate = date.toISOString().split("T")[0];
+      updateUserInfo({ birthDate: formattedDate });
+    }
   };
-
-  //   // 초기 상태
-  // isValidId = false (버튼 비활성화)
-  // idExists = false (중복확인 안 된 상태)
-  // buttonText = "중복확인"
-
-  // // ID 입력이 유효할 때
-  // isValidId = true (버튼 활성화)
-  // idExists = false (아직 중복확인 안 함)
-  // buttonText = "중복확인"
-
-  // // 중복확인 버튼 클릭 후
-  // isValidId = true (버튼 활성화 유지)
-  // idExists = true (중복확인 완료)
-  // buttonText = "사용가능"
-
-  // 생년월일 입력 핸들러
-  // const handleBirthDateChange = (
-  //   e: React.ChangeEvent<HTMLInputElement>,
-  //   type: keyof BirthDateType
-  // ) => {
-  //   let value = e.target.value.replace(/[^0-9]/g, "");
-
-  //   // 길이 제한
-  //   if (type === "year" && value.length > 4) {
-  //     value = value.slice(0, 4);
-  //   }
-  //   if ((type === "month" || type === "day") && value.length > 2) {
-  //     value = value.slice(0, 2);
-  //   }
-
-  //   // 먼저 입력값 업데이트
-  //   setBirthDate((prev) => ({
-  //     ...prev,
-  //     [type]: value,
-  //   }));
-
-  //   const newBirthDate = {
-  //     ...birthDate,
-  //     [type]: value,
-  //   };
-
-  //   if (newBirthDate.year && newBirthDate.month && newBirthDate.day) {
-  //     try {
-  //       const birthDateTime = new Date(
-  //         Number(newBirthDate.year),
-  //         Number(newBirthDate.month) - 1,
-  //         Number(newBirthDate.day)
-  //       );
-
-  //       if (!isNaN(birthDateTime.getTime())) {
-  //         updateCharacter({ birthDate: birthDateTime });
-  //       }
-  //     } catch (error) {
-  //       console.error("Invalid date:", error);
-  //     }
-  //   }
-  // };
-
-  // const isValidBirthDate = () => {
-  //   const date = new Date(
-  //     Number(birthDate.year),
-  //     Number(birthDate.month) - 1,
-  //     Number(birthDate.day)
-  //   );
-  //   return !isNaN(date.getTime());
-  // };
+  
 
   const handleNext = () => {
-    if (isFormComplete()) {
-      onNext();
-    } else {
-      alert("정보를 모두 입력해 주세요");
-    }
+  if (!userInfo.userName?.trim()) {
+    setErrorMessage("이름을 입력해주세요.");
+    showErrorPopup();
+    return;
+  }
+  if (!userInfo.userId) {
+    setErrorMessage("ID를 입력해주세요."); 
+    showErrorPopup();
+    return;
+  }
+  if (!idExists) {
+    setErrorMessage("ID 중복확인이 필요합니다."); 
+    showErrorPopup();
+    return;
+  }
+  if (!userInfo.birthDate) {
+    setErrorMessage("생년월일을 선택해주세요."); 
+    showErrorPopup();
+    return;
+  }
+    onNext();
+  };
+  
+  const showErrorPopup = () => {
+    setIsPokePopupVisible(true);
+    setTimeout(() => {
+      setIsPokePopupVisible(false);
+    }, 1500);
   };
 
   return (
@@ -274,7 +238,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             placeholder="영문, 숫자 조합 4-10자리"
             className={s.idInput}
           />
-          {isIdChecked && ( // 중복 확인 버튼을 눌렀을 때만 메시지 표시
+          {isIdChecked && (
             <div
               className={`${s.idCheckMessage} ${
                 idExists ? s.available : s.unavailable
@@ -284,7 +248,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             </div>
           )}
           <button
-            onClick={idCheck}
+            onClick={memoizedIdCheck}
             className={`${s.checkBtn} ${idExists ? s.available : ""}`}
             disabled={!isValidId}
           >
@@ -293,31 +257,31 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         </div>
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
-          {/* <div className={s.ageInput}>
-            <input
-              type="text"
-              value={birthDate.year}
-              onChange={(e) => handleBirthDateChange(e, "year")}
-              className={s.yearInput}
-            />
-            <div>년</div>
-            <div className={s.divider}>/</div>
-            <input
-              type="text"
-              value={birthDate.month}
-              onChange={(e) => handleBirthDateChange(e, "month")}
-            />
-            <div>월</div>
-            <div className={s.divider}>/</div>
-            <input
-              type="text"
-              value={birthDate.day}
-              onChange={(e) => handleBirthDateChange(e, "day")}
-            />
-            <div>일</div>
-          </div> */}
+          <Calendar
+            onChange={(date) => {
+              setSelectedDate(date);
+              handleDateChange(date as Date);
+            }}
+            value={selectedDate}
+            formatDay={(_, date) => date.getDate().toString()}
+          />
         </div>
       </div>
+      {isPokePopupVisible && (
+        <div className={s.pokePopup}>
+          <img
+            src={pokePopupStars}
+            alt="pokePopupStars"
+            className={s.pokePopupStarsUp}
+          />
+          {`${errorMessage}`}
+          <img
+            src={pokePopupStars}
+            alt="pokePopupStars"
+            className={s.pokePopupStarsDown}
+          />
+        </div>
+      )}
     </div>
   );
 };

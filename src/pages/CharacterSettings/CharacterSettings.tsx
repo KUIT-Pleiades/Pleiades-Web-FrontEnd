@@ -10,8 +10,8 @@ const CharacterSettings = () => {
   return (
     <div
       style={{
-        width: "clamp(375px, 100dvw, 428px)",
-        height: "100dvh",
+        width: "clamp(320px, 100dvw, 428px)",
+        height: "max(667px, min(100dvh, 926px))",
         position: "relative",
       }}
     >
