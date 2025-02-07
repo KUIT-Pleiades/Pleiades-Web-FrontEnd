@@ -76,14 +76,14 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
 
   const handleDateChange = (date: SelectedDate) => {
-    // date가 배열이 아닌 단일 Date 객체인 경우에만 처리
     if (date instanceof Date) {
-      // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환
-      const formattedDate = date.toISOString().split("T")[0];
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
       updateUserInfo({ birthDate: formattedDate });
     }
   };
-  
 
   const handleNext = () => {
   if (!userInfo.userName?.trim()) {
