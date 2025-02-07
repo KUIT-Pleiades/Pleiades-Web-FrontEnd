@@ -11,7 +11,7 @@ const CharacterSettings = () => {
     <div
       style={{
         width: "clamp(320px, 100dvw, 428px)",
-        height: "max(667px, min(100dvh, 926px))",
+        height: "max(600px, min(100dvh, 926px))",
         position: "relative",
         overflow: "hidden",
       }}
