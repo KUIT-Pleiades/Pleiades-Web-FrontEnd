@@ -13,6 +13,7 @@ const CharacterSettings = () => {
         width: "clamp(320px, 100dvw, 428px)",
         height: "max(667px, min(100dvh, 926px))",
         position: "relative",
+        overflow: "hidden",
       }}
     >
       {step === 0 && <CharacterSetUp onNext={() => setStep(1)} />}

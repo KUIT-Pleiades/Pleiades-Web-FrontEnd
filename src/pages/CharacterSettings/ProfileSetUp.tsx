@@ -3,7 +3,7 @@ import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import pokePopupStars from "../../assets/FriendsTab/pokePopupStars.svg";
+import popupStars from "../../assets/popupStars.svg";
 
 
 
@@ -76,14 +76,14 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
 
   const handleDateChange = (date: SelectedDate) => {
-    // date가 배열이 아닌 단일 Date 객체인 경우에만 처리
     if (date instanceof Date) {
-      // 날짜를 'YYYY-MM-DD' 형식의 문자열로 변환
-      const formattedDate = date.toISOString().split("T")[0];
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
       updateUserInfo({ birthDate: formattedDate });
     }
   };
-  
 
   const handleNext = () => {
   if (!userInfo.userName?.trim()) {
@@ -270,13 +270,13 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       {isPokePopupVisible && (
         <div className={s.pokePopup}>
           <img
-            src={pokePopupStars}
+            src={popupStars}
             alt="pokePopupStars"
             className={s.pokePopupStarsUp}
           />
           {`${errorMessage}`}
           <img
-            src={pokePopupStars}
+            src={popupStars}
             alt="pokePopupStars"
             className={s.pokePopupStarsDown}
           />
