@@ -21,8 +21,8 @@ const initialUserInfo: UserInfo = {
   userName: "",
   birthDate: "",
   starBackground: "background_01",
-  character: "",
-  profile: "",
+  character: "QmWC4899NqLPTqMSVFNZS5qzSUvCH1agcCdRzRrFe1um85",
+  profile: "QmURNcGX98UAecKyEELM39117X7RwQZE8B1dtm56B4vxEJ",
   face: {
     skinColor: "skin_01",
     hair: "hair_01",
