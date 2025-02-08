@@ -1,14 +1,119 @@
 .container {
+  position: relative;
   background: #1b142b;
   width: 100dvw;
   height: 100dvh;
   background-size: cover;
   background-repeat: no-repeat;
-  overflow: hidden;
+  display: flex;
 }
 
 .background {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100dvw;
-  height: 100dvh;
+  height: 91dvh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 54dvh;
+  background: linear-gradient(
+    180deg,
+    rgba(37, 32, 43, 0.85) 0%,
+    rgba(37, 32, 43, 0.45) 53.99%,
+    rgba(37, 32, 43, 0) 97.54%
+  );
+}
+
+.title {
+  z-index: 1;
+  position: absolute;
+  top: calc(3.5em + 27px);
+  left: 1.5em;
+  width: calc(100dvw - 2em);
+  display: flex;
+  flex-direction: row;
+}
+
+.planet {
+  width: 25.686px;
+  height: 18.479px;
+  flex-shrink: 0;
+}
+
+.owner {
+  margin-left: 6px;
+  color: #fff;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.32px;
+}
+
+@keyframes dropMotion {
+  0% {
+    transform: translate(-50%, -100vh);
+  }
+  20% {
+    transform: translate(-50%, -40%);
+  }
+  40% {
+    transform: translate(-50%, -58%);
+  }
+  60% {
+    transform: translate(-50%, -48%);
+  }
+  80% {
+    transform: translate(-50%, -52%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+.character {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  height: 65dvh;
+  aspect-ratio: 502/717;
+  animation-name: dropMotion;
+  animation-duration: 0.8s;
+  animation-iteration-count: 1;
+}
+
+@keyframes jumping {
+  0% {
+    transform: translate(0, 0.8em);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.diary {
+  position: absolute;
+  width: 3.5em;
+  height: 3.5em;
+  z-index: 1;
+  top: 8em;
+  right: 2em;
+  animation-name: jumping;
+  animation-duration: 1.5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
 }

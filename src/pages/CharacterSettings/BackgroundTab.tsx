@@ -22,13 +22,13 @@ const BackgroundTab = () => {
     <div className={s.tabContainer}>
       <div className={s.tabContent}>
         <div className={s.gridItems}>
-          {starBackImages.map((image, idx) => (
+          {starBackImages.slice(0, 4).map((image, idx) => (
             <div
               key={idx}
               className={`${s.item} ${
                 image.starBackground === userInfo.starBackground
                   ? s.selected
-                  : ""
+                  : ""  
               }`}
               onClick={() => handleImageClick(image)}
             >
