@@ -1,26 +1,26 @@
 {
   "userId": "char1",
   "userName": "Emma",
-  "birthDate": "2002-02-09",
+  "birthDate": "1998-01-01",
   "backgroundName": "park",
   "face": {
-    "skinColor": "white",
-    "hair": "ponytail",
-    "expression": "smile"
+    "skinColor": "/images/skin/white.png",
+    "hair": "/images/hair/ponytail.png",
+    "expression": "/images/expression/smile.png"
   },
   "outfit": {
-    "top": "t-shirt",
-    "bottom": "jeans",
-    "shoes": "sneakers"
+    "top": "/images/outfit/tshirt.png",
+    "bottom": "/images/outfit/jeans.png",
+    "shoes": "/images/outfit/sneakers.png"
   },
   "item": {
-    "head": "none",
-    "eyes": "none",
-    "ears": "none",
-    "neck": "necklace",
-    "leftWrist": "none",
-    "rightWrist": "none",
-    "leftHand": "none",
-    "rightHand": "none"
+    "head": "",
+    "eyes": "",
+    "ears": "",
+    "neck": "/images/accessories/necklace.png",
+    "leftWrist": "",
+    "rightWrist": "",
+    "leftHand": "",
+    "rightHand": ""
   }
 }
