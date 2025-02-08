@@ -17,12 +17,12 @@ interface CharacterStore {
 
 const initialUserInfo: UserInfo = {
   // 초기 캐릭터 상태 -> 디자이너, pm 과 상의
-  userId: "",
+  userId: "1",
   userName: "",
   birthDate: "",
   starBackground: "background_01",
-  character: "",
-  profile: "",
+  character: "QmWC4899NqLPTqMSVFNZS5qzSUvCH1agcCdRzRrFe1um85",
+  profile: "QmURNcGX98UAecKyEELM39117X7RwQZE8B1dtm56B4vxEJ",
   face: {
     skinColor: "skin_01",
     hair: "hair_01",

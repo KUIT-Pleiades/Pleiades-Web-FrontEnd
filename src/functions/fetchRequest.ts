@@ -14,13 +14,17 @@ export const fetchRequest = async <T>(
   const requestURL = `${BASEURL}${requestPoint}`;
   const { authorization, setToken } = useAuth.getState();
 
-  function setRequest(method: Methods, body: object | null) {
+  function setRequest(
+    method: Methods,
+    body: object | null,
+    token: string | null
+  ) {
     const credentials: RequestCredentials | undefined = "include";
     if (body !== null) {
       const request = {
         method: method,
         headers: {
-          Authorization: `Bearer ${authorization}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         credentials: credentials,
@@ -43,29 +47,31 @@ export const fetchRequest = async <T>(
   async function refresh(): Promise<AuthToken | null> {
     // access 토큰 refresh 받는 url
     const refreshUrl = `${BASEURL}/auth/refresh`;
-    const req = setRequest("GET", null);
+    const req = setRequest("GET", null, authorization);
     const response = await fetch(refreshUrl, req);
     if (response.headers.get("content-type") !== "application/json")
       return null;
     return response.json();
   }
 
-  const req = setRequest(method, body);
-  const response1 = await fetch(requestURL, req);
-  if (response1.headers.get("content-type") !== "application/json") {
+  let req = setRequest(method, body, authorization);
+  let response = await fetch(requestURL, req);
+  if (response.headers.get("content-type") !== "application/json") {
     return null;
   }
-  if (response1.status === 401) {
+  if (response.status === 401) {
     const refreshedAccessToken = await refresh();
     if (refreshedAccessToken !== null) {
       setToken(refreshedAccessToken.accessToken);
-      const response2 = await fetch(requestURL, req);
-      return response2.json() as Promise<T>;
+      const newAuthorization = useAuth.getState().authorization;
+      req = setRequest(method, body, newAuthorization);
+      response = await fetch(requestURL, req);
+      return response.json() as Promise<T>;
     } else {
       return null;
     }
-  } else if (response1.status === 403) {
+  } else if (response.status === 403) {
     return null; // 재 로그인 필요
   }
-  return response1.json() as Promise<T>;
+  return response.json() as Promise<T>;
 };
