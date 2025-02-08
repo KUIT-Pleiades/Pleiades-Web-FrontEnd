@@ -6,32 +6,25 @@
     margin: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #F8F8FA;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .headContainer{
     width: 100%;
-    height: 9%;
+    height: 11%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: flex-end;
     padding: 0;
     margin: 0;
-    padding-bottom: 18px;
     background-color: #FFFFFF;
-    margin-bottom: 18px;
-}
-.title{
-    padding: 0;
-    margin: 0;
-}
-.titleName{
-    font-family: "Pretendard";
-    font-size: 16px;
-    color: #1B142A;
-    font-weight: bold;
+    margin-bottom: 1.25rem;
 }
 
 .searchSection{
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -59,26 +52,63 @@
     letter-spacing: -0.01625rem;
 }
 
-.instruction{
-    font-family: "Pretendard";
-    width: 100%;
+.searchResultContainer{
+    width: 93%;
+    max-height: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 0;
+}
+
+.searchResultTitle{
+    width: 100%;
+    padding-bottom: 0.62rem;
+    &Text{
+        color: var(--gray-22, #444);
+        font-family: Pretendard;
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01625rem;
+    }
+}
+
+.noResultModal{
+    width: 50%;
+    height: 4rem;
     position: absolute;
-    bottom:35%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+    box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
+    background-color: #EDEFFF;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
-.instructionMessage{
-    font-family: "Pretendard";
-    font-weight: 400;
-    font-size: 13px;
-    color: #444444;
-    margin-bottom: 60px;
-}
-
-.searchResultContainer{
-    padding-top: 8px;
-}
+    &FirstText{
+        color: var(--gray-22, #444);
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.6875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01375rem;
+        margin-top: 0.75rem;
+    }
+    &SecondText{
+        color: var(--gray-11, #17151C);
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 0.75rem;
+    }
+  }

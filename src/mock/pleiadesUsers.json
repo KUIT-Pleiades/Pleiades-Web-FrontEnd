@@ -3,30 +3,30 @@
         {
             "Id": "friend12",
             "Name": "길봉태"
-        },
-        {
+          },
+          {
+            "Id": "friend13",
+            "Name": "김철수"
+          },
+          {
             "Id": "friend1",
             "Name": "홍길동"
-        },
-        {
+          },
+          {
             "Id": "friend2",
             "Name": "이영희"
-        },
-        {
-            "Id": "friend3",
-            "Name": "박지민"
-        },
-        {
-            "Id": "friend8",
+          },
+          {
+            "Id": "friend80",
             "Name": "박창식"
-        },
-        {
-            "Id": "user6",
-            "Name": "바길동"
-        },
-        {
-            "Id": "user7",
-            "Name": "사길동"
-        }
+          },
+          {
+            "Id": "friend81",
+            "Name": "윤도현"
+          },
+          {
+            "Id": "frexex",
+            "Name": "김종국"
+          }
     ]
 }

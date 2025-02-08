@@ -1,0 +1,33 @@
+.recentSearchContainer{
+    width: 90%;
+}
+.recentSearchTitle{
+    color: var(--gray-22, #444);
+    font-family: "Pretendard";
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01625rem;
+}
+.separator{
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-5-main, #C0B9DB);
+    margin-top: 0.62rem;
+    margin-bottom: 01.13rem;
+}
+.noRecentSearchContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.noRecentSearch{
+    color: var(--gray-22, #444);
+    font-family: "Pretendard";
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01375rem;
+}
