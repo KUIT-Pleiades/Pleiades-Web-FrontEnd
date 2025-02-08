@@ -3,7 +3,7 @@ import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import pokePopupStars from "../../assets/FriendsTab/pokePopupStars.svg";
+import popupStars from "../../assets/popupStars.svg";
 
 
 
@@ -270,13 +270,13 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       {isPokePopupVisible && (
         <div className={s.pokePopup}>
           <img
-            src={pokePopupStars}
+            src={popupStars}
             alt="pokePopupStars"
             className={s.pokePopupStarsUp}
           />
           {`${errorMessage}`}
           <img
-            src={pokePopupStars}
+            src={popupStars}
             alt="pokePopupStars"
             className={s.pokePopupStarsDown}
           />
