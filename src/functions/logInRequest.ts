@@ -83,7 +83,7 @@ export async function autoLogInRequest() {
     const newAccessToken: AuthToken = await refreshResponse.json();
     setToken(newAccessToken.accessToken);
 
-    const { authorization: newAuthorization } = useAuth.getState();
+    const newAuthorization = useAuth.getState().authorization;
     const response2 = await fetch(requestURL, {
       method: "GET",
       headers: {
