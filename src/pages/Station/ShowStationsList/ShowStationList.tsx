@@ -1,26 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import s from './ShowStationList.module.scss';
+import { useNavigate } from 'react-router-dom';
+
+import characterData from '../../../mock/character1.json';
+import stationsData from '../../../mock/myStations.json';
 
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import { Character, Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
+import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 
 const ShowStationList: React.FC = () => {
   const [character, setCharacter] = useState<Character | null>(null);
   const [stations, setStations] = useState<Stations | null>(null);
   const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
+  const [isSearchStationModalVisible, setIsSearchStationModalVisible] = useState(false);
+  const navigate = useNavigate();
+  
+  const [searchValue, setSearchValue] = useState('');
+
+  const closeSearchStationModal = () => {
+    setIsSearchStationModalVisible(false);
+    setSearchValue('');
+  };
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('검색 제출:', searchValue);
+    // 여기에 검색 실행 로직 작성
+  };
 
   useEffect(() => {
-    fetch("/src/mock/character1.json")
-      .then((res) => res.json())
-      .then((data) => {setCharacter(data)})
-      .catch((err) => {console.error(err)});
-    fetch("/src/mock/myStations.json")
-      .then((res) => res.json())
-      .then((data) => {setStations(data)})
-      .catch((err) => {console.error(err)});
+    setCharacter(characterData);
+    setStations(stationsData);
+    // fetch("/src/mock/character1.json")
+    //   .then((res) => res.json())
+    //   .then((data) => {setCharacter(data)})
+    //   .catch((err) => {console.error(err)});
+    // fetch("/src/mock/myStations.json")
+    //   .then((res) => res.json())
+    //   .then((data) => {setStations(data)})
+    //   .catch((err) => {console.error(err)});
   }, []);
 
   const sortedStations = React.useMemo(() => {
@@ -42,10 +64,16 @@ const ShowStationList: React.FC = () => {
         <div className={s.title}>
           <div className={s.titleText}>{character?.userName}님 어디로 떠나볼까요?</div>
           <div className={s.titleButtons}>
-            <button className={s.searchStationButton}>
+            <button
+              className={s.searchStationButton}
+              onClick={() => setIsSearchStationModalVisible(true)}
+            >
               <img src={searchIcon} alt="searchIcon" />
             </button>
-            <button className={s.createStationButton}>
+            <button
+              className={s.createStationButton}
+              onClick={() => {navigate("/station/createstation");}}
+            >
               <img src={createIcon} alt="createIcon" />
             </button>
           </div>
@@ -77,7 +105,15 @@ const ShowStationList: React.FC = () => {
           ))}
         </div>
       </div>
-      
+      {isSearchStationModalVisible && (
+        <SearchStationModal
+          name={character?.userName}
+          handleSubmit={handleSubmit}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          handleCloseModal={closeSearchStationModal}
+        />
+      )}
     </div>
   )
 }
