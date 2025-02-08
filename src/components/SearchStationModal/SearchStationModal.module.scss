@@ -1,0 +1,100 @@
+.modalOverlay {
+    background: rgba(17, 14, 17, 0.70);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    border-radius: 0.63rem;
+    width: 72dvw;
+    padding-bottom: 1.62rem;
+    padding-top: 4.62rem;
+    background-image: url("../../assets/StationList/searchStationModalBackground.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &Icon {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &Close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        margin-top: 0.81rem;
+        margin-right: 0.65rem;
+    }
+
+    &Title {
+        color: #FFF;
+        font-family: "ElectricalSafety";
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 1.69rem;
+    }
+
+    &Search {
+        width: 78%;
+        height: 2.5rem;
+        border: 1px solid #BEAADD;
+        border-radius: 3.13rem;
+
+    }
+    &Input {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        height: 2.5rem;
+        color: #FFF;
+        text-align: center;
+        color: #FFF;
+        font-family: "ElectricalSafety";
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        &::placeholder{
+            color: var(--Color-4, #BEAADD);
+            font-family: "Pretendard";
+            font-size: 0.8125rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-align: center;
+        }
+        &:focus{
+            outline: none;
+            &::placeholder{
+                color: transparent;
+            }
+        }
+
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration,
+        &::-webkit-search-results-button,
+        &::-webkit-search-results-decoration {
+        display: none;
+        }
+        
+        &::-ms-clear {
+        display: none;
+        }
+    }
+}

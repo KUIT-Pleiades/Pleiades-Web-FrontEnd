@@ -14,6 +14,7 @@ import CharacterSettings from "./pages/CharacterSettings/CharacterSettings";
 import Setting from "./pages/Setting/Setting";
 import Market from "./pages/Market/Market";
 import MyStar from "./pages/Home/MyStar";
+import CreateStation from "./pages/Station/CreateStation/CreateStation";
 
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="setting" element={<Setting />}></Route>
           <Route path="station" element={<Station />}>
             <Route path="stationlist" element={<ShowStationList />} />
+            <Route path="createstation" element={<CreateStation />} />
           </Route>
           <Route path="friendtab" element={<FriendsTab />}></Route>
           <Route path="searchusers" element={<SearchUsers />}></Route>

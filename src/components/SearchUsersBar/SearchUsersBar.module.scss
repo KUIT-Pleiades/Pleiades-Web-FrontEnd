@@ -48,9 +48,13 @@
     color: #FFFFFF;
 }
 .searchInput::placeholder{
-    color: #FFFFFF;
+    color: #FFF;
     font-family: "Pretendard";
-    font-size: 13px;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01625rem;
 }
 .searchInput:focus{
     outline: none;
