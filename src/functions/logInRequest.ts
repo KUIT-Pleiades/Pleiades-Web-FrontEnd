@@ -89,11 +89,10 @@ export async function autoLogInRequest() {
     const newAccessToken: AuthToken = await refreshResponse.json();
     setToken(newAccessToken.accessToken);
 
-    const newAuthorization = useAuth.getState().authorization;
     const response2 = await fetch(requestURL, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${newAuthorization}`,
+        Authorization: `Bearer ${newAccessToken.accessToken}`,
         "Content-Type": "application/json",
       },
       credentials: "include",
