@@ -24,7 +24,7 @@ return (
     <div className={s.modalOverlay}>
         <div className={s.modal}>
             <div className={s.modalIcon}>
-                <img src={searchStationModalIcon} alt='searchStationModalIcon' />
+                <img src={searchStationModalIcon} alt='searchStationModalIcon' width={195} />
             </div>
             <button
                 className={s.modalClose}
