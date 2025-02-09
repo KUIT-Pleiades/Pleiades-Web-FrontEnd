@@ -47,8 +47,13 @@ export const fetchRequest = async <T>(
   async function refresh(): Promise<AuthToken | null> {
     // access 토큰 refresh 받는 url
     const refreshUrl = `${BASEURL}/auth/refresh`;
-    const req = setRequest("GET", null, authorization);
-    const response = await fetch(refreshUrl, req);
+    const response = await fetch(refreshUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
     if (response.headers.get("content-type") !== "application/json")
       return null;
     return response.json();
@@ -63,8 +68,7 @@ export const fetchRequest = async <T>(
     const refreshedAccessToken = await refresh();
     if (refreshedAccessToken !== null) {
       setToken(refreshedAccessToken.accessToken);
-      const newAuthorization = useAuth.getState().authorization;
-      req = setRequest(method, body, newAuthorization);
+      req = setRequest(method, body, refreshedAccessToken.accessToken);
       response = await fetch(requestURL, req);
       return response.json() as Promise<T>;
     } else {
