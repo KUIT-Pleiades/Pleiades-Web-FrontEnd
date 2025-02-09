@@ -59,7 +59,7 @@ export const fetchRequest = async <T>(
   if (response.headers.get("content-type") !== "application/json") {
     return null;
   }
-  if (response.status === 401) {
+  if (response.status === 401 || response.status === 428) {
     const refreshedAccessToken = await refresh();
     if (refreshedAccessToken !== null) {
       setToken(refreshedAccessToken.accessToken);
