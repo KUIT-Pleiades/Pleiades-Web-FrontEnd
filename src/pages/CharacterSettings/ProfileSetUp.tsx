@@ -4,8 +4,7 @@ import characterBackground from "../../assets/backgroundImg/characterBackground.
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import popupStars from "../../assets/popupStars.svg";
-
-
+import { fetchRequest } from "../../functions/fetchRequest";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -14,6 +13,10 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
+interface IdCheckResponse {
+  available: boolean;
+  message: string;
+}
 
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -29,7 +32,6 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
-
 
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +50,29 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     return idRegex.test(id);
   };
 
+  const checkDuplicateId = async (id: string) => {
+    try {
+      const response = await fetchRequest<IdCheckResponse>(
+        `/auth/checkId?userId=${id}`,
+        "GET",
+        null
+      );
+
+      if (response === null) {
+        setIdCheckMessage("서버 연결에 실패했습니다.");
+        return false;
+      }
+
+      // 응답 메시지 사용
+      setIdCheckMessage(response.message);
+      return response.available;
+    } catch (error) {
+      console.error("ID 중복확인 오류:", error);
+      setIdCheckMessage("중복확인 중 오류가 발생했습니다.");
+      return false;
+    }
+  };
+
   const handleIdChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newId = e.target.value;
@@ -59,21 +84,23 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     [updateUserInfo]
   );
 
-  const memoizedIdCheck = useCallback(() => {
-    setIdExists(!idExists);
-    setButtonText(idExists ? "중복확인" : "사용가능");
-    if (!idExists) {
-      setIdExists(true);
-      setButtonText("사용가능");
-      setIdCheckMessage("사용 가능한 ID입니다.");
-    } else {
-      setIdExists(false);
-      setButtonText("중복확인");
-      setIdCheckMessage("이미 사용중인 ID입니다.");
+  const memoizedIdCheck = useCallback(async () => {
+    if (!userInfo.userId) {
+      setIdCheckMessage("ID를 입력해주세요.");
+      return;
     }
-    setIsIdChecked(true);
-  }, [idExists]);
 
+    if (!isValidId) {
+      setIdCheckMessage("올바른 ID 형식이 아닙니다.");
+      return;
+    }
+
+    const isAvailable = await checkDuplicateId(userInfo.userId);
+
+    setIdExists(isAvailable);
+    setButtonText(isAvailable ? "사용가능" : "중복확인");
+    setIsIdChecked(true);
+  }, [userInfo.userId, isValidId]);
 
   const handleDateChange = (date: SelectedDate) => {
     if (date instanceof Date) {
@@ -86,29 +113,29 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   };
 
   const handleNext = () => {
-  if (!userInfo.userName?.trim()) {
-    setErrorMessage("이름을 입력해주세요.");
-    showErrorPopup();
-    return;
-  }
-  if (!userInfo.userId) {
-    setErrorMessage("ID를 입력해주세요."); 
-    showErrorPopup();
-    return;
-  }
-  if (!idExists) {
-    setErrorMessage("ID 중복확인이 필요합니다."); 
-    showErrorPopup();
-    return;
-  }
-  if (!userInfo.birthDate) {
-    setErrorMessage("생년월일을 선택해주세요."); 
-    showErrorPopup();
-    return;
-  }
+    if (!userInfo.userName?.trim()) {
+      setErrorMessage("이름을 입력해주세요.");
+      showErrorPopup();
+      return;
+    }
+    if (!userInfo.userId) {
+      setErrorMessage("ID를 입력해주세요.");
+      showErrorPopup();
+      return;
+    }
+    if (!idExists) {
+      setErrorMessage("ID 중복확인이 필요합니다.");
+      showErrorPopup();
+      return;
+    }
+    if (!userInfo.birthDate) {
+      setErrorMessage("생년월일을 선택해주세요.");
+      showErrorPopup();
+      return;
+    }
     onNext();
   };
-  
+
   const showErrorPopup = () => {
     setIsPokePopupVisible(true);
     setTimeout(() => {
