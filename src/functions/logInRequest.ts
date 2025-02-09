@@ -10,7 +10,13 @@ export function kakaoLogInRedirect() {
 export async function kakaoLogInRequest(emailhash: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/kakao/temp?hash=${emailhash}`;
-  const response = await fetch(requestURL, { method: "GET" });
+  const response = await fetch(requestURL, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
   const status = response.status;
   if (status == 401) {
     //다시 로그인하세요 모달
