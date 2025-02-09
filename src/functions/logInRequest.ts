@@ -76,7 +76,6 @@ export async function autoLogInRequest() {
     const refreshResponse = await fetch(refreshURL, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${authorization}`,
         "Content-Type": "application/json",
       },
       credentials: "include",

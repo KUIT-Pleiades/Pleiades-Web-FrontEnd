@@ -9,10 +9,11 @@ export default function NaverLogin() {
   const url = useLocation();
   const { setToken } = useAuth();
   const [loginState, setLoginState] = useState<LogInState>("Pending");
+  const [authCode, setAuthCode] = useState<string | null>(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(url.search);
-    const authCode = urlParams.get("code");
+    setAuthCode(urlParams.get("code"));
     const handleLogin = async () => {
       if (authCode !== null) {
         const tokenData = await naverLogInRequest(authCode);
@@ -29,7 +30,7 @@ export default function NaverLogin() {
       }
     };
     handleLogin();
-  }, [navigate, setToken, url.search]);
+  }, [authCode, navigate, setToken, url.search]);
 
   return <div>{loginState}</div>;
 }
