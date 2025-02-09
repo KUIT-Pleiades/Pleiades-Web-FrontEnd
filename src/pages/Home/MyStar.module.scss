@@ -84,7 +84,7 @@
 
 .character {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -110,7 +110,7 @@
   width: 3.5em;
   height: 3.5em;
   z-index: 1;
-  top: 8em;
+  top: 11em;
   right: 2em;
   animation-name: jumping;
   animation-duration: 1.5s;

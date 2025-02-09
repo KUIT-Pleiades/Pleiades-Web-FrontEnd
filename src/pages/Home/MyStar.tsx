@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getImage } from "../../functions/getImage";
 // import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./MyStar.module.scss";
@@ -12,12 +12,20 @@ export default function MyStar() {
   // const { userInfo } = useCharacterStore();
   const navigate = useNavigate();
   const { userInfo } = useCharacterStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!userInfo.userId) {
+    if (userInfo.userId) {
+      setIsLoading(false);
+    }
+  }, [userInfo.userId]);
+
+  useEffect(() => {
+    if (!isLoading && !userInfo.userId) {
       navigate("/onboarding");
     }
-  }, [userInfo.userId, navigate]);
+  }, [userInfo.userId, navigate, isLoading]);
+
   const userCharacter = `https://gateway.pinata.cloud/ipfs/${userInfo.character}`;
   const background = getImage(userInfo.starBackground);
 
