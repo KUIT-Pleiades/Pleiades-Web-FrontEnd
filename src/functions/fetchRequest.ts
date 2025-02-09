@@ -35,7 +35,7 @@ export const fetchRequest = async <T>(
       const request = {
         method: method,
         headers: {
-          Authorization: `Bearer ${authorization}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         credentials: credentials,
