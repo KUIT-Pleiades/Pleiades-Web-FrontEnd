@@ -74,7 +74,7 @@ export default function CharacterDisplay() {
         }
       );
 
-      if (!response.ok) {
+      if (!response.ok) { // 이게 맞나?
         throw new Error("이미지 생성에 실패했습니다");
       }
 
