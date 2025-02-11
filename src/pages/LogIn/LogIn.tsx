@@ -20,11 +20,11 @@ export default function LogIn() {
         if (status) {
           navigate("/home");
         } else {
-          navigate("/login");
+          //로그인화면에 남아있기
         }
       } catch {
         console.log("Not Expected Data");
-        navigate("/login");
+        //로그인화면에 남아있기
       }
     };
     handleAutoLogIn();

@@ -1,6 +1,7 @@
 import backBtn from "../../assets/btnImg/backBtn.png"
 import s from "./Report.module.scss"
 import { useCharacterStore } from "../../store/useCharacterStore";
+import SearchReportsBar from "../../components/SearchReportsBar/SearchReportsBar";
 
 
 const Report = () => {
@@ -21,7 +22,7 @@ const Report = () => {
       </div>
       {/*=============================== 검색창 ===================================*/}
 			<div className={s.searchWrapper}>
-				<input type="text  " />
+				<SearchReportsBar/>
 			</div>
 
       {/*============================= 리포트 목록 ================================*/}
