@@ -15,7 +15,7 @@ import Setting from "./pages/Setting/Setting";
 import Market from "./pages/Market/Market";
 import MyStar from "./pages/Home/MyStar";
 import CreateStation from "./pages/Station/CreateStation/CreateStation";
-import Report from "./pages/Home/Report/Report";
+import Report from "./pages/Report/Report";
 
 export default function App() {
   return (
