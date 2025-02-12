@@ -7,9 +7,10 @@ import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png'
 
 interface ShowMyRequestsListProps {
     otherUser: OtherUser;
+    handleDeleteRequest: (id: string) => void;
 }
 
-const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser }) => {
+const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, handleDeleteRequest }) => {
   const [isCancelRequestPopupVisible, setisCancelRequestPopupVisible] = useState(false);
 
   const showCancelRequestPopup = () => {
@@ -29,8 +30,8 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser }) =>
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
-          <p>{otherUser.Name}</p>
-          <p>@{otherUser.Id}</p>
+          <p>{otherUser.userName}</p>
+          <p>@{otherUser.userId}</p>
         </div>
       </div>
       {/*============= 버튼 =============*/}
@@ -38,13 +39,14 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser }) =>
         <button
           className={s.cancelButton}
           onClick={() => {
+            handleDeleteRequest(otherUser.userId)
             showCancelRequestPopup();
           }}
         >취소</button>
       </div>
       {isCancelRequestPopupVisible && (
         <div className={s.cancelRequestPopup}>
-          {`${otherUser.Name} 님 요청을 취소했어요`}
+          {`${otherUser.userName} 님 요청을 취소했어요`}
         </div>
       )}
     </div>

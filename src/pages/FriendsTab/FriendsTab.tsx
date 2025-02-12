@@ -1,80 +1,119 @@
 import React, { useEffect, useState } from 'react';
-import { Character } from '../../interfaces/Interfaces';
+import { useNavigate } from 'react-router-dom';
 import s from './FriendsTab.module.scss';
-import characterData from '../../mock/character1.json';
-import friendsExampleData from '../../mock/socialInfo.json';
+//import { Character } from '../../interfaces/Interfaces';
+//import characterData from '../../mock/character1.json';
+//import friendsExampleData from '../../mock/socialInfo.json';
 
 // components
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
+import { fetchRequest } from '../../functions/fetchRequest';
 
 // image files
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
-import { useNavigate } from 'react-router-dom';
 
 interface Friend {
-    Id: string;
-    Name: string;
-    Since: number;
+    friendId: number;
+    userId: string;
+    userName: string;
+    profile: string;
 }
 
 interface FriendsData {
-    FriendRequests: Friend[];
-    MyFriends: Friend[];
-    MyRequests: Friend[];
+    received: Friend[];
+    friend: Friend[];
+    sent: Friend[];
 }
 
 const FriendsTab: React.FC = () => {
     const navigate = useNavigate();
-    const [character, setCharacter] = useState<Character | null>(null);
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
-
-    //친구 있는지 없는지
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
-    const handleDeleteFriend = () => {
-        //친구 삭제
+    const getFriendsList = async () => {
+        const response = await fetchRequest<FriendsData>("/friends", "GET", null);
+        if (response) {
+            setFriendsData(response);
+        }
+    };
+
+    // friends interaction functions
+    const handleDeleteFriend = async(friendId: string) => {
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/requests/${friendId}`,
+            "DELETE",
+            null
+        );
+        if (response) {
+            console.log(response.message);
+            getFriendsList(); // 친구 목록 갱신
+        } else console.error("친구 삭제 실패");
+    }
+    const handleAcceptRequest = async (friendId: string) => {
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/requests/${friendId}`,
+            "PATCH",
+            { status: "ACCEPTED" }
+        );
+        if (response) {
+            console.log(response.message);
+            getFriendsList(); // 친구 목록 갱신
+        } else console.error("친구 요청 수락 실패");
+    };
+    const handleRejectRequest = async (friendId: string) => {
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/requests/${friendId}`,
+            "PATCH",
+            { status: "REJECTED" }
+        );
+        if (response) {
+            console.log(response.message);
+            getFriendsList(); // 친구 목록 갱신
+        } else console.error("친구 요청 거절 실패");
+    }
+    const handleDeleteRequest = async (friendId: string) => {
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/requests/${friendId}`,
+            "DELETE",
+            null
+        );
+        if (response) {
+            console.log(response.message);
+            getFriendsList(); // 친구 목록 갱신
+        } else console.error("친구 요청 취소 실패");
+    }
+    const handleSendSignal = async (friendId: string) => {
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/${friendId}/signal`,
+            "POST",
+            { receiverId: friendId }
+        );
+        if (response) {
+            console.log(response.message);
+        } else console.error("시그널 보내기 실패");
     }
 
     useEffect(() => {
-        setCharacter(characterData);
-        setFriendsData(friendsExampleData);
-
-        // const getCharacter = async () => {
-        //     const response = await fetch("/src/mock/character1.json");
-        //     setCharacter(await response.json());
-        // }
-        // getCharacter()
-
-        // fetch("/src/mock/character1.json")
-        //     .then((res) => res.json())
-        //     .then((data) => {setCharacter(data)})
-        //     .catch((err) => {console.error(err)});
-        // fetch("/src/mock/socialInfo.json")
-        //     .then((res) => res.json())
-        //     .then((data) => {setFriendsData(data)})
-        //     .catch((err) => {console.error(err)});
+        //setFriendsData(friendsExampleData);
+        getFriendsList();
     }, []);
     useEffect(() => {
-        if (
-            friendsData?.FriendRequests?.length === 0 &&
-            friendsData?.MyFriends?.length === 0 &&
-            friendsData?.MyRequests?.length === 0
-        ) {
+        if (friendsData?.friend?.length === 0 && friendsData?.received?.length === 0 && friendsData?.sent?.length === 0) {
             setHasNoFriend(true); // 친구 없음
         } else {
             setHasNoFriend(false); // 친구 있음
         }
     }, [friendsData]);
 
-    if (!character || !friendsData) return <div>Loading...</div>;
+    if (!friendsData) return <div>Loading...</div>;
 
     return (
         <div className={s.container}>
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
                 <div className={s.title}>
-                    <span className={s.titleName}>{character?.userName}</span>
+                    <span className={s.titleName}>Example</span>
                     <span className={s.titleText}>님의 친구목록</span>
                 </div>
             </div>
@@ -89,6 +128,10 @@ const FriendsTab: React.FC = () => {
             <ShowTotalFriendsList
                 friendsData={friendsData}
                 handleDeleteFriend={handleDeleteFriend}
+                handleAcceptRequest={handleAcceptRequest}
+                handleRejectRequest={handleRejectRequest}
+                handleDeleteRequest={handleDeleteRequest}
+                handleSendSignal={handleSendSignal}
             />
             {/*================================ 친구가 없을 때 ================================*/}
             {hasNoFriend &&

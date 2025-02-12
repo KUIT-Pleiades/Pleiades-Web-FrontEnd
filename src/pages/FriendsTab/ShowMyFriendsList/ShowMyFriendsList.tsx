@@ -4,20 +4,27 @@ import { OtherUser } from '../../../interfaces/Interfaces';
 
 // components
 import DeleteFriendModal from '../../../components/DeleteFriendModal/DeleteFriendModal';
+import SignalButton from '../../../components/SignalButton/SignalButton';
 
 //image files
 import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
 import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.svg';
-import SignalButton from '../../../components/SignalButton/SignalButton';
 
 interface ShowMyFriendsListProps {
     otherUser: OtherUser;
     handleDeleteFriend: (id: string) => void;
+    handleSendSignal: (id: string) => void;
     onActionFriendId: string;
     setOnActionFriendId: (friendId: string) => void;
 }
 
-const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handleDeleteFriend, onActionFriendId, setOnActionFriendId }) => {
+const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
+  otherUser,
+  handleDeleteFriend,
+  handleSendSignal,
+  onActionFriendId,
+  setOnActionFriendId,
+}) => {
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
 
   const handleGoStation = () => {
@@ -36,12 +43,8 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
     setOnActionFriendId("");
   };
 
-  const handleSignal = (id: string) => {
-    console.log('signal', id);
-  };
-
   const RenderButtons = () => {
-    if (onActionFriendId === otherUser.Id) {
+    if (onActionFriendId === otherUser.userId) {
       return (
         <button
           className={s.showDeleteFriendModalButton}
@@ -51,15 +54,14 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
     }
     return (
       <SignalButton
-        onClickSignal={() => handleSignal(otherUser.Id)}
-        name={otherUser.Name}
+        onClickSignal={() => handleSendSignal(otherUser.userId)}
+        name={otherUser.userName}
       />
     );
   };
 
   return (
     <div className={s.container}>
-
       <div
         className={s.userInfoContainer}
         onClick={handleGoStation}
@@ -70,8 +72,8 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
-          <p>{otherUser.Name}</p>
-          <p>@{otherUser.Id}</p>
+          <p>{otherUser.userName}</p>
+          <p>@{otherUser.userId}</p>
         </div>
       </div>
       <div className={s.emptySpace} onClick={handleGoStation} />
@@ -83,10 +85,10 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
         <button
           className={s.deleteFriendsButton}
           onClick={() => {
-            if (onActionFriendId === otherUser.Id) {
+            if (onActionFriendId === otherUser.userId) {
               setOnActionFriendId("");
             }else{
-              setOnActionFriendId(otherUser.Id);
+              setOnActionFriendId(otherUser.userId);
             }
           }}>
           <img src={deleteFriendsButton} alt='deleteFriendsButton' />
@@ -94,8 +96,8 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({ otherUser, handle
       </div>
       {isDeleteFriendModalOpen && (
         <DeleteFriendModal
-          username={otherUser.Name}
-          userId={otherUser.Id}
+          username={otherUser.userName}
+          userId={otherUser.userId}
           onClose={handleDeleteCancel}
           onDelete={handleDelete}
         />
