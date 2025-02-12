@@ -12,14 +12,16 @@ import RecentSearch from './RecentSearch/RecentSearch';
 import SearchResults from './SearchResults/SearchResults';
 
 interface Friend {
-    Id: string;
-    Name: string;
+    friendId: number;
+    userId: string;
+    userName: string;
+    profile: string;
 }
 
 interface FriendsData {
-    FriendRequests: Friend[];
-    MyFriends: Friend[];
-    MyRequests: Friend[];
+    received: Friend[];
+    friend: Friend[];
+    sent: Friend[];
 }
 
 interface User {
@@ -116,9 +118,9 @@ const SearchUsers: React.FC = () => {
     const getFriendStatus = (id: string) => {
         if (!friendsData) return { isFriend: false, isRequested: false, isReceivedRequest: false };
 
-        const isFriend = friendsData.MyFriends.some(friend => friend.Id === id);
-        const isRequested = friendsData.MyRequests.some(request => request.Id === id);
-        const isReceivedRequest = friendsData.FriendRequests.some(request => request.Id === id);
+        const isFriend = friendsData.friend.some(friend => friend.userId === id);
+        const isRequested = friendsData.sent.some(request => request.userId === id);
+        const isReceivedRequest = friendsData.received.some(request => request.userId === id);
       
         return { isFriend, isRequested, isReceivedRequest };
     };

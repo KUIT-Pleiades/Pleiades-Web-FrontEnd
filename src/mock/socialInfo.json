@@ -1,243 +1,56 @@
 {
-  "FriendRequests": [
-    {
-      "Id": "friend12",
-      "Name": "길봉태",
-      "Since": 1706782496
-    },
-    {
-      "Id": "friend13",
-      "Name": "김철수",
-      "Since": 1706782497
-    },
-    {
-      "Id": "friend14",
-      "Name": "이영석",
-      "Since": 1706782498
-    },
-    {
-      "Id": "friend15",
-      "Name": "박진호",
-      "Since": 1706782499
-    },
-    {
-      "Id": "friend16",
-      "Name": "정민수",
-      "Since": 1706782500
-    },
-    {
-      "Id": "friend17",
-      "Name": "한가영",
-      "Since": 1706782501
-    },
-    {
-      "Id": "friend18",
-      "Name": "서윤아",
-      "Since": 1706782502
-    },
-    {
-      "Id": "friend19",
-      "Name": "문재성",
-      "Since": 1706782503
-    },
-    {
-      "Id": "friend20",
-      "Name": "장하준",
-      "Since": 1706782504
-    },
-    {
-      "Id": "friend21",
-      "Name": "오민호",
-      "Since": 1706782505
-    },
-    {
-      "Id": "friend22",
-      "Name": "최성원",
-      "Since": 1706782506
-    },
-    {
-      "Id": "friend23",
-      "Name": "안세진",
-      "Since": 1706782507
-    },
-    {
-      "Id": "friend24",
-      "Name": "유다은",
-      "Since": 1706782508
-    },
-    {
-      "Id": "friend25",
-      "Name": "배지훈",
-      "Since": 1706782509
-    },
-    {
-      "Id": "friend26",
-      "Name": "강수연",
-      "Since": 1706782510
-    }
+  "received": [
+      {
+          "friendId": 1,
+          "userId": "play123456",
+          "userName": "플아데123",
+          "profile": "String"
+      },
+      {
+          "friendId": 2,
+          "userId": "play12345",
+          "userName": "플아데1234",
+          "profile": "String"
+      }
   ],
-  "MyFriends": [
-    {
-      "Id": "friend1",
-      "Name": "홍길동",
-      "Since": 1706782491
-    },
-    {
-      "Id": "friend2",
-      "Name": "이영희",
-      "Since": 1706782492
-    },
-    {
-      "Id": "friend3",
-      "Name": "박지민",
-      "Since": 1706782493
-    },
-    {
-      "Id": "friend4",
-      "Name": "김지민",
-      "Since": 1706782494
-    },
-    {
-      "Id": "friend5",
-      "Name": "유지민",
-      "Since": 1706782495
-    },
-    {
-      "Id": "friend6",
-      "Name": "최지민",
-      "Since": 1706782496
-    },
-    {
-      "Id": "friend7",
-      "Name": "고지민",
-      "Since": 1706782497
-    },
-    {
-      "Id": "friend8",
-      "Name": "엄지민",
-      "Since": 1706782498
-    },
-    {
-      "Id": "friend9",
-      "Name": "강지민",
-      "Since": 1706782499
-    },
-    {
-      "Id": "friend10",
-      "Name": "윤지민",
-      "Since": 1706782500
-    },
-    {
-      "Id": "friend51",
-      "Name": "배지민",
-      "Since": 1706782501
-    },
-    {
-      "Id": "friend52",
-      "Name": "손지민",
-      "Since": 1706782502
-    },
-    {
-      "Id": "friend53",
-      "Name": "서지민",
-      "Since": 1706782503
-    },
-    {
-      "Id": "friend54",
-      "Name": "문지민",
-      "Since": 1706782504
-    },
-    {
-      "Id": "friend55",
-      "Name": "하지민",
-      "Since": 1706782505
-    },
-    {
-      "Id": "friend56",
-      "Name": "이준호",
-      "Since": 1706782506
-    },
-    {
-      "Id": "friend57",
-      "Name": "정윤수",
-      "Since": 1706782507
-    }
-  ],
-  "MyRequests": [
-    {
-      "Id": "friend80",
-      "Name": "박창식",
-      "Since": 1706782496
-    },
-    {
-      "Id": "friend81",
-      "Name": "윤도현",
-      "Since": 1706782497
-    },
-    {
-      "Id": "friend82",
-      "Name": "강민준",
-      "Since": 1706782498
-    },
-    {
-      "Id": "friend83",
-      "Name": "김서연",
-      "Since": 1706782499
-    },
-    {
-      "Id": "friend84",
-      "Name": "오현석",
-      "Since": 1706782500
-    },
-    {
-      "Id": "friend85",
-      "Name": "최한별",
-      "Since": 1706782501
-    },
-    {
-      "Id": "friend86",
-      "Name": "안지우",
-      "Since": 1706782502
-    },
-    {
-      "Id": "friend87",
-      "Name": "배서윤",
-      "Since": 1706782503
-    },
-    {
-      "Id": "friend88",
-      "Name": "박세진",
-      "Since": 1706782504
-    },
-    {
-      "Id": "friend89",
-      "Name": "장태희",
-      "Since": 1706782505
-    },
-    {
-      "Id": "friend90",
-      "Name": "강지훈",
-      "Since": 1706782506
-    },
-    {
-      "Id": "friend91",
-      "Name": "이채연",
-      "Since": 1706782507
-    },
-    {
-      "Id": "friend92",
-      "Name": "윤하영",
-      "Since": 1706782508
-    },
-    {
-      "Id": "friend93",
-      "Name": "손지혁",
-      "Since": 1706782509
-    },
-    {
-      "Id": "friend94",
-      "Name": "문재훈",
-      "Since": 1706782510
-    }
+  "friend": [
+      {
+          "friendId": 13,
+          "userId": "play23456",
+          "userName": "플아데123",
+          "profile": "String"
+      },
+      {
+          "friendId": 10,
+          "userId": "play2345",
+          "userName": "플아데1234",
+          "profile": "String"
+      },
+      {
+          "friendId": 8,
+          "userId": "play23459",
+          "userName": "플아데1234",
+          "profile": "String"
+      },
+      {
+          "friendId": 7,
+          "userId": "play23458",
+          "userName": "플아데1234",
+          "profile": "String"
+      }					 
+  ],  
+  "sent": [
+      {
+          "friendId": 5,
+          "userId": "play234876456",
+          "userName": "플아데123",
+          "profile": "String"
+      },
+      {
+          "friendId": 4,
+          "userId": "play2348755",
+          "userName": "플아데1234",
+          "profile": "String"
+      }
   ]
 }

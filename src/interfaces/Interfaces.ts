@@ -205,9 +205,10 @@ export interface StationDetails {
 /** Interfaces For Social */
 
 export interface OtherUser {
-  Id: string;
-  Name: string;
-  Since: number;
+  friendId: number;
+  userId: string;
+  userName: string;
+  profile: string;
 }
 
 export interface Social {
