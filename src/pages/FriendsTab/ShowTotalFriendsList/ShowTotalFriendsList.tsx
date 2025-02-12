@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-//import { Character } from "../../interfaces/Interfaces";
 import s from "./ShowTotalFriendsList.module.scss";
+//import { Character } from "../../interfaces/Interfaces";
 
 // components
 import ShowFriendRequestsList from "../ShowFriendRequestsList/ShowFriendRequestsList";
@@ -15,58 +15,64 @@ import toggleDown from "../../../assets/FriendsTab/toggleDown.svg";
 import toggleUp from "../../../assets/FriendsTab/toggleUp.svg";
 
 interface Friend {
-  Id: string;
-  Name: string;
-  Since: number;
+  friendId: number;
+  userId: string;
+  userName: string;
+  profile: string;
 }
 
 interface FriendsData {
-  FriendRequests: Friend[];
-  MyFriends: Friend[];
-  MyRequests: Friend[];
+  received: Friend[];
+  friend: Friend[];
+  sent: Friend[];
 }
 
 interface ShowTotalFriendsListProps {
   friendsData: FriendsData;
   handleDeleteFriend: (friendId: string) => void;
+  handleAcceptRequest: (friendId: string) => void;
+  handleRejectRequest: (friendId: string) => void;
+  handleDeleteRequest: (friendId: string) => void;
+  handleSendSignal: (friendId: string) => void;
 }
 
 const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   friendsData,
   handleDeleteFriend,
+  handleAcceptRequest,
+  handleRejectRequest,
+  handleDeleteRequest,
+  handleSendSignal,
 }) => {
-    const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
-    const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
-    const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
+  const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
+  const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
+  const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
+  const [onActionFriendId, setOnActionFriendId] = useState<string>("");
+  const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
+  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
 
-    useEffect(() => {
-        if (
-            friendsData?.FriendRequests?.length === 0 &&
-            friendsData?.MyFriends?.length === 0 &&
-            friendsData?.MyRequests?.length === 0
-        ) {
-            setIsShowFriendRequests(false);
-            setIsShowMyFriends(false);
-            setIsShowMyRequests(false);
-        }
-    }, [friendsData]);
+  const sortedByRecent = useMemo(() => [...friendsData.friend], [friendsData.friend]);
 
-    const [onActionFriendId, setOnActionFriendId] = useState<string>("");
-
-    const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
-
-    const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
-    const sortedFriends = useMemo(() => {
-      const friendsCopy = [...friendsData.MyFriends];
+  const sortedByName = useMemo(() => {
+    return [...friendsData.friend].sort((a, b) => {
+      const isAKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(a.userName);
+      const isBKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(b.userName);
   
-      if (sortCriteria === "최신순") {
-        return friendsCopy.sort((a, b) => b.Since - a.Since);
-      } else if (sortCriteria === "이름순") {
-        return friendsCopy.sort((a, b) => a.Name.localeCompare(b.Name, "ko-KR", { sensitivity: "base" }));
-      }
+      if (isAKorean && !isBKorean) return -1; // a가 한글이고 b가 영어면 a를 앞에 배치
+      if (!isAKorean && isBKorean) return 1; // a가 영어이고 b가 한글이면 b를 앞에 배치
   
-      return friendsCopy;
-    }, [friendsData.MyFriends, sortCriteria]);
+      return a.userName.localeCompare(b.userName, "ko-KR", { sensitivity: "base" });
+    });
+  }, [friendsData.friend]);
+
+  const sortedFriends = sortCriteria === "최신순" ? sortedByRecent : sortedByName;
+
+  useEffect(() => {
+    if(friendsData?.received?.length === 0) setIsShowFriendRequests(false);
+    if(friendsData?.friend?.length === 0) setIsShowMyFriends(false);
+    if(friendsData?.sent?.length === 0) setIsShowMyRequests(false);
+  }, [friendsData]);
+
   return (
     <div className={s.friendsList}>
       {/*============= 받은 친구 요청 리스트 =============*/}
@@ -85,13 +91,17 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
               <img src={showDownArrow} alt="showDown" />
             )}
           </button>
-          <span>친구 요청 왔어요 ({friendsData?.FriendRequests?.length || 0})</span>
+          <span>친구 요청 왔어요 ({friendsData?.received?.length || 0})</span>
         </div>
-        {friendsData?.FriendRequests && isShowFriendRequests && (
+        {friendsData?.received && isShowFriendRequests && (
           <div className={s.friendRequestsSection}>
-            {friendsData.FriendRequests.map((friend) => (
-              <div key={friend.Id} className={s.friendRequest}>
-                <ShowFriendRequestsList otherUser={friend} />
+            {friendsData.received.map((friend) => (
+              <div key={friend.userId} className={s.friendRequest}>
+                <ShowFriendRequestsList
+                  otherUser={friend}
+                  handleAcceptRequest={handleAcceptRequest}
+                  handleRejectRequest={handleRejectRequest}
+                />
               </div>
             ))}
           </div>
@@ -113,10 +123,10 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
               <img src={showDownArrow} alt="showDown" />
             )}
           </button>
-          <span>내 친구 ({friendsData?.MyFriends?.length || 0})</span>
+          <span>내 친구 ({friendsData?.friend?.length || 0})</span>
         </div>
 
-        {friendsData?.MyFriends && isShowMyFriends && (
+        {friendsData?.friend && isShowMyFriends && (
           <div className={s.myFriendsSectionContainer}>
             <div className={s.sortCriteriaBoxContainer}>
               <SortCriteriaBox
@@ -126,10 +136,11 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
             </div>
             <div className={s.myFriendsSection}>
               {sortedFriends.slice(0, showAllFriends ? sortedFriends.length : 7).map((friend) => (
-                <div key={friend.Id} className={s.myFriend}>
+                <div key={friend.userId} className={s.myFriend}>
                   <ShowMyFriendsList
                     otherUser={friend}
-                    handleDeleteFriend={() => handleDeleteFriend(friend.Id)}
+                    handleDeleteFriend={handleDeleteFriend}
+                    handleSendSignal={handleSendSignal}
                     onActionFriendId={onActionFriendId}
                     setOnActionFriendId={setOnActionFriendId}
                   />
@@ -166,13 +177,16 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
               <img src={showDownArrow} alt="showDown" />
             )}
           </button>
-          <span>요청 중인 친구 ({friendsData?.MyRequests?.length || 0})</span>
+          <span>요청 중인 친구 ({friendsData?.sent?.length || 0})</span>
         </div>
-        {friendsData?.MyRequests && isShowMyRequests && (
+        {friendsData?.sent && isShowMyRequests && (
           <div className={s.myRequestsSection}>
-            {friendsData.MyRequests.map((friend) => (
-              <div key={friend.Id} className={s.myRequest}>
-                <ShowMyRequestsList otherUser={friend} />
+            {friendsData.sent.map((friend) => (
+              <div key={friend.userId} className={s.myRequest}>
+                <ShowMyRequestsList
+                  otherUser={friend}
+                  handleDeleteRequest={handleDeleteRequest}
+                />
               </div>
             ))}
           </div>
