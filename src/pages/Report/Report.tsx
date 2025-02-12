@@ -4,6 +4,7 @@ import { useCharacterStore } from "../../store/useCharacterStore";
 import SearchReportsBar from "../../components/SearchReportsBar/SearchReportsBar";
 import ReportList from "./ReportList/ReportList";
 import { useState } from "react";
+import SearchReport from "./SearchReport/SearchReport";
 
 
 const Report = () => {
@@ -76,12 +77,56 @@ const Report = () => {
     },
 	]);
 
+	const [searchHistory, setSearchHistory] = useState([
+    "완벽한",
+    "선물",
+    "붕어빵",
+	]);
+	
+	const [searchValue, setSearchValue] = useState("");
+
+	
+
+	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+	};
+	
+	const handleSearchSubmit = () => {
+    if (searchValue.trim()) {
+      setSearchHistory((prev) => {
+        // 중복 검색어 방지
+        if (!prev.includes(searchValue.trim())) {
+          // 최대 10개까지만 저장
+          const newHistory = [...prev, searchValue.trim()];
+          if (newHistory.length > 10) {
+            newHistory.shift(); // 가장 오래된 검색어 제거
+          }
+          return newHistory;
+        }
+        return prev;
+      });
+      setSearchValue("");
+    }
+  };
+
 	const [showSearchHistory, setShowSearchHistory] = useState(false);
 	const handleSearchFocus = () => {
     setShowSearchHistory(true);
 	};
+
 	const handleSearchBlur = () => {
-    setShowSearchHistory(false);
+    
+      setShowSearchHistory(false);
+    
+  };
+	
+	const handleDeleteHistory = (index: number) => {
+    setSearchHistory((prev) => prev.filter((_, i) => i !== index));
+	};
+	
+	const handleSelectHistory = (value: string) => {
+    setSearchValue(value);
+		setShowSearchHistory(true);
   };
 	
 	const handleUpdateReport = (reportId: number, newAnswer: string) => {
@@ -116,6 +161,9 @@ const Report = () => {
       {/*=============================== 검색창 ===================================*/}
       <div className={s.searchWrapper}>
         <SearchReportsBar
+          value={searchValue}
+          onChange={handleSearchChange}
+          onSubmit={handleSearchSubmit}
           onFocus={handleSearchFocus}
           onBlur={handleSearchBlur}
         />
@@ -123,7 +171,13 @@ const Report = () => {
 
       {/*============================= 리포트 목록 ================================*/}
       {showSearchHistory ? (
-        <div></div>
+        <div className={s.searchReport}>
+          <SearchReport
+            searchHistory={searchHistory}
+            onDeleteHistory={handleDeleteHistory}
+            onSelectHistory={handleSelectHistory}
+          />
+        </div>
       ) : (
         <div className={s.reportList}>
           <ReportList reports={reports} onUpdateReport={handleUpdateReport} />
