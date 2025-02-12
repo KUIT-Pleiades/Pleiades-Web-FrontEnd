@@ -7,10 +7,17 @@ import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png'
 import acceptFriendPopupSpacecraft from '../../../assets/FriendsTab/acceptFriendPopupSpacecraft.svg';
 
 interface ShowFriendRequestsListProps {
-    otherUser: OtherUser;
+  otherUser: OtherUser;
+  handleAcceptRequest: (friendId: string) => void;
+  handleRejectRequest: (friendId: string) => void;
+
 }
 
-const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUser }) => {
+const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
+  otherUser,
+  handleAcceptRequest,
+  handleRejectRequest,
+}) => {
   const [isAcceptFriendPopupVisible, setIsAcceptFriendPopupVisible] = useState(false);
   const [isRefuseFriendPopupVisible, setIsRefuseFriendPopupVisible] = useState(false);
 
@@ -37,8 +44,8 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUs
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
-          <p>{otherUser.Name}</p>
-          <p>@{otherUser.Id}</p>
+          <p>{otherUser.userName}</p>
+          <p>@{otherUser.userId}</p>
         </div>
       </div>
       
@@ -47,6 +54,7 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUs
         <button
           className={s.acceptButton}
           onClick={() => {
+            handleAcceptRequest(otherUser.userId);
             showAcceptFriendPopup();
           }}
         >수락</button>
@@ -54,6 +62,7 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUs
         <button
           className={s.declineButton}
           onClick={() => {
+            handleRejectRequest(otherUser.userId);
             showRefuseFriendPopup();
           }}
         >거절</button>
@@ -61,13 +70,13 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({ otherUs
       {isAcceptFriendPopupVisible && (
           <div className={s.acceptFriendPopup}>
             <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraftUp} />
-            {`${otherUser.Name}님과 친구가 되었어요!`}
+            {`${otherUser.userName}님과 친구가 되었어요!`}
             <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraftDown} />
           </div>
       )}
       {isRefuseFriendPopupVisible && (
         <div className={s.refuseFriendPopup}>
-          {`${otherUser.Name}님 요청을 거절했어요`}
+          {`${otherUser.userName}님 요청을 거절했어요`}
         </div>
       )}
     </div>
