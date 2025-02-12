@@ -25,7 +25,10 @@ const SearchReportsBar: React.FC<SearchReportsBarProps> = ({
     if (event.key === "Enter" && onSubmit) {
       onSubmit();
     }
-  };
+	};
+	
+
+	
   return (
     <div className={s.searchBarContainer}>
       <div className={s.searchBar}>

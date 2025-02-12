@@ -75,6 +75,14 @@ const Report = () => {
       answer: "ㅇ",
     },
 	]);
+
+	const [showSearchHistory, setShowSearchHistory] = useState(false);
+	const handleSearchFocus = () => {
+    setShowSearchHistory(true);
+	};
+	const handleSearchBlur = () => {
+    setShowSearchHistory(false);
+  };
 	
 	const handleUpdateReport = (reportId: number, newAnswer: string) => {
     setReports((prevReports) =>
@@ -107,13 +115,20 @@ const Report = () => {
       </div>
       {/*=============================== 검색창 ===================================*/}
       <div className={s.searchWrapper}>
-        <SearchReportsBar />
+        <SearchReportsBar
+          onFocus={handleSearchFocus}
+          onBlur={handleSearchBlur}
+        />
       </div>
 
       {/*============================= 리포트 목록 ================================*/}
-      <div className={s.reportList}>
-        <ReportList reports={reports} onUpdateReport={handleUpdateReport} />
-      </div>
+      {showSearchHistory ? (
+        <div></div>
+      ) : (
+        <div className={s.reportList}>
+          <ReportList reports={reports} onUpdateReport={handleUpdateReport} />
+        </div>
+      )}
     </div>
   );
 };
