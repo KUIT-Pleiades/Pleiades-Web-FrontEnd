@@ -1,8 +1,9 @@
 // ReportModal.tsx
 import s from "./ReportModal.module.scss";
 import messageIcon from "../../../assets/Icon/message.svg";
-import closeBtn from "../../../assets/btnImg/closeBtn.svg"
+import closeBtn from "../../../assets/btnImg/closeBtn.svg";
 import { useState } from "react";
+import { formatDateTime } from "../../../functions/formatDateTime";
 
 interface Report {
   reportId: number;
@@ -20,22 +21,47 @@ interface ReportModalProps {
 }
 
 const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
-
-	const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [editedAnswer, setEditedAnswer] = useState(report.answer);
+  const [currentReport, setCurrentReport] = useState(report);
+  const maxLength = 150;
 
   const handleEdit = () => {
     setIsEditing(true);
+    setTimeout(() => {
+      const textarea = document.querySelector(
+        `.${s.editAnswer}`
+      ) as HTMLTextAreaElement;
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      }
+    }, 0);
   };
 
   const handleSave = () => {
-    onUpdate(report.reportId, editedAnswer); // 수정된 내용 저장
+    const updatedReport = {
+      ...currentReport,
+      answer: editedAnswer,
+      modifiedAt: new Date().toISOString(),
+    };
+    setCurrentReport(updatedReport); // 현재 리포트 상태 업데이트
+    onUpdate(report.reportId, editedAnswer);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
     setEditedAnswer(report.answer);
     setIsEditing(false);
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value;
+    if (text.length <= maxLength) {
+			setEditedAnswer(text);
+			e.target.style.height = "auto";
+      e.target.style.height = e.target.scrollHeight + "px";
+    }
   };
 
   return (
@@ -61,37 +87,45 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
         </div>
         <div className={s.modalBody}>
           <div className={s.infoWrapper}>
-            <div className={s.modifedAt}>{report.modifiedAt}</div>
-            <div className={s.btnGroup}>
-              {isEditing ? (
-                <>
+            <div className={s.modifedAt}>
+              {formatDateTime(report.modifiedAt)}
+            </div>
+            {!isEditing ? (
+              <div className={s.btnGroup}>
+                <button className={s.modifyBtn} onClick={handleEdit}>
+                  수정
+                </button>
+                <span className={s.divider}>|</span>
+                <button className={s.deleteBtn}>삭제</button>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          {isEditing ? (
+            <div className={s.editWrapper}>
+              <textarea
+                className={s.editAnswer}
+                value={editedAnswer}
+                onChange={handleTextChange}
+                maxLength={maxLength}
+              />
+              <div className={s.editFooter}>
+                <div className={s.characterCount}>
+                  {editedAnswer.length} / {maxLength}byte
+                </div>
+                <div className={s.buttonGroup}>
                   <button className={s.saveBtn} onClick={handleSave}>
-                    저장
+                    완료
                   </button>
-                  <span className={s.divider}>|</span>
                   <button className={s.cancelBtn} onClick={handleCancel}>
                     취소
                   </button>
-                </>
-              ) : (
-                <>
-                  <button className={s.modifyBtn} onClick={handleEdit}>
-                    수정
-                  </button>
-                  <span className={s.divider}>|</span>
-                  <button className={s.deleteBtn}>삭제</button>
-                </>
-              )}
+                </div>
+              </div>
             </div>
-          </div>
-          {isEditing ? (
-            <textarea
-              className={s.editAnswer}
-              value={editedAnswer}
-              onChange={(e) => setEditedAnswer(e.target.value)}
-            />
           ) : (
-            <div className={s.answer}>{report.answer}</div>
+            <div className={s.answer}>{currentReport.answer}</div>
           )}
         </div>
       </div>

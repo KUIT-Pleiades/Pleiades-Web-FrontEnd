@@ -80,10 +80,8 @@
 	.modalBody {
 		padding: 10px 17px;
 		box-shadow: 0 -4px 4px -3px rgba(0, 0, 0, 0.2);
-
-
-
-
+		height: auto;
+		min-height: 50px;
 
 		.answer {
 			color: var(--gray-11, #17151C);
@@ -94,6 +92,9 @@
 			line-height: normal;
 			word-break: keep-all;
 			white-space: pre-wrap;
+			height: auto;
+				min-height: 50px;
+				overflow: hidden;
 		}
 	}
 }
@@ -126,22 +127,99 @@
 	gap: 2px;
 }
 
-.modifyBtn{
+.modifyBtn {
 	color: var(--Gray4, #858585);
-		font-family: Pretendard;
-		font-size: 11px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: -0.22px;
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.22px;
 }
 
-.deleteBtn{
+.deleteBtn {
 	color: var(--gray-7, #E1E1E1);
-		font-family: Pretendard;
-		font-size: 11px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: -0.22px;
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.22px;
+}
+
+.editWrapper {
+	width: 100%;
+	height: auto;
+}
+
+.editAnswer {
+	width: 100%;
+	min-height: inherit;
+	height: auto;
+	resize: none;
+	color: var(--gray-11, #17151C);
+	font-family: "ElectricalSafety";
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	border: none;
+
+	&:focus {
+		outline: none;
+		border: none;
+	}
+}
+
+.editFooter {
+	display: flex;
+	justify-content: space-between;
+}
+
+.characterCount {
+	color: var(--Gray4, #858585);
+	font-family: "Noto Sans KR";
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.3px;
+}
+
+.buttonGroup{
+	display: flex;
+	gap: 9px;
+}
+
+.saveBtn {
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 30px;
+	background: var(--color-21, #402C44);
+	color: #FFF;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+}
+
+.cancelBtn {
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 30px;
+	background: var(--color-5-main, #C0B9DB);
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
 }
