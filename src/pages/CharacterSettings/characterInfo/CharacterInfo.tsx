@@ -1,9 +1,109 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { UserInfo } from "../../../interfaces/Interfaces";
+import { fetchRequest } from "../../../functions/fetchRequest";
+
+interface SignUpResponse {
+  userId: string;
+  userName: string;
+  birthDate: string;
+  backgroundName: string;
+  profile: string;
+  character: string;
+  face: {
+    skinColor: string;
+    hair: string;
+    expression: string;
+  };
+  outfit: {
+    top: string;
+    bottom: string;
+    shoes: string;
+  };
+  item: {
+    head?: string;
+    eyes?: string;
+    ears?: string;
+    neck?: string;
+    leftWrist?: string;
+    rightWrist?: string;
+    leftHand?: string;
+    rightHand?: string;
+  };
+}
 
 export default function CharacterDisplay() {
-  // Zustand store에서 character 상태 가져오기
-  const character: UserInfo = useCharacterStore((state) => state.userInfo);
+  const character = useCharacterStore((state) => state.userInfo);
+
+  const handleSubmit = async () => {
+    try {
+      // 첫 번째 요청: 이미지 생성
+      const imageRequestData = {
+        userId: character.userId,
+        userName: character.userName,
+        birthDate: character.birthDate,
+        backgroundName: character.starBackground,
+        face: {
+          skinColor: character.face.skinColor,
+          hair: character.face.hair,
+          expression: character.face.expression,
+        },
+        outfit: {
+          top: character.outfit.top,
+          bottom: character.outfit.bottom,
+          shoes: character.outfit.shoes,
+        },
+        item: {
+          head: character.item.head,
+          eyes: character.item.eyes,
+          ears: character.item.ears,
+          neck: character.item.neck,
+          leftWrist: character.item.leftWrist,
+          rightWrist: character.item.rightWrist,
+          leftHand: character.item.leftHand,
+          rightHand: character.item.rightHand,
+        },
+      };
+
+      const response = await fetch(
+        "http://image-maker-nine.vercel.app/profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(imageRequestData),
+        }
+      );
+
+      if (!response.ok) { // 이게 맞나?
+        throw new Error("이미지 생성에 실패했습니다");
+      }
+
+      const data = await response.json();
+
+      // 두 번째 요청: 회원가입
+      const signupData = {
+        ...imageRequestData,
+        profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
+        character: data.character, // 첫 번째 요청에서 받은 이미지 URL
+      };
+
+      const signupResponse = await fetchRequest<SignUpResponse>(
+        "/auth/signup",
+        "POST",
+        signupData
+      );
+
+      if (signupResponse === null) {
+        throw new Error("회원가입에 실패했습니다");
+      }
+
+      console.log("회원가입 성공:", signupResponse);
+      alert("캐릭터 생성 및 회원가입이 완료되었습니다!");
+    } catch (error) {
+      console.error("오류 발생:", error);
+      alert("처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
 
   return (
     <div className="character-display">
@@ -66,6 +166,11 @@ export default function CharacterDisplay() {
           <p>배경: {character.starBackground}</p>
         </div>
       )}
+      <div className="submit-button-container">
+        <button onClick={handleSubmit} className="submit-button">
+          완료
+        </button>
+      </div>
     </div>
   );
 }
