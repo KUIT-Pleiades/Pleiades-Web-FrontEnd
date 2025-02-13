@@ -8,7 +8,7 @@ interface ModalProps {
     username: string;
     userId: string;
     onClose: () => void;
-    onDelete: (id: string) => void;
+    onDelete: () => void;
 }
 
 const DeleteFriendModal: React.FC<ModalProps> = ({
@@ -27,7 +27,7 @@ const DeleteFriendModal: React.FC<ModalProps> = ({
             <div className={s.modalUserId}>(@{userId})</div>
             <p className={s.modalMessage}>{username}님을 친구에서 삭제할까요?</p>
             <div className={s.modalButtons}>
-                <button className={s.modalButtonsDelete} onClick={() => onDelete(userId)}>
+                <button className={s.modalButtonsDelete} onClick={onDelete}>
                     삭제할래요
                 </button>
                 <button className={s.modalButtonsCancel} onClick={onClose}>

@@ -7,7 +7,7 @@ import DeleteFriendModal from '../../../components/DeleteFriendModal/DeleteFrien
 import SignalButton from '../../../components/SignalButton/SignalButton';
 
 //image files
-import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
+//import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
 import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.svg';
 
 interface ShowMyFriendsListProps {
@@ -68,7 +68,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
       >
         {/*============= 프로필 사진 =============*/}
         <div className={s.profileImage}>
-          <img src={profileImageSmall} alt="profileImageSmall" />
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
@@ -99,7 +99,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
           username={otherUser.userName}
           userId={otherUser.userId}
           onClose={handleDeleteCancel}
-          onDelete={handleDelete}
+          onDelete={() => handleDelete(otherUser.userId)}
         />
       )}
     </div>
