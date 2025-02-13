@@ -11,7 +11,6 @@ export default function NaverLogin() {
   useEffect(() => {
     const urlParams = new URLSearchParams(url.search);
     const authCode = urlParams.get("code");
-    console.log(authCode);
     if (!authCode) {
       navigate("/loginfail");
       return;

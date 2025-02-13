@@ -24,8 +24,8 @@
 }
 
 .subTitle {
-  font-family: "NanumSquareRound";
-  font-size: 15px;
+  font-family: "ElectricalSafety";
+  font-size: 13px;
   text-align: center;
   letter-spacing: -2%;
   margin-top: 0%;
@@ -35,8 +35,11 @@
 }
 
 .title {
+  line-height: normal;
+  letter-spacing: -0.4px;
   font-family: "ElectricalSafety";
-  font-size: 36px;
+  font-size: 20px;
+  font-weight: 400;
   text-align: center;
   margin-top: 0;
   margin-bottom: 8%;
@@ -45,14 +48,18 @@
 }
 
 .homeButton {
+  text-align: center;
   font-family: "Pretendard";
-  font-weight: 800;
-  font-size: 1em;
-  width: 10em;
-  height: 4em;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.233px;
+  width: 12em;
+  height: 3.2em;
+  color: #ffffff;
   border-radius: 12px;
-  background: #e4d0e5;
-  color: #1b142b;
+  background: var(--color-5-main, #c0b9db);
   z-index: 2;
 }
 

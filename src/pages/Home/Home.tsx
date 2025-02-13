@@ -3,12 +3,14 @@ import BottomBar from "../../pageLayout/BottomBar";
 import { useCallback, useEffect } from "react";
 import { getUser } from "../../functions/getUserInfo";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import { useAuth } from "../../store/authStore";
 
 export default function Home() {
   const location = useLocation();
   const navigate = useNavigate();
   const isSetup = location.pathname.includes("charactersetting");
-  const { userInfo, updateUserInfo } = useCharacterStore();
+  const { authorization } = useAuth();
+  const { updateUserInfo } = useCharacterStore();
   const fetchUserInfo = useCallback(async () => {
     const data = await getUser();
     if (data) {
@@ -19,10 +21,10 @@ export default function Home() {
   }, [updateUserInfo]);
 
   useEffect(() => {
-    if (!userInfo.userId) {
+    if (!authorization) {
       fetchUserInfo();
     }
-  }, [fetchUserInfo, navigate, updateUserInfo, userInfo.userId]);
+  }, [fetchUserInfo, navigate, updateUserInfo, authorization]);
 
   return (
     <>

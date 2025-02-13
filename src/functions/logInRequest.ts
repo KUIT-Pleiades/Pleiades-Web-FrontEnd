@@ -70,7 +70,11 @@ export async function autoLogInRequest() {
     },
     credentials: "include",
   });
-  if (response1.ok) {
+  if (
+    response1.ok &&
+    response1.headers.get("Content-Type") === "application/json"
+  ) {
+    console.log(response1);
     return true;
   } else if (response1.status === 401 || response1.status === 428) {
     const refreshResponse = await fetch(refreshURL, {

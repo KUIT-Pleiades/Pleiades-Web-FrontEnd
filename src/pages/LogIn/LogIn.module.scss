@@ -25,9 +25,13 @@
 }
 
 .subTitle {
+  text-align: center;
   font-family: "NanumSquareRound";
   font-size: 15px;
-  text-align: center;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: -0.3px;
   margin-top: 4dvh;
   margin-bottom: 2dvh;
   color: #ffffff;
@@ -36,10 +40,12 @@
 .title {
   font-family: "ElectricalSafety";
   font-size: 36px;
+  font-weight: 800;
+  font-style: normal;
   text-align: center;
   margin-top: 0;
   margin-bottom: 8dvh;
-  color: #e4d0e5;
+  color: #beaadd;
 }
 
 .stateTitle {
@@ -58,6 +64,7 @@
   width: 93dvw;
   height: 5dvh;
   border: 1px solid #beaadd;
+  background: #ffffff;
   border-radius: 100px;
   margin: 5px;
   display: flex;
@@ -76,6 +83,8 @@
   font-family: "Pretendard";
   font-weight: 600px;
   font-size: 15px;
-  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: #000000;
   text-align: center;
 }
