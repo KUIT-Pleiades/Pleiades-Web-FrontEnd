@@ -39,3 +39,17 @@
 		
 	}
 }
+
+
+.emptyMessage{
+	color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.22px;
+		display: flex;
+		justify-content: center;
+		padding-top: 18px;
+}

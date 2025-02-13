@@ -21,21 +21,25 @@ const SearchReport: React.FC<SearchReportProps> = ({
     <div className={s.searchContainer}>
       <div className={s.recentSearch}>최근 검색</div>
       <div className={s.historyContainer}>
-        {searchHistory.map((item, index) => (
-          <div
-            key={index}
-            className={s.historyItem}
-            onMouseDown={handleMouseDown}
-          >
-            <span onClick={() => onSelectHistory(item)}>{item}</span>
-            <button
-              className={s.deleteButton}
-              onClick={() => onDeleteHistory(index)}
+        {searchHistory.length === 0 ? (
+          <div className={s.emptyMessage}>검색 내역이 없어요</div>
+        ) : (
+          searchHistory.map((item, index) => (
+            <div
+              key={index}
+              className={s.historyItem}
+              onMouseDown={handleMouseDown}
             >
-              <img src={closeBtn} alt="삭제" />
-            </button>
-          </div>
-        ))}
+              <span onClick={() => onSelectHistory(item)}>{item}</span>
+              <button
+                className={s.deleteButton}
+                onClick={() => onDeleteHistory(index)}
+              >
+                <img src={closeBtn} alt="삭제" />
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

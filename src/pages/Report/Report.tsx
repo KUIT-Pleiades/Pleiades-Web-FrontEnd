@@ -116,7 +116,7 @@ const Report = () => {
 
 	const handleSearchBlur = () => {
     
-      setShowSearchHistory(false);
+      setShowSearchHistory(true);
     
   };
 	
