@@ -7,6 +7,8 @@ export default function NaverLogin() {
   const navigate = useNavigate();
   const url = useLocation();
   const { authorization, setToken } = useAuth();
+  const urlParams = new URLSearchParams(url.search);
+  const authCode = urlParams.get("code");
 
   useEffect(() => {
     if (authorization) {
@@ -15,8 +17,6 @@ export default function NaverLogin() {
   }, [authorization, navigate]);
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(url.search);
-    const authCode = urlParams.get("code");
     if (!authCode) {
       navigate("/loginfail");
       return;
