@@ -2,3 +2,69 @@
     width: 100%;
     overflow-y: scroll;
 }
+
+.popup{
+    &Accept, &Refuse, &Withdraw, &SendRequest{
+        width: 50%;
+        //height: 4rem;
+        padding-top: 0.9rem;
+        padding-bottom: 0.9rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
+        background-color: #EDEFFF;
+        border-radius: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeInOut 1.5s ease-in-out;
+    
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            90% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+        }
+    }
+    &Title{
+        color: var(--gray-11, #17151C);
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    &Text{
+        color: var(--gray-22, #444);
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.6875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01375rem;
+        margin-top: 0.44rem;
+    }
+    
+}

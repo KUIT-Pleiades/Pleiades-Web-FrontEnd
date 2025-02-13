@@ -3,7 +3,7 @@ import s from './ShowMyRequestsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
 
 //image files
-import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
+//import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
 
 interface ShowMyRequestsListProps {
     otherUser: OtherUser;
@@ -26,7 +26,7 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
       <div className={s.userInfoContainer}>
         {/*============= 프로필 사진 =============*/}
         <div className={s.profileImage}>
-          <img src={profileImageSmall} alt="profileImageSmall" />
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
