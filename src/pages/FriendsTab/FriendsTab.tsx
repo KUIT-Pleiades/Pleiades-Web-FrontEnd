@@ -31,13 +31,6 @@ const FriendsTab: React.FC = () => {
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
-    const getFriendsList = async () => {
-        const response = await fetchRequest<FriendsData>("/friends", "GET", null);
-        if (response) {
-            setFriendsData(response);
-        }
-    };
-
     // friends interaction functions
     const handleDeleteFriend = async(friendId: string) => {
         const response = await fetchRequest<{ message: string }>(
@@ -94,6 +87,12 @@ const FriendsTab: React.FC = () => {
         } else console.error("시그널 보내기 실패");
     }
 
+    const getFriendsList = async () => {
+        const response = await fetchRequest<FriendsData>("/friends", "GET", null);
+        if (response) {
+            setFriendsData(response);
+        }
+    };
     useEffect(() => {
         //setFriendsData(friendsExampleData);
         getFriendsList();
