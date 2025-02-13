@@ -6,7 +6,7 @@ import recentSearchUserRemove from '../../../../assets/SearchUsers/recentSearchU
 interface RecentSearchUserProps {
   id: string;
   name: string;
-  profileImage?: string;
+  profileImage: string;
   onRemove: (id: string) => void;
   onClick: () => void;
 }
