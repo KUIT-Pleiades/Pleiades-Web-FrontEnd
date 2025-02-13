@@ -1,8 +1,7 @@
-// ReportModal.tsx
 import s from "./ReportModal.module.scss";
 import messageIcon from "../../../assets/Icon/message.svg";
 import closeBtn from "../../../assets/btnImg/closeBtn.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatDateTime } from "../../../functions/formatDateTime";
 
 interface Report {
@@ -23,8 +22,13 @@ interface ReportModalProps {
 const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnswer, setEditedAnswer] = useState(report.answer);
-  const [currentReport, setCurrentReport] = useState(report);
+  const [localReport, setLocalReport] = useState(report);
   const maxLength = 150;
+
+  useEffect(() => {
+    setEditedAnswer(report.answer);
+    setLocalReport(report);
+  }, [report]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -41,25 +45,25 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
 
   const handleSave = () => {
     const updatedReport = {
-      ...currentReport,
+      ...localReport,
       answer: editedAnswer,
       modifiedAt: new Date().toISOString(),
     };
-    setCurrentReport(updatedReport); // 현재 리포트 상태 업데이트
+    setLocalReport(updatedReport);
     onUpdate(report.reportId, editedAnswer);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setEditedAnswer(report.answer);
+    setEditedAnswer(localReport.answer);
     setIsEditing(false);
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     if (text.length <= maxLength) {
-			setEditedAnswer(text);
-			e.target.style.height = "auto";
+      setEditedAnswer(text);
+      e.target.style.height = "auto";
       e.target.style.height = e.target.scrollHeight + "px";
     }
   };
@@ -75,9 +79,9 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
               className={s.messageIcon}
             />
             <div className={s.modalContent}>
-              <div className={s.question}>{report.question}</div>
+              <div className={s.question}>{localReport.question}</div>
               <div className={s.date}>
-                {new Date(report.createdAt).toLocaleDateString()}
+                {new Date(localReport.createdAt).toLocaleDateString()}
               </div>
             </div>
           </div>
@@ -88,7 +92,7 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
         <div className={s.modalBody}>
           <div className={s.infoWrapper}>
             <div className={s.modifedAt}>
-              {formatDateTime(report.modifiedAt)}
+              {formatDateTime(localReport.modifiedAt)}
             </div>
             {!isEditing ? (
               <div className={s.btnGroup}>
@@ -125,7 +129,7 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
               </div>
             </div>
           ) : (
-            <div className={s.answer}>{currentReport.answer}</div>
+            <div className={s.answer}>{localReport.answer}</div>
           )}
         </div>
       </div>
