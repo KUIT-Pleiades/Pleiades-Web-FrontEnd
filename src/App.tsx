@@ -32,7 +32,7 @@ export default function App() {
               title="다시 로그인해주세요"
               subTitle="앗! 로그인에 실패했어요"
               destination="/login"
-              buttonDescription="로그인 화면으로 이동"
+              buttonDescription="다시 로그인하기"
             />
           }
         />
@@ -59,10 +59,10 @@ export default function App() {
           path="*"
           element={
             <Error
-              title="경로를 확인해주세요"
+              title="경로를 다시 확인해주세요"
               subTitle="앗! 잘못된 접근이에요"
               destination="/home"
-              buttonDescription="홈으로 이동"
+              buttonDescription="홈으로 돌아가기"
             />
           }
         />

@@ -54,14 +54,17 @@ export const fetchRequest = async <T>(
       },
       credentials: "include",
     });
-    if (response.headers.get("content-type") !== "application/json")
+    if (response.headers.get("content-type") !== "application/json") {
+      console.log("응답형식이 JSON이 아닙니다");
       return null;
+    }
     return response.json();
   }
 
   let req = setRequest(method, body, authorization);
   let response = await fetch(requestURL, req);
   if (response.headers.get("content-type") !== "application/json") {
+    console.log("응답형식이 JSON이 아닙니다");
     return null;
   }
   if (response.status === 401 || response.status === 428) {
@@ -72,9 +75,11 @@ export const fetchRequest = async <T>(
       response = await fetch(requestURL, req);
       return response.json() as Promise<T>;
     } else {
+      console.log("refresh실패");
       return null;
     }
   } else if (response.status === 403) {
+    console.log("재로그인 필요");
     return null; // 재 로그인 필요
   }
   return response.json() as Promise<T>;
