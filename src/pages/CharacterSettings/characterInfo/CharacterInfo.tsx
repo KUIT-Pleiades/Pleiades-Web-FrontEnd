@@ -1,5 +1,6 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
+import { CharacterImg } from "../../../interfaces/Interfaces";
 
 interface SignUpResponse {
   userId: string;
@@ -74,11 +75,12 @@ export default function CharacterDisplay() {
         }
       );
 
-      if (!response.ok) { // 이게 맞나?
+      if (!response.ok) {
+        // 이게 맞나?
         throw new Error("이미지 생성에 실패했습니다");
       }
 
-      const data = await response.json();
+      const data: CharacterImg = await response.json();
 
       // 두 번째 요청: 회원가입
       const signupData = {
@@ -86,6 +88,8 @@ export default function CharacterDisplay() {
         profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
         character: data.character, // 첫 번째 요청에서 받은 이미지 URL
       };
+      console.log(data.profile);
+      console.log(data.character);
 
       const signupResponse = await fetchRequest<SignUpResponse>(
         "/auth/signup",
