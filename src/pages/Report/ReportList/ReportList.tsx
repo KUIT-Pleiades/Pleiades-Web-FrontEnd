@@ -15,9 +15,10 @@ interface Report {
 interface ReportListProps {
   reports: Report[];
   onUpdateReport: (reportId: number, newAnswer: string) => void;
+  isSearchResult?: boolean;
 }
 
-const ReportList = ({ reports, onUpdateReport }: ReportListProps) => {
+const ReportList = ({ reports, onUpdateReport, isSearchResult }: ReportListProps) => {
 
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
 
@@ -28,7 +29,11 @@ const ReportList = ({ reports, onUpdateReport }: ReportListProps) => {
   return (
     <>
       <div className={s.listNum}>
-        <span>전체 {reports.length}</span>
+        <span>
+          {isSearchResult
+            ? `검색 결과 (${reports.length})`
+            : `전체 ${reports.length}`}
+        </span>
       </div>
       <div className={s.scrollableList}>
         {reports.map((report) => (
