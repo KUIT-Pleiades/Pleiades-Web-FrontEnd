@@ -15,11 +15,16 @@ interface Report {
 interface ReportListProps {
   reports: Report[];
   onUpdateReport: (reportId: number, newAnswer: string) => void;
+  onDeleteReport: (reportId: number) => void;
   isSearchResult?: boolean;
 }
 
-const ReportList = ({ reports, onUpdateReport, isSearchResult }: ReportListProps) => {
-
+const ReportList = ({
+  reports,
+  onUpdateReport,
+  onDeleteReport,
+  isSearchResult,
+}: ReportListProps) => {
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
 
   const handleReportClick = (report: Report) => {
@@ -73,6 +78,10 @@ const ReportList = ({ reports, onUpdateReport, isSearchResult }: ReportListProps
           report={selectedReport}
           onClose={() => setSelectedReport(null)}
           onUpdate={onUpdateReport}
+          onDelete={(reportId) => {
+            onDeleteReport(reportId);
+            setSelectedReport(null); // 모달 닫기
+          }}
         />
       )}
     </>

@@ -119,8 +119,8 @@ const Report = () => {
   };
 
   const [showSearchHistory, setShowSearchHistory] = useState(false);
-  
-	const handleSearchFocus = () => {
+
+  const handleSearchFocus = () => {
     setShowSearchHistory(true); // 검색 기록 보여주기
     setIsSearchResult(false); // 검색 결과 화면 해제
   };
@@ -153,6 +153,20 @@ const Report = () => {
   };
 
   const { userInfo } = useCharacterStore();
+
+  // 삭제 핸들러 추가
+  const handleDeleteReport = (reportId: number) => {
+    setReports((prevReports) =>
+      prevReports.filter((report) => report.reportId !== reportId)
+    );
+
+    // 검색 결과도 함께 업데이트
+    if (isSearchResult) {
+      setFilteredReports((prevFiltered) =>
+        prevFiltered.filter((report) => report.reportId !== reportId)
+      );
+    }
+  };
 
   return (
     <div className={s.container}>
@@ -193,6 +207,7 @@ const Report = () => {
           <ReportList
             reports={filteredReports}
             onUpdateReport={handleUpdateReport}
+            onDeleteReport={handleDeleteReport}
             isSearchResult={true}
           />
         </div>
@@ -202,6 +217,7 @@ const Report = () => {
           <ReportList
             reports={reports}
             onUpdateReport={handleUpdateReport}
+            onDeleteReport={handleDeleteReport}
             isSearchResult={false}
           />
         </div>

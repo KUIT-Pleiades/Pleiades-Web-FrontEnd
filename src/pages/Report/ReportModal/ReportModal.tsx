@@ -17,9 +17,15 @@ interface ReportModalProps {
   report: Report;
   onClose: () => void;
   onUpdate: (reportId: number, newAnswer: string) => void;
+  onDelete: (reportId: number) => void;
 }
 
-const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
+const ReportModal = ({
+  report,
+  onClose,
+  onUpdate,
+  onDelete,
+}: ReportModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAnswer, setEditedAnswer] = useState(report.answer);
   const [localReport, setLocalReport] = useState(report);
@@ -66,6 +72,12 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
       e.target.style.height = "auto";
       e.target.style.height = e.target.scrollHeight + "px";
     }
+	};
+	
+	const handleDelete = () => {
+    if (window.confirm("정말로 이 리포트를 삭제하시겠습니까?")) {
+      onDelete(localReport.reportId);
+    }
   };
 
   return (
@@ -100,7 +112,7 @@ const ReportModal = ({ report, onClose, onUpdate }: ReportModalProps) => {
                   수정
                 </button>
                 <span className={s.divider}>|</span>
-                <button className={s.deleteBtn}>삭제</button>
+                <button className={s.deleteBtn} onClick={handleDelete}>삭제</button>
               </div>
             ) : (
               ""
