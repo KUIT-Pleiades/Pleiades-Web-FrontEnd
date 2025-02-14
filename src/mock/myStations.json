@@ -1,60 +1,94 @@
 {
   "stations": [
     {
-      "id": "1",
-      "name": "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥",
-      "backgroundImg": "jazz_lounge_bg.jpg",
+      "stationId": "X7G9P2",
+      "name": "스테이션1",
+      "numOfUsers": 4,
+      "backgroundImg": "station_01"
+    },
+    {
+      "stationId": "A3B4C5",
+      "name": "스테이션2",
       "numOfUsers": 3,
-      "createdAt": 1706294400000
+      "backgroundImg": "station_02"
     },
     {
-      "id": "2",
-      "name": "aaaAAArrrRRR",
-      "backgroundImg": "classical_hall_bg.jpg",
-      "numOfUsers": 4,
-      "createdAt": 1707294400000
+      "stationId": "Z9Y8X7",
+      "name": "스테이션3",
+      "numOfUsers": 5,
+      "backgroundImg": "station_03"
     },
     {
-      "id": "3",
-      "name": "K-POP 스테이션",
-      "backgroundImg": "kpop_station_bg.jpg",
+      "stationId": "M1N2O3",
+      "name": "컴공21",
+      "numOfUsers": 2,
+      "backgroundImg": "station_04"
+    },
+    {
+      "stationId": "Q4R5S6",
+      "name": "스융공23",
       "numOfUsers": 6,
-      "createdAt": 1708294400000
+      "backgroundImg": "station_05"
     },
     {
-      "id": "4",
-      "name": "힙합 스튜디오",
-      "backgroundImg": "hiphop_studio_bg.jpg",
+      "stationId": "T7U8V9",
+      "name": "컴공 22",
+      "numOfUsers": 3,
+      "backgroundImg": "station_01"
+    },
+    {
+      "stationId": "W1X2Y3",
+      "name": "소웨공 19",
       "numOfUsers": 4,
-      "createdAt": 1709294400000
+      "backgroundImg": "station_02"
     },
     {
-      "id": "5",
-      "name": "록 카페",
-      "backgroundImg": "rock_cafe_bg.jpg",
-      "numOfUsers": 2,
-      "createdAt": 1710294400000
+      "stationId": "D4E5F6",
+      "name": "~~~물결",
+      "numOfUsers": 3,
+      "backgroundImg": "station_03"
     },
     {
-      "id": "6",
-      "name": "록 카페",
-      "backgroundImg": "rock_cafe_bg.jpg",
-      "numOfUsers": 2,
-      "createdAt": 1711294400000
+      "stationId": "G7H8I9",
+      "name": "🔥🔥🔥",
+      "numOfUsers": 4,
+      "backgroundImg": "station_04"
     },
     {
-      "id": "7",
-      "name": "록 카페",
-      "backgroundImg": "rock_cafe_bg.jpg",
-      "numOfUsers": 2,
-      "createdAt": 1712294400000
+      "stationId": "J1K2L3",
+      "name": "룰루랄라",
+      "numOfUsers": 5,
+      "backgroundImg": "station_05"
     },
     {
-      "id": "8",
-      "name": "록 카페",
-      "backgroundImg": "rock_cafe_bg.jpg",
+      "stationId": "P4Q5R6",
+      "name": "ㄱㄱㄱㄱㄱ",
+      "numOfUsers": 5,
+      "backgroundImg": "station_01"
+    },
+    {
+      "stationId": "S7T8U9",
+      "name": "ㄴㄴㄴㄴ",
+      "numOfUsers": 4,
+      "backgroundImg": "station_02"
+    },
+    {
+      "stationId": "V1W2X3",
+      "name": "abc",
+      "numOfUsers": 6,
+      "backgroundImg": "station_03"
+    },
+    {
+      "stationId": "Y4Z5A6",
+      "name": "fffff",
       "numOfUsers": 2,
-      "createdAt": 1713294400000
+      "backgroundImg": "station_04"
+    },
+    {
+      "stationId": "B7C8D9",
+      "name": "pleiadesTeam",
+      "numOfUsers": 3,
+      "backgroundImg": "station_05"
     }
   ]
 }

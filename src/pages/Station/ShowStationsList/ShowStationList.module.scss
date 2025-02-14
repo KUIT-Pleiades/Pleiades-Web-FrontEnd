@@ -105,3 +105,40 @@
     width: 48%;
     //aspect-ratio: 121 / 104;
 }
+
+.noStation{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &Title {
+        color: #FFF;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.02rem;
+        margin-bottom: 1.12rem;
+    }
+    &Text {
+        color: #FFF;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01625rem;
+        margin-bottom: 3rem;
+    }
+    &Logo {
+        width: 10.97269rem;
+    }
+}
