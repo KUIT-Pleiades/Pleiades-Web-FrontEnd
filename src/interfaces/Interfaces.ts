@@ -178,11 +178,10 @@ interface Position {
 }
 
 export interface Station {
-  id: string;
+  stationId: string;
   name: string;
-  backgroundImg: string;
   numOfUsers: number;
-  createdAt: number;
+  backgroundImg: string;
 }
 
 export interface Stations {

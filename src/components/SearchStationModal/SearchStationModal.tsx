@@ -39,7 +39,11 @@ return (
                         className={s.modalInput}
                         type='search'
                         value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        maxLength={6}
+                        onChange={(e) => {
+                            const input = e.target.value.toUpperCase();
+                            if(input.length <= 6) setSearchValue(input);
+                        }}
                         placeholder='우주 정거장 코드를 입력해주세요.'
                     />
                 </form>
