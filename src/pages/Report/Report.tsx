@@ -16,34 +16,39 @@ interface Report {
   answer: string;
 }
 
+interface SearchHistoryResponse {
+  history: string[];
+}
+
 const Report = () => {
   const [reports, setReports] = useState<Report[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchHistory, setSearchHistory] = useState([
-    "완벽한",
-    "선물",
-    "붕어빵",
-  ]);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredReports, setFilteredReports] = useState<Report[]>([]);
   const [isSearchResult, setIsSearchResult] = useState(false);
   const [showSearchHistory, setShowSearchHistory] = useState(false);
 
   useEffect(() => {
-    const getReports = async () => {
+    const fetchInitialData = async () => {
       try {
-        const response = await fetchRequest<{ reports: Report[] }>(
-          "/reports",
-          "GET",
-          null
-        );
+        const [reportsResponse, historyResponse] = await Promise.all([
+          fetchRequest<{ reports: Report[] }>("/reports", "GET", null),
+          fetchRequest<SearchHistoryResponse>("/reports/history", "GET", null),
+        ]);
 
-        if (response && response.reports) {
-          setReports(response.reports);
-          setFilteredReports(response.reports);
+        if (reportsResponse && reportsResponse.reports) {
+          setReports(reportsResponse.reports);
+          setFilteredReports(reportsResponse.reports);
         } else {
           throw new Error("리포트를 불러오는데 실패했습니다.");
+        }
+
+        if (historyResponse && historyResponse.history) {
+          setSearchHistory(historyResponse.history);
+        } else {
+          throw new Error("검색 기록을 불러오는데 실패했습니다.");
         }
       } catch (err) {
         setError(
@@ -54,7 +59,7 @@ const Report = () => {
       }
     };
 
-    getReports();
+    fetchInitialData();
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
