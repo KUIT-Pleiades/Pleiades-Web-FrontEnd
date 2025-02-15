@@ -1,10 +1,16 @@
 import s from "./SearchReport.module.scss";
 import closeBtn from "../../../assets/btnImg/closeBtn.svg";
 
+interface SearchHistoryItem {
+  id: number;
+  query: string;
+  createdAt: string;
+}
+
 interface SearchReportProps {
-  searchHistory: string[];
-  onDeleteHistory: (index: number) => void;
-  onSelectHistory: (value: string) => void;
+  searchHistory: SearchHistoryItem[];
+  onDeleteHistory: (id: number) => void;
+  onSelectHistory: (query: string) => void;
 }
 
 const SearchReport: React.FC<SearchReportProps> = ({
@@ -12,8 +18,7 @@ const SearchReport: React.FC<SearchReportProps> = ({
   onDeleteHistory,
   onSelectHistory,
 }) => {
-
-	const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault(); // blur 이벤트 발생 방지
   };
 
@@ -24,16 +29,18 @@ const SearchReport: React.FC<SearchReportProps> = ({
         {searchHistory.length === 0 ? (
           <div className={s.emptyMessage}>검색 내역이 없어요</div>
         ) : (
-          searchHistory.map((item, index) => (
+          searchHistory.map((item) => (
             <div
-              key={index}
+              key={item.id}
               className={s.historyItem}
               onMouseDown={handleMouseDown}
             >
-              <span onClick={() => onSelectHistory(item)}>{item}</span>
+              <span onClick={() => onSelectHistory(item.query)}>
+                {item.query}
+              </span>
               <button
                 className={s.deleteButton}
-                onClick={() => onDeleteHistory(index)}
+                onClick={() => onDeleteHistory(item.id)}
               >
                 <img src={closeBtn} alt="삭제" />
               </button>

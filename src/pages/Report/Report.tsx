@@ -1,176 +1,224 @@
 import backBtn from "../../assets/btnImg/backBtn.png";
 import s from "./Report.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import SearchReportsBar from "../../components/SearchReportsBar/SearchReportsBar";
+import SearchReportsBar from "./SearchReportsBar/SearchReportsBar";
 import ReportList from "./ReportList/ReportList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchReport from "./SearchReport/SearchReport";
+import { fetchRequest } from "../../functions/fetchRequest";
 
+interface Report {
+  reportId: number;
+  questionId: number;
+  question: string;
+  createdAt: string;
+  modifiedAt: string;
+  answer: string;
+}
+
+interface SearchHistoryItem {
+  id: number;
+  query: string;
+  createdAt: string;
+}
+
+interface SearchHistoryResponse {
+  history: SearchHistoryItem[];
+}
 
 const Report = () => {
-  const [reports, setReports] = useState([
-    {
-      reportId: 123,
-      questionId: 2,
-      question: "아버지는 어떤 분인가요?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:14",
-      answer: "항상 자상하고 바쁜 와중에도...",
-    },
-    {
-      reportId: 23,
-      questionId: 100,
-      question: "졸림?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:18",
-      answer:
-        "항상 자상하고 바쁜 와중에도 꼭 놀러 데려가주시는 존경스러운  아빠입니다. 아빠가 사주시는 붕어빵이 참 맛있어요 😍",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer:
-        "항상 자상하고 바쁜 와중에도 꼭 놀러 데려가주시는 존경스러운  아빠입니다. 아빠가 사주시는 붕어빵이 참 맛있어요 😍항상 자상하고 바쁜 와중에도 꼭 놀러 데려가주시는 존경스러운  아빠입니다. 아빠가 사주시는 붕어빵이 참 맛있어요 😍항상 자상하고 바쁜 와중에도 꼭 놀러 데려가주시는 존경스러운  아빠입니다. 아빠가 사주시는 붕어빵이 참 맛있어요 😍항상 자상하고 바쁜 와중에도 꼭 놀러 데려가주시는 존경스러운  아빠입니다. 아빠가 사주시는 붕어빵이 참 맛있어요 😍",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer: "ㅇ",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer: "ㅇ",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer: "ㅇ",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer: "ㅇ",
-    },
-    {
-      reportId: 34,
-      questionId: 29,
-      question: "배고픔?",
-      createdAt: "2025-02-02 03:14",
-      modifiedAt: "2025-02-02 03:19",
-      answer: "ㅇ",
-    },
-  ]);
-
-  const [searchHistory, setSearchHistory] = useState([
-    "완벽한",
-    "선물",
-    "붕어빵",
-  ]);
-
+  const [reports, setReports] = useState<Report[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [filteredReports, setFilteredReports] = useState<Report[]>([]);
+  const [isSearchResult, setIsSearchResult] = useState(false);
+  const [showSearchHistory, setShowSearchHistory] = useState(false);
 
-  const [filteredReports, setFilteredReports] = useState(reports); // 검색된 리포트 목록
-  const [isSearchResult, setIsSearchResult] = useState(false); // 검색 결과 화면 여부
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const [reportsResponse, historyResponse] = await Promise.all([
+          fetchRequest<{ reports: Report[] }>("/reports", "GET", null),
+          fetchRequest<SearchHistoryResponse>("/reports/history", "GET", null),
+        ]);
+
+        if (reportsResponse && reportsResponse.reports) {
+          setReports(reportsResponse.reports);
+          setFilteredReports(reportsResponse.reports);
+        } else {
+          throw new Error("리포트를 불러오는데 실패했습니다.");
+        }
+
+        if (historyResponse && historyResponse.history) {
+          setSearchHistory(historyResponse.history);
+        } else {
+          throw new Error("검색 기록을 불러오는데 실패했습니다.");
+        }
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다."
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
-  const handleSearchSubmit = () => {
-    if (searchValue.trim()) {
-      // 검색 기록 추가
-      setSearchHistory((prev) => {
-        if (!prev.includes(searchValue.trim())) {
-          const newHistory = [...prev, searchValue.trim()];
-          if (newHistory.length > 10) {
-            newHistory.shift(); // 최대 10개 유지
+  const handleSearchSubmit = async (query: string) => {
+    if (query.trim()) {
+      try {
+        // 1. 검색 실행
+        const searchResponse = await fetchRequest<{ reports: Report[] }>(
+          `/reports?query=${encodeURIComponent(query.trim())}`,
+          "GET",
+          null
+        );
+
+        if (searchResponse && searchResponse.reports) {
+          setFilteredReports(searchResponse.reports);
+          setIsSearchResult(true);
+          setShowSearchHistory(false);
+          setSearchValue("");
+
+          // 2. 검색 후 업데이트된 검색 기록 가져오기
+          const historyResponse = await fetchRequest<SearchHistoryResponse>(
+            "/reports/history",
+            "GET",
+            null
+          );
+
+          if (historyResponse && historyResponse.history) {
+            setSearchHistory(historyResponse.history);
           }
-          return newHistory;
         }
-        return prev;
-      });
-
-      // 리포트 필터링
-      const filtered = reports.filter((report) =>
-        report.question.toLowerCase().includes(searchValue.trim().toLowerCase())
-      );
-
-      setFilteredReports(filtered); // 필터링된 결과 저장
-      setIsSearchResult(true); // 검색 결과 화면으로 전환
-      setShowSearchHistory(false); // 검색 기록 숨기기
-      setSearchValue(""); // 검색창 초기화
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "검색 처리 중 오류가 발생했습니다."
+        );
+      }
     }
   };
 
-  const [showSearchHistory, setShowSearchHistory] = useState(false);
 
   const handleSearchFocus = () => {
-    setShowSearchHistory(true); // 검색 기록 보여주기
-    setIsSearchResult(false); // 검색 결과 화면 해제
+    setShowSearchHistory(true);
+    setIsSearchResult(false);
   };
 
   const handleSearchBlur = () => {
-    setShowSearchHistory(false);
+    setTimeout(() => {
+      setShowSearchHistory(false);
+    }, 200); // 검색어 선택할 시간을 주기 위한 지연
   };
 
-  const handleDeleteHistory = (index: number) => {
-    setSearchHistory((prev) => prev.filter((_, i) => i !== index));
-  };
+  const handleDeleteHistory = async (id: number) => {
+    try {
+      // 검색어 삭제 API 호출
+      await fetchRequest<void>(`/reports/history/${id}`, "DELETE", null);
 
-  const handleSelectHistory = (value: string) => {
-    setSearchValue(value);
-    setShowSearchHistory(true);
-  };
-
-  const handleUpdateReport = (reportId: number, newAnswer: string) => {
-    setReports((prevReports) =>
-      prevReports.map((report) =>
-        report.reportId === reportId
-          ? {
-              ...report,
-              answer: newAnswer,
-              modifiedAt: new Date().toISOString(),
-            }
-          : report
-      )
-    );
-  };
-
-  const { userInfo } = useCharacterStore();
-
-  // 삭제 핸들러 추가
-  const handleDeleteReport = (reportId: number) => {
-    setReports((prevReports) =>
-      prevReports.filter((report) => report.reportId !== reportId)
-    );
-
-    // 검색 결과도 함께 업데이트
-    if (isSearchResult) {
-      setFilteredReports((prevFiltered) =>
-        prevFiltered.filter((report) => report.reportId !== reportId)
+      // 삭제 후 검색 기록 상태 업데이트
+      setSearchHistory((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "검색 기록 삭제 중 오류가 발생했습니다."
       );
     }
   };
 
+  const handleSelectHistory = (query: string) => {
+    setSearchValue(query);
+    setShowSearchHistory(true);
+  };
+
+  const handleUpdateReport = async (reportId: number, newAnswer: string) => {
+    try {
+      await fetchRequest<void>(`/reports/${reportId}`, "PATCH", {
+        answer: newAnswer.trim(),
+      });
+
+      // 성공적으로 업데이트되면 로컬 상태 업데이트
+      setReports((prevReports) =>
+        prevReports.map((report) =>
+          report.reportId === reportId
+            ? {
+                ...report,
+                answer: newAnswer,
+                modifiedAt: new Date().toISOString(),
+              }
+            : report
+        )
+      );
+
+      if (isSearchResult) {
+        setFilteredReports((prevFiltered) =>
+          prevFiltered.map((report) =>
+            report.reportId === reportId
+              ? {
+                  ...report,
+                  answer: newAnswer,
+                  modifiedAt: new Date().toISOString(),
+                }
+              : report
+          )
+        );
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "리포트 수정 중 오류가 발생했습니다."
+      );
+    }
+  };
+
+  const handleDeleteReport = async (reportId: number) => {
+    try {
+      // 서버에 삭제 요청
+      await fetchRequest<void>(`/reports/${reportId}`, "DELETE", null);
+
+      // 성공적으로 삭제되면 로컬 상태 업데이트
+      setReports((prevReports) =>
+        prevReports.filter((report) => report.reportId !== reportId)
+      );
+
+      // 검색 결과에서도 제거
+      if (isSearchResult) {
+        setFilteredReports((prevFiltered) =>
+          prevFiltered.filter((report) => report.reportId !== reportId)
+        );
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "리포트 삭제 중 오류가 발생했습니다."
+      );
+    }
+  };
+  const { userInfo } = useCharacterStore();
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>에러: {error}</div>;
+  }
+
   return (
     <div className={s.container}>
-      {/*================================ 헤더 ===================================*/}
       <div className={s.headerWrapper}>
         <div className={s.header}>
           <img src={backBtn} alt="뒤로가기" className={s.backBtn} />
@@ -180,7 +228,6 @@ const Report = () => {
           <strong>{userInfo.userName}</strong>님의 기록이에요
         </div>
       </div>
-      {/*=============================== 검색창 ===================================*/}
       <div className={s.searchWrapper}>
         <SearchReportsBar
           value={searchValue}
@@ -191,18 +238,15 @@ const Report = () => {
         />
       </div>
 
-      {/*============================= 리포트 목록 ================================*/}
       {showSearchHistory ? (
-        // 검색 기록 화면
         <div className={s.searchReport}>
           <SearchReport
             searchHistory={searchHistory}
             onDeleteHistory={handleDeleteHistory}
-            onSelectHistory={handleSelectHistory}
+            onSelectHistory={(query) => handleSelectHistory(query)}
           />
         </div>
       ) : isSearchResult ? (
-        // 검색 결과 화면
         <div className={s.searchReport}>
           <ReportList
             reports={filteredReports}
@@ -212,7 +256,6 @@ const Report = () => {
           />
         </div>
       ) : (
-        // 기본 리포트 목록 화면
         <div className={s.reportList}>
           <ReportList
             reports={reports}
