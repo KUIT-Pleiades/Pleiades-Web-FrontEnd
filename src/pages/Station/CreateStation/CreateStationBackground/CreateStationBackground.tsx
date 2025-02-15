@@ -1,66 +1,105 @@
-/* CreateStationBackground.tsx
-   2단계: 배경 이미지 선택 화면
-   - props로 background 상태와 setBackground를 전달받아, 사용자가 선택한 배경을 업데이트
-   - "완료" or "다음" 버튼 클릭 시 handleNext를 호출 → 최종 서버 전송
-*/
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import s from './CreateStationBackground.module.scss';
 
+// image files
+import slideBoxShowUpArrow from '../../../../assets/StationCreate/slideBoxShowupArrow.svg';
 
 interface CreateStationBackgroundProps {
-	background: string;
-	setBackground: React.Dispatch<React.SetStateAction<string>>;
-	handleCancel: () => void;
-	handleNext: () => void;
+	backgrounds: string[];
+    background: string;
+    setBackground: React.Dispatch<React.SetStateAction<string>>;
+    handleBack: () => void;
+    handleComplete: () => void;
 }
 
 const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
-	background,
-	setBackground,
-	handleCancel,
-	handleNext,
+	backgrounds,
+    background,
+    setBackground,
+    handleBack,
+    handleComplete,
 }) => {
-	// 예시로 배경 후보 이미지를 배열로 가정
-	const backgrounds = [
-		'../../../../assets/stationBackgroundImg/stationBackground_01.png',
-		'../../../../assets/stationBackgroundImg/stationBackground_01.png',
-		'../../../../assets/stationBackgroundImg/stationBackground_01.png',
-	];
+    const [isOpen, setIsOpen] = useState(false); // 슬라이드 박스 상태
+    const containerRef = useRef<HTMLDivElement>(null);
 
-	return (
-		<div className={s.container}>
-			{/* 헤더 영역 */}
-			<div className={s.header}>
-				<div className={s.headerContents}>
-					<button className={s.headerCancelButton} onClick={handleCancel}>
-						취소
-					</button>
-					<span className={s.headerTitle}>정거장 배경 선택</span>
-					<button className={s.headerNextButton} onClick={handleNext}>
-						완료
-					</button>
-				</div>
-			</div>
+    // 배경 후보 이미지 리스트
+    // const backgrounds = [
+    //     '../../../../assets/stationBackgroundImg/stationBackground_01.png',
+    //     '../../../../assets/stationBackgroundImg/stationBackground_02.png',
+    //     '../../../../assets/stationBackgroundImg/stationBackground_03.png',
+    // ];
 
-			{/* 배경 선택 영역 */}
-			<div className={s.body}>
-				<span className={s.guideText}>정거장 천장에 어울리는 배경을 골라보세요!</span>
-				<div className={s.backgroundList}>
-					{backgrounds.map((bgSrc) => (
-						<div
-							key={bgSrc}
-							className={`${s.backgroundItem} ${
-								background === bgSrc ? s.selected : ''
-							}`}
-							onClick={() => setBackground(bgSrc)}
-						>
-							<img src={bgSrc} alt="background" className={s.backgroundImage} />
-						</div>
-					))}
-				</div>
+    // 외부 클릭 시 슬라이드 박스 닫기
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isOpen]);
+
+    // 슬라이드 박스 토글 함수
+    const toggleOpen = () => {
+        setIsOpen((prev) => !prev);
+    };
+
+    return (
+        <div className={s.container} style={{ backgroundImage: `url(${background})` }}>
+            {/* 헤더 영역 */}
+            <div className={s.header}>
+                <div className={s.headerContents}>
+                    <button className={s.headerBackButton} onClick={handleBack}>
+                        이전
+                    </button>
+                    <span className={s.headerTitle}>정거장 배경 선택하기</span>
+                    <button className={s.headerNextButton} onClick={handleComplete}>
+                        완료
+                    </button>
+                </div>
+            </div>
+			<span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
+            {/* 현재 선택한 배경 미리보기 */}
+            {/* <div className={s.body}>
+                <span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
+                <div 
+                    className={s.selectedBackground} 
+                />
+            </div> */}
+
+            {/* 슬라이드 박스 */}
+            <div className={`${s.slideBox} ${isOpen ? s.open : ''}`} ref={containerRef}>
+                <div className={s.backgroundList}>
+                    {backgrounds.map((bgSrc) => (
+                        <div
+                            key={bgSrc}
+                            className={`${s.backgroundItem} ${background === bgSrc ? s.selected : ''}`}
+                            onClick={() => setBackground(bgSrc)}
+							style={{ backgroundImage: `url(${bgSrc})` }}
+                        >
+                            {/* <img src={bgSrc} alt="background" className={s.backgroundImage} /> */}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* 화살표 버튼 */}
+            {!isOpen && (
+                <button className={s.arrowButton} onClick={toggleOpen}>
+                    <img src={slideBoxShowUpArrow} alt='arrow' />
+                </button>
+            )}
+			<div className={s.bottomWhiteSpace}>
 			</div>
-		</div>
-	);
+        </div>
+    );
 };
 
 export default CreateStationBackground;
