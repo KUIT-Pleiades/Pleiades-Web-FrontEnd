@@ -75,28 +75,40 @@ const Report = () => {
   const handleSearchSubmit = async (query: string) => {
     if (query.trim()) {
       try {
-        // 검색 API 호출
-        const response = await fetchRequest<{ reports: Report[] }>(
+        // 1. 검색 실행
+        const searchResponse = await fetchRequest<{ reports: Report[] }>(
           `/reports?query=${encodeURIComponent(query.trim())}`,
           "GET",
           null
         );
 
-        if (response && response.reports) {
-          setFilteredReports(response.reports);
+        if (searchResponse && searchResponse.reports) {
+          setFilteredReports(searchResponse.reports);
           setIsSearchResult(true);
           setShowSearchHistory(false);
           setSearchValue("");
-        } else {
-          throw new Error("검색 결과를 불러오는데 실패했습니다.");
+
+          // 2. 검색 후 업데이트된 검색 기록 가져오기
+          const historyResponse = await fetchRequest<SearchHistoryResponse>(
+            "/reports/history",
+            "GET",
+            null
+          );
+
+          if (historyResponse && historyResponse.history) {
+            setSearchHistory(historyResponse.history);
+          }
         }
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "검색 처리 중 오류가 발생했습니다."
+          err instanceof Error
+            ? err.message
+            : "검색 처리 중 오류가 발생했습니다."
         );
       }
     }
   };
+
 
   const handleSearchFocus = () => {
     setShowSearchHistory(true);
