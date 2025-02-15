@@ -130,18 +130,45 @@ const Report = () => {
     setShowSearchHistory(true);
   };
 
-  const handleUpdateReport = (reportId: number, newAnswer: string) => {
-    setReports((prevReports) =>
-      prevReports.map((report) =>
-        report.reportId === reportId
-          ? {
-              ...report,
-              answer: newAnswer,
-              modifiedAt: new Date().toISOString(),
-            }
-          : report
-      )
-    );
+  const handleUpdateReport = async (reportId: number, newAnswer: string) => {
+    try {
+      await fetchRequest<void>(`/reports/${reportId}`, "PATCH", {
+        answer: newAnswer.trim(),
+      });
+
+      // 성공적으로 업데이트되면 로컬 상태 업데이트
+      setReports((prevReports) =>
+        prevReports.map((report) =>
+          report.reportId === reportId
+            ? {
+                ...report,
+                answer: newAnswer,
+                modifiedAt: new Date().toISOString(),
+              }
+            : report
+        )
+      );
+
+      if (isSearchResult) {
+        setFilteredReports((prevFiltered) =>
+          prevFiltered.map((report) =>
+            report.reportId === reportId
+              ? {
+                  ...report,
+                  answer: newAnswer,
+                  modifiedAt: new Date().toISOString(),
+                }
+              : report
+          )
+        );
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "리포트 수정 중 오류가 발생했습니다."
+      );
+    }
   };
 
   const handleDeleteReport = (reportId: number) => {

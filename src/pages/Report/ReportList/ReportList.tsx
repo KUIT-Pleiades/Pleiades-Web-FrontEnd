@@ -14,7 +14,7 @@ interface Report {
 
 interface ReportListProps {
   reports: Report[];
-  onUpdateReport: (reportId: number, newAnswer: string) => void;
+  onUpdateReport: (reportId: number, newAnswer: string) => Promise<void>;
   onDeleteReport: (reportId: number) => void;
   isSearchResult?: boolean;
 }
@@ -55,7 +55,11 @@ const ReportList = ({
                   className={s.messageIcon}
                 />
                 <div className={s.questionContent}>
-                  <span className={s.question}>{report.question}</span>
+                  <span className={s.question}>
+                    {report.question.length > 25
+                      ? `${report.question.slice(0, 25)}...`
+                      : report.question}
+                  </span>
                   <span className={s.date}>
                     {new Date(report.createdAt).toLocaleDateString()}
                   </span>

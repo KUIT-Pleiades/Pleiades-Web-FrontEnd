@@ -27,8 +27,10 @@ const ReportModal = ({
   onDelete,
 }: ReportModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedAnswer, setEditedAnswer] = useState(report.answer);
-  const [localReport, setLocalReport] = useState(report);
+	const [editedAnswer, setEditedAnswer] = useState(report.answer);
+	const [localReport, setLocalReport] = useState(report);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const maxLength = 150;
 
   useEffect(() => {
@@ -49,15 +51,24 @@ const ReportModal = ({
     }, 0);
   };
 
-  const handleSave = () => {
-    const updatedReport = {
-      ...localReport,
-      answer: editedAnswer,
-      modifiedAt: new Date().toISOString(),
-    };
-    setLocalReport(updatedReport);
-    onUpdate(report.reportId, editedAnswer);
-    setIsEditing(false);
+  const handleSave = async () => {
+    if (!editedAnswer.trim()) {
+      setError("답변 내용을 입력해주세요.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await onUpdate(report.reportId, editedAnswer.trim());
+      setIsEditing(false);
+      onClose();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "답변 수정 중 오류가 발생했습니다."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancel = () => {
@@ -112,7 +123,9 @@ const ReportModal = ({
                   수정
                 </button>
                 <span className={s.divider}>|</span>
-                <button className={s.deleteBtn} onClick={handleDelete}>삭제</button>
+                <button className={s.deleteBtn} onClick={handleDelete}>
+                  삭제
+                </button>
               </div>
             ) : (
               ""
@@ -126,13 +139,18 @@ const ReportModal = ({
                 onChange={handleTextChange}
                 maxLength={maxLength}
               />
+              {error && <div className={s.error}>{error}</div>}
               <div className={s.editFooter}>
                 <div className={s.characterCount}>
                   {editedAnswer.length} / {maxLength}byte
                 </div>
                 <div className={s.buttonGroup}>
-                  <button className={s.saveBtn} onClick={handleSave}>
-                    완료
+                  <button
+                    className={s.saveBtn}
+                    onClick={handleSave}
+                    disabled={isSubmitting || !editedAnswer.trim()}
+                  >
+                    {isSubmitting ? "저장 중..." : "완료"}
                   </button>
                   <button className={s.cancelBtn} onClick={handleCancel}>
                     취소
