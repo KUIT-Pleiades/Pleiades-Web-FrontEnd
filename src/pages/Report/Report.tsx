@@ -16,15 +16,21 @@ interface Report {
   answer: string;
 }
 
+interface SearchHistoryItem {
+  id: number;
+  query: string;
+  createdAt: string;
+}
+
 interface SearchHistoryResponse {
-  history: string[];
+  history: SearchHistoryItem[];
 }
 
 const Report = () => {
   const [reports, setReports] = useState<Report[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredReports, setFilteredReports] = useState<Report[]>([]);
   const [isSearchResult, setIsSearchResult] = useState(false);
@@ -66,27 +72,41 @@ const Report = () => {
     setSearchValue(event.target.value);
   };
 
-  const handleSearchSubmit = () => {
+  const handleSearchSubmit = async () => {
     if (searchValue.trim()) {
-      setSearchHistory((prev) => {
-        if (!prev.includes(searchValue.trim())) {
-          const newHistory = [...prev, searchValue.trim()];
-          if (newHistory.length > 10) {
-            newHistory.shift();
-          }
-          return newHistory;
+      try {
+        // 검색어 저장 API 호출
+        await fetchRequest("/reports/history", "POST", {
+          query: searchValue.trim(),
+        });
+
+        // 검색 기록 다시 불러오기
+        const historyResponse = await fetchRequest<SearchHistoryResponse>(
+          "/reports/history",
+          "GET",
+          null
+        );
+        if (historyResponse && historyResponse.history) {
+          setSearchHistory(historyResponse.history);
         }
-        return prev;
-      });
 
-      const filtered = reports.filter((report) =>
-        report.question.toLowerCase().includes(searchValue.trim().toLowerCase())
-      );
+        const filtered = reports.filter((report) =>
+          report.question
+            .toLowerCase()
+            .includes(searchValue.trim().toLowerCase())
+        );
 
-      setFilteredReports(filtered);
-      setIsSearchResult(true);
-      setShowSearchHistory(false);
-      setSearchValue("");
+        setFilteredReports(filtered);
+        setIsSearchResult(true);
+        setShowSearchHistory(false);
+        setSearchValue("");
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "검색 처리 중 오류가 발생했습니다."
+        );
+      }
     }
   };
 
@@ -96,15 +116,36 @@ const Report = () => {
   };
 
   const handleSearchBlur = () => {
-    setShowSearchHistory(false);
+    setTimeout(() => {
+      setShowSearchHistory(false);
+    }, 200); // 검색어 선택할 시간을 주기 위한 지연
   };
 
-  const handleDeleteHistory = (index: number) => {
-    setSearchHistory((prev) => prev.filter((_, i) => i !== index));
+  const handleDeleteHistory = async (id: number) => {
+    try {
+      // 검색어 삭제 API 호출
+      await fetchRequest(`/reports/history/${id}`, "DELETE", null);
+
+      // 검색 기록 다시 불러오기
+      const historyResponse = await fetchRequest<SearchHistoryResponse>(
+        "/reports/history",
+        "GET",
+        null
+      );
+      if (historyResponse && historyResponse.history) {
+        setSearchHistory(historyResponse.history);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "검색 기록 삭제 중 오류가 발생했습니다."
+      );
+    }
   };
 
-  const handleSelectHistory = (value: string) => {
-    setSearchValue(value);
+  const handleSelectHistory = (query: string) => {
+    setSearchValue(query);
     setShowSearchHistory(true);
   };
 
@@ -170,7 +211,7 @@ const Report = () => {
           <SearchReport
             searchHistory={searchHistory}
             onDeleteHistory={handleDeleteHistory}
-            onSelectHistory={handleSelectHistory}
+            onSelectHistory={(query) => handleSelectHistory(query)}
           />
         </div>
       ) : isSearchResult ? (
