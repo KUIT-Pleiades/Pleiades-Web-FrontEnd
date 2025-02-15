@@ -72,39 +72,27 @@ const Report = () => {
     setSearchValue(event.target.value);
   };
 
-  const handleSearchSubmit = async () => {
-    if (searchValue.trim()) {
+  const handleSearchSubmit = async (query: string) => {
+    if (query.trim()) {
       try {
-        // 검색어 저장 API 호출
-        await fetchRequest("/reports/history", "POST", {
-          query: searchValue.trim(),
-        });
-
-        // 검색 기록 다시 불러오기
-        const historyResponse = await fetchRequest<SearchHistoryResponse>(
-          "/reports/history",
+        // 검색 API 호출
+        const response = await fetchRequest<{ reports: Report[] }>(
+          `/reports?query=${encodeURIComponent(query.trim())}`,
           "GET",
           null
         );
-        if (historyResponse && historyResponse.history) {
-          setSearchHistory(historyResponse.history);
+
+        if (response && response.reports) {
+          setFilteredReports(response.reports);
+          setIsSearchResult(true);
+          setShowSearchHistory(false);
+          setSearchValue("");
+        } else {
+          throw new Error("검색 결과를 불러오는데 실패했습니다.");
         }
-
-        const filtered = reports.filter((report) =>
-          report.question
-            .toLowerCase()
-            .includes(searchValue.trim().toLowerCase())
-        );
-
-        setFilteredReports(filtered);
-        setIsSearchResult(true);
-        setShowSearchHistory(false);
-        setSearchValue("");
       } catch (err) {
         setError(
-          err instanceof Error
-            ? err.message
-            : "검색 처리 중 오류가 발생했습니다."
+          err instanceof Error ? err.message : "검색 처리 중 오류가 발생했습니다."
         );
       }
     }
@@ -124,17 +112,10 @@ const Report = () => {
   const handleDeleteHistory = async (id: number) => {
     try {
       // 검색어 삭제 API 호출
-      await fetchRequest(`/reports/history/${id}`, "DELETE", null);
+      await fetchRequest<void>(`/reports/history/${id}`, "DELETE", null);
 
-      // 검색 기록 다시 불러오기
-      const historyResponse = await fetchRequest<SearchHistoryResponse>(
-        "/reports/history",
-        "GET",
-        null
-      );
-      if (historyResponse && historyResponse.history) {
-        setSearchHistory(historyResponse.history);
-      }
+      // 삭제 후 검색 기록 상태 업데이트
+      setSearchHistory((prev) => prev.filter((item) => item.id !== id));
     } catch (err) {
       setError(
         err instanceof Error
