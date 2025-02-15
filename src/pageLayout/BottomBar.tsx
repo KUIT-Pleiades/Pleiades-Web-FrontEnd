@@ -22,7 +22,7 @@ export default function BottomBar() {
       tag: "정거장",
       defaultImg: stationIcon,
       selectedImg: selectedStationIcon,
-      link: "/station",
+      link: "/station/stationlist",
     },
     {
       tag: "상점",
