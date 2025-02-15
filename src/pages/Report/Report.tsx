@@ -1,7 +1,7 @@
 import backBtn from "../../assets/btnImg/backBtn.png";
 import s from "./Report.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import SearchReportsBar from "../../components/SearchReportsBar/SearchReportsBar";
+import SearchReportsBar from "./SearchReportsBar/SearchReportsBar";
 import ReportList from "./ReportList/ReportList";
 import { useState, useEffect } from "react";
 import SearchReport from "./SearchReport/SearchReport";

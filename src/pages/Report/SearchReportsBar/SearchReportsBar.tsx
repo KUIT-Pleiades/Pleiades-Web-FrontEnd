@@ -1,8 +1,8 @@
 import React from "react";
 import s from "./SearchReportsBar.module.scss";
 
-// image files
-import searchIcon from "../../assets/btnImg/searchBtn.svg";
+
+import searchIcon from "../../../assets/btnImg/searchBtn.svg"
 
 interface SearchReportsBarProps {
   value?: string;
