@@ -171,18 +171,30 @@ const Report = () => {
     }
   };
 
-  const handleDeleteReport = (reportId: number) => {
-    setReports((prevReports) =>
-      prevReports.filter((report) => report.reportId !== reportId)
-    );
+  const handleDeleteReport = async (reportId: number) => {
+    try {
+      // 서버에 삭제 요청
+      await fetchRequest<void>(`/reports/${reportId}`, "DELETE", null);
 
-    if (isSearchResult) {
-      setFilteredReports((prevFiltered) =>
-        prevFiltered.filter((report) => report.reportId !== reportId)
+      // 성공적으로 삭제되면 로컬 상태 업데이트
+      setReports((prevReports) =>
+        prevReports.filter((report) => report.reportId !== reportId)
+      );
+
+      // 검색 결과에서도 제거
+      if (isSearchResult) {
+        setFilteredReports((prevFiltered) =>
+          prevFiltered.filter((report) => report.reportId !== reportId)
+        );
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "리포트 삭제 중 오류가 발생했습니다."
       );
     }
   };
-
   const { userInfo } = useCharacterStore();
 
   if (isLoading) {

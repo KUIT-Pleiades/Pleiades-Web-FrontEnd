@@ -17,7 +17,7 @@ interface ReportModalProps {
   report: Report;
   onClose: () => void;
   onUpdate: (reportId: number, newAnswer: string) => void;
-  onDelete: (reportId: number) => void;
+  onDelete: (reportId: number) => Promise<void>;
 }
 
 const ReportModal = ({
