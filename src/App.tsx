@@ -49,7 +49,7 @@ export default function App() {
           <Route path="market" element={<Market />}></Route>
           <Route path="setting" element={<Setting />}></Route>
           <Route path="station" element={<Station />}>
-            <Route path="stationlist" element={<ShowStationList />} />
+            <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
           </Route>
           <Route path="friendtab" element={<FriendsTab />}></Route>

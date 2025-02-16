@@ -4,8 +4,8 @@ import starIcon from "../assets/bottomBarImg/starIcon.svg";
 import selectedStarIcon from "../assets/bottomBarImg/starIconSelected.png";
 import stationIcon from "../assets/bottomBarImg/stationIcon.svg";
 import selectedStationIcon from "../assets/bottomBarImg/stationIconSelected.png";
-import rocketIcon from "../assets/bottomBarImg/stationIcon.svg";
-import selectedRocketIcon from "../assets/bottomBarImg/stationIconSelected.png";
+import shopIcon from "../assets/bottomBarImg/shop.svg";
+import selectedShopIcon from "../assets/bottomBarImg/shopSelected.png";
 import settingIcon from "../assets/bottomBarImg/settingIcon.svg";
 import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.png";
 import BottomBarItem from "./BottomBarItem";
@@ -22,12 +22,12 @@ export default function BottomBar() {
       tag: "정거장",
       defaultImg: stationIcon,
       selectedImg: selectedStationIcon,
-      link: "/station/stationlist",
+      link: "/station",
     },
     {
       tag: "상점",
-      defaultImg: rocketIcon,
-      selectedImg: selectedRocketIcon,
+      defaultImg: shopIcon,
+      selectedImg: selectedShopIcon,
       link: "/market",
     },
     {

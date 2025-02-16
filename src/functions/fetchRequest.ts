@@ -13,7 +13,6 @@ export const fetchRequest = async <T>(
   const BASEURL = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASEURL}${requestPoint}`;
   const { authorization, setToken } = useAuth.getState();
-  console.log(authorization);
 
   function setRequest(
     method: Methods,
@@ -63,6 +62,7 @@ export const fetchRequest = async <T>(
   }
 
   let req = setRequest(method, body, authorization);
+  //삭제해야함 이부분
   console.log(req);
   let response = await fetch(requestURL, req);
   if (!response.headers.get("Content-Type")?.includes("application/json")) {

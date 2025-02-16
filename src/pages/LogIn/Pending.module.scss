@@ -4,6 +4,7 @@
   position: relative;
   background-color: #1b142b;
   overflow: hidden;
+  z-index: 100;
 }
 
 .content {
@@ -13,6 +14,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .motionSection {
@@ -25,35 +27,42 @@
 
 @keyframes jumping {
   0% {
-    transform: translateY(-100vh);
-  }
-  20% {
-    transform: translateY(3vh);
-  }
-  40% {
-    transform: translateY(-6vh);
-  }
-  60% {
-    transform: translateY(0);
-  }
-  80% {
-    transform: translateY(-2vh);
+    transform: translate(0, 0.8em);
   }
   100% {
-    transform: translateY(0);
+    transform: translate(0, 0);
   }
 }
 
-.logo {
-  animation-name: jumping;
-  animation-duration: 0.8s;
-  animation-iteration-count: 1;
+.spaceShip1 {
+  position: absolute;
+  width: 3.5em;
+  height: 3.5em;
   z-index: 1;
+  top: 33%;
+  left: 20%;
+  animation-name: jumping;
+  animation-duration: 1.5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+}
+
+.spaceShip2 {
+  position: absolute;
+  width: 3.5em;
+  height: 3.5em;
+  z-index: 1;
+  top: 45%;
+  right: 20%;
+  animation-name: jumping;
+  animation-duration: 1.5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
 }
 
 .subTitle {
   font-family: "NanumSquareRound";
-  font-size: 15px;
+  font-size: 13px;
   text-align: center;
   letter-spacing: -2%;
   margin-top: 0%;
@@ -64,7 +73,7 @@
 
 .title {
   font-family: "ElectricalSafety";
-  font-size: 36px;
+  font-size: 20px;
   text-align: center;
   margin-top: 0;
   margin-bottom: 15%;
