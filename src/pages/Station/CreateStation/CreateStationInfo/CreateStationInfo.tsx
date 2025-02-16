@@ -101,8 +101,8 @@ const CreateStationInfo: React.FC<CreateStationInfoProps> = ({
 							value={ampm}
 							onChange={(e) => setAmpm(e.target.value as '오전' | '오후')}
 						>
-							<option value="오전">오전</option>
-							<option value="오후">오후</option>
+							<option className={s.alarmSelectOption} value="오전">오전</option>
+							<option className={s.alarmSelectOption} value="오후">오후</option>
 						</select>
 						<img src={slash} alt="slash" />
 						<select
@@ -111,7 +111,7 @@ const CreateStationInfo: React.FC<CreateStationInfoProps> = ({
 							onChange={(e) => setHour(e.target.value)}
 						>
 							{Array.from({ length: 12 }, (_, i) => i + 1).map((num) => (
-								<option key={num} value={String(num)}>
+								<option key={num} value={String(num)} className={s.alarmSelectOption}>
 									{num}
 								</option>
 							))}
@@ -126,7 +126,7 @@ const CreateStationInfo: React.FC<CreateStationInfoProps> = ({
 							{Array.from({ length: 60 }, (_, i) => i).map((num) => {
 								const val = num < 10 ? `0${num}` : String(num);
 								return (
-									<option key={val} value={val}>
+									<option key={val} value={val} className={s.alarmSelectOption}>
 										{val}
 									</option>
 								);
