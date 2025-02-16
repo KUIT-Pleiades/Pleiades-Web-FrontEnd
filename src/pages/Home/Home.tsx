@@ -8,7 +8,7 @@ import { useAuth } from "../../store/authStore";
 export default function Home() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isSetup = location.pathname.includes("charactersetting") || location.pathname.includes("createstation");
+  const isSetup = location.pathname.includes("charactersetting");
   const { authorization } = useAuth();
   const { updateUserInfo } = useCharacterStore();
   const fetchUserInfo = useCallback(async () => {

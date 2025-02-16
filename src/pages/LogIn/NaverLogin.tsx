@@ -12,6 +12,7 @@ export default function NaverLogin() {
 
   useEffect(() => {
     if (authorization) {
+      console.log(authorization);
       navigate("/home");
     }
   }, [authorization, navigate]);
@@ -26,12 +27,11 @@ export default function NaverLogin() {
       if (!tokenData) {
         navigate("/loginfail");
       } else {
-        console.log(tokenData.accessToken);
         setToken(tokenData.accessToken);
       }
     };
     handleLogin();
-  }, [navigate, setToken, url.search]);
+  }, [authCode, navigate, setToken, url.search]);
 
   return <div>pending...</div>;
 }
