@@ -16,6 +16,7 @@ import Market from "./pages/Market/Market";
 import MyStar from "./pages/Home/MyStar";
 import CreateStation from "./pages/Station/CreateStation/CreateStation";
 import Report from "./pages/Report/Report";
+import Pending from "./pages/LogIn/Pending";
 
 export default function App() {
   return (
@@ -23,8 +24,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/login" element={<LogIn />}></Route>
-        <Route path="naverlogin" element={<NaverLogin />} />
-        <Route path="kakaologin" element={<KakaoLogin />} />
+        <Route path="naverlogin" element={<NaverLogin />}>
+          <Route index element={<Pending />} />
+        </Route>
+        <Route path="kakaologin" element={<KakaoLogin />}>
+          <Route index element={<Pending />} />
+        </Route>
         <Route
           path="/loginfail"
           element={

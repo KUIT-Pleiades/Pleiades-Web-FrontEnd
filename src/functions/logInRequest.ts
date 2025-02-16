@@ -55,9 +55,6 @@ export async function naverLogInRequest(authCode: string) {
     //다시 로그인하세요 모달
     return null;
   }
-  console.log(response)
-  const text = await response.text();
-  console.log(text)
   const data: AuthToken = await response.json();
   return data;
 }
@@ -77,7 +74,7 @@ export async function autoLogInRequest() {
   });
   if (
     response1.ok &&
-    response1.headers.get("Content-Type") === "application/json"
+    response1.headers.get("Content-Type")?.includes("application/json")
   ) {
     console.log(response1);
     return true;
