@@ -28,7 +28,6 @@ export default function NaverLogin() {
         navigate("/loginfail");
       } else {
         console.log(tokenData.accessToken);
-        setToken(tokenData.accessToken);
         navigate("/home");
       }
     };

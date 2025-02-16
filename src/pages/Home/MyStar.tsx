@@ -47,6 +47,10 @@ export default function MyStar() {
     }
   }, [userInfo.userId]);
 
+  const showDiary = () => {
+    navigate("/report");
+  };
+
   return isLoading ? (
     <Pending />
   ) : (
@@ -59,7 +63,7 @@ export default function MyStar() {
         <p className={s.owner}>{userInfo.userName}님의 별</p>
       </div>
       <img className={s.character} src={userCharacter} alt="캐릭터" />
-      <img className={s.diary} src={diary} alt="일기장" />
+      <img className={s.diary} src={diary} alt="일기장" onClick={showDiary} />
     </div>
   );
 }
