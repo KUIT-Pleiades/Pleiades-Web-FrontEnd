@@ -56,7 +56,6 @@ export async function naverLogInRequest(authCode: string) {
     return null;
   }
   const data: AuthToken = await response.json();
-  console.log(data)
   return data;
 }
 
@@ -75,7 +74,7 @@ export async function autoLogInRequest() {
   });
   if (
     response1.ok &&
-    response1.headers.get("Content-Type") === "application/json"
+    response1.headers.get("Content-Type")?.includes("application/json")
   ) {
     console.log(response1);
     return true;

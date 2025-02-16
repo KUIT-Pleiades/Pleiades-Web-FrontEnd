@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { naverLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
 
@@ -35,5 +35,5 @@ export default function NaverLogin() {
     handleLogin();
   }, [authCode, navigate, setToken, url.search]);
 
-  return <div>pending...</div>;
+  return <Outlet />;
 }

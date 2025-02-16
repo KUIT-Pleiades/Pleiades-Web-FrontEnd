@@ -1,18 +1,13 @@
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
 import s from "./Splash.module.scss";
 
-interface logoProps {
-  width: number;
-  height: number;
-}
-
-export default function Logo({ width, height }: logoProps) {
+export default function Logo() {
   return (
     <img
       className={s.logo}
       src={pleiadesLogo}
-      width={width}
-      height={height}
+      width={192.24}
+      height={138.32}
       alt="Logo"
     />
   );
