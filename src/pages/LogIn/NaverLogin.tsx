@@ -6,16 +6,16 @@ import { useAuth } from "../../store/authStore";
 export default function NaverLogin() {
   const navigate = useNavigate();
   const url = useLocation();
-  const { authorization, setToken } = useAuth();
+  const { setToken } = useAuth();
   const urlParams = new URLSearchParams(url.search);
   const authCode = urlParams.get("code");
 
-  useEffect(() => {
-    if (authorization) {
-      console.log(authorization);
-      navigate("/home");
-    }
-  }, [authorization, navigate]);
+  // useEffect(() => {
+  //   if (authorization) {
+  //     console.log(authorization);
+  //     navigate("/home");
+  //   }
+  // }, [authorization, navigate]);
 
   useEffect(() => {
     if (!authCode) {
@@ -24,12 +24,12 @@ export default function NaverLogin() {
     }
     const handleLogin = async () => {
       const tokenData = await naverLogInRequest(authCode);
-      console.log(tokenData?.accessToken);
-      if (!tokenData) {
+      if (tokenData === null) {
         navigate("/loginfail");
       } else {
-        console.log(tokenData?.accessToken);
-        setToken(tokenData?.accessToken);
+        console.log(tokenData.accessToken);
+        setToken(tokenData.accessToken);
+        navigate("/home");
       }
     };
     handleLogin();
