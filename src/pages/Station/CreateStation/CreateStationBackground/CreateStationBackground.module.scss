@@ -119,18 +119,18 @@
     bottom: -100%; // 기본적으로 화면 아래에 완전히 숨김
     left: 0;
     width: 100%;
-    height: auto; //바텀바 수정 후 15%로 조정
+    height: auto;
     background-color: #FFF;
     transition: bottom 0.3s ease-in-out;
 }
 
 .open {
-    bottom: 13dvh; // 바텀바 수정 후 0으로 ㄱㄱ
+    bottom: 4dvh; // 바텀바 수정 후 0으로 ㄱㄱ
 }
 
 .arrowButton {
     position: absolute;
-    bottom: 11.2dvh;
+    bottom: 2.2dvh;
     left: 50%;
     transform: translateX(-50%);
     background: #FFF;
@@ -150,6 +150,6 @@
 	height: 4dvh;
 	background-color: #FFF;
 	position: absolute;
-	bottom: 9dvh;
+	bottom: 0;
 	z-index: 0;
 }

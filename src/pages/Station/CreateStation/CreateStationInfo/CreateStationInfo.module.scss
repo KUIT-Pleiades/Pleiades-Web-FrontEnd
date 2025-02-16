@@ -26,8 +26,12 @@
 
 	&Title {
 		color: #17151C;
+		text-align: center;
+		font-family: "Pretendard";
 		font-size: 1rem;
+		font-style: normal;
 		font-weight: 700;
+		line-height: normal;
 		letter-spacing: -0.02rem;
 	}
 
@@ -38,9 +42,13 @@
 		border-radius: 1.88rem;
 		margin-left: 0.88rem;
 		color: #FFF;
+		text-align: center;
+		font-family: Pretendard;
 		font-size: 0.875rem;
+		font-style: normal;
 		font-weight: 700;
-		cursor: pointer;
+		line-height: normal;
+		letter-spacing: -0.01456rem;
 	}
 
 	&NextButton {
@@ -50,9 +58,13 @@
 		border-radius: 1.88rem;
 		margin-right: 0.88rem;
 		color: #FFF;
+		text-align: center;
+		font-family: Pretendard;
 		font-size: 0.875rem;
+		font-style: normal;
 		font-weight: 700;
-		cursor: pointer;
+		line-height: normal;
+		letter-spacing: -0.01456rem;
 	}
 }
 
@@ -90,6 +102,7 @@
 	width: 100%;
 	height: 3.625rem;
 	border: 1px solid #C0B9DB;
+	background-color: #FFF;
 	border-radius: 0.75rem;
 	display: flex;
 	flex-direction: column;
@@ -116,7 +129,6 @@
 	font-weight: 600;
 	letter-spacing: -0.02rem;
 }
-
 .nameInput:-ms-input-placeholder, .introInput:-ms-input-placeholder {
 	color: #CBCCCB;
 	font-family: "Pretendard";
@@ -128,9 +140,12 @@
 .alarmRow {
 	width: 100%;
 	height: 3.63rem;
+	text-align: center;
 	border: 1px solid #C0B9DB;
+	background-color: #FFF;
 	border-radius: 0.75rem;
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	z-index: 1000;
@@ -144,12 +159,20 @@
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
+	background-image: none;
 	color: #8B6193;
+	text-align-last: center;
 	text-align: center;
+	-ms-text-align-last: center;
+	-moz-text-align-last: center;
 	font-family: "Pretendard";
 	font-size: 1rem;
 	font-weight: 700;
 	z-index: 1001;
+
+	&Option{
+		text-align: center;
+	}
 }
 
 .alarmSelect:focus {
