@@ -55,7 +55,7 @@ export const fetchRequest = async <T>(
       },
       credentials: "include",
     });
-    if (response.headers.get("Content-Type")?.includes("application/json")) {
+    if (!response.headers.get("Content-Type")?.includes("application/json")) {
       console.log("응답형식이 JSON이 아닙니다");
       return null;
     }
@@ -65,7 +65,7 @@ export const fetchRequest = async <T>(
   let req = setRequest(method, body, authorization);
   console.log(req);
   let response = await fetch(requestURL, req);
-  if (response.headers.get("Content-Type")?.includes("application/json")) {
+  if (!response.headers.get("Content-Type")?.includes("application/json")) {
     console.log("응답형식이 JSON이 아닙니다");
     return null;
   }
