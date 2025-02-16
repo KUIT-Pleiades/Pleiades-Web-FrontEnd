@@ -18,7 +18,7 @@ interface CharacterStore {
 const initialUserInfo: UserInfo = {
   // 초기 캐릭터 상태 -> 디자이너, pm 과 상의
   userId: "",
-  userName: "김플아데",
+  userName: "",
   birthDate: "",
   starBackground: "background_01",
   character: "QmWC4899NqLPTqMSVFNZS5qzSUvCH1agcCdRzRrFe1um85",

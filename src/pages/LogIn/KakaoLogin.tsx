@@ -20,6 +20,7 @@ export default function KakaoLogin() {
           navigate("/loginfail");
         } else {
           setToken(tokenData.accessToken);
+          console.log(tokenData.accessToken);
           setLoginState("Success");
           navigate("/home");
         }
