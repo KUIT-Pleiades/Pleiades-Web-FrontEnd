@@ -24,9 +24,11 @@ export default function NaverLogin() {
     }
     const handleLogin = async () => {
       const tokenData = await naverLogInRequest(authCode);
+      console.log(tokenData.accessToken);
       if (!tokenData) {
         navigate("/loginfail");
       } else {
+        console.log(tokenData.accessToken);
         setToken(tokenData.accessToken);
       }
     };
