@@ -14,12 +14,14 @@ export default function Home() {
   const { updateUserInfo } = useCharacterStore();
   const fetchUserInfo = useCallback(async () => {
     const data = await fetchRequest<User>("/home", "GET", null);
-    if (data) {
-      updateUserInfo(data);
-    } else {
-      /** 예외처리*/
+    if (data !== null) {
+      if (data.userId === "") {
+        navigate("/onboarding");
+      } else {
+        updateUserInfo(data);
+      }
     }
-  }, [updateUserInfo]);
+  }, [navigate, updateUserInfo]);
 
   useEffect(() => {
     if (authorization !== null) {

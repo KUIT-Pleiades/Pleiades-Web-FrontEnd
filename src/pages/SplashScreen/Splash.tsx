@@ -27,7 +27,7 @@ export default function Splash() {
       <div className={s.content}>
         <div className={s.motionSection}>
           <Suspense fallback={""}>
-            <Logo />
+            <Logo width={192.24} height={138.32} />
           </Suspense>
         </div>
         <p className={s.subTitle}>별과 우주정거장이 모이는 곳,</p>
