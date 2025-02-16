@@ -10,15 +10,16 @@ export function kakaoLogInRedirect() {
 export async function kakaoLogInRequest(emailhash: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/kakao/temp?hash=${emailhash}`;
+  const { authorization } = useAuth.getState();
   const response = await fetch(requestURL, {
     method: "GET",
     headers: {
+      Authorization: `Bearer ${authorization}`,
       "Content-Type": "application/json",
     },
     credentials: "include",
   });
-  const status = response.status;
-  if (status == 401) {
+  if (!response.ok) {
     //다시 로그인하세요 모달
     return null;
   }
@@ -40,16 +41,17 @@ export function naverLogInRedirect() {
 export async function naverLogInRequest(authCode: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/naver`;
+  const { authorization } = useAuth.getState();
   const response = await fetch(requestURL, {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${authorization}`,
       "Content-Type": "application/json",
     },
     credentials: "include",
     body: JSON.stringify({ code: authCode }),
   });
-  const status = response.status;
-  if (status == 401) {
+  if (!response.ok) {
     //다시 로그인하세요 모달
     return null;
   }
