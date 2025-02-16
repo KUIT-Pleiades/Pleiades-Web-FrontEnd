@@ -111,7 +111,7 @@
 
 .nameInput,
 .introInput {
-	width: 97%;
+	width: 95%;
 	height: 100%;
 	border: none;
 	background-color: transparent;
@@ -138,7 +138,8 @@
 }
 
 .alarmRow {
-	width: 100%;
+	width: 98%;
+	padding-right: 3%;
 	height: 3.63rem;
 	text-align: center;
 	border: 1px solid #C0B9DB;
@@ -152,7 +153,7 @@
 }
 
 .alarmSelect {
-	width: 30%;
+	flex: 1;
 	height: 100%;
 	border: none;
 	background-color: transparent;
@@ -191,11 +192,11 @@
 }
 
 .hourText {
-	left: 53%;
+	left: 51.8dvw;
 }
 
 .minText {
-	left: 87%;
+	left: 83%;
 }
 
 .incompletePopup {

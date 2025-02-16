@@ -133,6 +133,7 @@ const CreateStationInfo: React.FC<CreateStationInfoProps> = ({
 							})}
 						</select>
 						<span className={s.minText}>분</span>
+						
 					</div>
 				</div>
 			</div>

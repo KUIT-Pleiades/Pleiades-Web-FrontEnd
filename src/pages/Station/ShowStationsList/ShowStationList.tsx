@@ -62,7 +62,7 @@ const ShowStationList: React.FC = () => {
             </button>
             <button
               className={s.createStationButton}
-              onClick={() => {navigate("/station/createstation");}}
+              onClick={() => {navigate("/station/createstation", {replace: true});}}
             >
               <img src={createIcon} alt="createIcon" />
             </button>
