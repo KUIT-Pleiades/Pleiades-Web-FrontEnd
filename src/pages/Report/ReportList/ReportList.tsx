@@ -14,8 +14,8 @@ interface Report {
 
 interface ReportListProps {
   reports: Report[];
-  onUpdateReport: (reportId: number, newAnswer: string) => void;
-  onDeleteReport: (reportId: number) => void;
+  onUpdateReport: (reportId: number, newAnswer: string) => Promise<void>;
+  onDeleteReport: (reportId: number) => Promise<void>;
   isSearchResult?: boolean;
 }
 
@@ -55,7 +55,11 @@ const ReportList = ({
                   className={s.messageIcon}
                 />
                 <div className={s.questionContent}>
-                  <span className={s.question}>{report.question}</span>
+                  <span className={s.question}>
+                    {report.question.length > 25
+                      ? `${report.question.slice(0, 25)}...`
+                      : report.question}
+                  </span>
                   <span className={s.date}>
                     {new Date(report.createdAt).toLocaleDateString()}
                   </span>
@@ -78,9 +82,13 @@ const ReportList = ({
           report={selectedReport}
           onClose={() => setSelectedReport(null)}
           onUpdate={onUpdateReport}
-          onDelete={(reportId) => {
-            onDeleteReport(reportId);
-            setSelectedReport(null); // 모달 닫기
+          onDelete={async (reportId) => {
+            try {
+              await onDeleteReport(reportId);
+              setSelectedReport(null); // 삭제 성공 후 모달 닫기
+            } catch (err) {
+              console.error("Error deleting report:", err);
+            }
           }}
         />
       )}

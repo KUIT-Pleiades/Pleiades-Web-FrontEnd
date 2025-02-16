@@ -7,7 +7,7 @@ interface Auth {
 }
 
 export const useAuth = create<Auth>((set) => ({
-  authorization: null,
+  authorization: "null",
   setToken: (token) => {
     set(() => ({ authorization: token }));
   },
