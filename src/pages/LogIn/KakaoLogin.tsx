@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LogInState } from "../../types/types";
 import { kakaoLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
 
@@ -8,29 +7,30 @@ export default function KakaoLogin() {
   const navigate = useNavigate();
   const url = useLocation();
   const { setToken } = useAuth();
-  const [loginState, setLoginState] = useState<LogInState>("Pending");
+  const urlParams = new URLSearchParams(url.search);
+  const hash = urlParams.get("hash");
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(url.search);
-    const hash = urlParams.get("hash");
+    if (hash === null) {
+      navigate("/loginfail");
+      return;
+    }
     const handleLogin = async () => {
       if (hash !== null) {
         const tokenData = await kakaoLogInRequest(hash);
-        if (tokenData == null) {
+        if (tokenData === null) {
           navigate("/loginfail");
         } else {
           setToken(tokenData.accessToken);
           console.log(tokenData.accessToken);
-          setLoginState("Success");
           navigate("/home");
         }
       } else {
-        setLoginState("Fail");
         navigate("/loginfail");
       }
     };
     handleLogin();
-  }, [navigate, setToken, url.search]);
+  }, [hash, navigate, setToken, url.search]);
 
-  return <div>{loginState}</div>;
+  return <div>pending...</div>;
 }
