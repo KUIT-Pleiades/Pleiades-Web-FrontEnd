@@ -13,20 +13,14 @@ import { fetchRequest } from '../../../functions/fetchRequest';
 import CreateStationInfo from './CreateStationInfo/CreateStationInfo';
 import CreateStationBackground from './CreateStationBackground/CreateStationBackground';
 
-import background1 from '../../../assets/stationBackgroundImg/stationBackground_01.png';
-import background2 from '../../../assets/stationBackgroundImg/stationBackground_02.png';
-import background3 from '../../../assets/stationBackgroundImg/stationBackground_03.png';
-import background4 from '../../../assets/stationBackgroundImg/stationBackground_04.png';
-import background5 from '../../../assets/stationBackgroundImg/stationBackground_05.png';
-import background6 from '../../../assets/stationBackgroundImg/stationBackground_06.png';
-import background7 from '../../../assets/stationBackgroundImg/stationBackground_07.png';
-import background8 from '../../../assets/stationBackgroundImg/stationBackground_08.png';
-import background9 from '../../../assets/stationBackgroundImg/stationBackground_09.png';
-import background10 from '../../../assets/stationBackgroundImg/stationBackground_10.png';
+import background1 from '../../../assets/stationBackgroundImg/stationBackgroundImg_01.png';
+import background2 from '../../../assets/stationBackgroundImg/stationBackgroundImg_02.png';
+import background3 from '../../../assets/stationBackgroundImg/stationBackgroundImg_03.png';
+//import background4 from '../../../assets/stationBackgroundImg/stationBackgroundImg_04.png';
+import background5 from '../../../assets/stationBackgroundImg/stationBackgroundImg_05.png';
 
 const stationBackgrounds = [
-	background1, background2, background3, background4, background5,
-	background6, background7, background8, background9, background10
+	background1, background2, background3, background5
 ];
 
 const CreateStation: React.FC = () => {

@@ -22,13 +22,6 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
     const [isOpen, setIsOpen] = useState(false); // 슬라이드 박스 상태
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // 배경 후보 이미지 리스트
-    // const backgrounds = [
-    //     '../../../../assets/stationBackgroundImg/stationBackground_01.png',
-    //     '../../../../assets/stationBackgroundImg/stationBackground_02.png',
-    //     '../../../../assets/stationBackgroundImg/stationBackground_03.png',
-    // ];
-
     // 외부 클릭 시 슬라이드 박스 닫기
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -66,13 +59,6 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                 </div>
             </div>
 			<span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
-            {/* 현재 선택한 배경 미리보기 */}
-            {/* <div className={s.body}>
-                <span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
-                <div 
-                    className={s.selectedBackground} 
-                />
-            </div> */}
 
             {/* 슬라이드 박스 */}
             <div className={`${s.slideBox} ${isOpen ? s.open : ''}`} ref={containerRef}>
@@ -83,9 +69,7 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                             className={`${s.backgroundItem} ${background === bgSrc ? s.selected : ''}`}
                             onClick={() => setBackground(bgSrc)}
 							style={{ backgroundImage: `url(${bgSrc})` }}
-                        >
-                            {/* <img src={bgSrc} alt="background" className={s.backgroundImage} /> */}
-                        </div>
+                        />
                     ))}
                 </div>
             </div>
