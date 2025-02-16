@@ -13,15 +13,22 @@ export default function Home() {
   const { authorization } = useAuth();
   const { updateUserInfo } = useCharacterStore();
   const fetchUserInfo = useCallback(async () => {
+  try {
+    console.log("Fetching user info...");
     const data = await fetchRequest<User>("/home", "GET", null);
+    console.log("Fetched data:", data);
     if (data !== null) {
       if (data.userId === "") {
+        console.log("Navigating to /onboarding");
         navigate("/onboarding");
       } else {
         updateUserInfo(data);
       }
     }
-  }, [navigate, updateUserInfo]);
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+  }
+}, [navigate, updateUserInfo]);
 
   useEffect(() => {
     if (authorization !== null) {
