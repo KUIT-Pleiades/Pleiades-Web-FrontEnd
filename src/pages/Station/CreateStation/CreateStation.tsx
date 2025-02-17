@@ -16,11 +16,17 @@ import CreateStationBackground from './CreateStationBackground/CreateStationBack
 import background1 from '../../../assets/stationBackgroundImg/stationBackgroundImg_01.png';
 import background2 from '../../../assets/stationBackgroundImg/stationBackgroundImg_02.png';
 import background3 from '../../../assets/stationBackgroundImg/stationBackgroundImg_03.png';
-//import background4 from '../../../assets/stationBackgroundImg/stationBackgroundImg_04.png';
-import background5 from '../../../assets/stationBackgroundImg/stationBackgroundImg_05.png';
+import background4 from '../../../assets/stationBackgroundImg/stationBackgroundImg_04.png';
+import backgroundPrev1 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_01.png';
+import backgroundPrev2 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_02.png';
+import backgroundPrev3 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_03.png';
+import backgroundPrev4 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_04.png';
 
 const stationBackgrounds = [
-	background1, background2, background3, background5
+	background1, background2, background3, background4
+];
+const stationBackgroundPrevs = [
+	backgroundPrev1, backgroundPrev2, backgroundPrev3, backgroundPrev4
 ];
 
 const CreateStation: React.FC = () => {
@@ -42,7 +48,7 @@ const CreateStation: React.FC = () => {
 
 	// 취소 버튼 클릭 시 동작
 	const handleCancel = () => {
-		navigate("/station/stationlist");
+		navigate("/station");
 		// 필요하면 뒤로가기, 모달 닫기, 메인 페이지 이동 등 원하는 로직 추가
 	};
 	const handleBack = () => {
@@ -77,13 +83,19 @@ const CreateStation: React.FC = () => {
 		const finalMinute = minute.padStart(2, '0');
 		const reportNoticeTime = `${finalHour}:${finalMinute}:00`;
 
+		const getFileName = (path: string) => {
+			return path.split('/').pop()?.split('.')[0] || ''; 
+		};
+	
+		const backgroundName = getFileName(background);
+
 		try {
 			// 서버에 최종 데이터 전송
 			const response = await fetchRequest<{ message: string }>(
 				'/stations',
 				'POST',
 				{
-					backgroundName: background,
+					backgroundName: backgroundName,
 					name: stationName,
 					intro: stationIntro,
 					reportNoticeTime: reportNoticeTime
@@ -93,7 +105,6 @@ const CreateStation: React.FC = () => {
 				alert('정거장 생성 실패');
 				return;
 			}
-			console.log('정거장 생성 성공:', response);
 			// 생성 완료 후 원하는 페이지로 이동하거나 로직 추가
 		} catch (error) {
 			console.error('정거장 생성 중 오류:', error);
@@ -125,6 +136,7 @@ const CreateStation: React.FC = () => {
 			{step === 2 && (
 				<CreateStationBackground
 					backgrounds={stationBackgrounds}
+					backgroundPrevs={stationBackgroundPrevs}
 					background={background}
 					setBackground={setBackground}
 					handleBack={handleBack}

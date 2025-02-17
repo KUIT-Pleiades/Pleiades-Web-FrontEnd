@@ -176,16 +176,16 @@ export interface Answer {
 
 /** Interfaces For Station */
 
-interface Position {
-  x: number; // 퍼센트
-  y: number;
-}
+// interface Position {
+//   x: number; // 퍼센트
+//   y: number;
+// }
 
 export interface Station {
   stationId: string;
   name: string;
   numOfUsers: number;
-  backgroundImg: string;
+  stationBackground: string;
 }
 
 export interface Stations {
@@ -193,16 +193,26 @@ export interface Stations {
 }
 
 export interface StationMember {
-  character: Character;
-  position: Position;
-  isAnswered: boolean;
+  userId: string;
+  userName: string;
+  character: string;
+  profile: string;
+  positionX: number;
+  positionY: number;
+  todayReport: boolean;
 }
 
 export interface StationDetails {
-  id: string;
+  stationId: string;
+  adminUserId: string;
   name: string;
-  backgroundImg: string;
-  members: StationMember[];
+  intro: string;
+  numberOfUsers: number;
+  createdAt: string;
+  stationBackground: string;
+  reportNoticeTime: string;
+  reportWritten: boolean;
+  stationMembers: StationMember[];
 }
 
 /** Interfaces For Social */
