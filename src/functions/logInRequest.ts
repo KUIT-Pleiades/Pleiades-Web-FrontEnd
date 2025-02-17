@@ -38,7 +38,7 @@ export function naverLogInRedirect() {
   return naverLogInURL;
 }
 
-export async function naverLogInRequest(authCode: string) {
+export async function naverLogInRequest(authCode: string, stateString: string) {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth/login/naver`;
   const { authorization } = useAuth.getState();
@@ -49,7 +49,7 @@ export async function naverLogInRequest(authCode: string) {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ code: authCode }),
+    body: JSON.stringify({ code: authCode, state: stateString }),
   });
   if (!response.ok) {
     //다시 로그인하세요 모달

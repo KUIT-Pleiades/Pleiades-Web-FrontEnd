@@ -1,6 +1,10 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
-import { CharacterImg, UserInfo } from "../../../interfaces/Interfaces";
+import {
+  Character,
+  CharacterImg,
+  UserInfo,
+} from "../../../interfaces/Interfaces";
 
 export default function CharacterDisplay() {
   const character = useCharacterStore((state) => state.userInfo);
@@ -8,11 +12,11 @@ export default function CharacterDisplay() {
   const handleSubmit = async () => {
     try {
       // 첫 번째 요청: 이미지 생성
-      const imageRequestData = {
+      const imageRequestData: Character = {
         userId: character.userId,
         userName: character.userName,
         birthDate: character.birthDate,
-        backgroundName: character.starBackground,
+        starBackground: character.starBackground,
         face: {
           skinColor: character.face.skinColor,
           hair: character.face.hair,
@@ -52,7 +56,7 @@ export default function CharacterDisplay() {
       const data: CharacterImg = await response.json();
 
       // 두 번째 요청: 회원가입
-      const signupData = {
+      const signupData: UserInfo = {
         ...imageRequestData,
         profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
         character: data.character, // 첫 번째 요청에서 받은 이미지 URL
