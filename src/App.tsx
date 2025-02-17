@@ -58,7 +58,7 @@ export default function App() {
           <Route path="station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
-            <Route path="stationInside" element={<StationInside />} />
+            <Route path="stationinside" element={<StationInside />} />
             <Route path="stationslide" element={<StationSlide />} />
           </Route>
           <Route path="friendtab" element={<FriendsTab />}></Route>
