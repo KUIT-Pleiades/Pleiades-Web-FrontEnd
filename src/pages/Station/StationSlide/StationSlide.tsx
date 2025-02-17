@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { fetchRequest } from "../../../functions/fetchRequest";
-import s from "./StationSlide.module.scss"
-import planetIcon from "../../../assets/Icon/planet.svg"
-import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png"
+import s from "./StationSlide.module.scss";
+import planetIcon from "../../../assets/Icon/planet.svg";
+import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
+import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
 
 interface StationMember {
   userId: string;
@@ -26,43 +25,24 @@ interface StationResponse {
   stationMembers: StationMember[];
 }
 
-const StationSlide: React.FC = () => {
-  const [stationData, setStationData] = useState<StationResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+interface StationSlideProps {
+  stationData: StationResponse;
+  onClose: () => void;
+}
 
-  const stationId = "ABCDEF"; // 실제 stationId 필요
-
-  useEffect(() => {
-    const getStationData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetchRequest<StationResponse>(
-          `/stations/${stationId}`,
-          "GET",
-          null
-        );
-        if (response) {
-          setStationData(response);
-        }
-      } catch (err) {
-        setError(err as Error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getStationData();
-  }, [stationId]);
-
-  if (isLoading) return <div>로딩중...</div>;
-  if (error) return <div>에러가 발생했습니다</div>;
-  if (!stationData) return null;
+const StationSlide: React.FC<StationSlideProps> = ({
+  stationData,
+  onClose,
+}) => {
+  const handleSlideClick = (e: React.MouseEvent) => {
+    // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
+    e.stopPropagation();
+  };
 
   return (
-    <div className={s.container}>
+    <div className={s.container} onClick={onClose}>
       <div className={s.overlay}>
-        <div className={s.slide}>
+        <div className={s.slide} onClick={handleSlideClick}>
           <div className={s.headerContainer}>
             <div
               className={s.background}
@@ -74,9 +54,9 @@ const StationSlide: React.FC = () => {
               <img src={planetIcon} alt="" />
             </div>
             <div className={s.header}>
-              <h2>[{stationData.name}]</h2>
-							<p>{stationData.intro}</p>
-							<div className={s.codeCopy}>정거장 코드 복사</div>
+              <h2>[ {stationData.name} ]</h2>
+              <p>{stationData.intro}</p>
+              <div className={s.codeCopy}>정거장 코드 복사</div>
             </div>
           </div>
 
@@ -98,7 +78,7 @@ const StationSlide: React.FC = () => {
                 {stationData.stationMembers.map((member) => (
                   <div key={member.userId} className={s.memberItem}>
                     <div className={s.avatar}>
-                      <img src={member.profile} alt="profile" />
+                      <img src={characterProfile} alt="profile" />
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
