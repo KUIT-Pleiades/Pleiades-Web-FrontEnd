@@ -2,6 +2,9 @@ import s from "./StationSlide.module.scss";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
+import copyBtn from "../../../assets/btnImg/copyBtn.png"
+import plusBtn from "../../../assets/btnImg/plusBtn.png"
+import onerIcon from "../../../assets/Icon/oner.png"
 
 interface StationMember {
   userId: string;
@@ -36,7 +39,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
 }) => {
   const handleSlideClick = (e: React.MouseEvent) => {
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
-    e.stopPropagation();
+    e.stopPropagation(); 
   };
 
   return (
@@ -56,7 +59,10 @@ const StationSlide: React.FC<StationSlideProps> = ({
             <div className={s.header}>
               <h2>[ {stationData.name} ]</h2>
               <p>{stationData.intro}</p>
-              <div className={s.codeCopy}>정거장 코드 복사</div>
+              <div className={s.codeCopy}>
+                <img src={copyBtn} alt="" />
+                정거장 코드 복사
+              </div>
             </div>
           </div>
 
@@ -71,14 +77,17 @@ const StationSlide: React.FC<StationSlideProps> = ({
                 멤버 ({stationData.numOfUsers})
               </div>
               <button className={s.addMemberButton}>
-                <span>+</span> 친구 초대하기
+                <img src={plusBtn} alt="" /> 친구 초대하기
               </button>
 
               <div className={s.memberList}>
                 {stationData.stationMembers.map((member) => (
                   <div key={member.userId} className={s.memberItem}>
                     <div className={s.avatar}>
-                      <img src={characterProfile} alt="profile" />
+											<img src={characterProfile} alt="profile" />
+											{stationData.adminUserId === member.userId && (
+												<img src={onerIcon} alt="방장" className={s.onerIcon} />
+											)}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
