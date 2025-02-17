@@ -1,35 +1,6 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
-import { CharacterImg } from "../../../interfaces/Interfaces";
-
-interface SignUpResponse {
-  userId: string;
-  userName: string;
-  birthDate: string;
-  backgroundName: string;
-  profile: string;
-  character: string;
-  face: {
-    skinColor: string;
-    hair: string;
-    expression: string;
-  };
-  outfit: {
-    top: string;
-    bottom: string;
-    shoes: string;
-  };
-  item: {
-    head?: string;
-    eyes?: string;
-    ears?: string;
-    neck?: string;
-    leftWrist?: string;
-    rightWrist?: string;
-    leftHand?: string;
-    rightHand?: string;
-  };
-}
+import { CharacterImg, UserInfo } from "../../../interfaces/Interfaces";
 
 export default function CharacterDisplay() {
   const character = useCharacterStore((state) => state.userInfo);
@@ -76,10 +47,8 @@ export default function CharacterDisplay() {
       );
 
       if (!response.ok) {
-        // 이게 맞나?
-        throw new Error("이미지 생성에 실패했습니다");
+        console.log("이미지 생성에 실패했습니다");
       }
-
       const data: CharacterImg = await response.json();
 
       // 두 번째 요청: 회원가입
@@ -91,7 +60,7 @@ export default function CharacterDisplay() {
       console.log(data.profile);
       console.log(data.character);
 
-      const signupResponse = await fetchRequest<SignUpResponse>(
+      const signupResponse = await fetchRequest<UserInfo>(
         "/auth/signup",
         "POST",
         signupData
