@@ -1,0 +1,92 @@
+.container {
+	position: relative;
+	border: none;
+	overflow: hidden;
+	width: 100vw;
+	height: 91vh;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+
+}
+
+
+.headerContainer {
+	position: absolute;
+	width: 100%;
+	height: 20%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.backBtn {
+		padding-left: 17px;
+
+		img {
+			width: 7px;
+			height: 14px;
+		}
+	}
+
+	.btnGroup {
+		display: flex;
+		padding-right: 14px;
+		gap: 15px;
+		z-index: 10;
+
+		.customBtn {
+			img {
+				width: 23.087px;
+				height: 19.25px;
+			}
+		}
+
+		.settingBtn {
+			img {
+				width: 15px;
+				height: 16px;
+			}
+		}
+	}
+
+
+	.header {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 2px;
+
+		h2 {
+			margin: 0;
+			color: #FFF;
+			text-align: center;
+			font-family: Pretendard;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+		}
+
+		p {
+			color: #FFF;
+
+			text-align: center;
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.26px;
+		}
+	}
+}
+
+.content {
+	position: relative;
+	width: 100%;
+	top: 20%;
+}
