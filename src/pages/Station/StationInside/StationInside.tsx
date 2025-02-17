@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetchRequest } from "../../../functions/fetchRequest";
 import s from "./StationInside.module.scss";
-import stationBackgroundImg_01 from "../../../assets/backgroundImg/starBackroundImg/backgroundImg01.png";
+import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
 import customBtn from "../../../assets/btnImg/customBtn.png";
 import settingBtn from "../../../assets/btnImg/settingBtn.png";
 import messageBtn from "../../../assets/btnImg/messageBtn.svg";
 import character_01 from "../../../assets/Character/character1.svg";
+import StationSlide from "../StationSlide/StationSlide";
+
 
 interface StationMember {
   userId: string;
@@ -33,7 +35,13 @@ interface StationResponse {
 const StationInside: React.FC = () => {
   const [stationData, setStationData] = useState<StationResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+	const [error, setError] = useState<Error | null>(null);
+	const [showSlide, setShowSlide] = useState(false);
+
+	const handleSettingClick = () => {
+    setShowSlide(true);
+  };
+
 
   const stationId = "ABCDEF"; // 실제 stationId 필요
 
@@ -82,7 +90,7 @@ const StationInside: React.FC = () => {
           <div className={s.customBtn}>
             <img src={customBtn} alt="" />
           </div>
-          <div className={s.settingBtn}>
+          <div className={s.settingBtn} onClick={handleSettingClick}>
             <img src={settingBtn} alt="" />
           </div>
         </div>
@@ -129,6 +137,12 @@ const StationInside: React.FC = () => {
           ))}
         </div>
       </div>
+      {showSlide && (
+        <StationSlide
+          stationData={stationData}
+          onClose={() => setShowSlide(false)}
+        />
+      )}
     </div>
   );
 };

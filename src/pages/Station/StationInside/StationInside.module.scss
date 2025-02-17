@@ -4,9 +4,11 @@
 	overflow: hidden;
 	width: 100vw;
 	height: 91vh;
+	background-repeat: no-repeat;
 	background-size: 100% 100%;
 
 }
+
 
 .headerContainer {
 	position: absolute;
@@ -29,6 +31,7 @@
 		display: flex;
 		padding-right: 14px;
 		gap: 15px;
+		z-index: 10;
 
 		.customBtn {
 			img {
