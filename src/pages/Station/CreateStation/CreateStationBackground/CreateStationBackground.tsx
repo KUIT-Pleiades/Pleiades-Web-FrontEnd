@@ -6,6 +6,7 @@ import slideBoxShowUpArrow from '../../../../assets/StationCreate/slideBoxShowup
 
 interface CreateStationBackgroundProps {
 	backgrounds: string[];
+    backgroundPrevs: string[];
     background: string;
     setBackground: React.Dispatch<React.SetStateAction<string>>;
     handleBack: () => void;
@@ -14,12 +15,13 @@ interface CreateStationBackgroundProps {
 
 const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
 	backgrounds,
+    backgroundPrevs,
     background,
     setBackground,
     handleBack,
     handleComplete,
 }) => {
-    const [isOpen, setIsOpen] = useState(false); // 슬라이드 박스 상태
+    const [isOpen, setIsOpen] = useState(true); // 슬라이드 박스 상태
     const containerRef = useRef<HTMLDivElement>(null);
 
     // 외부 클릭 시 슬라이드 박스 닫기
@@ -63,12 +65,12 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
             {/* 슬라이드 박스 */}
             <div className={`${s.slideBox} ${isOpen ? s.open : ''}`} ref={containerRef}>
                 <div className={s.backgroundList}>
-                    {backgrounds.map((bgSrc) => (
+                    {backgroundPrevs.map((prevSrc, index) => (
                         <div
-                            key={bgSrc}
-                            className={`${s.backgroundItem} ${background === bgSrc ? s.selected : ''}`}
-                            onClick={() => setBackground(bgSrc)}
-							style={{ backgroundImage: `url(${bgSrc})` }}
+                            key={prevSrc}
+                            className={`${s.backgroundItem} ${background === backgrounds[index] ? s.selected : ''}`}
+                            onClick={() => setBackground(backgrounds[index])}  // 원본 이미지 설정
+                            style={{ backgroundImage: `url(${prevSrc})` }}  // 미리보기 이미지 표시
                         />
                     ))}
                 </div>
