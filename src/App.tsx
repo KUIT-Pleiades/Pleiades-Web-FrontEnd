@@ -17,6 +17,8 @@ import MyStar from "./pages/Home/MyStar";
 import CreateStation from "./pages/Station/CreateStation/CreateStation";
 import Report from "./pages/Report/Report";
 import Pending from "./pages/LogIn/Pending";
+import StationSlide from "./pages/Station/StationSlide/StationSlide";
+import StationInside from "./pages/Station/StationInside/StationInside";
 
 export default function App() {
   return (
@@ -56,6 +58,8 @@ export default function App() {
           <Route path="station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
+            <Route path="stationInside" element={<StationInside />} />
+            <Route path="stationslide" element={<StationSlide />} />
           </Route>
           <Route path="friendtab" element={<FriendsTab />}></Route>
           <Route path="searchusers" element={<SearchUsers />}></Route>

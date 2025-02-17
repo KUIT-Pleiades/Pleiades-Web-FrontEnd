@@ -88,22 +88,22 @@
 	align-items: center;
 	justify-content: space-evenly;
 	padding-top: 0.7rem;
-	// padding-left: 0.97rem;
-	// padding-right: 0.97rem;
 }
 
 .backgroundItem {
 	width: 19dvw;
 	height: 19dvw;
-	overflow: hidden;
+	max-width: 8.1635rem;
+	max-height: 8.1635rem;
 	border-radius: 0.3rem;
-	background-size: 100% 100%;
-    background-repeat: no-repeat;
-	flex-shrink: 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .selected {
-	border: 0.2rem solid #C0B9DB;
+	border: 5px solid #BDB5D8;
+	filter: drop-shadow(0px 0px 5px rgba(41, 34, 41, 0.20));
 }
 
 .slideBox {

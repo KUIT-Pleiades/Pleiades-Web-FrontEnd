@@ -7,16 +7,17 @@ import stationNumOfUsersIcon from '../../../../assets/StationList/stationNumOfUs
 interface StationProps {
   name: string;
   numOfUsers: number;
+  background: string;
 }
 
 const StationDisplay: React.FC<StationProps> = ({
     name,
-    numOfUsers
+    numOfUsers,
+    background
 }) => {
   return (
     <div className={s.stationBox}>
-      <div className={s.stationBackground} />
-
+      <div className={s.stationBackground} style={{ backgroundImage: `url(${background})` }} />
       <div className={s.stationInfo}>
         <div className={s.stationNumOfUsers}>
           <img src={stationNumOfUsersIcon} alt='stationNumOfUsersIcon' />
