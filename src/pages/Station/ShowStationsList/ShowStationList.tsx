@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '../../../store/useCharacterStore';
 
 //import characterData from '../../../mock/character1.json';
-import stationsData from '../../../mock/myStations.json';
+//import stationsData from '../../../mock/myStations.json';
 import { StationDetails, Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
