@@ -9,6 +9,7 @@ import plusBtn from "../../../assets/btnImg/plusBtn.png"
 import onerIcon from "../../../assets/Icon/oner.png"
 import messageIcon from "../../../assets/Icon/messageIcon.png"
 import signalBtn from "../../../assets/btnImg/signalBtn.png"
+import plusIcon from "../../../assets/Icon/plusIcon.png"
 
 interface StationMember {
   userId: string;
@@ -116,7 +117,9 @@ const StationSlide: React.FC<StationSlideProps> = ({
                           alt="메세지 아이콘"
                           className={s.messageIcon}
                         />
-                      )}
+											)}
+											{!member.isFriend && (<img src={plusIcon} className={s.plusIcon} />)
+											}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
@@ -125,7 +128,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
                         {character.userId}
                       </div>
                     </div>
-                    {!member.isFriend && member.userId !== character.userId && (
+                    {member.isFriend && member.userId !== character.userId && (
                       <img
                         src={signalBtn}
                         alt="signal button"

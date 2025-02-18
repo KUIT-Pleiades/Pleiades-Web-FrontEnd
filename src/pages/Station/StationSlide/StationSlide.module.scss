@@ -126,7 +126,6 @@
 	margin: 0px 12px;
 	padding: 15px 0;
 	border-bottom: 1px solid #C0B9DB;
-	;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -201,20 +200,27 @@
 			margin-right: 10px;
 
 			.onerIcon {
-					position: absolute;
-					right: 5px;
-					bottom: -1px;
-					width: 17px;
-					height: 17px;
-				}
+				position: absolute;
+				right: 5px;
+				bottom: -1px;
+				width: 17px;
+				height: 17px;
+			}
 
-				.messageIcon{
-					position: absolute;
-						right: 5px;
-						bottom: 25px;
-						width: 17px;
-						height: 17px;
-				}
+			.messageIcon {
+				position: absolute;
+				right: 5px;
+				bottom: 25px;
+				width: 17px;
+				height: 17px;
+			}
+
+			.plusIcon {
+				position: absolute;
+				width: 35px;
+				height: 35px;
+				left: 0px;
+			}
 		}
 
 		.memberInfo {
@@ -238,9 +244,9 @@
 		}
 	}
 
-		.signalBtn {
-			width: 30px;
-		}
+	.signalBtn {
+		width: 30px;
+	}
 }
 
 .bottomButton {
