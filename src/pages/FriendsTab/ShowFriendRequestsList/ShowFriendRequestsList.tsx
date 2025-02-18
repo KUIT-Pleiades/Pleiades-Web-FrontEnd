@@ -36,11 +36,10 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
   
   return (
     <div className={s.container}>
-
       <div className={s.userInfoContainer}>
         {/*============= 프로필 사진 =============*/}
         <div className={s.profileImage}>
-          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} width={34} height={34}/>
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`}/>
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>

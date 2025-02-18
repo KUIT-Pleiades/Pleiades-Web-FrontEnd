@@ -69,8 +69,8 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                         <div
                             key={prevSrc}
                             className={`${s.backgroundItem} ${background === backgrounds[index] ? s.selected : ''}`}
-                            onClick={() => setBackground(backgrounds[index])}  // 원본 이미지 설정
-                            style={{ backgroundImage: `url(${prevSrc})` }}  // 미리보기 이미지 표시
+                            onClick={() => setBackground(backgrounds[index])}  // ✅ 원본 이미지 설정
+                            style={{ backgroundImage: `url(${prevSrc})` }}  // ✅ 온라인 URL 사용
                         />
                     ))}
                 </div>
