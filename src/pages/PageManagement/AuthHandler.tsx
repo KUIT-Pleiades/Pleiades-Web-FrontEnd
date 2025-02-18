@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 
 export default function AuthHandler() {
   const { authorization } = useAuth();
-  const [authState,setAuthState] = useState(false);
+  const [authState, setAuthState] = useState(false);
 
-  useEffect(()=>{
-    setAuthState(authorization!==null);
-  },[authorization])
+  useEffect(() => {
+    setAuthState(authorization !== null);
+  }, [authorization]);
 
   return authState ? (
     <Outlet />
