@@ -91,7 +91,7 @@ const StationInside: React.FC = () => {
         backgroundImage: `url(${stationBackgroundImg_01})`,
       }}
     >
-      {stationData.reportWritten && <StationReport stationId={stationId} />}
+      {!stationData.reportWritten && <StationReport stationId={stationId} />}
       <div className={s.headerContainer}>
         <div className={s.backBtn}>
           <img src={backBtn} alt="뒤로가기" />
