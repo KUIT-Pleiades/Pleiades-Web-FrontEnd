@@ -17,7 +17,8 @@ interface StationMember {
   profile: string;
   positionX: number;
   positionY: number;
-  todayReport: boolean;
+	todayReport: boolean;
+	isFriend: boolean;
 }
 
 interface StationResponse {
