@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchRequest } from "../../../../functions/fetchRequest";
 import { useState, useEffect } from "react";
+import { formatDateTime } from "../../../../functions/formatDateTime";
 import s from "./CharacterReport.module.scss";
 import messageIcon from "../../../../assets/Icon/message.svg";
 import closeBtn from "../../../../assets/btnImg/closeBtn.svg";
@@ -80,7 +81,9 @@ const CharacterReport: React.FC<ReportProps> = ({
               />
               <div className={s.modalContent}>
                 <div className={s.question}>{reportData.report.question}</div>
-                <div className={s.date}>{reportData.report.createdAt}</div>
+                <div className={s.date}>
+                  {formatDateTime(reportData.report.createdAt)}
+                </div>
               </div>
             </div>
             <button className={s.closeButton} onClick={onClose}>
@@ -88,10 +91,13 @@ const CharacterReport: React.FC<ReportProps> = ({
             </button>
           </div>
           <div className={s.modalBody}>
-            <div className={s.answerWrapper}>
-              <div>{reportData.report.modifiedAt}</div>
-              {reportData.report.answer}
+            <div className={s.infoWrapper}>
+              <div className={s.modifedAt}>
+                {reportData.report.modifiedAt &&
+                  formatDateTime(reportData.report.modifiedAt)}
+              </div>
             </div>
+            <div className={s.answer}>{reportData.report.answer}</div>
           </div>
         </div>
       </div>
