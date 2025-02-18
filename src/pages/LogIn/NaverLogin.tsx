@@ -9,7 +9,6 @@ export default function NaverLogin() {
   const { setToken } = useAuth();
   const urlParams = new URLSearchParams(url.search);
   const authCode = urlParams.get("code");
-  const stateString = urlParams.get("state");
 
   // useEffect(() => {
   //   if (authorization) {
@@ -19,12 +18,12 @@ export default function NaverLogin() {
   // }, [authorization, navigate]);
 
   useEffect(() => {
-    if (!authCode || !stateString) {
+    if (!authCode) {
       navigate("/loginfail");
       return;
     }
     const handleLogin = async () => {
-      const tokenData = await naverLogInRequest(authCode, stateString);
+      const tokenData = await naverLogInRequest(authCode);
       if (tokenData === null) {
         navigate("/loginfail");
       } else {
@@ -33,7 +32,7 @@ export default function NaverLogin() {
       }
     };
     handleLogin();
-  }, [authCode, navigate, setToken, stateString, url.search]);
+  }, [authCode, navigate, setToken, url.search]);
 
   return <Outlet />;
 }

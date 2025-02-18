@@ -1,18 +1,18 @@
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import openBtn from "../../assets/btnImg/openBtn.png"
+import openBtn from "../../assets/btnImg/openBtn.png";
 
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
 
 interface BackgroundSetUpProps {
-  onNext: () => void;
+  complete: () => void;
   onPrev: () => void;
 }
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
+const BackgroundSetUp = ({ complete, onPrev }: BackgroundSetUpProps) => {
   const { userInfo } = useCharacterStore();
 
   const backgroundStyle = {
@@ -29,7 +29,7 @@ const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
           이전
         </button>
         <p className={s.pHeader}>별 배경 선택하기</p>
-        <button className={s.nextBtn} onClick={onNext}>
+        <button className={s.nextBtn} onClick={complete}>
           완료
         </button>
         <p className={s.pDescription}>
@@ -137,7 +137,11 @@ const BackgroundSetUp = ({ onNext, onPrev }: BackgroundSetUpProps) => {
       {!showList && (
         <div className={s.bottomBar}>
           <div className={s.openBtn} onClick={() => setShowList(true)}>
-            <img src={openBtn} alt="" style={{width: "14px", marginTop:"9px"}} />
+            <img
+              src={openBtn}
+              alt=""
+              style={{ width: "14px", marginTop: "9px" }}
+            />
           </div>
         </div>
       )}

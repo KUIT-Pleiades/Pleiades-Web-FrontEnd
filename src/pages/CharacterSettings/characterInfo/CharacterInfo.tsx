@@ -3,6 +3,7 @@ import { fetchRequest } from "../../../functions/fetchRequest";
 import {
   Character,
   CharacterImg,
+  Message,
   UserInfo,
 } from "../../../interfaces/Interfaces";
 
@@ -64,17 +65,18 @@ export default function CharacterDisplay() {
       console.log(data.profile);
       console.log(data.character);
 
-      const signupResponse = await fetchRequest<UserInfo>(
+      const signupResponse = await fetchRequest<Message>(
         "/auth/signup",
         "POST",
         signupData
       );
 
       if (signupResponse === null) {
-        throw new Error("회원가입에 실패했습니다");
-      }
-
-      console.log("회원가입 성공:", signupResponse);
+        console.log("회원가입에 실패했습니다");
+      } else if (
+        signupResponse.message === "sign-up success - character created"
+      )
+        console.log("회원가입 성공:", signupResponse);
       alert("캐릭터 생성 및 회원가입이 완료되었습니다!");
     } catch (error) {
       console.error("오류 발생:", error);
