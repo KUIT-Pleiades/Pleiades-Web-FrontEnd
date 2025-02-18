@@ -1,4 +1,5 @@
 import s from "./StationSlide.module.scss";
+import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
@@ -45,6 +46,21 @@ const StationSlide: React.FC<StationSlideProps> = ({
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
     e.stopPropagation(); 
 	};
+
+	const [isCopied, setIsCopied] = useState(false);
+
+	const handleCopyClick = async () => {
+    try {
+      // 클립보드에 정거장 ID를 복사
+      await navigator.clipboard.writeText(stationData.stationId);
+      // 복사 완료 상태로 변경
+      setIsCopied(true);
+      // 2초 후에 복사 상태 초기화
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error("복사 실패:", err);
+    }
+  };
 	
 	const character = useCharacterStore((state) => state.userInfo);
 
@@ -65,9 +81,9 @@ const StationSlide: React.FC<StationSlideProps> = ({
             <div className={s.header}>
               <h2>[ {stationData.name} ]</h2>
               <p>{stationData.intro}</p>
-              <div className={s.codeCopy}>
+              <div className={s.codeCopy} onClick={handleCopyClick}>
                 <img src={copyBtn} alt="" />
-                정거장 코드 복사
+                {isCopied ? "복사 완료!" : "정거장 코드 복사"}
               </div>
             </div>
           </div>
