@@ -207,6 +207,14 @@
 					width: 17px;
 					height: 17px;
 				}
+
+				.messageIcon{
+					position: absolute;
+						right: 5px;
+						bottom: 25px;
+						width: 17px;
+						height: 17px;
+				}
 		}
 
 		.memberInfo {
@@ -229,6 +237,10 @@
 			}
 		}
 	}
+
+		.signalBtn {
+			width: 30px;
+		}
 }
 
 .bottomButton {

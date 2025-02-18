@@ -1,10 +1,13 @@
 import s from "./StationSlide.module.scss";
+import { useCharacterStore } from "../../../store/useCharacterStore";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
 import copyBtn from "../../../assets/btnImg/copyBtn.png"
 import plusBtn from "../../../assets/btnImg/plusBtn.png"
 import onerIcon from "../../../assets/Icon/oner.png"
+import messageIcon from "../../../assets/Icon/messageIcon.png"
+import signalBtn from "../../../assets/btnImg/signalBtn.png"
 
 interface StationMember {
   userId: string;
@@ -13,7 +16,8 @@ interface StationMember {
   profile: string;
   positionX: number;
   positionY: number;
-  todayReport: boolean;
+	todayReport: boolean;
+	isFriend: boolean;
 }
 
 interface StationResponse {
@@ -40,7 +44,9 @@ const StationSlide: React.FC<StationSlideProps> = ({
   const handleSlideClick = (e: React.MouseEvent) => {
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
     e.stopPropagation(); 
-  };
+	};
+	
+	const character = useCharacterStore((state) => state.userInfo);
 
   return (
     <div className={s.container} onClick={onClose}>
@@ -84,15 +90,32 @@ const StationSlide: React.FC<StationSlideProps> = ({
                 {stationData.stationMembers.map((member) => (
                   <div key={member.userId} className={s.memberItem}>
                     <div className={s.avatar}>
-											<img src={characterProfile} alt="profile" />
-											{stationData.adminUserId === member.userId && (
-												<img src={onerIcon} alt="방장" className={s.onerIcon} />
-											)}
+                      <img src={characterProfile} alt="profile" />
+                      {stationData.adminUserId === member.userId && (
+                        <img src={onerIcon} alt="방장" className={s.onerIcon} />
+                      )}
+                      {member.todayReport && (
+                        <img
+                          src={messageIcon}
+                          alt="메세지 아이콘"
+                          className={s.messageIcon}
+                        />
+                      )}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
-                      <div className={s.memberHandle}>@{member.userId}</div>
+                      <div className={s.memberHandle}>
+                        @{member.userId}
+                        {character.userId}
+                      </div>
                     </div>
+                    {!member.isFriend && member.userId !== character.userId && (
+                      <img
+                        src={signalBtn}
+                        alt="signal button"
+                        className={s.signalBtn}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
