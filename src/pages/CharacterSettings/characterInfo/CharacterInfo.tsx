@@ -1,35 +1,11 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
-import { CharacterImg } from "../../../interfaces/Interfaces";
-
-interface SignUpResponse {
-  userId: string;
-  userName: string;
-  birthDate: string;
-  backgroundName: string;
-  profile: string;
-  character: string;
-  face: {
-    skinColor: string;
-    hair: string;
-    expression: string;
-  };
-  outfit: {
-    top: string;
-    bottom: string;
-    shoes: string;
-  };
-  item: {
-    head?: string;
-    eyes?: string;
-    ears?: string;
-    neck?: string;
-    leftWrist?: string;
-    rightWrist?: string;
-    leftHand?: string;
-    rightHand?: string;
-  };
-}
+import {
+  Character,
+  CharacterImg,
+  Message,
+  UserInfo,
+} from "../../../interfaces/Interfaces";
 
 export default function CharacterDisplay() {
   const character = useCharacterStore((state) => state.userInfo);
@@ -37,11 +13,11 @@ export default function CharacterDisplay() {
   const handleSubmit = async () => {
     try {
       // 첫 번째 요청: 이미지 생성
-      const imageRequestData = {
+      const imageRequestData: Character = {
         userId: character.userId,
         userName: character.userName,
         birthDate: character.birthDate,
-        backgroundName: character.starBackground,
+        starBackground: character.starBackground,
         face: {
           skinColor: character.face.skinColor,
           hair: character.face.hair,
@@ -76,14 +52,12 @@ export default function CharacterDisplay() {
       );
 
       if (!response.ok) {
-        // 이게 맞나?
-        throw new Error("이미지 생성에 실패했습니다");
+        console.log("이미지 생성에 실패했습니다");
       }
-
       const data: CharacterImg = await response.json();
 
       // 두 번째 요청: 회원가입
-      const signupData = {
+      const signupData: UserInfo = {
         ...imageRequestData,
         profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
         character: data.character, // 첫 번째 요청에서 받은 이미지 URL
@@ -91,17 +65,18 @@ export default function CharacterDisplay() {
       console.log(data.profile);
       console.log(data.character);
 
-      const signupResponse = await fetchRequest<SignUpResponse>(
+      const signupResponse = await fetchRequest<Message>(
         "/auth/signup",
         "POST",
         signupData
       );
 
       if (signupResponse === null) {
-        throw new Error("회원가입에 실패했습니다");
-      }
-
-      console.log("회원가입 성공:", signupResponse);
+        console.log("회원가입에 실패했습니다");
+      } else if (
+        signupResponse.message === "sign-up success - character created"
+      )
+        console.log("회원가입 성공:", signupResponse);
       alert("캐릭터 생성 및 회원가입이 완료되었습니다!");
     } catch (error) {
       console.error("오류 발생:", error);

@@ -62,8 +62,6 @@ export const fetchRequest = async <T>(
   }
 
   let req = setRequest(method, body, authorization);
-  //삭제해야함 이부분
-  console.log(req);
   let response = await fetch(requestURL, req);
   if (!response.headers.get("Content-Type")?.includes("application/json")) {
     console.log("응답형식이 JSON이 아닙니다");
