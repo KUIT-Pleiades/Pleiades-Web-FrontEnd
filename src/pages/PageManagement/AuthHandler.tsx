@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../../store/authStore";
 import Error from "./Error";
+import { useEffect, useState } from "react";
 
 export default function AuthHandler() {
   const { authorization } = useAuth();
