@@ -8,6 +8,7 @@ export default function AuthHandler() {
   const [authState,setAuthState] = useState(false);
 
   useEffect(()=>{
+    console.log(authorization);
     setAuthState(authorization!==null);
   },[authorization])
 
