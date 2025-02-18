@@ -8,7 +8,7 @@ import settingBtn from "../../../assets/btnImg/settingBtn.png";
 import messageBtn from "../../../assets/btnImg/messageBtn.svg";
 import character_01 from "../../../assets/Character/character1.svg";
 import StationSlide from "../StationSlide/StationSlide";
-
+import StationReport from "./StationReport/StationReport";
 
 interface StationMember {
   userId: string;
@@ -17,8 +17,8 @@ interface StationMember {
   profile: string;
   positionX: number;
   positionY: number;
-	todayReport: boolean;
-	isFriend: boolean;
+  todayReport: boolean;
+  isFriend: boolean;
 }
 
 interface StationResponse {
@@ -36,13 +36,12 @@ interface StationResponse {
 const StationInside: React.FC = () => {
   const [stationData, setStationData] = useState<StationResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
-	const [showSlide, setShowSlide] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [showSlide, setShowSlide] = useState(false);
 
-	const handleSettingClick = () => {
+  const handleSettingClick = () => {
     setShowSlide(true);
   };
-
 
   const stationId = "ABCDEF"; // 실제 stationId 필요
 
@@ -79,6 +78,7 @@ const StationInside: React.FC = () => {
         backgroundImage: `url(${stationBackgroundImg_01})`,
       }}
     >
+      {!stationData.reportWritten && <StationReport stationId={stationId} />}
       <div className={s.headerContainer}>
         <div className={s.backBtn}>
           <img src={backBtn} alt="뒤로가기" />
