@@ -9,6 +9,8 @@ import messageBtn from "../../../assets/btnImg/messageBtn.svg";
 import character_01 from "../../../assets/Character/character1.svg";
 import StationSlide from "../StationSlide/StationSlide";
 import StationReport from "./StationReport/StationReport";
+import MyReport from "./CharacterReport/MyReport";
+import CharacterReport from "./CharacterReport/CharacterReport";
 
 interface StationMember {
   userId: string;
@@ -38,9 +40,20 @@ const StationInside: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [showSlide, setShowSlide] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<StationMember | null>(
+    null
+  );
 
   const handleSettingClick = () => {
     setShowSlide(true);
+  };
+
+  // 현재 로그인한 사용자의 ID (예시)
+  const currentUserId = "현재_사용자_ID";
+
+  // 멤버 클릭 핸들러 추가
+  const handleMemberClick = (member: StationMember) => {
+    setSelectedMember(member);
   };
 
   const stationId = "ABCDEF"; // 실제 stationId 필요
@@ -107,30 +120,40 @@ const StationInside: React.FC = () => {
                 position: "fixed",
                 left: `${member.positionX}dvw`,
                 top: `${member.positionY}dvh`,
+                width: "30dvw",
               }}
             >
               <img
                 src={character_01}
-                style={{
-                  height: "30dvh",
-                }}
                 alt=""
+                style={{
+                  position: "fixed",
+                  left: `${member.positionX}dvw`,
+                  top: `${member.positionY}dvh`,
+                  width: "30dvw",
+                }}
               />
-              {!member.todayReport && (
+              {member.todayReport && (
                 <div
                   className={s.messageIcon}
                   style={{
                     position: "fixed",
-                    left: `${member.positionX + 25}dvw`,
+                    left: `${member.positionX}dvw`,
                     top: `${member.positionY}dvh`,
+                    zIndex: 100,
                   }}
                 >
                   <img
                     src={messageBtn}
                     alt="리포트"
                     style={{
-                      height: "5dvh",
+                      position: "fixed",
+                      left: `${member.positionX+20}dvw`,
+                      top: `${member.positionY+2}dvh`,
+                      zIndex: 100,
+                      height: "7dvw",
                     }}
+                    onClick={() => handleMemberClick(member)}
                   />
                 </div>
               )}
@@ -144,6 +167,21 @@ const StationInside: React.FC = () => {
           onClose={() => setShowSlide(false)}
         />
       )}
+      {selectedMember &&
+        (selectedMember.userId === currentUserId ? (
+          <MyReport
+            onClose={() => setSelectedMember(null)}
+            stationId={stationId}
+            userId={selectedMember.userId}
+          />
+        ) : (
+          <CharacterReport
+            memberName={selectedMember.userName}
+            onClose={() => setSelectedMember(null)}
+            stationId={stationId}
+            userId={selectedMember.userId}
+          />
+        ))}
     </div>
   );
 };
