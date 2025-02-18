@@ -10,12 +10,11 @@ export default function NaverLogin() {
   const urlParams = new URLSearchParams(url.search);
   const authCode = urlParams.get("code");
 
-  // useEffect(() => {
-  //   if (authorization) {
-  //     console.log(authorization);
-  //     navigate("/home");
-  //   }
-  // }, [authorization, navigate]);
+  useEffect(() => {
+    if (authorization) {
+      navigate("/home");
+    }
+  }, [authorization, navigate]);
 
   useEffect(() => {
     if (!authCode) {
@@ -27,9 +26,7 @@ export default function NaverLogin() {
       if (tokenData === null) {
         navigate("/loginfail");
       } else {
-        console.log(`acstkn: ${tokenData.accessToken}`);
-        console.log(`authorization: ${authorization}`);
-        navigate("/home");
+        setToken(tokenData.accessToken);
       }
     };
     handleLogin();
