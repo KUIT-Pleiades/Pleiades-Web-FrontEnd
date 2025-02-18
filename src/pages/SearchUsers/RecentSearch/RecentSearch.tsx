@@ -32,8 +32,8 @@ const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, getRecentSearc
                 null
             );
     
-            if (response) {
-                console.log(response.message);
+            if (!response) {
+                console.log("삭제 성공. 삭제된 아이디: ",searchedId);
                 // 삭제 성공 시, 최신 검색 목록을 다시 불러옴
                 getRecentSearches();
             } else {

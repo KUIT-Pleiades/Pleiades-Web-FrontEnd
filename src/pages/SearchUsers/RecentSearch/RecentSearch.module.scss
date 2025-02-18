@@ -1,8 +1,8 @@
 .recentSearchContainer{
-    width: 90%;
+    width: 100%;
 }
 .recentSearchTitle{
-    color: var(--gray-22, #444);
+    color: #444;
     font-family: "Pretendard";
     font-size: 0.8125rem;
     font-style: normal;
@@ -13,7 +13,7 @@
 .separator{
     width: 100%;
     height: 1px;
-    background-color: var(--color-5-main, #C0B9DB);
+    background-color: #C0B9DB;
     margin-top: 0.62rem;
     margin-bottom: 01.13rem;
 }
@@ -23,7 +23,7 @@
     justify-content: center;
 }
 .noRecentSearch{
-    color: var(--gray-22, #444);
+    color: #444;
     font-family: "Pretendard";
     font-size: 0.6875rem;
     font-style: normal;

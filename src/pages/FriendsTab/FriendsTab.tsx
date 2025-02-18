@@ -12,6 +12,7 @@ import { fetchRequest } from '../../functions/fetchRequest';
 
 // image files
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
+import { useCharacterStore } from '../../store/useCharacterStore';
 
 interface Friend {
     friendId: number;
@@ -28,6 +29,8 @@ interface FriendsData {
 
 const FriendsTab: React.FC = () => {
     const navigate = useNavigate();
+    const { userInfo } = useCharacterStore();
+    const userName = userInfo.userName || "플레이아데스";
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
@@ -39,7 +42,7 @@ const FriendsTab: React.FC = () => {
             null
         );
         if (response) {
-            console.log(response.message);
+            console.log("친구 삭제 완료. 응답: ", response);
             getFriendsList(); // 친구 목록 갱신
         } else console.error("친구 삭제 실패");
     }
@@ -72,7 +75,7 @@ const FriendsTab: React.FC = () => {
             null
         );
         if (response) {
-            console.log(response.message);
+            console.log('삭제 완료. 응답 메시지: ',response);
             getFriendsList(); // 친구 목록 갱신
         } else console.error("친구 요청 취소 실패");
     }
@@ -90,6 +93,7 @@ const FriendsTab: React.FC = () => {
     const getFriendsList = async () => {
         const response = await fetchRequest<FriendsData>("/friends", "GET", null);
         if (response) {
+            console.log("친구 목록 새로고침. 응답: ",response);
             setFriendsData(response);
         }
     };
@@ -112,7 +116,7 @@ const FriendsTab: React.FC = () => {
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
                 <div className={s.title}>
-                    <span className={s.titleName}>Example</span>
+                    <span className={s.titleName}>{userName}</span>
                     <span className={s.titleText}>님의 친구목록</span>
                 </div>
             </div>
@@ -124,14 +128,16 @@ const FriendsTab: React.FC = () => {
                 <SearchUsersBar />
             </div>
             {/*================================ 친구 목록 부분 ================================*/}
-            <ShowTotalFriendsList
-                friendsData={friendsData}
-                handleDeleteFriend={handleDeleteFriend}
-                handleAcceptRequest={handleAcceptRequest}
-                handleRejectRequest={handleRejectRequest}
-                handleDeleteRequest={handleDeleteRequest}
-                handleSendSignal={handleSendSignal}
-            />
+                <div className={s.totalFriendsListContainer}>
+                <ShowTotalFriendsList
+                    friendsData={friendsData}
+                    handleDeleteFriend={handleDeleteFriend}
+                    handleAcceptRequest={handleAcceptRequest}
+                    handleRejectRequest={handleRejectRequest}
+                    handleDeleteRequest={handleDeleteRequest}
+                    handleSendSignal={handleSendSignal}
+                />
+                </div>
             {/*================================ 친구가 없을 때 ================================*/}
             {hasNoFriend &&
                 <div className={s.noFriend}>

@@ -5,15 +5,15 @@
     height: auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .userInfoContainer{
     width: auto;
+    height: 2.1875rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-end;
     margin: 0;
     padding: 0;
 }
@@ -27,10 +27,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     margin: 0;
     bottom: 0;
-    margin-bottom: 0.1rem;
 }
 
 .nameId{
@@ -41,7 +40,7 @@
     padding: 0;
 }
 .nameId p:nth-child(1){
-    color: var(--gray-22, #444);
+    color: #444;
     font-family: "Pretendard";
     font-size: 0.9375rem;
     font-style: normal;
@@ -50,7 +49,7 @@
     margin-bottom: 0.19rem;
 }
 .nameId p:nth-child(2){
-    color: var(--gray-22, #444);
+    color: #444;
     font-family: "Pretendard";
     font-size: 0.6875rem;
     font-style: normal;

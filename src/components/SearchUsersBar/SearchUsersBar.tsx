@@ -27,26 +27,24 @@ const SearchUsersBar: React.FC<SearchUsersBarProps> = ({
         }
     };
     return (
-        <div className={s.searchBarContainer}>
-            <div className={s.searchBar}>
-                <input
-                    className={s.searchInput}
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    onKeyDown={handleKeyPress}
-                    placeholder={placeholder}
-                />
-                <button
+        <div className={s.searchBar}>
+            <button
                     className={s.searchButton}
                     type="submit"
                     onClick={onSubmit}
                 >
                     <img src={searchIcon} alt="searchIcon" />
-                </button>
-            </div>
+            </button>
+            <input
+                className={s.searchInput}
+                type="text"
+                value={value}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                onKeyDown={handleKeyPress}
+                placeholder={placeholder}
+            />
         </div>
         
     )

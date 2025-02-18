@@ -13,67 +13,55 @@
     flex-direction: column;
     align-items: center;
 }
+
 .headContainer {
     width: 100%;
     height: 8rem;
     display: flex;
-    align-items: flex-end;
-    margin-bottom: 0.23rem;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    margin-bottom: 0.23rem;
 }
+
 .title {
     width: 92%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
+
 .titleText {
     color: #FFF;
     text-align: center;
     font-family: Pretendard;
     font-size: 1rem;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
     letter-spacing: -0.02rem;
-    //margin-left: 0.87rem;
 }
+
 .titleButtons {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 3rem;
-    //margin-right: 0.91rem;
 }
-.searchStationButton{
-    
-}
-.createStationButton{
-
-}
-
 
 .separator {
     border-bottom: 1px solid #E1E1E1;
     width: 92%;
-    //height: 2rem;
     padding-bottom: 0.94rem;
     position: relative;
 }
+
 .totalNumOfStations {
     color: #CBCCCB;
     font-family: Pretendard;
     font-size: 0.8125rem;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
     margin-top: 1.65rem;
 }
+
 .sortCriteriaBoxContainer {
     position: absolute;
     right: -0.75rem;
@@ -83,7 +71,6 @@
 .stationListWrapper {
     width: 100%;
     flex: 1;
-    //height: 100%;
     margin-bottom: 9dvh;
     padding-bottom: 1rem;
     display: flex;
@@ -91,7 +78,7 @@
     align-items: center;
     overflow-y: auto;
 }
-  
+
 .stationListContainer {
     display: flex;
     flex-wrap: wrap;
@@ -103,10 +90,9 @@
 
 .stationDisplayWrapper {
     width: 48%;
-    //aspect-ratio: 121 / 104;
 }
 
-.noStation{
+.noStation {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -121,24 +107,85 @@
         text-align: center;
         font-family: "ElectricalSafety";
         font-size: 1rem;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
         letter-spacing: -0.02rem;
         margin-bottom: 1.12rem;
     }
+
     &Text {
         color: #FFF;
         text-align: center;
         font-family: "ElectricalSafety";
         font-size: 0.8125rem;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
         letter-spacing: -0.01625rem;
         margin-bottom: 3rem;
     }
+
     &Logo {
         width: 10.97269rem;
+    }
+}
+
+.popup {
+    &NoExistStation {
+        width: 50%;
+        padding: 0.9rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
+        background-color: #EDEFFF;
+        border-radius: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeInOut 1.5s ease-in-out;
+        opacity: 0;
+        z-index: 9999;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+        10% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        90% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -40%);
+        }
+    }
+
+    &Title {
+        color: #858585;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.6875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01375rem;
+        margin-bottom: 0.56rem;
+    }
+
+    &Text {
+        color: #17151C;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
     }
 }

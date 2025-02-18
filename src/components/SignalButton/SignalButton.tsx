@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import s from './SignalButton.module.scss';
 
-import signal from '../../assets/Signal/signal.svg';
-import onSignal from '../../assets/Signal/onSignal.svg';
+import signal from '../../assets/Signal/signalIcon.png';
+import onSignal from '../../assets/Signal/signalIcon.png';
 import signalPopupStars from '../../assets/Signal/signalPopupStars.svg';
 
 interface SignalButtonProps {
