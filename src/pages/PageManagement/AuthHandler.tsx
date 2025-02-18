@@ -4,7 +4,11 @@ import Error from "./Error";
 
 export default function AuthHandler() {
   const { authorization } = useAuth();
-  const authState = authorization !== null;
+  const [authState,setAuthState] = useState(false);
+
+  useEffect(()=>{
+    setAuthState(authorization!==null);
+  },[authorization])
 
   return authState ? (
     <Outlet />
