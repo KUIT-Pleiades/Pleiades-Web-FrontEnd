@@ -4,15 +4,18 @@ import openBtn from "../../assets/btnImg/openBtn.png";
 
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
+import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
+import { useNavigate } from "react-router-dom";
+import { fetchRequest } from "../../functions/fetchRequest";
 
 interface BackgroundSetUpProps {
-  complete: () => void;
   onPrev: () => void;
 }
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const BackgroundSetUp = ({ complete, onPrev }: BackgroundSetUpProps) => {
+const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
+  const navigate = useNavigate();
   const { userInfo } = useCharacterStore();
 
   const backgroundStyle = {
@@ -21,6 +24,50 @@ const BackgroundSetUp = ({ complete, onPrev }: BackgroundSetUpProps) => {
   };
 
   const [showList, setShowList] = useState(true);
+
+  const complete = async () => {
+    const { profile, character, ...imageRequestData } = userInfo;
+    console.log(`${profile}  ${character}`);
+
+    const response = await fetch("http://image-maker-nine.vercel.app/profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(imageRequestData),
+    });
+
+    if (!response.ok) {
+      console.log("이미지 생성에 실패했습니다");
+      navigate("/onboarding");
+    }
+    const data: CharacterImg = await response.json();
+
+    // 두 번째 요청: 회원가입
+    const signupData: UserInfo = {
+      ...imageRequestData,
+      profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
+      character: data.character, // 첫 번째 요청에서 받은 이미지 URL
+    };
+    console.log(data.profile);
+    console.log(data.character);
+
+    const signupResponse = await fetchRequest<Message>(
+      "/auth/signup",
+      "POST",
+      signupData
+    );
+
+    if (signupResponse === null) {
+      console.log("회원가입 실패");
+    } else if (signupResponse.message === "duplicate user") {
+      console.log("회원가입 실패:", signupResponse.message);
+      navigate("/login");
+    } else {
+      console.log("회원가입 성공:", signupResponse.message);
+      navigate("/home");
+    }
+  };
 
   return (
     <div style={backgroundStyle} className={s.background}>
