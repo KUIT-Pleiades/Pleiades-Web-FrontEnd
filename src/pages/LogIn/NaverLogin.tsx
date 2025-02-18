@@ -6,7 +6,7 @@ import { useAuth } from "../../store/authStore";
 export default function NaverLogin() {
   const navigate = useNavigate();
   const url = useLocation();
-  const { setToken } = useAuth();
+  const { authorization, setToken } = useAuth();
   const urlParams = new URLSearchParams(url.search);
   const authCode = urlParams.get("code");
 
@@ -27,7 +27,8 @@ export default function NaverLogin() {
       if (tokenData === null) {
         navigate("/loginfail");
       } else {
-        console.log(tokenData.accessToken);
+        console.log(`acstkn: ${tokenData.accessToken}`);
+        console.log(`authorization: ${authorization}`);
         navigate("/home");
       }
     };
