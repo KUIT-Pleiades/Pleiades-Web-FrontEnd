@@ -28,7 +28,7 @@
 		background: var(--gray-9, #EDEFFF);
 		border-radius: 10px 10px 0px 0px;
 		min-height: 50px; // 최소 높이 설정
-			height: auto; // 자동으로 늘어나도록 설정
+		height: auto; // 자동으로 늘어나도록 설정
 		box-sizing: border-box;
 
 		.modalQuestion {
@@ -94,8 +94,8 @@
 			word-break: keep-all;
 			white-space: pre-wrap;
 			height: auto;
-				min-height: 50px;
-				overflow: hidden;
+			min-height: 50px;
+			overflow: hidden;
 		}
 	}
 }
@@ -188,7 +188,7 @@
 	letter-spacing: -0.3px;
 }
 
-.buttonGroup{
+.buttonGroup {
 	display: flex;
 	gap: 9px;
 }
@@ -198,7 +198,7 @@
 	height: 35px;
 	flex-shrink: 0;
 	border-radius: 30px;
-	background:#402C44;
+	background: #402C44;
 	color: #FFF;
 	text-align: center;
 	font-family: Pretendard;
