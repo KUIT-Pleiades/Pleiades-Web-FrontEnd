@@ -14,7 +14,7 @@ export interface Character {
   userId: string;
   userName: string;
   birthDate: string;
-  backgroundName: string;
+  starBackground: string;
   face: {
     skinColor: string;
     hair: string;
