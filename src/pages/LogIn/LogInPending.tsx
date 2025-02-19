@@ -1,4 +1,4 @@
-import s from "./Pending.module.scss";
+import s from "./LogInPending.module.scss";
 import backGroundImg1 from "../../assets/splashBackGround1.svg";
 import backGroundImg2 from "../../assets/splashBackGround2.svg";
 import backGroundImg3 from "../../assets/splashBackGround3.svg";
@@ -6,7 +6,7 @@ import backGroundImg4 from "../../assets/splashBackGround4.svg";
 import spaceShip from "../../assets/spaceShip.svg";
 import pleiadesLogo from "../../assets/pleiadesLogo.png";
 
-export default function Pending() {
+export default function LogInPending() {
   return (
     <div className={s.pageContainer}>
       <img className={s.backGround1} src={backGroundImg1} alt=" " />

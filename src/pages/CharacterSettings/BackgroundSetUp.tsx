@@ -12,12 +12,11 @@ interface BackgroundSetUpProps {
   onPrev: () => void;
 }
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
+  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
   const IMG_MAKER = import.meta.env.VITE_IMG_MAKER;
   const navigate = useNavigate();
-  const { userInfo } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
 
   const backgroundStyle = {
     backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
@@ -68,6 +67,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       navigate("/login");
     } else {
       console.log("회원가입 성공:", signupResponse.message);
+      updateUserInfo(signupData);
       navigate("/home");
     }
   };

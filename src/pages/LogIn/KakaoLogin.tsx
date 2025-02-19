@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { kakaoLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
+import LogInPending from "./LogInPending";
 
 export default function KakaoLogin() {
   const navigate = useNavigate();
@@ -31,5 +32,5 @@ export default function KakaoLogin() {
     handleLogin();
   }, [hash, navigate, setToken, url.search]);
 
-  return <Outlet />;
+  return <LogInPending />;
 }

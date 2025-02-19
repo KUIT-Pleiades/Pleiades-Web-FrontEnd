@@ -5,12 +5,12 @@ import { useCharacterStore } from "../../store/useCharacterStore";
 import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.png";
 import diary from "../../assets/home/diary.svg";
 import HomeBar from "./HomeBar/HomeBar";
-import Pending from "../LogIn/Pending";
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../store/authStore";
 import { Message, User } from "../../interfaces/Interfaces";
 import { fetchRequest } from "../../functions/fetchRequest";
 import { useNavigate } from "react-router-dom";
+import LogInPending from "../LogIn/LogInPending";
 
 export default function MyStar() {
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -52,7 +52,7 @@ export default function MyStar() {
   };
 
   return isLoading ? (
-    <Pending />
+    <LogInPending />
   ) : (
     <div className={s.container}>
       <img className={s.background} src={background} alt="background" />
