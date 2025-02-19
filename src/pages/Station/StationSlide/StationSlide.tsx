@@ -4,7 +4,6 @@ import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
-import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
 import copyBtn from "../../../assets/btnImg/copyBtn.png"
 //import plusBtn from "../../../assets/btnImg/plusBtn.png"
 import onerIcon from "../../../assets/Icon/oner.png"
@@ -125,7 +124,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
                 {stationData.stationMembers.map((member) => (
                   <div key={member.userId} className={s.memberItem}>
                     <div className={s.avatar}>
-                      <img src={characterProfile} alt="profile" />
+                      <img src={member.profile} alt="profile" />
                       {stationData.adminUserId === member.userId && (
                         <img src={onerIcon} alt="방장" className={s.onerIcon} />
                       )}
@@ -136,22 +135,22 @@ const StationSlide: React.FC<StationSlideProps> = ({
                           className={s.messageIcon}
                         />
                       )}
-                      {!member.isFriend && (
-                        <img
-                          src={plusIcon}
-                          className={s.plusIcon}
-                          onClick={(e) => {
-                            e.stopPropagation(); // 이벤트 버블링 방지
-                            handleSendRequestFriend(member.userId);
-                          }}
-                        />
-                      )}
+                      {!member.isFriend &&
+                        member.userId !== character.userId && (
+                          <img
+                            src={plusIcon}
+                            className={s.plusIcon}
+                            onClick={(e) => {
+                              e.stopPropagation(); // 이벤트 버블링 방지
+                              handleSendRequestFriend(member.userId);
+                            }}
+                          />
+                        )}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
                       <div className={s.memberHandle}>
                         @{member.userId}
-                        {character.userId}
                       </div>
                     </div>
                     {member.isFriend && member.userId !== character.userId && (

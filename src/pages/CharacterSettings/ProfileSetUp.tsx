@@ -31,7 +31,8 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   type DatePiece = Date | null;
   type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
+  const defaultDate = new Date("2000-01-01"); // 원하는 날짜 지정
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(defaultDate);
 
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -11,6 +11,7 @@ interface Report {
   createdAt: string;
   modifiedAt: string;
   answer: string;
+  isTodayReport: boolean;
 }
 
 interface ReportModalProps {
@@ -123,7 +124,13 @@ const ReportModal = ({
                   수정
                 </button>
                 <span className={s.divider}>|</span>
-                <button className={s.deleteBtn} onClick={handleDelete}>
+                <button
+                  className={`${s.deleteBtn} ${
+                    localReport.isTodayReport ? s.disabled : ""
+                  }`}
+                  onClick={handleDelete}
+                  disabled={localReport.isTodayReport}
+                >
                   삭제
                 </button>
               </div>
