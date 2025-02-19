@@ -10,6 +10,7 @@ interface Report {
   createdAt: string;
   modifiedAt: string;
   answer: string;
+  isTodayReport: boolean;
 }
 
 interface ReportListProps {
