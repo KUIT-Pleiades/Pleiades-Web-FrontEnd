@@ -15,6 +15,7 @@ interface BackgroundSetUpProps {
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
+  const IMG_MAKER = import.meta.env.VITE_IMG_MAKER;
   const navigate = useNavigate();
   const { userInfo } = useCharacterStore();
 
@@ -29,7 +30,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
     const { profile, character, ...imageRequestData } = userInfo;
     console.log(`${profile}  ${character}`);
 
-    const response = await fetch("http://image-maker-nine.vercel.app/profile", {
+    const response = await fetch(IMG_MAKER, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +42,9 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       console.log("이미지 생성에 실패했습니다");
       navigate("/onboarding");
     }
+
     const data: CharacterImg = await response.json();
+    console.log(data);
 
     // 두 번째 요청: 회원가입
     const signupData: UserInfo = {

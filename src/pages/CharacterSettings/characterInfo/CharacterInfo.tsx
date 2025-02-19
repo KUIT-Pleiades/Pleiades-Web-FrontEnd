@@ -53,8 +53,11 @@ export default function CharacterDisplay() {
 
       if (!response.ok) {
         console.log("이미지 생성에 실패했습니다");
+        return;
       }
+
       const data: CharacterImg = await response.json();
+      console.log(data);
 
       // 두 번째 요청: 회원가입
       const signupData: UserInfo = {
