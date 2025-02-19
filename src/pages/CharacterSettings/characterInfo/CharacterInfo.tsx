@@ -1,88 +1,7 @@
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { fetchRequest } from "../../../functions/fetchRequest";
-import {
-  Character,
-  CharacterImg,
-  Message,
-  UserInfo,
-} from "../../../interfaces/Interfaces";
 
 export default function CharacterDisplay() {
   const character = useCharacterStore((state) => state.userInfo);
-
-  const handleSubmit = async () => {
-    try {
-      // 첫 번째 요청: 이미지 생성
-      const imageRequestData: Character = {
-        userId: character.userId,
-        userName: character.userName,
-        birthDate: character.birthDate,
-        starBackground: character.starBackground,
-        face: {
-          skinColor: character.face.skinColor,
-          hair: character.face.hair,
-          expression: character.face.expression,
-        },
-        outfit: {
-          top: character.outfit.top,
-          bottom: character.outfit.bottom,
-          shoes: character.outfit.shoes,
-        },
-        item: {
-          head: character.item.head,
-          eyes: character.item.eyes,
-          ears: character.item.ears,
-          neck: character.item.neck,
-          leftWrist: character.item.leftWrist,
-          rightWrist: character.item.rightWrist,
-          leftHand: character.item.leftHand,
-          rightHand: character.item.rightHand,
-        },
-      };
-
-      const response = await fetch(
-        "http://image-maker-nine.vercel.app/profile",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(imageRequestData),
-        }
-      );
-
-      if (!response.ok) {
-        console.log("이미지 생성에 실패했습니다");
-      }
-      const data: CharacterImg = await response.json();
-
-      // 두 번째 요청: 회원가입
-      const signupData: UserInfo = {
-        ...imageRequestData,
-        profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
-        character: data.character, // 첫 번째 요청에서 받은 이미지 URL
-      };
-      console.log(data.profile);
-      console.log(data.character);
-
-      const signupResponse = await fetchRequest<Message>(
-        "/auth/signup",
-        "POST",
-        signupData
-      );
-
-      if (signupResponse === null) {
-        console.log("회원가입에 실패했습니다");
-      } else if (
-        signupResponse.message === "sign-up success - character created"
-      )
-        console.log("회원가입 성공:", signupResponse);
-      alert("캐릭터 생성 및 회원가입이 완료되었습니다!");
-    } catch (error) {
-      console.error("오류 발생:", error);
-      alert("처리 중 오류가 발생했습니다. 다시 시도해주세요.");
-    }
-  };
 
   return (
     <div className="character-display">
@@ -146,7 +65,7 @@ export default function CharacterDisplay() {
         </div>
       )}
       <div className="submit-button-container">
-        <button onClick={handleSubmit} className="submit-button">
+        <button className="submit-button">
           완료
         </button>
       </div>

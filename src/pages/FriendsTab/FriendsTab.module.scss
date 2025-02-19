@@ -7,6 +7,10 @@
     width: 100vw;
     height: 100vh;
     background-color: #F8F8FA;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
 .headContainer{
     width: 100%;
@@ -36,9 +40,18 @@
 }
 
 .searchBarContainer{
-    padding-left: 2rem;
-    padding-right: 2rem;
+    // padding-left: 1rem;
+    // padding-right: 1rem;
+    width: 93%;
     margin-bottom: 1.3125rem;
+}
+
+.totalFriendsListContainer{
+    width: 93dvw;
+    padding-right: 3.5dvw;
+    padding-left: 3.5dvw;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .noFriend{

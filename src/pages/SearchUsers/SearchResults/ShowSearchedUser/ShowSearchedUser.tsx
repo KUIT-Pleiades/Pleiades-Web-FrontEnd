@@ -36,7 +36,9 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
 }) => {
     const [showDeleteFriendButton, setShowDeleteFriendButton] = useState(false);
     const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
-    
+    // console.log('showsearchedUser rander. randering: ',user.userName);
+    // console.log('user status: ',user.status);
+
     const renderButton = () => {
         switch (user.status) {
             case "FRIEND":
@@ -143,11 +145,9 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     userId={user.userId}
                     onClose={() => {
                         setIsDeleteFriendModalOpen(false);
-                        handleAddSearchHistory(user.userId);
                     }}
                     onDelete={() => {
                         handleDeleteRequest(user.userId, "FRIEND");
-                        handleAddSearchHistory(user.userId);
                     }}
                 />
             )}

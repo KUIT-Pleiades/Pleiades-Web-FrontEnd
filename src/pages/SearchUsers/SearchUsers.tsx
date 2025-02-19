@@ -45,23 +45,38 @@ const SearchUsers: React.FC = () => {
 
     const handleSearchSubmit = async (value?: string) => {
         const searchQuery = value || searchValue.trim();
-        if(!searchQuery) return;
-        
+        if (!searchQuery) return;
+    
         setLoading(true);
         setShowRecentSearches(false);
         setShowNoResultMessage(false);
-
-        const response = await fetchRequest<{ users: User[] }>(
-            `/users?user_id=${searchValue}`,
-            "GET",
-            null
-        );
-
-        setLoading(false);
-
-        if (response && response.users.length > 0) {
-            setFilteredUsers(response.users);
-        } else {
+    
+        try {
+            // ❌ 잘못된 타입 추론 (response가 배열이 아님)
+            // const response = await fetchRequest<User[]>("/users?user_id=" + searchQuery, "GET", null);
+            
+            // ✅ 올바른 타입 적용 (response.users에 접근)
+            const response = await fetchRequest<{ users: User[] }>(
+                `/users?user_id=${searchQuery}`,
+                "GET",
+                null
+            );
+    
+            console.log('검색 요청 완료. 검색어: ', searchQuery);
+            console.log('response: ', response);
+    
+            setLoading(false);
+    
+            if (response && Array.isArray(response.users) && response.users.length > 0) {
+                setFilteredUsers(response.users);
+            } else {
+                console.log('검색 결과 0명..');
+                setFilteredUsers([]);
+                setShowNoResultMessage(true);
+            }
+        } catch (error) {
+            console.error("검색 요청 실패:", error);
+            setLoading(false);
             setFilteredUsers([]);
             setShowNoResultMessage(true);
         }
@@ -69,7 +84,11 @@ const SearchUsers: React.FC = () => {
 
     const getRecentSearches = async () => {
         setRecentSearchLoading(true);
-        const response = await fetchRequest<{ users: User[] }>("/users/histories", "GET", null);
+        const response = await fetchRequest<{ users: RecentSearchedUser[] }>(
+            "/users/histories",
+            "GET",
+            null
+        );
         if (response && response.users) {
             setRecentSearches(response.users);
         }else{
@@ -109,18 +128,25 @@ const SearchUsers: React.FC = () => {
             {/*============================== 최근 검색 기록 ================================*/}
 
             {showRecentSearches &&
-                <RecentSearch
-                    onUserClick={handleRecentSearchClick}
-                    getRecentSearches={getRecentSearches}
-                    recentSearchloading={recentSearchloading}
-                    recentSearches={recentSearches}
-                />
+                <div className={s.recentSearchContainer}>
+                    <RecentSearch
+                        onUserClick={handleRecentSearchClick}
+                        getRecentSearches={getRecentSearches}
+                        recentSearchloading={recentSearchloading}
+                        recentSearches={recentSearches}
+                    />
+                </div>
             }
             {/*================================ 검색 결과 ================================*/}
             {loading ? (
                 <div className={s.loading}>검색 중...</div>
             ) : filteredUsers.length > 0 ? (
-                <SearchResults filteredUsers={filteredUsers} refreshSearch={handleSearchSubmit} />
+                <div className={s.searchResultsContainer}>
+                    <SearchResults
+                        filteredUsers={filteredUsers}
+                        refreshSearch={handleSearchSubmit}
+                    />
+                </div>
             ) : showNoResultMessage ? (
                 <div className={s.noResultModal}>
                     <span className={s.noResultModalFirstText}>검색한 ID가 존재하지 않아요!</span>

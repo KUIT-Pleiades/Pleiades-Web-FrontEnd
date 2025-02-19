@@ -15,8 +15,9 @@
     width: 100%;
     height: 11%;
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0;
     margin: 0;
     background-color: #FFFFFF;
@@ -24,7 +25,7 @@
 }
 
 .searchSection{
-    width: 100%;
+    width: 93%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -32,24 +33,26 @@
 }
 
 .searchBarContainer{
-    width: 100%;
-    padding-left: 2rem;
-    padding-right: 1.2rem;
+    flex: 1;
     display: flex;
     align-items: center;
+    margin-right: 0.62rem;
 }
 .cancelSearchButton {
-    width: 10%;
+    //width: 10%;
     padding: 0;
     margin: 0;
-    margin-right: 0.38rem;
-    color: var(--gray-22, #444);
+    color: #444;
     font-family: "Pretendard";
     font-size: 0.8125rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.01625rem;
+}
+
+.recentSearchContainer {
+    width: 93%;
 }
 
 .searchResultContainer{
@@ -73,6 +76,13 @@
         line-height: normal;
         letter-spacing: -0.01625rem;
     }
+}
+
+.searchResultsContainer {
+    width: 93%;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .noResultModal{

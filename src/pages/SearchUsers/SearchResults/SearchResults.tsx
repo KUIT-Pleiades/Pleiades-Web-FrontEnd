@@ -32,8 +32,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             "POST",
             { receiverId: friendId }
         );
+        console.log('친구 요청 보냄. to: ',friendId);
         if (response) {
-            console.log(response.message);
+            console.log('응답 받기 성공. 응답 메시지: ',response.message);
             refreshSearch();
             setIsSendRequestPopupVisible(true);
             setTimeout(() => {
@@ -48,7 +49,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             null
         );
         if (response) {
-            console.log(response.message);
+            console.log('딜리트 함수 실행 완. 메시지: ',response.message);
             refreshSearch();
     
             if (type === "REQUEST") {
@@ -99,14 +100,16 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
     }
 
     const handleAddSearchHistory = async (searchedId: string) => {
+        console.log('검색기록 추가 시도..!');
         try {
             const response = await fetchRequest<{ message: string }>(
                 "/users/histories",
                 "POST",
-                { searchedId }
+                { searchedId: searchedId }
             );
             if (response) {
-                console.log(response.message);
+                console.log('최근 검색 기록 추가 완료. 추가한 사용자 아이디: ',searchedId);
+                console.log('응답: ', response);
                 //getRecentSearches();
             } else {
                 console.error("최근 검색 기록 추가 실패");
@@ -120,9 +123,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         <div className={s.searchResultContainer}>
             {filteredUsers.map(user => {
                 return(
-                    <>
+                    <div className={s.searchUserContainer} key={user.userId}>
                         <ShowSearchedUser
-                            key={user.userId}
                             user={user}
                             handleSendRequestFriend={handleSendRequestFriend}
                             handleDeleteRequest={handleDeleteRequest}
@@ -153,7 +155,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
                                 <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>
                             </div>
                         )}
-                    </>
+                    </div>
                     
                 );
             })}
