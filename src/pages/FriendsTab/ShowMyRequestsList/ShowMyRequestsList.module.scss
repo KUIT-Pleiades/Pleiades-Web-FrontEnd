@@ -18,8 +18,8 @@
     padding: 0;
 }
 
-.profileImage{
-    border-radius: 100%;
+.profileImageContainer{
+    border-radius: 50%;
     overflow: hidden;
     background-color: #E4D0E5;
     width: 2.1875rem;
@@ -30,6 +30,10 @@
     align-items: center;
     margin: 0;
     bottom: 0;
+}
+.profileImage{
+    width: 2.1875rem;
+    height: 2.1875rem;
 }
 
 .nameId{

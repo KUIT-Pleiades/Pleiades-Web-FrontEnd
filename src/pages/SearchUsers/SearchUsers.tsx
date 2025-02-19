@@ -42,7 +42,7 @@ const SearchUsers: React.FC = () => {
             setShowNoResultMessage(false);
         }
     };
-
+    
     const handleSearchSubmit = async (value?: string) => {
         const searchQuery = value || searchValue.trim();
         if (!searchQuery) return;

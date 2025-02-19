@@ -20,6 +20,11 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch }) => {
+    const doRefresh = () => {
+        setTimeout(() => {
+            refreshSearch();
+        }, 1290);
+    }
     // ✅ 친구 요청 보내기
     const handleSendRequestFriend = async (friendId: string) => {
         const response = await fetchRequest<{ message: string }>(
@@ -29,7 +34,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log('친구 요청 보냄. to: ', friendId);
-            refreshSearch();
+            doRefresh();
         } else console.error("친구 요청 실패");
     };
 
@@ -42,7 +47,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log('딜리트 실행 완료. 메시지: ', response.message);
-            refreshSearch();
+            if(type === "REQUEST"){
+                doRefresh();
+            }else{
+                refreshSearch();
+            }
         } else console.error(type === "REQUEST" ? "친구 요청 취소 실패" : "친구 삭제 실패");
     };
 
@@ -55,7 +64,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log(response.message);
-            refreshSearch();
+            doRefresh();
         } else console.error("친구 요청 거절 실패");
     };
 
@@ -105,18 +114,18 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
     return (
         <div className={s.searchResultContainer}>
             {filteredUsers.map(user => (
-    <div className={s.searchUserContainer} key={user.userId}>
-        <ShowSearchedUser
-            user={user}
-            handleSendRequestFriend={handleSendRequestFriend}
-            handleDeleteRequest={handleDeleteRequest}
-            handleRejectRequest={handleRejectRequest}
-            handleAcceptRequest={handleAcceptRequest}
-            handleSendSignal={handleSendSignal}
-            handleAddSearchHistory={handleAddSearchHistory}
-        />
-    </div>
-))}
+                <div className={s.searchUserContainer} key={user.userId}>
+                    <ShowSearchedUser
+                        user={user}
+                        handleSendRequestFriend={handleSendRequestFriend}
+                        handleDeleteRequest={handleDeleteRequest}
+                        handleRejectRequest={handleRejectRequest}
+                        handleAcceptRequest={handleAcceptRequest}
+                        handleSendSignal={handleSendSignal}
+                        handleAddSearchHistory={handleAddSearchHistory}
+                    />
+                </div>
+            ))}
         </div>
     )
 }
