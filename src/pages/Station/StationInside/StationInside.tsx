@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchRequest } from "../../../functions/fetchRequest";
 import { useCharacterStore } from "../../../store/useCharacterStore";
+import { useNavigate } from "react-router-dom";
 import s from "./StationInside.module.scss";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
@@ -38,6 +39,7 @@ interface StationResponse {
 }
 
 const StationInside: React.FC = () => {
+	const navigate = useNavigate();
   const [stationData, setStationData] = useState<StationResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -52,7 +54,8 @@ const StationInside: React.FC = () => {
   };
 
   // 스테이션 데이터를 새로고침하는 함수
-  const refreshStationData = async () => {
+	const refreshStationData = async () => {
+		if (!stationId) return;
     try {
       const response = await fetchRequest<StationResponse>(
         `/stations/${stationId}`,
@@ -74,10 +77,23 @@ const StationInside: React.FC = () => {
     setSelectedMember(member);
   };
 
-  const stationId = "ABCDEF"; // 실제 stationId 필요
+	const stationId = sessionStorage.getItem("stationId") as string;;
+	const handleLeaveStation = () => {
+		sessionStorage.removeItem('stationId');
+		navigate('/station');
+	}
+
+	useEffect(() => {
+    if (!stationId) {
+      navigate("/station");
+      return;
+    }
+  }, [stationId, navigate]);
 
   useEffect(() => {
-    const getStationData = async () => {
+		const getStationData = async () => {
+			if (!stationId) return;
+			
       try {
         setIsLoading(true);
         const response = await fetchRequest<StationResponse>(
@@ -117,7 +133,7 @@ const StationInside: React.FC = () => {
       )}
       <div className={s.headerContainer}>
         <div className={s.backBtn}>
-          <img src={backBtn} alt="뒤로가기" />
+          <img src={backBtn} alt="뒤로가기" onClick={handleLeaveStation}/>
         </div>
         <div className={s.header}>
           <h2>[ {stationData.name} ]</h2>
