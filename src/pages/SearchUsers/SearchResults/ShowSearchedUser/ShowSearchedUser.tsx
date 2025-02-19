@@ -41,7 +41,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
     const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | null>(null);
 
     // ✅ 팝업 표시 함수
-    const showPopup = (type: "ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND") => {
+    const showPopup = (type: "REFUSE" | "WITHDRAW" | "SEND") => {
         setPopupType(type);
         setTimeout(() => {
             setPopupType(null);
@@ -103,7 +103,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                             className={s.acceptRequestButton}
                             onClick={() => {
                                 handleAcceptRequest(user.userId);
-                                showPopup("ACCEPT");
                                 handleAddSearchHistory(user.userId);
                             }}
                         >
@@ -158,12 +157,10 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
             {popupType && (
                 <div className={`${s.popup} ${popupType ? s[`popup${popupType}`] : ""}`}>
                     <span className={s.popupTitle}>
-                        {popupType === "ACCEPT" && `${user.userName}님과 친구가 되었어요!`}
                         {popupType === "REFUSE" && "친구 요청을 거절했어요"}
                         {popupType === "WITHDRAW" && "친구 요청을 취소했어요"}
                         {popupType === "SEND" && "친구 요청을 완료했어요!"}
                     </span>
-                    {popupType === "ACCEPT" && <span className={s.popupText}>내 친구에서 확인할 수 있어요</span>}
                     {popupType === "SEND" && <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>}
                 </div>
             )}

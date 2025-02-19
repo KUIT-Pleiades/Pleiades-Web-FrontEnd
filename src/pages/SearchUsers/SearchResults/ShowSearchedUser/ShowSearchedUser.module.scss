@@ -162,16 +162,49 @@
     opacity: 1;
     z-index: 1000;
     transition: opacity 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeInOut 1.5s ease-in-out;
     
     &Title {
-        font-size: 0.9375rem;
-        font-weight: 400;
         color: #17151C;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.9375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
     }
     
     &Text {
-        font-size: 0.6875rem;
         color: #444;
+        text-align: center;
+        font-family: "ElectricalSafety";
+        font-size: 0.6875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01375rem;
         margin-top: 0.44rem;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+        10% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        90% {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -40%);
+        }
     }
 }

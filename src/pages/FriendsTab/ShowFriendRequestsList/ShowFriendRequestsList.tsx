@@ -3,20 +3,18 @@ import s from './ShowFriendRequestsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
 
 //image files
-//import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
 import acceptFriendPopupSpacecraft from '../../../assets/FriendsTab/acceptFriendPopupSpacecraft.svg';
 
 interface ShowFriendRequestsListProps {
   otherUser: OtherUser;
   handleAcceptRequest: (friendId: string) => void;
   handleRejectRequest: (friendId: string) => void;
-
 }
 
 const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
   otherUser,
   handleAcceptRequest,
-  handleRejectRequest,
+  handleRejectRequest
 }) => {
   const [isAcceptFriendPopupVisible, setIsAcceptFriendPopupVisible] = useState(false);
   const [isRefuseFriendPopupVisible, setIsRefuseFriendPopupVisible] = useState(false);
@@ -38,8 +36,8 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
     <div className={s.container}>
       <div className={s.userInfoContainer}>
         {/*============= 프로필 사진 =============*/}
-        <div className={s.profileImage}>
-          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`}/>
+        <div className={s.profileImageContainer}>
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} className={s.profileImage} />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
