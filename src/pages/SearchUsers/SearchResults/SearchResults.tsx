@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import s from './SearchResults.module.scss';
 
 //components
@@ -8,7 +7,7 @@ import { fetchRequest } from '../../../functions/fetchRequest';
 //image files
 //import userProfileImg from '../../../assets/SearchUsers/searchedUserProfileImg.png';
 
-interface User { 
+interface User {
     userId: string;
     userName: string;
     profile: string;
@@ -21,27 +20,20 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch }) => {
-    const [isAcceptRequestPopupVisible, setIsAcceptRequestPopupVisible] = useState(false);
-    const [isRefuseRequestPopupVisible, setIsRefuseRequestPopupVisible] = useState(false);
-    const [isWithdrawRequestPopupVisible, setIsWithdrawRequestPopupVisible] = useState(false);
-    const [isSendRequestPopupVisible, setIsSendRequestPopupVisible] = useState(false);
-
+    // ✅ 친구 요청 보내기
     const handleSendRequestFriend = async (friendId: string) => {
         const response = await fetchRequest<{ message: string }>(
             `/friends/requests`,
             "POST",
             { receiverId: friendId }
         );
-        console.log('친구 요청 보냄. to: ',friendId);
         if (response) {
-            console.log('응답 받기 성공. 응답 메시지: ',response.message);
+            console.log('친구 요청 보냄. to: ', friendId);
             refreshSearch();
-            setIsSendRequestPopupVisible(true);
-            setTimeout(() => {
-                setIsSendRequestPopupVisible(false);
-            }, 1500);
         } else console.error("친구 요청 실패");
     };
+
+    // ✅ 친구 요청 취소 or 삭제
     const handleDeleteRequest = async (friendId: string, type: "REQUEST" | "FRIEND") => {
         const response = await fetchRequest<{ message: string }>(
             `/friends/requests/${friendId}`,
@@ -49,15 +41,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             null
         );
         if (response) {
-            console.log('딜리트 함수 실행 완. 메시지: ',response.message);
+            console.log('딜리트 실행 완료. 메시지: ', response.message);
             refreshSearch();
-    
-            if (type === "REQUEST") {
-                setIsWithdrawRequestPopupVisible(true);
-                setTimeout(() => setIsWithdrawRequestPopupVisible(false), 1500);
-            }
         } else console.error(type === "REQUEST" ? "친구 요청 취소 실패" : "친구 삭제 실패");
     };
+
+    // ✅ 친구 요청 거절
     const handleRejectRequest = async (friendId: string) => {
         const response = await fetchRequest<{ message: string }>(
             `/friends/requests/${friendId}`,
@@ -67,27 +56,21 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         if (response) {
             console.log(response.message);
             refreshSearch();
-            setIsRefuseRequestPopupVisible(true);
-            setTimeout(() => {
-                setIsRefuseRequestPopupVisible(false);
-            }, 1500);
         } else console.error("친구 요청 거절 실패");
-    }
+    };
+
+    // ✅ 친구 요청 수락
     const handleAcceptRequest = async (friendId: string) => {
-            const response = await fetchRequest<{ message: string }>(
-                `/friends/requests/${friendId}`,
-                "PATCH",
-                { status: "ACCEPTED" }
-            );
-            if (response) {
-                console.log(response.message);
-                refreshSearch();
-                setIsAcceptRequestPopupVisible(true);
-                setTimeout(() => {
-                    setIsAcceptRequestPopupVisible(false);
-                }, 1500);
-            } else console.error("친구 요청 수락 실패");
-        };
+        const response = await fetchRequest<{ message: string }>(
+            `/friends/requests/${friendId}`,
+            "PATCH",
+            { status: "ACCEPTED" }
+        );
+        if (response) {
+            console.log(response.message);
+            refreshSearch();
+        } else console.error("친구 요청 수락 실패");
+    };
     const handleSendSignal = async (friendId: string) => {
         const response = await fetchRequest<{ message: string }>(
             `/friends/${friendId}/signal`,
@@ -121,44 +104,19 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
 
     return (
         <div className={s.searchResultContainer}>
-            {filteredUsers.map(user => {
-                return(
-                    <div className={s.searchUserContainer} key={user.userId}>
-                        <ShowSearchedUser
-                            user={user}
-                            handleSendRequestFriend={handleSendRequestFriend}
-                            handleDeleteRequest={handleDeleteRequest}
-                            handleRejectRequest={handleRejectRequest}
-                            handleAcceptRequest={handleAcceptRequest}
-                            handleSendSignal={handleSendSignal}
-                            handleAddSearchHistory={handleAddSearchHistory}
-                        />
-                        {isAcceptRequestPopupVisible && (
-                            <div className={s.popupAccept}>
-                                <span className={s.popupTitle}>{user.userName}님과 친구가 되었어요!</span>
-                                <span className={s.popupText}>내 친구에서 확인할 수 있어요</span>
-                            </div>
-                        )}
-                        {isRefuseRequestPopupVisible && (
-                            <div className={s.popupRefuse}>
-                                <span className={s.popupTitle}>친구 요청을 거절했어요</span>
-                            </div>
-                        )}
-                        {isWithdrawRequestPopupVisible && (
-                            <div className={s.popupWithdraw}>
-                                <span className={s.popupTitle}>친구 요청을 취소했어요</span>
-                            </div>
-                        )}
-                        {isSendRequestPopupVisible && (
-                            <div className={s.popupSendRequest}>
-                                <span className={s.popupTitle}>친구 요청을 완료했어요!</span>
-                                <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>
-                            </div>
-                        )}
-                    </div>
-                    
-                );
-            })}
+            {filteredUsers.map(user => (
+    <div className={s.searchUserContainer} key={user.userId}>
+        <ShowSearchedUser
+            user={user}
+            handleSendRequestFriend={handleSendRequestFriend}
+            handleDeleteRequest={handleDeleteRequest}
+            handleRejectRequest={handleRejectRequest}
+            handleAcceptRequest={handleAcceptRequest}
+            handleSendSignal={handleSendSignal}
+            handleAddSearchHistory={handleAddSearchHistory}
+        />
+    </div>
+))}
         </div>
     )
 }

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import s from './ShowSearchedUser.module.scss';
 
-// image files
+// 이미지 파일
 import deleteFriendsButton from '../../../../assets/SearchUsers/deleteFriendsButton.svg';
 
-// conponents
+// 컴포넌트
 import DeleteFriendModal from '../../../../components/DeleteFriendModal/DeleteFriendModal';
 import SignalButton from '../../../../components/SignalButton/SignalButton';
 
@@ -36,9 +36,19 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
 }) => {
     const [showDeleteFriendButton, setShowDeleteFriendButton] = useState(false);
     const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
-    // console.log('showsearchedUser rander. randering: ',user.userName);
-    // console.log('user status: ',user.status);
+    
+    // ✅ 팝업 상태 (이제 개별 유저마다 관리됨)
+    const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | null>(null);
 
+    // ✅ 팝업 표시 함수
+    const showPopup = (type: "ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND") => {
+        setPopupType(type);
+        setTimeout(() => {
+            setPopupType(null);
+        }, 1500); // 1.5초 후 자동 닫힘
+    };
+
+    // 버튼 렌더링 함수
     const renderButton = () => {
         switch (user.status) {
             case "FRIEND":
@@ -78,6 +88,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         className={s.withdrawRequestButton}
                         onClick={() => {
                             handleDeleteRequest(user.userId, "REQUEST");
+                            showPopup("WITHDRAW");
                             handleAddSearchHistory(user.userId);
                         }}
                     >
@@ -92,6 +103,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                             className={s.acceptRequestButton}
                             onClick={() => {
                                 handleAcceptRequest(user.userId);
+                                showPopup("ACCEPT");
                                 handleAddSearchHistory(user.userId);
                             }}
                         >
@@ -101,6 +113,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                             className={s.refuseRequestButton}
                             onClick={() => {
                                 handleRejectRequest(user.userId);
+                                showPopup("REFUSE");
                                 handleAddSearchHistory(user.userId);
                             }}
                         >
@@ -116,6 +129,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         className={s.sendRequestButton}
                         onClick={() => {
                             handleSendRequestFriend(user.userId);
+                            showPopup("SEND");
                             handleAddSearchHistory(user.userId);
                         }}
                     >
@@ -139,6 +153,22 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
 
             {/* 버튼 UI */}
             {renderButton()}
+
+            {/* ✅ 팝업 (개별 유저마다 표시) */}
+            {popupType && (
+                <div className={`${s.popup} ${popupType ? s[`popup${popupType}`] : ""}`}>
+                    <span className={s.popupTitle}>
+                        {popupType === "ACCEPT" && `${user.userName}님과 친구가 되었어요!`}
+                        {popupType === "REFUSE" && "친구 요청을 거절했어요"}
+                        {popupType === "WITHDRAW" && "친구 요청을 취소했어요"}
+                        {popupType === "SEND" && "친구 요청을 완료했어요!"}
+                    </span>
+                    {popupType === "ACCEPT" && <span className={s.popupText}>내 친구에서 확인할 수 있어요</span>}
+                    {popupType === "SEND" && <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>}
+                </div>
+            )}
+
+            {/* 친구 삭제 모달 */}
             {isDeleteFriendModalOpen && (
                 <DeleteFriendModal
                     username={user.userName}

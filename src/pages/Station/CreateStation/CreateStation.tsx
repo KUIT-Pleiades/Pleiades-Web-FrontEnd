@@ -104,7 +104,8 @@ const CreateStation: React.FC = () => {
 
       if (response && response.stationId) {
         console.log('정거장 생성 성공:', response);
-        //navigate(`/station/${response.stationId}`); // 생성된 정거장으로 이동
+        sessionStorage.setItem('stationId', response.stationId);
+        navigate('/station/stationinside');
       } else {
         console.log('정거장 생성 실패. 응답: ', response);
       }
@@ -156,3 +157,4 @@ const CreateStation: React.FC = () => {
 };
 
 export default CreateStation;
+

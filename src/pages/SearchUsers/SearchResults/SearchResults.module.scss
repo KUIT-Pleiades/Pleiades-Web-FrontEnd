@@ -10,7 +10,7 @@
         //height: 4rem;
         padding-top: 0.9rem;
         padding-bottom: 0.9rem;
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -27,6 +27,18 @@
         align-items: center;
         z-index: 1000;
         animation: fadeInOut 1.5s ease-in-out;
+        opacity: 0;
+        z-index: 9999;
+
+        &.visible {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        &.hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
     
         @keyframes fadeInOut {
             0% {
