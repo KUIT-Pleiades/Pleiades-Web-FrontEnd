@@ -25,8 +25,8 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
       
       <div className={s.userInfoContainer}>
         {/*============= 프로필 사진 =============*/}
-        <div className={s.profileImage}>
-          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} />
+        <div className={s.profileImageContainer}>
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} className={s.profileImage} />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>

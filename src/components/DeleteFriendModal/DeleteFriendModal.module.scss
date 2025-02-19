@@ -28,14 +28,22 @@ $modal-border-radius: 0.75rem;
 
   &Avatar {
     position: absolute;
-    top: -10%;
+    top: -15%;
     left: 50%;
     transform: translate(-50%, -50%);
-    img {
+    overflow: hidden;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background-color: #BBC4E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &Image {
       width: 7rem;
       height: 7rem;
-      border-radius: 50%;
-      margin-bottom: 0.3rem;
+      // border-radius: 50%;
+      // margin-bottom: 0.3rem;
     }
   }
 
@@ -79,7 +87,7 @@ $modal-border-radius: 0.75rem;
       border: none;
       padding: 0;
       margin: 0;
-      width: 36%;
+      width: 39%;
       border-radius: 1.88rem;
       color: #FFF;
       text-align: center;
@@ -97,7 +105,7 @@ $modal-border-radius: 0.75rem;
       border: none;
       padding: 0;
       margin: 0;
-      width: 36%;
+      width: 39%;
       border-radius: 1.88rem;
       color: #FFF;
       text-align: center;

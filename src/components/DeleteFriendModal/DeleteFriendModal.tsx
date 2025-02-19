@@ -2,13 +2,14 @@ import React from "react";
 import s from './DeleteFriendModal.module.scss';
 
 // image files
-import characterAvatar from '../../assets/FriendsTab/characterAvatarModal.png';
+
 
 interface ModalProps {
     username: string;
     userId: string;
     onClose: () => void;
     onDelete: () => void;
+    profile: string;
 }
 
 const DeleteFriendModal: React.FC<ModalProps> = ({
@@ -16,13 +17,14 @@ const DeleteFriendModal: React.FC<ModalProps> = ({
     userId,
     onClose,
     onDelete,
+    profile
 }) => {
 
   return (
     <div className={s.modalOverlay}>
         <div className={s.modal}>
             <div className={s.modalAvatar}>
-                <img src={characterAvatar} alt={`${username}'s avatar`} />
+                <img src={profile} alt={`${username}'s avatar`} className={s.modalAvatarImage}/>
             </div>
             <div className={s.modalUserId}>(@{userId})</div>
             <p className={s.modalMessage}>{username}님을 친구에서 삭제할까요?</p>

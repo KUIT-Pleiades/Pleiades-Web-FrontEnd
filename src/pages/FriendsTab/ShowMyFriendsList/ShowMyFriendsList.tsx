@@ -67,8 +67,8 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
         onClick={handleGoStation}
       >
         {/*============= 프로필 사진 =============*/}
-        <div className={s.profileImage}>
-          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} />
+        <div className={s.profileImageContainer}>
+          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} className={s.profileImage} />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
@@ -98,6 +98,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
         <DeleteFriendModal
           username={otherUser.userName}
           userId={otherUser.userId}
+          profile={otherUser.profile}
           onClose={handleDeleteCancel}
           onDelete={() => handleDelete(otherUser.userId)}
         />

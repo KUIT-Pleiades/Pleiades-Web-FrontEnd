@@ -56,14 +56,11 @@
 
 .noFriend{
     width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    //bottom: 10.67rem;
-    bottom: 5rem;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    justify-content: center;
 }
 .noFriendFirstText{
     color: var(--gray-11, #17151C);
