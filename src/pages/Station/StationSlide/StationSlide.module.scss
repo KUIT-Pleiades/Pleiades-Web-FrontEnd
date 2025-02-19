@@ -198,10 +198,14 @@
 			border-radius: 50%;
 			background-color: #f0f0f0;
 			margin-right: 10px;
+			img{
+				width: 40px;
+				height: 40px;
+			}
 
 			.onerIcon {
 				position: absolute;
-				right: 5px;
+				right: -4px;
 				bottom: -1px;
 				width: 17px;
 				height: 17px;
@@ -209,7 +213,7 @@
 
 			.messageIcon {
 				position: absolute;
-				right: 5px;
+				right: -4px;
 				bottom: 25px;
 				width: 17px;
 				height: 17px;
