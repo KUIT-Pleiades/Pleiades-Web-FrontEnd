@@ -6,6 +6,7 @@ import messageIcon from "../../../../assets/Icon/message.svg";
 
 interface StationReportProps {
   stationId: string;
+  onReportSubmitted: () => void;
 }
 
 interface ReportResponse {
@@ -22,14 +23,17 @@ interface ReportResponse {
   };
 }
 
-const StationReport: React.FC<StationReportProps> = ({ stationId }) => {
+const StationReport: React.FC<StationReportProps> = ({
+  stationId,
+  onReportSubmitted,
+}) => {
   const [reportData, setReportData] = useState<ReportResponse["report"] | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-	const [editedAnswer, setEditedAnswer] = useState("");
-	const [isSaving, setIsSaving] = useState(false);
+  const [editedAnswer, setEditedAnswer] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const maxLength = 150;
 
   useEffect(() => {
@@ -68,20 +72,20 @@ const StationReport: React.FC<StationReportProps> = ({ stationId }) => {
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     if (text.length <= maxLength) {
-			setEditedAnswer(text);
-			setError(null);
+      setEditedAnswer(text);
+      setError(null);
       e.target.style.height = "auto";
       e.target.style.height = e.target.scrollHeight + "px";
     }
   };
 
-	const handleSave = async () => {
-		if (editedAnswer.trim() === "") {
+  const handleSave = async () => {
+    if (editedAnswer.trim() === "") {
       setError(new Error("답변을 입력해주세요"));
       return;
     }
-		try {
-			setIsSaving(true);
+    try {
+      setIsSaving(true);
       const response = await fetchRequest<ReportResponse>(
         `/stations/${stationId}/report`,
         "PATCH",
@@ -95,16 +99,17 @@ const StationReport: React.FC<StationReportProps> = ({ stationId }) => {
       }
 
       // 성공적으로 저장된 경우 reportData 업데이트
-      setReportData(response.report);
+			setReportData(response.report);
+			onReportSubmitted(); 
       console.log("리포트가 성공적으로 저장되었습니다:", response);
 
       // 여기에 성공 메시지나 추가적인 UI 업데이트 로직을 추가할 수 있습니다
     } catch (err) {
       console.error("리포트 저장 중 에러:", err);
       setError(err as Error);
-		} finally {
-			setIsSaving(false);
-		}
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCancel = () => {
@@ -112,7 +117,6 @@ const StationReport: React.FC<StationReportProps> = ({ stationId }) => {
   };
 
   if (isLoading) return <div className={s.loading}>로딩 중...</div>;
-  if (error) return null;
   if (!reportData) return null;
 
   return (
@@ -148,7 +152,7 @@ const StationReport: React.FC<StationReportProps> = ({ stationId }) => {
                 maxLength={maxLength}
                 placeholder="입장을 위해 투데이 리포트를 작성해주세요!"
               />
-              {error && <div className={s.error}>{error}</div>}
+              {error && <div className={s.error}>{error.message}</div>}
               <div className={s.editFooter}>
                 <div className={s.characterCount}>
                   {editedAnswer.length} / {maxLength}byte

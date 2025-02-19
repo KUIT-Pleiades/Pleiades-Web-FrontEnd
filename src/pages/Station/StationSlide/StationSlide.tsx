@@ -5,7 +5,7 @@ import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
 import copyBtn from "../../../assets/btnImg/copyBtn.png"
-import plusBtn from "../../../assets/btnImg/plusBtn.png"
+//import plusBtn from "../../../assets/btnImg/plusBtn.png"
 import onerIcon from "../../../assets/Icon/oner.png"
 import messageIcon from "../../../assets/Icon/messageIcon.png"
 import signalBtn from "../../../assets/btnImg/signalBtn.png"
@@ -99,9 +99,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
               <div className={s.memberTitle}>
                 멤버 ({stationData.numOfUsers})
               </div>
-              <button className={s.addMemberButton}>
-                <img src={plusBtn} alt="" /> 친구 초대하기
-              </button>
+              
 
               <div className={s.memberList}>
                 {stationData.stationMembers.map((member) => (

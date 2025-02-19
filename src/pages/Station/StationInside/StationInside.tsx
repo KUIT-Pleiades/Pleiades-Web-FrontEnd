@@ -44,14 +44,29 @@ const StationInside: React.FC = () => {
   const [showSlide, setShowSlide] = useState(false);
   const [selectedMember, setSelectedMember] = useState<StationMember | null>(
     null
-	);
-	const { userInfo } = useCharacterStore();
+  );
+  const { userInfo } = useCharacterStore();
 
   const handleSettingClick = () => {
     setShowSlide(true);
   };
 
-  
+  // 스테이션 데이터를 새로고침하는 함수
+  const refreshStationData = async () => {
+    try {
+      const response = await fetchRequest<StationResponse>(
+        `/stations/${stationId}`,
+        "GET",
+        null
+      );
+      if (response) {
+        setStationData(response);
+      }
+    } catch (err) {
+      setError(err as Error);
+    }
+  };
+
   const currentUserId = userInfo.userId;
 
   // 멤버 클릭 핸들러 추가
@@ -94,7 +109,12 @@ const StationInside: React.FC = () => {
         backgroundImage: `url(${stationBackgroundImg_01})`,
       }}
     >
-      {!stationData.reportWritten && <StationReport stationId={stationId} />}
+      {!stationData.reportWritten && (
+        <StationReport
+          stationId={stationId}
+          onReportSubmitted={refreshStationData}
+        />
+      )}
       <div className={s.headerContainer}>
         <div className={s.backBtn}>
           <img src={backBtn} alt="뒤로가기" />
@@ -151,8 +171,8 @@ const StationInside: React.FC = () => {
                     alt="리포트"
                     style={{
                       position: "fixed",
-                      left: `${member.positionX+20}dvw`,
-                      top: `${member.positionY+2}dvh`,
+                      left: `${member.positionX + 20}dvw`,
+                      top: `${member.positionY + 2}dvh`,
                       zIndex: 100,
                       height: "7dvw",
                     }}
