@@ -136,22 +136,22 @@ const StationSlide: React.FC<StationSlideProps> = ({
                           className={s.messageIcon}
                         />
                       )}
-                      {!member.isFriend && (
-                        <img
-                          src={plusIcon}
-                          className={s.plusIcon}
-                          onClick={(e) => {
-                            e.stopPropagation(); // 이벤트 버블링 방지
-                            handleSendRequestFriend(member.userId);
-                          }}
-                        />
-                      )}
+                      {!member.isFriend &&
+                        member.userId !== character.userId && (
+                          <img
+                            src={plusIcon}
+                            className={s.plusIcon}
+                            onClick={(e) => {
+                              e.stopPropagation(); // 이벤트 버블링 방지
+                              handleSendRequestFriend(member.userId);
+                            }}
+                          />
+                        )}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
                       <div className={s.memberHandle}>
                         @{member.userId}
-                        {character.userId}
                       </div>
                     </div>
                     {member.isFriend && member.userId !== character.userId && (
