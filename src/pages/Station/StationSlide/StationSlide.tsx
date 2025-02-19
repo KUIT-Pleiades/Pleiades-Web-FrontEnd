@@ -1,6 +1,7 @@
 import s from "./StationSlide.module.scss";
 import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
+import { fetchRequest } from "../../../functions/fetchRequest";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import characterProfile from "../../../assets/Character/profile/characterProfile.svg"
@@ -45,12 +46,12 @@ const StationSlide: React.FC<StationSlideProps> = ({
 }) => {
   const handleSlideClick = (e: React.MouseEvent) => {
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
-    e.stopPropagation(); 
-	};
+    e.stopPropagation();
+  };
 
-	const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
-	const handleCopyClick = async () => {
+  const handleCopyClick = async () => {
     try {
       // 클립보드에 정거장 ID를 복사
       await navigator.clipboard.writeText(stationData.stationId);
@@ -62,8 +63,28 @@ const StationSlide: React.FC<StationSlideProps> = ({
       console.error("복사 실패:", err);
     }
   };
-	
-	const character = useCharacterStore((state) => state.userInfo);
+
+  const character = useCharacterStore((state) => state.userInfo);
+
+  // 친구 요청 보내는 함수 추가
+  const handleSendRequestFriend = async (friendId: string) => {
+    try {
+      const response = await fetchRequest<{ message: string }>(
+        `/friends/requests`,
+        "POST",
+        { receiverId: friendId }
+      );
+      console.log("친구 요청 보냄. to: ", friendId);
+      if (response) {
+        console.log("응답 받기 성공. 응답 메시지: ", response.message);
+        // 성공 메시지나 토스트 알림을 추가할 수 있습니다
+      } else {
+        console.error("친구 요청 실패");
+      }
+    } catch (error) {
+      console.error("친구 요청 중 오류 발생:", error);
+    }
+  };
 
   return (
     <div className={s.container} onClick={onClose}>
@@ -99,7 +120,6 @@ const StationSlide: React.FC<StationSlideProps> = ({
               <div className={s.memberTitle}>
                 멤버 ({stationData.numOfUsers})
               </div>
-              
 
               <div className={s.memberList}>
                 {stationData.stationMembers.map((member) => (
@@ -115,9 +135,17 @@ const StationSlide: React.FC<StationSlideProps> = ({
                           alt="메세지 아이콘"
                           className={s.messageIcon}
                         />
-											)}
-											{!member.isFriend && (<img src={plusIcon} className={s.plusIcon} />)
-											}
+                      )}
+                      {!member.isFriend && (
+                        <img
+                          src={plusIcon}
+                          className={s.plusIcon}
+                          onClick={(e) => {
+                            e.stopPropagation(); // 이벤트 버블링 방지
+                            handleSendRequestFriend(member.userId);
+                          }}
+                        />
+                      )}
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
