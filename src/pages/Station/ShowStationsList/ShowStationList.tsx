@@ -72,8 +72,7 @@ const ShowStationList: React.FC = () => {
       // 200 OK - 정거장 입장 성공
       if (response?.message === "Enter Station Success") {
         console.log("정거장 입장 성공:", response);
-        console.log('정거장 입장 성공!');
-        //navigate(`/station/${stationId}`);
+        enterStation(stationId);
         return;
       }
   
@@ -99,7 +98,7 @@ const ShowStationList: React.FC = () => {
   
       if (response?.message.includes("User already in the station")) {
         console.log('이미 정거장에 가입되어 있습니다.');
-        //navigate(`/station/${stationId}`);
+        enterStation(stationId);
         return;
       }
   
@@ -131,7 +130,7 @@ const ShowStationList: React.FC = () => {
               console.log('정거장 인원이 가득 찼습니다.');
             } else if (data?.message?.includes('User already in the station')) {
               console.log('이미 정거장에 가입되어 있습니다.');
-              navigate(`/station/${stationId}`);
+              enterStation(stationId);
             }
             break;
           default:
@@ -159,7 +158,62 @@ const ShowStationList: React.FC = () => {
 
   // 정거장 입장
   const handleEnterStation = async (stationId: string) => {
-    await fetchSearchedStation(stationId);
+    try {
+        const response = await fetchRequest<{ message: string }>(`/stations/${stationId}`, 'PATCH', null);
+        console.log('정거장 입장 요청:', stationId);
+
+        // ✅ 200 OK - 정거장 입장 성공
+        if (response?.message === "Enter Station Success") {
+            console.log("정거장 입장 성공:", response);
+            enterStation(stationId);
+            return;
+        }
+
+        // ✅ 409 Conflict - 이미 정거장에 가입됨
+        if (response?.message === "User already in the station") {
+            console.log("이미 정거장에 가입되어 있음:", response);
+            enterStation(stationId);
+            return;
+        }
+
+    } catch (error: unknown) {
+        console.error('정거장 입장 중 오류 발생:', error);
+
+        // ✅ 응답이 있는 경우 (서버에서 오류 메시지 반환)
+        if (typeof error === 'object' && error !== null && 'response' in error) {
+            const axiosError = error as { response?: { status?: number; data?: { message: string } } };
+            const { status, data } = axiosError.response || {};
+            console.warn(`서버 응답 (${status}):`, data?.message);
+
+            // ✅ 401 Unauthorized - 로그인 필요
+            if (status === 401 && data?.message === "Invalid or expired token") {
+                console.log("로그인이 필요합니다.");
+                navigate('/login'); // 로그인 페이지로 이동
+                return;
+            }
+            // ✅ 404 Not Found - 정거장 없음
+            if (status === 404 && data?.message === "Station not found") {
+                console.warn("정거장이 존재하지 않습니다.");
+                handlePopupNoExistStation(); // 정거장 없음 팝업 표시
+                return;
+            }
+            // ✅ 409 Conflict - 정거장 인원이 가득 참
+            if (status === 409 && data?.message === "Station Full. You cannot enter the station.") {
+                console.log("정거장 인원이 가득 찼습니다.");
+                alert("정거장이 가득 찼습니다. 다른 정거장을 찾아보세요.");
+                return;
+            }
+        }
+
+        // ✅ 예상치 못한 오류 처리
+        console.log("정거장 입장 중 알 수 없는 오류가 발생했습니다.");
+        alert("정거장 입장 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const enterStation = (stationId: string) => {
+    sessionStorage.setItem('stationId', stationId);
+    navigate('/station/stationinside');
   };
 
   useEffect(() => {
@@ -201,7 +255,11 @@ const ShowStationList: React.FC = () => {
         <div className={s.stationListContainer}>
           {sortedStations.length > 0 ? (
             sortedStations.map((station) => (
-              <div key={station.stationId} className={s.stationDisplayWrapper} onClick={() => handleEnterStation(station.stationId)}>
+              <div
+                key={station.stationId}
+                className={s.stationDisplayWrapper}
+                onClick={() => handleEnterStation(station.stationId)}
+              >
                 <StationDisplay
                   name={station.name}
                   numOfUsers={station.numOfUsers}
