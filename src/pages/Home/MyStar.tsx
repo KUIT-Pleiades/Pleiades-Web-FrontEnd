@@ -17,7 +17,7 @@ export default function MyStar() {
   const [isLoading, setIsLoading] = useState(true);
   const { authorization } = useAuth();
   const navigate = useNavigate();
-  const userCharacter = `https://gateway.pinata.cloud/ipfs/${userInfo.character}`;
+  const userCharacter = `${userInfo.character}`;
   const background = getImage(userInfo.starBackground);
 
   const fetchUserInfo = useCallback(async () => {
