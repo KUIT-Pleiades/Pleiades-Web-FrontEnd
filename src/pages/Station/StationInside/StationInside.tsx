@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchRequest } from "../../../functions/fetchRequest";
+import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./StationInside.module.scss";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
@@ -11,6 +12,7 @@ import StationSlide from "../StationSlide/StationSlide";
 import StationReport from "./StationReport/StationReport";
 import MyReport from "./CharacterReport/MyReport";
 import CharacterReport from "./CharacterReport/CharacterReport";
+
 
 interface StationMember {
   userId: string;
@@ -42,14 +44,15 @@ const StationInside: React.FC = () => {
   const [showSlide, setShowSlide] = useState(false);
   const [selectedMember, setSelectedMember] = useState<StationMember | null>(
     null
-  );
+	);
+	const { userInfo } = useCharacterStore();
 
   const handleSettingClick = () => {
     setShowSlide(true);
   };
 
-  // 현재 로그인한 사용자의 ID (예시)
-  const currentUserId = "현재_사용자_ID";
+  
+  const currentUserId = userInfo.userId;
 
   // 멤버 클릭 핸들러 추가
   const handleMemberClick = (member: StationMember) => {
