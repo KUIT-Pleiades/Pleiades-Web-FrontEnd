@@ -1,9 +1,10 @@
 .container {
-	position: relative;
+	position: fixed;
 	border: none;
 	overflow: hidden;
 	width: 100vw;
 	height: 100vh;
+	z-index: 100;
 }
 
 .overlay {
@@ -13,7 +14,6 @@
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 100;
 }
 
 .slide {
@@ -24,7 +24,6 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	z-index: 100;
 }
 
 .headerContainer {
@@ -68,7 +67,7 @@
 
 	h2 {
 		margin: 0;
-		margin-top: 30px;
+		margin-top: 35px;
 		color: #FFF;
 		text-align: center;
 		font-family: Pretendard;
@@ -99,7 +98,16 @@
 		font-weight: 500;
 		line-height: normal;
 		letter-spacing: -0.22px;
-		padding-bottom: 32px;
+		padding-bottom: 20px;
+		display: flex;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			height: 12px;
+			padding-right: 4px;
+		}
 	}
 }
 
@@ -107,17 +115,17 @@
 	position: absolute;
 	top: min(40%, 250px);
 	width: 100%;
-	height: 70%;
-	flex: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 	background-color: #FFF;
-	z-index: 100;
+	overflow-y: hidden;
 }
 
 .settingButton {
 	margin: 0px 12px;
 	padding: 15px 0;
 	border-bottom: 1px solid #C0B9DB;
-	;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -137,6 +145,7 @@
 .memberSection {
 	margin: 0px 12px;
 	padding: 15px 0;
+	height: calc(100% - 50px); // settingButton 높이를 제외한 나머지 높이
 
 	.memberTitle {
 		color: var(--gray-22, #444);
@@ -151,13 +160,21 @@
 
 .addMemberButton {
 	width: 100%;
-	padding: 12px;
-	border: 1px dashed #ccc;
-	background: none;
-	border-radius: 8px;
-	color: #666;
-	margin-bottom: 20px;
+	padding: 5px 10px;
 	cursor: pointer;
+	color: #8B6193;
+	font-family: Pretendard;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	img {
+		width: 15px;
+	}
 
 	span {
 		margin-right: 5px;
@@ -165,17 +182,49 @@
 }
 
 .memberList {
+	height: calc(100% - 150px);
+	overflow-y: auto;
+	margin-bottom: 50px;
+
 	.memberItem {
 		display: flex;
 		align-items: center;
 		padding: 10px 0;
 
 		.avatar {
+			position: relative;
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
 			background-color: #f0f0f0;
 			margin-right: 10px;
+			img{
+				width: 40px;
+				height: 40px;
+			}
+
+			.onerIcon {
+				position: absolute;
+				right: -4px;
+				bottom: -1px;
+				width: 17px;
+				height: 17px;
+			}
+
+			.messageIcon {
+				position: absolute;
+				right: -4px;
+				bottom: 25px;
+				width: 17px;
+				height: 17px;
+			}
+
+			.plusIcon {
+				position: absolute;
+				width: 40px;
+				height: 40px;
+				left: 0px;
+			}
 		}
 
 		.memberInfo {
@@ -198,15 +247,31 @@
 			}
 		}
 	}
+
+	.signalBtn {
+		width: 30px;
+	}
 }
 
 .bottomButton {
-	width: 100%;
-	padding: 15px;
-	background-color: #f0f0f0;
+	width: calc(100% - 24px);
+	height: 40px;
+	margin: 12px;
 	border: none;
-	border-radius: 8px;
 	color: #666;
 	margin-top: auto;
+	border-radius: 12px;
+	background: #C0B9DB;
 	cursor: pointer;
+	z-index: 2;
+
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
 }

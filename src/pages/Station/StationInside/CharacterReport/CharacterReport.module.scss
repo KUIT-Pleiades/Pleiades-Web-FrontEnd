@@ -1,16 +1,67 @@
-// ReportModal.module.scss
-.modalOverlay {
+.container {
 	position: fixed;
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+}
+
+.overlay {
+	width: 100%;
+	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 1000;
+	flex-direction: column;
+	gap: 9px;
 }
+
+.title {
+	position: relative;
+	width: calc(100% - 28px);
+	max-width: 500px;
+	border-radius: 12px;
+	background: #FFF;
+	height: 49px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--gray-22, #444);
+	text-align: center;
+	font-family: "ElectricalSafety";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.32px;
+
+	.bar1 {
+		width: 9px;
+		height: 23px;
+		flex-shrink: 0;
+		border-radius: 5.5px;
+		background: var(--color-5-main, #C0B9DB);
+		position: absolute;
+		left: 10%;
+		bottom: -17px;
+
+	}
+
+	.bar2 {
+		width: 9px;
+		height: 23px;
+		flex-shrink: 0;
+		border-radius: 5.5px;
+		background: var(--color-5-main, #C0B9DB);
+		position: absolute;
+		right: 10%;
+		bottom: -17px;
+	}
+
+}
+
 
 .modal {
 	background: white;
@@ -64,88 +115,20 @@
 			}
 		}
 
-		.closeButton {
-			background: none;
-			border: none;
-			cursor: pointer;
-			padding: 1px 0px 1px 16px;
-			color: #666;
-			line-height: 1;
-
-			&:hover {
-				color: #333;
-			}
-		}
-	}
-
-	.modalBody {
-		padding: 10px 17px;
-		box-shadow: 0 -4px 4px -3px rgba(0, 0, 0, 0.2);
-		height: auto;
-		min-height: 50px;
-
-		.answer {
-			color: var(--gray-11, #17151C);
-			font-family: "ElectricalSafety";
-			font-size: 13px;
-			font-style: normal;
-			font-weight: 400;
-			line-height: normal;
-			word-break: keep-all;
-			white-space: pre-wrap;
-			height: auto;
-			min-height: 50px;
-			overflow: hidden;
-		}
 	}
 }
 
-.infoWrapper {
-	display: flex;
-	justify-content: space-between;
-	padding-bottom: 10px;
+.closeButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 1px 0px 1px 16px;
+	color: #666;
+	line-height: 1;
 
-	.modifedAt {
-		color: var(--Gray4, #858585);
-		font-family: Pretendard;
-		font-size: 11px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: -0.22px;
+	&:hover {
+		color: #333;
 	}
-}
-
-.btnGroup {
-	color: var(--Gray4, #858585);
-	font-family: Pretendard;
-	font-size: 11px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	letter-spacing: -0.22px;
-	display: flex;
-	gap: 2px;
-}
-
-.modifyBtn {
-	color: var(--Gray4, #858585);
-	font-family: Pretendard;
-	font-size: 11px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	letter-spacing: -0.22px;
-}
-
-.deleteBtn {
-	color: var(--gray-7, #E1E1E1);
-	font-family: Pretendard;
-	font-size: 11px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	letter-spacing: -0.22px;
 }
 
 .editWrapper {
@@ -166,6 +149,15 @@
 	line-height: normal;
 	border: none;
 	caret-color: #BEAADD;
+
+	&::placeholder {
+		color: var(--Gray4, #858585);
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+	}
 
 	&:focus {
 		outline: none;
@@ -226,9 +218,45 @@
 	letter-spacing: -0.233px;
 }
 
+
+.modalBody {
+	padding: 10px 17px;
+	box-shadow: 0 -4px 4px -3px rgba(0, 0, 0, 0.2);
+	height: auto;
+	min-height: 50px;
+
+	.infoWrapper {
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 10px;
+
+		.modifedAt {
+			color: var(--Gray4, #858585);
+			font-family: Pretendard;
+			font-size: 11px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			letter-spacing: -0.22px;
+		}
+	}
+
+	.answer {
+		color: var(--gray-11, #17151C);
+		font-family: "ElectricalSafety";
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		word-break: keep-all;
+		white-space: pre-wrap;
+		height: auto;
+		min-height: 50px;
+		overflow: hidden;
+	}
+}
+
 .error {
 	color: #ff0000;
 	font-size: 14px;
-	margin-top: 8px;
-	padding: 0 16px;
 }

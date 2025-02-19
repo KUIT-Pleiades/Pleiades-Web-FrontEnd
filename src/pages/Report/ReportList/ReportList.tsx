@@ -36,14 +36,14 @@ const ReportList = ({
       <div className={s.listNum}>
         <span>
           {isSearchResult
-            ? `검색 결과 (${reports.length})`
-            : `전체 ${reports.length}`}
+            ? `검색 결과 (${reports?.length || 0})`
+            : `전체 ${reports?.length || 0}`}
         </span>
       </div>
       <div className={s.scrollableList}>
-        {reports.map((report) => (
+        {reports?.map((report) => (
           <div
-            key={report.reportId}
+            key={report?.reportId}
             className={s.reportItem}
             onClick={() => handleReportClick(report)}
           >
@@ -56,21 +56,22 @@ const ReportList = ({
                 />
                 <div className={s.questionContent}>
                   <span className={s.question}>
-                    {report.question.length > 25
+                    {report?.question?.length > 25
                       ? `${report.question.slice(0, 25)}...`
-                      : report.question}
+                      : report?.question}
                   </span>
                   <span className={s.date}>
-                    {new Date(report.createdAt).toLocaleDateString()}
+                    {report?.createdAt &&
+                      new Date(report.createdAt).toLocaleDateString()}
                   </span>
                 </div>
               </div>
             </div>
             <div className={s.answerWrapper}>
               <span className={s.answer}>
-                {report.answer.length > 20
+                {report?.answer?.length > 20
                   ? `${report.answer.slice(0, 20)}...`
-                  : report.answer}
+                  : report?.answer}
               </span>
             </div>
           </div>

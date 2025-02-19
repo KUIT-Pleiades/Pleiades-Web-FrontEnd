@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchRequest } from "../../../functions/fetchRequest";
+import { useCharacterStore } from "../../../store/useCharacterStore";
+import { useNavigate } from "react-router-dom";
 import s from "./StationInside.module.scss";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
@@ -8,6 +10,9 @@ import settingBtn from "../../../assets/btnImg/settingBtn.png";
 import messageBtn from "../../../assets/btnImg/messageBtn.svg";
 import character_01 from "../../../assets/Character/character1.svg";
 import StationSlide from "../StationSlide/StationSlide";
+import StationReport from "./StationReport/StationReport";
+import MyReport from "./CharacterReport/MyReport";
+import CharacterReport from "./CharacterReport/CharacterReport";
 
 
 interface StationMember {
@@ -18,6 +23,7 @@ interface StationMember {
   positionX: number;
   positionY: number;
   todayReport: boolean;
+  isFriend: boolean;
 }
 
 interface StationResponse {
@@ -33,20 +39,61 @@ interface StationResponse {
 }
 
 const StationInside: React.FC = () => {
+	const navigate = useNavigate();
   const [stationData, setStationData] = useState<StationResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<Error | null>(null);
-	const [showSlide, setShowSlide] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [showSlide, setShowSlide] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<StationMember | null>(
+    null
+  );
+  const { userInfo } = useCharacterStore();
 
-	const handleSettingClick = () => {
+  const handleSettingClick = () => {
     setShowSlide(true);
   };
 
+  // 스테이션 데이터를 새로고침하는 함수
+	const refreshStationData = async () => {
+		if (!stationId) return;
+    try {
+      const response = await fetchRequest<StationResponse>(
+        `/stations/${stationId}`,
+        "GET",
+        null
+      );
+      if (response) {
+        setStationData(response);
+      }
+    } catch (err) {
+      setError(err as Error);
+    }
+  };
 
-  const stationId = "ABCDEF"; // 실제 stationId 필요
+  const currentUserId = userInfo.userId;
+
+  // 멤버 클릭 핸들러 추가
+  const handleMemberClick = (member: StationMember) => {
+    setSelectedMember(member);
+  };
+
+	const stationId = sessionStorage.getItem("stationId") as string;;
+	const handleLeaveStation = () => {
+		sessionStorage.removeItem('stationId');
+		navigate('/station');
+	}
+
+	useEffect(() => {
+    if (!stationId) {
+      navigate("/station");
+      return;
+    }
+  }, [stationId, navigate]);
 
   useEffect(() => {
-    const getStationData = async () => {
+		const getStationData = async () => {
+			if (!stationId) return;
+			
       try {
         setIsLoading(true);
         const response = await fetchRequest<StationResponse>(
@@ -78,9 +125,15 @@ const StationInside: React.FC = () => {
         backgroundImage: `url(${stationBackgroundImg_01})`,
       }}
     >
+      {!stationData.reportWritten && (
+        <StationReport
+          stationId={stationId}
+          onReportSubmitted={refreshStationData}
+        />
+      )}
       <div className={s.headerContainer}>
         <div className={s.backBtn}>
-          <img src={backBtn} alt="뒤로가기" />
+          <img src={backBtn} alt="뒤로가기" onClick={handleLeaveStation}/>
         </div>
         <div className={s.header}>
           <h2>[ {stationData.name} ]</h2>
@@ -106,30 +159,40 @@ const StationInside: React.FC = () => {
                 position: "fixed",
                 left: `${member.positionX}dvw`,
                 top: `${member.positionY}dvh`,
+                width: "30dvw",
               }}
             >
               <img
                 src={character_01}
-                style={{
-                  height: "30dvh",
-                }}
                 alt=""
+                style={{
+                  position: "fixed",
+                  left: `${member.positionX}dvw`,
+                  top: `${member.positionY}dvh`,
+                  width: "30dvw",
+                }}
               />
-              {!member.todayReport && (
+              {member.todayReport && (
                 <div
                   className={s.messageIcon}
                   style={{
                     position: "fixed",
-                    left: `${member.positionX + 25}dvw`,
+                    left: `${member.positionX}dvw`,
                     top: `${member.positionY}dvh`,
+                    zIndex: 100,
                   }}
                 >
                   <img
                     src={messageBtn}
                     alt="리포트"
                     style={{
-                      height: "5dvh",
+                      position: "fixed",
+                      left: `${member.positionX + 20}dvw`,
+                      top: `${member.positionY + 2}dvh`,
+                      zIndex: 100,
+                      height: "7dvw",
                     }}
+                    onClick={() => handleMemberClick(member)}
                   />
                 </div>
               )}
@@ -143,6 +206,21 @@ const StationInside: React.FC = () => {
           onClose={() => setShowSlide(false)}
         />
       )}
+      {selectedMember &&
+        (selectedMember.userId === currentUserId ? (
+          <MyReport
+            onClose={() => setSelectedMember(null)}
+            stationId={stationId}
+            userId={selectedMember.userId}
+          />
+        ) : (
+          <CharacterReport
+            memberName={selectedMember.userName}
+            onClose={() => setSelectedMember(null)}
+            stationId={stationId}
+            userId={selectedMember.userId}
+          />
+        ))}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import ReportList from "./ReportList/ReportList";
 import { useState, useEffect } from "react";
 import SearchReport from "./SearchReport/SearchReport";
 import { fetchRequest } from "../../functions/fetchRequest";
+import { useNavigate } from "react-router-dom";
 
 interface Report {
   reportId: number;
@@ -34,7 +35,8 @@ const Report = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredReports, setFilteredReports] = useState<Report[]>([]);
   const [isSearchResult, setIsSearchResult] = useState(false);
-  const [showSearchHistory, setShowSearchHistory] = useState(false);
+	const [showSearchHistory, setShowSearchHistory] = useState(false);
+	const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -221,7 +223,14 @@ const Report = () => {
     <div className={s.container}>
       <div className={s.headerWrapper}>
         <div className={s.header}>
-          <img src={backBtn} alt="뒤로가기" className={s.backBtn} />
+          <img
+            src={backBtn}
+            alt="뒤로가기"
+            className={s.backBtn}
+            onClick={() => {
+              navigate("/home");
+            }}
+          />
           <div className={s.headerTitle}>리포트</div>
         </div>
         <div className={s.userRecord}>
