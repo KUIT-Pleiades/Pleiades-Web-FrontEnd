@@ -170,6 +170,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                 <DeleteFriendModal
                     username={user.userName}
                     userId={user.userId}
+                    profile={user.profile}
                     onClose={() => {
                         setIsDeleteFriendModalOpen(false);
                     }}
