@@ -15,6 +15,7 @@ interface Report {
   createdAt: string;
   modifiedAt: string;
   answer: string;
+  isTodayReport: boolean;
 }
 
 interface SearchHistoryItem {
@@ -228,7 +229,7 @@ const Report = () => {
             alt="뒤로가기"
             className={s.backBtn}
             onClick={() => {
-              navigate("/home");
+              navigate(-1);
             }}
           />
           <div className={s.headerTitle}>리포트</div>
