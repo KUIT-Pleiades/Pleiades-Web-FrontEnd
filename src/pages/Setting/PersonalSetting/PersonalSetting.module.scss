@@ -1,0 +1,134 @@
+.settingContainer {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
+
+	.title {
+		position: absolute;
+		width: 100%;
+		height: 80px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--gray-11, #17151C);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.32px;
+		background: #FFF;
+	}
+
+	.menuList {
+		position: absolute;
+		top: 80px;
+		width: 100%;
+		padding: 0 14px;
+
+		.menuItem {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 59px;
+			width: calc(100% - 28px);
+			border-bottom: 1px solid #C0B9DB;
+			cursor: pointer;
+			color: var(--gray-22, #444);
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.26px;
+
+			img {
+				width: 7px;
+				height: 14px;
+			}
+
+			.accountEmail {
+				color: var(--color-8-id, #8B6193);
+				font-family: Pretendard;
+				font-size: 13px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: normal;
+				letter-spacing: -0.26px;
+				margin-right: 13px;
+				margin-left: auto;
+			}
+		}
+	}
+
+	.serviceInfo {
+		height: 58px;
+		color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		letter-spacing: -0.26px;
+		display: flex;
+		align-items: center;
+	}
+
+	.infoItem {
+		color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		letter-spacing: -0.32px;
+		height: 36px;
+		display: flex;
+		justify-content: space-between;
+		width: calc(100% - 28px);
+
+		img {
+
+			width: 7px;
+			height: 14px;
+		}
+	}
+
+
+
+	.bottomButtons {
+		display: flex;
+		justify-content: center;
+		gap: 9px;
+		position: fixed;
+		bottom: 10dvh;
+		left: 0;
+		right: 0;
+		padding: 0 20px;
+		color: var(--Gray4, #858585);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		letter-spacing: -0.26px;
+
+		button {
+			border: none;
+			background: none;
+			cursor: pointer;
+			color: var(--Gray4, #858585);
+			text-align: center;
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.26px;
+		}
+	}
+}
