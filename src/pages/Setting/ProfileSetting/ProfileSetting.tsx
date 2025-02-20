@@ -11,6 +11,10 @@ interface IdCheckResponse {
   message: string;
 }
 
+interface ProfileResponse {
+  message: string;
+}
+
 const ProfileSetting: React.FC = () => {
   const navigate = useNavigate();
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -20,7 +24,9 @@ const ProfileSetting: React.FC = () => {
   const [idExists, setIdExists] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>("중복확인");
   const [idCheckMessage, setIdCheckMessage] = useState<string>("");
-  const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
+	const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState<string>("");
+		const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
 
   type DatePiece = Date | null;
   type SelectedDate = DatePiece | [DatePiece, DatePiece];
@@ -107,6 +113,65 @@ const ProfileSetting: React.FC = () => {
     [updateUserInfo]
   );
 
+
+  const showErrorPopup = () => {
+    setIsPokePopupVisible(true);
+    setTimeout(() => {
+      setIsPokePopupVisible(false);
+    }, 1500);
+	};
+	
+	const handleConfirm = async () => {
+    if (!userInfo.userName?.trim()) {
+      setErrorMessage("이름을 입력해주세요.");
+      showErrorPopup();
+      return;
+    }
+    if (!userInfo.userId) {
+      setErrorMessage("ID를 입력해주세요.");
+      showErrorPopup();
+      return;
+    }
+    if (!idExists) {
+      setErrorMessage("ID 중복확인이 필요합니다.");
+      showErrorPopup();
+      return;
+    }
+    if (!userInfo.birthDate) {
+      setErrorMessage("생년월일을 선택해주세요.");
+      showErrorPopup();
+      return;
+    }
+
+    try {
+      const requestBody = {
+        userId: userInfo.userId,
+        userName: userInfo.userName,
+        birthDate: userInfo.birthDate,
+      };
+
+      const response = await fetchRequest<ProfileResponse>(
+        "/home/settings/profile",
+        "POST",
+        requestBody
+      );
+
+      if (response && response.message === "profile setting success") {
+        // 성공 시 이전 페이지로 이동
+        navigate(-1);
+      } else if (response === null) {
+        // 401(토큰 만료) 또는 403(잘못된 정보) 응답의 경우
+        // fetchRequest에서 이미 처리되므로 여기서는 일반적인 에러 메시지 표시
+        setErrorMessage("프로필 수정에 실패했습니다. 다시 시도해주세요.");
+        showErrorPopup();
+      }
+    } catch (error) {
+      console.error("프로필 수정 오류:", error);
+      setErrorMessage("프로필 수정 중 오류가 발생했습니다.");
+      showErrorPopup();
+    }
+  };
+
   return (
     <div>
       <div className={s.profileContainer}>
@@ -119,7 +184,7 @@ const ProfileSetting: React.FC = () => {
             }}
           />
           <div className={s.title}>프로필</div>
-          <button>확인</button>
+          <button onClick={handleConfirm}>확인</button>
         </div>
         <div className={s.container}>
           <div className={s.profileImg}>
@@ -178,6 +243,7 @@ const ProfileSetting: React.FC = () => {
           </div>
         </div>
       </div>
+      {isPokePopupVisible && <div className={s.pokePopup}>{errorMessage}</div>}
     </div>
   );
 };
