@@ -23,13 +23,20 @@
     padding-bottom: 1.25rem;
     background-color: #FFF;
     margin-bottom: 1.125rem;
+    position: relative;
+}
+.backButton{
+    position: absolute;
+    left: 0.9rem;
+    bottom: 1.1rem;
+    cursor: pointer;
 }
 .title{
     padding: 0;
     margin: 0;
 }
 .titleName, .titleText{
-    color: var(--gray-11, #17151C);
+    color: #17151C;
     text-align: center;
     font-family: Pretendard;
     font-size: 1rem;
