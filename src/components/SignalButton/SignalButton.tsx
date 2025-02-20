@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import s from './SignalButton.module.scss';
 
 import signal from '../../assets/Signal/signalIcon.png';
-import onSignal from '../../assets/Signal/signalIcon.png';
 
 interface SignalButtonProps {
     onClickSignal: () => void;
@@ -21,7 +20,7 @@ const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
         <>
             {isSignalPopupVisible ? (
             <button className={s.onSignalButton}>
-                <img src={onSignal} alt="onSignal" className={s.signalImg} />
+                <img src={signal} alt="onSignal" className={s.signalImg} />
             </button>
             ) : (
             <button

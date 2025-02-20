@@ -8,8 +8,10 @@
 
 .officialMarketContainer {
     width: 100%;
-    height: 35dvh;
+    height: 33dvh;
     background-color: #F8F8FA;
+    display: flex;
+    flex-direction: column;
 }
 .officialMarketTitle {
     color: #444;
@@ -30,7 +32,10 @@
 .secondhandMarketContainer {
     width: 100%;
     flex: 1;
+    margin-bottom: 9dvh;
     background-color: #FFF;
+    display: flex;
+    flex-direction: column;
 }
 .secondhandMarketTitle {
     color: #444;
@@ -49,8 +54,9 @@
 }
 
 .announcement {
-    width: 100%;
-    margin-top: 8dvh;
+    //width: 100%;
+    //margin-top: 8dvh;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,5 +86,5 @@
 }
 .logo {
     width: 11rem;
-    margin-top: 3.46rem;
+    margin-top: 5dvh;
 }
