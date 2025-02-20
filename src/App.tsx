@@ -19,6 +19,7 @@ import Report from "./pages/Report/Report";
 import StationInside from "./pages/Station/StationInside/StationInside";
 import PersonalSetting from "./pages/Setting/PersonalSetting/PersonalSetting";
 import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
+import MarketMain from "./pages/Market/MarketMain/MarketMain";
 
 export default function App() {
   return (
@@ -49,7 +50,9 @@ export default function App() {
             ></Route>
           </Route>
           <Route path="/report" element={<Report />}></Route>
-          <Route path="market" element={<Market />}></Route>
+          <Route path="market" element={<Market />}>
+            <Route index element={<MarketMain />} />
+          </Route>
           <Route path="setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
             <Route path="profile" element={<ProfileSetting />} />
