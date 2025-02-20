@@ -34,7 +34,6 @@ const itemMap: { [key: string]: string } = {
 
 const ItemTab = ({ increaseLoadCount }: imgTabProps) => {
   const [itemTab, setItemTab] = useState("전체");
-  const [count, setCount] = useState(0);
   const { userInfo, updateUserInfo } = useCharacterStore();
 
   // 미리 분류된 이미지 캐싱
@@ -47,28 +46,29 @@ const ItemTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredItemImages.length;
-    console.log(count);
+    let loadedCount = 0;
 
     filteredItemImages.forEach(({ src }) => {
       const img = new Image();
       img.src = src;
 
       img.onload = () => {
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
 
       img.onerror = () => {
         console.log(`${src} load failed`);
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
+      console.log(loadedCount);
     });
-  }, [count, filteredItemImages, increaseLoadCount]);
+  }, [filteredItemImages, increaseLoadCount]);
 
   // 아이템 착용 여부 확인 함수
   const isItemEquipped = useCallback(
