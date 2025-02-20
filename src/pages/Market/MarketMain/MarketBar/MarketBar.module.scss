@@ -1,0 +1,36 @@
+.marketBarContainer {
+    width: 100%;
+    height: 9%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+  
+.assets {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    margin-right: 0.88rem;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 1rem;
+}
+
+.balance {
+    color: #000;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.02rem;
+    
+    width: 2rem;
+    margin-left: 0.3rem;
+}
