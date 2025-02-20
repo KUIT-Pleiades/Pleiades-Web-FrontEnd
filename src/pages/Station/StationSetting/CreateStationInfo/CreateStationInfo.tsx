@@ -45,7 +45,7 @@ const CreateStationInfo: React.FC<CreateStationInfoProps> = ({
     <div className={s.container}>
       {/* 헤더 부분 */}
       <div className={s.header}>
-        <span className={s.headerTitle}>정거장 생성</span>
+        <span className={s.headerTitle}>정거장 설정</span>
         <div className={s.headerContents}>
           <button className={s.headerCancelButton} onClick={handleCancel}>
             <img src={backBtn} alt="" />

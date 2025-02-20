@@ -52,7 +52,14 @@ const StationSlide: React.FC<StationSlideProps> = ({
 	const navigate = useNavigate();
 
 	const handleSettingClick = () => {
-    navigate("/station/stationsetting");
+    navigate("/station/stationsetting", {
+      state: {
+        stationId: stationData.stationId,
+        name: stationData.name,
+        intro: stationData.intro,
+        reportNoticeTime: stationData.reportNoticeTime,
+      },
+    });
   };
 
   const [isCopied, setIsCopied] = useState(false);

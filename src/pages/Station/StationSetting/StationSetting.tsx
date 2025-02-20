@@ -1,38 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./CreateStation.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fetchRequest } from "../../../functions/fetchRequest";
 
 // 하위 스텝 컴포넌트
 import CreateStationInfo from "./CreateStationInfo/CreateStationInfo";
 
 interface StationResquest {
-	name?: string,
-	intro?: string,
-	reportNoticeTime?: string,
+  name?: string;
+  intro?: string;
+  reportNoticeTime?: string;
 }
 
+interface LocationState {
+  stationId: string;
+  name: string;
+  intro: string;
+  reportNoticeTime: string;
+}
 
-const CreateStation: React.FC = () => {
+const StationSetting: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const stationData = location.state as LocationState;
 
   // 정거장 정보 (이름, 소개, 시간) 상태
-  const [stationName, setStationName] = useState("");
-  const [stationIntro, setStationIntro] = useState("");
+  const [stationName, setStationName] = useState(stationData?.name || "");
+  const [stationIntro, setStationIntro] = useState(stationData?.intro || "");
   const [ampm, setAmpm] = useState<"오전" | "오후">("오전");
   const [hour, setHour] = useState("9");
   const [minute, setMinute] = useState("00");
 
+  // 시간 데이터 초기화
+  useEffect(() => {
+    if (stationData?.reportNoticeTime) {
+      const time = new Date(`2000-01-01 ${stationData.reportNoticeTime}`);
+      const hours = time.getHours();
 
-  // “입력값 미완성” 팝업 표시 상태
+      setAmpm(hours >= 12 ? "오후" : "오전");
+      setHour(String(hours % 12 || 12));
+      setMinute(String(time.getMinutes()).padStart(2, "0"));
+    }
+  }, [stationData]);
+
+  // "입력값 미완성" 팝업 표시 상태
   const [showPopup, setShowPopup] = useState(false);
 
   // 취소 버튼 클릭 시 동작
   const handleCancel = () => {
     navigate(-1);
   };
-
-
 
   const handleInfoNext = () => {
     // 입력값 검증
@@ -59,16 +76,10 @@ const CreateStation: React.FC = () => {
     const finalMinute = minute.padStart(2, "0");
     const reportNoticeTime = `${finalHour}:${finalMinute}:00`;
 
-    const stationId = sessionStorage.getItem("stationId");
-    if (!stationId) {
-      console.error("stationId not found in sessionStorage");
-      return;
-    }
-
     try {
       // 서버에 최종 데이터 전송
       const response = await fetchRequest<StationResquest>(
-        `/stations/${stationId}/settings`,
+        `/stations/${stationData.stationId}/settings`,
         "PATCH",
         {
           name: stationName,
@@ -96,23 +107,23 @@ const CreateStation: React.FC = () => {
 
   return (
     <div className={s.container}>
-        <CreateStationInfo
-          stationName={stationName}
-          setStationName={setStationName}
-          stationIntro={stationIntro}
-          setStationIntro={setStationIntro}
-          ampm={ampm}
-          setAmpm={setAmpm}
-          hour={hour}
-          setHour={setHour}
-          minute={minute}
-          setMinute={setMinute}
-          showPopup={showPopup}
-          handleCancel={handleCancel}
-          handleNext={handleInfoNext}
-        />
+      <CreateStationInfo
+        stationName={stationName}
+        setStationName={setStationName}
+        stationIntro={stationIntro}
+        setStationIntro={setStationIntro}
+        ampm={ampm}
+        setAmpm={setAmpm}
+        hour={hour}
+        setHour={setHour}
+        minute={minute}
+        setMinute={setMinute}
+        showPopup={showPopup}
+        handleCancel={handleCancel}
+        handleNext={handleInfoNext}
+      />
     </div>
   );
 };
 
-export default CreateStation;
+export default StationSetting;
