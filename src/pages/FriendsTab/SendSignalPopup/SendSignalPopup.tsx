@@ -19,6 +19,8 @@ const SendSignalPopup: React.FC<SendSignalPopupProps> = ({
     imageIndex
 }) => {
     const images = [outgoing1, outgoing2, outgoing3];
+    const sentences1 = ["🚀 신호 발사 완료!", "🔭신호를 보냈어요!", "📨메시지 전송중..."];
+    const sentences2 = ["곧 포착할 거에요!", "발견할 때까지 조금만 기다려요!", "곧 받으실거에요!"];
 
     return (
         <div className={s.modalOverlay}>
@@ -30,9 +32,9 @@ const SendSignalPopup: React.FC<SendSignalPopupProps> = ({
                     <img src={close} alt="close" />
                 </button>
                 <div className={s.textArea}>
-                    <span className={s.textTitle}>🚀 신호 발사 완료!</span>
+                    <span className={s.textTitle}>{sentences1[imageIndex]}</span>
                     <span className={s.textFirst}>{username}님이</span>
-                    <span className={s.textSecond}>곧 포착할 거에요!</span>
+                    <span className={s.textSecond}>{sentences2[imageIndex]}</span>
                 </div>
                 <div className={s.imageContainer}>
                     <img
