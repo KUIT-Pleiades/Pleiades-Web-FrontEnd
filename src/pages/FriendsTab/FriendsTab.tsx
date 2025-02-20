@@ -41,7 +41,7 @@ const FriendsTab: React.FC = () => {
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
     const [signalTo, setSignalTo] = useState<string>("");
-    const [signalImageIndex, setSignalImageIndex] = useState<number>(-1);
+    const [signalImageIndex, setSignalImageIndex] = useState<number>(0);
     const [isSendSignalPopupVisible, setIsSendSignalPopupVisible] = useState<boolean>(false);
     const handleOpenSendSignalPopup = (friendName: string) => {
         setSignalTo(friendName);
@@ -103,25 +103,38 @@ const FriendsTab: React.FC = () => {
     }
     const handleSendSignal = async (friendId: string, friendName: string) => {
         const randomIndex = Math.floor(Math.random() * 3);
-        setSignalImageIndex(randomIndex);
-        const response = await fetchRequest<{ message: string }>(
-            '/friends/signals',
-            "POST",
-            {
+        
+        // ✅ 콜백을 사용하여 최신 값 보장
+        setSignalImageIndex(() => {
+            console.log("🎲 랜덤 이미지 인덱스 선택:", randomIndex);
+            sendSignalRequest(friendId, friendName, randomIndex);
+            return randomIndex;
+        });
+    };
+    
+    const sendSignalRequest = async (friendId: string, friendName: string, imageIndex: number) => {
+        console.log("📤 시그널 보냄. to:", friendId, " | 이미지 인덱스:", imageIndex);
+        
+        try {
+            const response = await fetchRequest<{ message: string }>('/friends/signals', "POST", {
                 receiverId: friendId,
-                imageIndex: signalImageIndex
+                imageIndex: imageIndex,
+            });
+    
+            if (response) {
+                console.log("📩 시그널 보내기 응답:", response.message);
+                if (response.message === "Signal sent successfully" || response.message === "You already sent a signal") {
+                    handleOpenSendSignalPopup(friendName);
+                } else if (response.message === "Invalid or expired token") {
+                    navigate("/login");
+                }
+            } else {
+                console.error("❌ 시그널 보내기 실패");
             }
-        );
-        if (response) {
-            console.log('시그널 보내기 응답: ',response.message);
-            if(response.message === "Signal sent successfully" || response.message === "You already sent a signal") {
-                handleOpenSendSignalPopup(friendName);
-            }else if(response.message === "Invalid or expired token") {
-                navigate("/login");
-            }
-            
-        } else console.error("시그널 보내기 실패");
-    }
+        } catch (error) {
+            console.error("❌ 시그널 전송 중 오류:", error);
+        }
+    };
     const handleReceiveSignal = async () => {
         try {
             const response = await fetchRequest<{ signals: SignalFrom[] }>('/friends/signals', 'GET', null);
@@ -165,16 +178,6 @@ const FriendsTab: React.FC = () => {
             console.error("❌ 시그널 삭제 실패:", error);
         }
     };
-    // const handleDeleteSignal = async (userId: string) => { // 시그널 삭제하는 코드
-    //     const response = await fetchRequest<{ message: string }>(
-    //         `/friends/signals/${userId}`,
-    //         "DELETE",
-    //         null
-    //     );
-    //     if (response) {
-    //         console.log(response.message);
-    //     } else console.error("시그널 삭제 실패");
-    // }
 
     const getFriendsList = async () => {
         try {
@@ -199,12 +202,6 @@ const FriendsTab: React.FC = () => {
             setHasNoFriend(false); // 친구 있음
         }
     }, [friendsData]);
-
-    // if (!friendsData) {
-    //     setLoading(true);
-    // } else {
-    //     setLoading(false);
-    // }
 
     return (
         <div className={s.container}>
@@ -260,7 +257,7 @@ const FriendsTab: React.FC = () => {
                 <ReceiveSignalPopup
                     username={signalsQueue[currentSignalIndex].userName}
                     handleCloseReceiveSignalPopup={handleDeleteSignal} // 시그널 삭제 후 다음 시그널 표시
-                    imageIndex={signalsQueue[currentSignalIndex].imageIndex}
+                    imageIndex={signalsQueue[currentSignalIndex].imageIndex+1}
                 />
             )}
         </div>

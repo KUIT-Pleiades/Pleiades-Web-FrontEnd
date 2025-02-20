@@ -24,6 +24,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  opacity: 1;
+  transition: opacity 300ms ease-out;
+}
+.fadeOut {
+  opacity: 0;
 }
 
 .modalClose {
