@@ -216,7 +216,8 @@ const StationInside: React.FC = () => {
             memberName={selectedMember.userName}
             onClose={() => setSelectedMember(null)}
             stationId={stationId}
-            userId={selectedMember.userId}
+						userId={selectedMember.userId}
+						profile={selectedMember.profile}
           />
         ))}
     </div>

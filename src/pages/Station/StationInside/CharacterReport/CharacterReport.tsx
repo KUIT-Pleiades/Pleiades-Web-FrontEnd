@@ -10,7 +10,8 @@ interface ReportProps {
   onClose: () => void;
   memberName?: string;
   stationId: string;
-  userId: string;
+	userId: string;
+	profile: string;
 }
 
 interface ReportResponse {
@@ -29,7 +30,8 @@ const CharacterReport: React.FC<ReportProps> = ({
   onClose,
   memberName,
   stationId,
-  userId,
+	userId,
+	profile
 }) => {
   const [reportData, setReportData] = useState<ReportResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,8 +69,13 @@ const CharacterReport: React.FC<ReportProps> = ({
     <div className={s.container}>
       <div className={s.overlay}>
         <div className={s.title}>
-          <div className={s.bar1}></div>
-          {memberName}님의 리포트
+					<div className={s.bar1}></div>
+					<img src={profile} alt="" />
+          <div className={s.reportOner}>{memberName}님의 리포트</div>
+          <div className={s.handleContainer}>
+            <div className={s.reportUserId}>(@{userId})</div>
+            <button className={s.visitStar}>별 방문하기</button>
+          </div>
           <div className={s.bar2}></div>
         </div>
         <div className={s.modal}>
