@@ -4,7 +4,7 @@ import { kakaoLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
 import LogInPending from "./LogInPending";
 import { fetchRequest } from "../../functions/fetchRequest";
-import { Message, User } from "../../interfaces/Interfaces";
+import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { isMessage } from "../../functions/isMessage";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
@@ -36,7 +36,7 @@ export default function KakaoLogin() {
   useEffect(() => {
     if (authorization) {
       const getUser = async () => {
-        const userData = await fetchRequest<User | Message>(
+        const userData = await fetchRequest<UserInfo | Message>(
           "/home",
           "GET",
           null
