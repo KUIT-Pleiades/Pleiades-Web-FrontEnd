@@ -32,7 +32,6 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   };
 
   const complete = async () => {
-    setLoadingState(false);
     const { profile, character, ...imageRequestData } = userInfo;
     console.log(`${profile}  ${character}`);
 
@@ -73,12 +72,16 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
     if (signupResponse === null) {
       console.log("회원가입 실패");
+      setLoadingState(false);
+      navigate("/loginfail");
     } else if (signupResponse.message === "duplicate user") {
       console.log("회원가입 실패:", signupResponse.message);
+      setLoadingState(false);
       navigate("/login");
     } else {
       console.log("회원가입 성공:", signupResponse.message);
       updateUserInfo(signupData);
+      setLoadingState(false);
       navigate("/home");
     }
   };
