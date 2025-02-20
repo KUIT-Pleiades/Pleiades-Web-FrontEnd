@@ -1,19 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchRequest } from "../../../functions/fetchRequest";
 import s from "./PersonalSetting.module.scss";
 import goBtn from "../../../assets/btnImg/goBtn.png";
 
-
+interface UserData {
+  userId: string;
+  userName: string;
+  birthDate: string;
+  email: string;
+  profile: string;
+}
 
 const PersonalSetting: React.FC = () => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState<UserData | null>(null);
 
-	const navigate = useNavigate();
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await fetchRequest<UserData>(
+          "/home/settings/profile",
+          "GET",
+          null
+        );
+
+        if (response) {
+          setUserData(response);
+        }
+      } catch (error) {
+        console.error("사용자 데이터 가져오기 실패:", error);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const handleProfileClick = () => {
     navigate("/setting/profile");
   };
 
-	
   return (
     <div className={s.settingContainer}>
       <div className={s.title}>설정</div>
@@ -26,7 +52,7 @@ const PersonalSetting: React.FC = () => {
 
         <div className={s.menuItem}>
           <span>로그인 계정</span>
-          <span className={s.accountEmail}>play123@naver.com</span>
+					<span className={s.accountEmail}>{userData?.email}</span>
           <img src={goBtn} alt="" />
         </div>
 
@@ -46,8 +72,8 @@ const PersonalSetting: React.FC = () => {
       </div>
 
       <div className={s.bottomButtons}>
-				<button className={s.logoutBtn}>로그아웃</button>
-				<span>|</span>
+        <button className={s.logoutBtn}>로그아웃</button>
+        <span>|</span>
         <button className={s.withdrawBtn}>탈퇴하기</button>
       </div>
     </div>
