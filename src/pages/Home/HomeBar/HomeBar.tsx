@@ -21,7 +21,7 @@ export default function HomeBar({ coinBalance, stoneBalance }: HomeBarProps) {
           <p className={s.balance}>{coinBalance}</p>
         </div>
         <div className={s.item}>
-          <img src={stoneImg} alt="coin" />
+          <img className={s.icon} src={stoneImg} alt="stone" />
           <p className={s.balance}>{stoneBalance}</p>
         </div>
       </div>

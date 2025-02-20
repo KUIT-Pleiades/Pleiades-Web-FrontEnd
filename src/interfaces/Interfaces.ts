@@ -50,6 +50,7 @@ export interface User {
   birthDate: string;
   starBackground: string;
   character: string;
+  profile: string;
 }
 
 export interface UserInfo {
