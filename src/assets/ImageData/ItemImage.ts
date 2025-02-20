@@ -1,17 +1,17 @@
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const acc1_01 = `${IMG_BASE_URL}acc1_01.png`;
+const acc1_02 = `${IMG_BASE_URL}acc1_02.png`;
+const acc2_01 = `${IMG_BASE_URL}acc2_01.png`;
+const acc3_01 = `${IMG_BASE_URL}acc3_01.png`;
+const acc4_01 = `${IMG_BASE_URL}acc4_01.png`;
+const acc5_01 = `${IMG_BASE_URL}acc5_01.png`;
+
 const fas1_01 = `${IMG_BASE_URL}fas1_01.png`;
 const fas1_02 = `${IMG_BASE_URL}fas1_02.png`;
 const fas1_03 = `${IMG_BASE_URL}fas1_03.png`;
-//const acc1_03 = `${IMG_BASE_URL}acc1_03.png`;
-const acc2_01 = `${IMG_BASE_URL}acc2_01.png`;
-const acc3_01 = `${IMG_BASE_URL}acc3_01.png`;
 const fas4_01 = `${IMG_BASE_URL}fas4_01.png`;
-const acc4_01 = `${IMG_BASE_URL}acc4_01.png`;
-const acc5_01 = `${IMG_BASE_URL}acc5_01.png`;
-//const fas7_01 = `${IMG_BASE_URL}fas7_01.png`;
-
+const fas6_01 = `${IMG_BASE_URL}fas6_01.png`;
 
 // ** 세부카테고리 **
 // acc 악세서리: 작게 포인트 주는 아이템
@@ -44,12 +44,12 @@ const images = {
   fas1_02,
   fas1_03,
   acc2_01,
-  //acc1_03,
+  acc1_02,
   acc3_01,
   fas4_01,
   acc4_01,
   acc5_01,
-  //fas7_01,
+  fas6_01,
 };
 
 export const ItemImages: Item[] = [

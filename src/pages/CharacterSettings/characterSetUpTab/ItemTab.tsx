@@ -1,7 +1,8 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { ItemImages, Item } from "../../../assets/ImageData/ItemImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./characterSetUptab.module.scss";
+import { imgTabProps } from "./FaceTab";
 
 // 스타일 객체 분리
 const imageStyles: { [key: string]: React.CSSProperties } = {
@@ -11,11 +12,12 @@ const imageStyles: { [key: string]: React.CSSProperties } = {
   acc2_01: { transform: "scale(1.5)", paddingTop: "15%" },
   fas1_03: { transform: "scale(1.5)", paddingTop: "22%" },
   acc1_03: { transform: "scale(1.8)", paddingTop: "30%" },
+  acc1_02: { transform: "scale(1.8)", paddingTop: "30%" },
   acc3_01: { transform: "scale(2)", paddingTop: "10%" },
   fas4_01: { transform: "scale(2)", paddingBottom: "40%" },
   acc4_01: { transform: "scale(4)", paddingBottom: "15%" },
   acc5_01: { transform: "scale(5)", paddingBottom: "39%", paddingLeft: "21%" },
-  fas7_01: { transform: "scale(2)", paddingBottom: "40%", paddingLeft: "20%" },
+  fas6_01: { transform: "scale(2)", paddingBottom: "40%", paddingLeft: "20%" },
 };
 
 // 아이템 매핑 객체 분리
@@ -30,8 +32,9 @@ const itemMap: { [key: string]: string } = {
   "8": "rightHand",
 };
 
-const ItemTab = () => {
+const ItemTab = ({ increaseLoadCount }: imgTabProps) => {
   const [itemTab, setItemTab] = useState("전체");
+  const [count, setCount] = useState(0);
   const { userInfo, updateUserInfo } = useCharacterStore();
 
   // 미리 분류된 이미지 캐싱
@@ -41,6 +44,30 @@ const ItemTab = () => {
     }
     return ItemImages.filter((image) => image.tags === itemTab);
   }, [itemTab]);
+
+  useEffect(() => {
+    const NUM_OF_IMG = filteredItemImages.length;
+
+    filteredItemImages.forEach(({ src }) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+
+      img.onerror = () => {
+        console.log(`${src} load failed`);
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+    });
+  }, [count, filteredItemImages, increaseLoadCount]);
 
   // 아이템 착용 여부 확인 함수
   const isItemEquipped = useCallback(

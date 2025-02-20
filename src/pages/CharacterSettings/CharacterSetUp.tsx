@@ -6,6 +6,7 @@ import FaceTab from "./characterSetUpTab/FaceTab";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import OutFitTab from "./characterSetUpTab/OutFitTab";
 import ItemTab from "./characterSetUpTab/ItemTab";
+import Pending from "../PageManagement/Pending";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -15,13 +16,18 @@ interface CharacterSetUpProps {
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
-
+  const [loadCount, setLoadCount] = useState(0);
   const { userInfo, resetUserInfo } = useCharacterStore();
+
+  const increaseLoadCount = () => {
+    setLoadCount(loadCount + 1);
+  };
 
   // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
 
   return (
     <div className={s.characterSetUpContainer}>
+      {loadCount !== 3 && <Pending />}
       <div className={s.showCharacter}>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>
@@ -156,9 +162,15 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           </button>
         </div>
         <div className={s.contentArea}>
-          {activeMenu === "face" && <FaceTab />}
-          {activeMenu === "costume" && <OutFitTab />}
-          {activeMenu === "item" && <ItemTab />}
+          {activeMenu === "face" && (
+            <FaceTab increaseLoadCount={increaseLoadCount} />
+          )}
+          {activeMenu === "costume" && (
+            <OutFitTab increaseLoadCount={increaseLoadCount} />
+          )}
+          {activeMenu === "item" && (
+            <ItemTab increaseLoadCount={increaseLoadCount} />
+          )}
         </div>
       </div>
     </div>

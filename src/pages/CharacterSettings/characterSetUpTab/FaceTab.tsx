@@ -1,11 +1,16 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FaceImages, FaceItem } from "../../../assets/ImageData/FaceImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./characterSetUptab.module.scss";
 
-const FaceTab = () => {
+export interface imgTabProps {
+  increaseLoadCount: () => void;
+}
+
+const FaceTab = ({ increaseLoadCount }: imgTabProps) => {
   const [faceTab, setFaceTab] = useState("전체");
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const [count, setCount] = useState(0);
 
   const filteredFaceImages = useMemo(() => {
     if (faceTab === "전체") {
@@ -14,37 +19,74 @@ const FaceTab = () => {
     return FaceImages.filter((image) => image.tags === faceTab);
   }, [faceTab]);
 
-  const handleImageClick = useCallback(
-    (image: FaceItem) => {
-      switch (image.tags) {
-        case "피부":
-          updateUserInfo({
-            face: {
-              ...userInfo.face,
-              skinColor: image.name,
-            },
-          });
-          break;
-        case "머리":
-          updateUserInfo({
-            face: {
-              ...userInfo.face,
-              hair: image.name,
-            },
-          });
-          break;
-        case "얼굴":
-          updateUserInfo({
-            face: {
-              ...userInfo.face,
-              expression: image.name,
-            },
-          });
-          break;
-      }
-    },
-    [userInfo.face, updateUserInfo]
-  );
+  useEffect(() => {
+    const NUM_OF_IMG = filteredFaceImages.length;
+
+    filteredFaceImages.forEach(({ src }) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+
+      img.onerror = () => {
+        console.log(`${src} load failed`);
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+    });
+  }, [count, filteredFaceImages, increaseLoadCount]);
+
+  const handleImageClick = (image: FaceItem) => {
+    updateUserInfo({
+      face: {
+        ...userInfo.face,
+        [image.tags === "피부"
+          ? "skinColor"
+          : image.tags === "머리"
+          ? "hair"
+          : "expression"]: image.name,
+      },
+    });
+  };
+
+  // const handleImageClick = useCallback(
+  //   (image: FaceItem) => {
+  //     switch (image.tags) {
+  //       case "피부":
+  //         updateUserInfo({
+  //           face: {
+  //             ...userInfo.face,
+  //             skinColor: image.name,
+  //           },
+  //         });
+  //         break;
+  //       case "머리":
+  //         updateUserInfo({
+  //           face: {
+  //             ...userInfo.face,
+  //             hair: image.name,
+  //           },
+  //         });
+  //         break;
+  //       case "얼굴":
+  //         updateUserInfo({
+  //           face: {
+  //             ...userInfo.face,
+  //             expression: image.name,
+  //           },
+  //         });
+  //         break;
+  //     }
+  //   },
+  //   [userInfo.face, updateUserInfo]
+  // );
 
   return (
     <div className={s.tabContainer}>

@@ -14,18 +14,29 @@ import CreateStationBackground from './CreateStationBackground/CreateStationBack
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds = [
-  `${IMG_BASE_URL}station_01.png`,
-  `${IMG_BASE_URL}station_02.png`,
-  `${IMG_BASE_URL}station_03.png`,
-  `${IMG_BASE_URL}station_04.png`
+  `${IMG_BASE_URL}station_dim_01.png`,
+  `${IMG_BASE_URL}station_dim_02.png`,
+  `${IMG_BASE_URL}station_dim_03.png`,
+  `${IMG_BASE_URL}station_dim_04.png`
 ];
-import backgroundPrev1 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_01.png';
-import backgroundPrev2 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_02.png';
-import backgroundPrev3 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_03.png';
-import backgroundPrev4 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_04.png';
+// const stationBackgrounds = [
+//   `${IMG_BASE_URL}station_dim_01.png`,
+//   `${IMG_BASE_URL}station_dim_02.png`,
+//   `${IMG_BASE_URL}station_dim_03.png`,
+//   `${IMG_BASE_URL}station_dim_04.png`
+// ];
+const stationBackgroundPrevs = [
+  `${IMG_BASE_URL}stationBackgroundPrevImg_01.png`,
+  `${IMG_BASE_URL}stationBackgroundPrevImg_02.png`,
+  `${IMG_BASE_URL}stationBackgroundPrevImg_03.png`,
+  `${IMG_BASE_URL}stationBackgroundPrevImg_04.png`
+]
+// import backgroundPrev1 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_01.png';
+// import backgroundPrev2 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_02.png';
+// import backgroundPrev3 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_03.png';
+// import backgroundPrev4 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_04.png';
 
-//const stationBackgrounds = [background1, background2, background3, background4];
-const stationBackgroundPrevs = [backgroundPrev1, backgroundPrev2, backgroundPrev3, backgroundPrev4];
+// const stationBackgroundPrevs = [backgroundPrev1, backgroundPrev2, backgroundPrev3, backgroundPrev4];
 
 const CreateStation: React.FC = () => {
   const navigate = useNavigate();
@@ -39,7 +50,7 @@ const CreateStation: React.FC = () => {
   const [minute, setMinute] = useState('00');
 
   // 배경 선택 상태
-  const [background, setBackground] = useState(`${IMG_BASE_URL}station_01.png`);
+  const [background, setBackground] = useState(`${IMG_BASE_URL}station_dim_01.png`);
 
   // “입력값 미완성” 팝업 표시 상태
   const [showPopup, setShowPopup] = useState(false);
@@ -83,14 +94,14 @@ const CreateStation: React.FC = () => {
 
     // 이미지 파일명 추출 함수
     const getFileName = (path: string) => {
-      return path.split('/').pop()?.split('.')[0] || 'station_01';
+      return path.split('/').pop()?.split('.')[0] || 'station_dim_01';
     };
     
     const backgroundName = getFileName(background);
 
     try {
       // 서버에 최종 데이터 전송
-      const response = await fetchRequest<{ stationId: string }>('/stations', 'POST', {
+      const response = await fetchRequest<{ stationId?: string; message?: string }>('/stations', 'POST', {
         backgroundName: backgroundName,
         name: stationName,
         intro: stationIntro,
@@ -108,6 +119,10 @@ const CreateStation: React.FC = () => {
         navigate('/station/stationinside');
       } else {
         console.log('정거장 생성 실패. 응답: ', response);
+        if (response?.message === 'Invalid or expired token') {
+          console.log('토큰이 만료되었거나 유효하지 않습니다. 로그인 페이지로 이동합니다. 주석 해제 필요');
+          //navigate('/login');
+        }
       }
     } catch (error: unknown) {
       console.error('정거장 생성 중 오류:', error);

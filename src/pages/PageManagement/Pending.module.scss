@@ -1,0 +1,51 @@
+.dim {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background: #00000050;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+@keyframes jumping {
+  0% {
+    transform: translate(0, 0.8em);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.logo {
+  animation-name: jumping;
+  animation-duration: 1.5s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: infinite;
+  z-index: 3;
+}
+
+.subTitle {
+  font-family: "NanumSquareRound";
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: -2%;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  color: #ffffff;
+  z-index: 3;
+}
+
+.title {
+  font-family: "ElectricalSafety";
+  font-size: 20px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15%;
+  color: #e4d0e5;
+  z-index: 3;
+}

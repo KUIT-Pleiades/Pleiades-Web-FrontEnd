@@ -1,14 +1,16 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import {
   OutfitImages,
   OutfitItem,
 } from "../../../assets/ImageData/OutfitImage";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./characterSetUptab.module.scss";
+import { imgTabProps } from "./FaceTab";
 
-const OutFitTab = () => {
+const OutFitTab = ({ increaseLoadCount }: imgTabProps) => {
   const [outfitTab, setOutfitTab] = useState("전체");
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const [count, setCount] = useState(0);
 
   const filteredOutfitImages = useMemo(() => {
     if (outfitTab === "전체") {
@@ -16,6 +18,30 @@ const OutFitTab = () => {
     }
     return OutfitImages.filter((image) => image.tags === outfitTab);
   }, [outfitTab]);
+
+  useEffect(() => {
+    const NUM_OF_IMG = filteredOutfitImages.length;
+
+    filteredOutfitImages.forEach(({ src }) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+
+      img.onerror = () => {
+        console.log(`${src} load failed`);
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+    });
+  }, [count, filteredOutfitImages, increaseLoadCount]);
 
   const handleImageClick = useCallback(
     (image: OutfitItem) => {
