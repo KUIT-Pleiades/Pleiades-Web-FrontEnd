@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import SearchReport from "./SearchReport/SearchReport";
 import { fetchRequest } from "../../functions/fetchRequest";
 import { useNavigate } from "react-router-dom";
+import Pending from "../PageManagement/Pending";
 
 interface Report {
   reportId: number;
@@ -36,8 +37,8 @@ const Report = () => {
   const [searchValue, setSearchValue] = useState("");
   const [filteredReports, setFilteredReports] = useState<Report[]>([]);
   const [isSearchResult, setIsSearchResult] = useState(false);
-	const [showSearchHistory, setShowSearchHistory] = useState(false);
-	const navigate = useNavigate();
+  const [showSearchHistory, setShowSearchHistory] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -111,7 +112,6 @@ const Report = () => {
       }
     }
   };
-
 
   const handleSearchFocus = () => {
     setShowSearchHistory(true);
@@ -213,7 +213,7 @@ const Report = () => {
   const { userInfo } = useCharacterStore();
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Pending />;
   }
 
   if (error) {

@@ -5,12 +5,12 @@ import { fetchRequest } from "../../../functions/fetchRequest";
 import { useNavigate } from "react-router-dom";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
-import copyBtn from "../../../assets/btnImg/copyBtn.png"
+import copyBtn from "../../../assets/btnImg/copyBtn.png";
 //import plusBtn from "../../../assets/btnImg/plusBtn.png"
-import onerIcon from "../../../assets/Icon/oner.png"
-import messageIcon from "../../../assets/Icon/messageIcon.png"
-import signalBtn from "../../../assets/btnImg/signalBtn.png"
-import plusIcon from "../../../assets/Icon/plusIcon.png"
+import onerIcon from "../../../assets/Icon/oner.png";
+import messageIcon from "../../../assets/Icon/messageIcon.png";
+import signalBtn from "../../../assets/btnImg/signalBtn.png";
+import plusIcon from "../../../assets/Icon/plusIcon.png";
 
 interface StationMember {
   userId: string;
@@ -19,8 +19,8 @@ interface StationMember {
   profile: string;
   positionX: number;
   positionY: number;
-	todayReport: boolean;
-	isFriend: boolean;
+  todayReport: boolean;
+  isFriend: boolean;
 }
 
 interface StationResponse {
@@ -47,12 +47,28 @@ const StationSlide: React.FC<StationSlideProps> = ({
   const handleSlideClick = (e: React.MouseEvent) => {
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
     e.stopPropagation();
-	};
-	
-	const navigate = useNavigate();
+  };
 
-	const handleSettingClick = () => {
-    navigate("/station/stationsetting");
+  const [popup, setPopup] = useState(false);
+
+  const showPopup = () => {
+    setPopup(true);
+    setTimeout(() => {
+      setPopup(false);
+    }, 1500); // 1.5초 후 자동 닫힘
+  };
+
+  const navigate = useNavigate();
+
+  const handleSettingClick = () => {
+    navigate("/station/stationsetting", {
+      state: {
+        stationId: stationData.stationId,
+        name: stationData.name,
+        intro: stationData.intro,
+        reportNoticeTime: stationData.reportNoticeTime,
+      },
+    });
   };
 
   const [isCopied, setIsCopied] = useState(false);
@@ -82,7 +98,8 @@ const StationSlide: React.FC<StationSlideProps> = ({
       );
       console.log("친구 요청 보냄. to: ", friendId);
       if (response) {
-        console.log("응답 받기 성공. 응답 메시지: ", response.message);
+				console.log("응답 받기 성공. 응답 메시지: ", response.message);
+				showPopup();
         // 성공 메시지나 토스트 알림을 추가할 수 있습니다
       } else {
         console.error("친구 요청 실패");
@@ -156,9 +173,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
                     </div>
                     <div className={s.memberInfo}>
                       <div>{member.userName}</div>
-                      <div className={s.memberHandle}>
-                        @{member.userId}
-                      </div>
+                      <div className={s.memberHandle}>@{member.userId}</div>
                     </div>
                     {member.isFriend && member.userId !== character.userId && (
                       <img
@@ -176,6 +191,15 @@ const StationSlide: React.FC<StationSlideProps> = ({
           <button className={s.bottomButton}>우주정거장 폭파 및 나가기</button>
         </div>
       </div>
+      {popup && (
+        <div className={`${s.popup}`}>
+          <span className={s.popupTitle}>친구 요청을 완료했어요!"</span>
+
+          <span className={s.popupText}>
+            요청 중인 친구에서 확인할 수 있어요
+          </span>
+        </div>
+      )}
     </div>
   );
 };
