@@ -11,6 +11,7 @@ import StationSlide from "../StationSlide/StationSlide";
 import StationReport from "./StationReport/StationReport";
 import MyReport from "./CharacterReport/MyReport";
 import CharacterReport from "./CharacterReport/CharacterReport";
+import Pending from "../../PageManagement/Pending";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -117,7 +118,7 @@ const StationInside: React.FC = () => {
     getStationData();
   }, [stationId]);
 
-  if (isLoading) return <div>로딩중...</div>;
+  if (isLoading) return <Pending/>;
   if (error) return <div>에러가 발생했습니다</div>;
   if (!stationData) return null;
 
