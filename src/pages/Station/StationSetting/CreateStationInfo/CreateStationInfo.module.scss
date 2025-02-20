@@ -1,0 +1,249 @@
+/* CreateStationInfo.module.scss 
+   (기존 CreateStation.module.scss에서 정보 입력 부분 스타일을 옮겨온 예시)
+*/
+.container {
+	width: 100%;
+	height: 100%;
+	background-color: #F8F8FA;
+}
+
+.header {
+	width: 100%;
+	height: 80px;
+	background-color: #FFF;
+	// display: flex;
+	// flex-direction: column;
+	// justify-content: flex-end;
+	margin-bottom: 1.44rem;
+
+	&Contents {
+		width: 100%;
+		height: 100%;
+		margin-bottom: 0.88rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&Title {
+		position: absolute;
+		color: #17151C;
+		text-align: center;
+		font-family: "Pretendard";
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.02rem;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 30px;
+	}
+
+	&CancelButton {
+		img {
+			padding-left: 14px;
+			width: 7px;
+			height: 14px;
+		}
+	}
+
+	&NextButton {
+		width: 14%;
+		height: 2.19rem;
+		padding-right: 14px;
+		color: var(--gray-11, #17151C);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 15px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.3px;
+	}
+}
+
+.body {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.name,
+.intro,
+.alarm {
+	width: 93%;
+	margin-bottom: 1.56rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.nameTitle,
+.introTitle,
+.alarmTitle {
+	color: #444;
+	text-align: center;
+	font-family: "Pretendard";
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: -0.01625rem;
+	margin-bottom: 0.63rem;
+}
+
+.nameInputSection,
+.introInputSection {
+	width: 100%;
+	height: 3.625rem;
+	border: 1px solid #C0B9DB;
+	background-color: #FFF;
+	border-radius: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.nameInput,
+.introInput {
+	width: 95%;
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	outline: none;
+	color: #444;
+	font-family: "Pretendard";
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: -0.02rem;
+}
+
+.nameInput::placeholder,
+.introInput::placeholder {
+	color: #CBCCCB;
+	font-family: "Pretendard";
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: -0.02rem;
+}
+
+.nameInput:-ms-input-placeholder,
+.introInput:-ms-input-placeholder {
+	color: #CBCCCB;
+	font-family: "Pretendard";
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: -0.02rem;
+}
+
+.alarmRow {
+	width: 98%;
+	padding-right: 3%;
+	height: 3.63rem;
+	text-align: center;
+	border: 1px solid #C0B9DB;
+	background-color: #FFF;
+	border-radius: 0.75rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 1000;
+}
+
+.alarmSelect {
+	flex: 1;
+	height: 100%;
+	border: none;
+	background-color: transparent;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: none;
+	color: #8B6193;
+	text-align-last: center;
+	text-align: center;
+	-ms-text-align-last: center;
+	-moz-text-align-last: center;
+	font-family: "Pretendard";
+	font-size: 1rem;
+	font-weight: 700;
+	z-index: 1001;
+
+	&Option {
+		text-align: center;
+	}
+}
+
+.alarmSelect:focus {
+	outline: none;
+}
+
+.hourText,
+.minText {
+	position: absolute;
+	z-index: 999;
+	color: #858585;
+	text-align: center;
+	font-family: "Pretendard";
+	font-size: 0.8125rem;
+	font-weight: 600;
+}
+
+.hourText {
+	left: 51.8dvw;
+}
+
+.minText {
+	left: 83%;
+}
+
+.incompletePopup {
+	width: 50%;
+	padding-top: 0.9rem;
+	padding-bottom: 0.9rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.3);
+	background-color: #EDEFFF;
+	border-radius: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	animation: fadeInOut 1.5s ease-in-out;
+	opacity: 0;
+
+	@keyframes fadeInOut {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, -60%);
+		}
+
+		10% {
+			opacity: 1;
+			transform: translate(-50%, -50%);
+		}
+
+		90% {
+			opacity: 1;
+			transform: translate(-50%, -50%);
+		}
+
+		100% {
+			opacity: 0;
+			transform: translate(-50%, -40%);
+		}
+	}
+
+	&Title {
+		color: var(--gray-11, #17151C);
+		text-align: center;
+		font-family: "ElectricalSafety";
+		font-size: 0.9375rem;
+		font-weight: 400;
+	}
+}

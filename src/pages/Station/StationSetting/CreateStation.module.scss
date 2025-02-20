@@ -1,0 +1,10 @@
+/* CreateStation.module.scss 
+   최상위 컨테이너용 스타일(필요에 따라 자유롭게 변경)
+*/
+.container {
+	width: 100vw;
+	height: 100vh;
+	background-color: #F8F8FA;
+	display: flex;
+	flex-direction: column;
+}
