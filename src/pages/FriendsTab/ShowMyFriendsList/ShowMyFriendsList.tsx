@@ -13,7 +13,7 @@ import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.
 interface ShowMyFriendsListProps {
     otherUser: OtherUser;
     handleDeleteFriend: (id: string) => void;
-    handleSendSignal: (id: string) => void;
+    handleSendSignal: (id: string, friendName: string) => void;
     onActionFriendId: string;
     setOnActionFriendId: (friendId: string) => void;
 }
@@ -54,8 +54,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
     }
     return (
       <SignalButton
-        onClickSignal={() => handleSendSignal(otherUser.userId)}
-        name={otherUser.userName}
+        onClickSignal={() => handleSendSignal(otherUser.userId, otherUser.userName)}
       />
     );
   };
