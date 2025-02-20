@@ -5,28 +5,34 @@ import openBtn from "../../assets/btnImg/openBtn.png";
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
 import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchRequest } from "../../functions/fetchRequest";
+import Pending from "../PageManagement/Pending";
 
 interface BackgroundSetUpProps {
   onPrev: () => void;
 }
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
+  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
   const IMG_MAKER = import.meta.env.VITE_IMG_MAKER;
   const navigate = useNavigate();
-  const { userInfo } = useCharacterStore();
+  const location = useLocation();
+  const { userInfo, updateUserInfo } = useCharacterStore();
+  const [loadingState, setLoadingState] = useState(false);
+  const [showList, setShowList] = useState(true);
+
+  const handleLoadingState = () => {
+    setLoadingState(true);
+  };
 
   const backgroundStyle = {
     backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
     overflow: "hidden",
   };
 
-  const [showList, setShowList] = useState(true);
-
   const complete = async () => {
+    setLoadingState(false);
     const { profile, character, ...imageRequestData } = userInfo;
     console.log(`${profile}  ${character}`);
 
@@ -55,8 +61,12 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
     console.log(data.profile);
     console.log(data.character);
 
+    const endpoint = location.pathname.includes("onboarding")
+      ? "/auth/signup"
+      : "/home/settings/character";
+
     const signupResponse = await fetchRequest<Message>(
-      "/auth/signup",
+      endpoint,
       "POST",
       signupData
     );
@@ -68,12 +78,14 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       navigate("/login");
     } else {
       console.log("회원가입 성공:", signupResponse.message);
+      updateUserInfo(signupData);
       navigate("/home");
     }
   };
 
   return (
     <div style={backgroundStyle} className={s.background}>
+      {!loadingState && <Pending />}
       <div className={s.showCharacter} onClick={() => setShowList(false)}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
@@ -182,7 +194,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
           overflow: "hidden",
         }}
       >
-        {showList && <BackgroundTab />}
+        {showList && <BackgroundTab increaseLoadCount={handleLoadingState} />}
       </div>
       {!showList && (
         <div className={s.bottomBar}>

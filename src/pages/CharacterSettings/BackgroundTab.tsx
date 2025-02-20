@@ -1,13 +1,38 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   starBackImages,
   starBackImg,
 } from "../../assets/ImageData/BackgroundImage";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./backgroundTab.module.scss";
+import { imgTabProps } from "./characterSetUpTab/FaceTab";
 
-const BackgroundTab = () => {
+const BackgroundTab = ({ increaseLoadCount }: imgTabProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const NUM_OF_IMG = starBackImages.length;
+    starBackImages.forEach(({ src }) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+
+      img.onerror = () => {
+        console.log(`${src} load failed`);
+        setCount(count + 1);
+        if (count === NUM_OF_IMG) {
+          increaseLoadCount();
+        }
+      };
+    });
+  }, [count, increaseLoadCount]);
 
   const handleImageClick = useCallback(
     (image: starBackImg) => {
@@ -28,7 +53,7 @@ const BackgroundTab = () => {
               className={`${s.item} ${
                 image.starBackground === userInfo.starBackground
                   ? s.selected
-                  : ""  
+                  : ""
               }`}
               onClick={() => handleImageClick(image)}
             >
