@@ -23,6 +23,18 @@ p {
   flex-direction: column;
 }
 
+.dim {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100dvw;
+	height: 54dvh;
+	background: linear-gradient(180deg,
+			rgba(37, 32, 43, 0.85) 0%,
+			rgba(37, 32, 43, 0.45) 53.99%,
+			rgba(37, 32, 43, 0) 97.54%);
+}
+
 
 .showCharacter {
   position: absolute;

@@ -24,9 +24,11 @@
 	max-width: 500px;
 	border-radius: 12px;
 	background: #FFF;
-	height: 49px;
+	height: 106px;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 10px;
 	align-items: center;
 	color: var(--gray-22, #444);
 	text-align: center;
@@ -36,6 +38,8 @@
 	font-weight: 400;
 	line-height: normal;
 	letter-spacing: -0.32px;
+	padding-bottom: 19px;
+	box-sizing: border-box;
 
 	.bar1 {
 		width: 9px;
@@ -60,6 +64,33 @@
 		bottom: -17px;
 	}
 
+}
+
+.handleContainer {
+	display: flex;
+	gap: 26px;
+
+	.reportUserId {
+		color: var(--gray-22, #444);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.22px;
+	}
+
+	.visitStar {
+		color: var(--color-8-id, #8B6193);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.22px;
+	}
 }
 
 .modifyBtn {
