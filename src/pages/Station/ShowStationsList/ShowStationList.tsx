@@ -35,7 +35,6 @@ const ShowStationList: React.FC = () => {
   const fetchStations = async () => {
     try {
       const response = await fetchRequest<Stations>('/stations', 'GET', null);
-      console.log('정거장 불러오기 요청 보냄. 응답: ',response);
       if (response && Array.isArray(response.stations)) {
         setStations(response);
         console.log('정거장 불러오기 응답 잘 받음');
