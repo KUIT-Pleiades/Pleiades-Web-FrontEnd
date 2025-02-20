@@ -1,14 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import s from "./PersonalSetting.module.scss";
 import goBtn from "../../../assets/btnImg/goBtn.png";
 
+
+
 const PersonalSetting: React.FC = () => {
+
+	const navigate = useNavigate();
+
+  const handleProfileClick = () => {
+    navigate("/setting/profile");
+  };
+
+	
   return (
     <div className={s.settingContainer}>
       <div className={s.title}>설정</div>
 
       <div className={s.menuList}>
-        <div className={s.menuItem}>
+        <div className={s.menuItem} onClick={handleProfileClick}>
           <span>프로필</span>
           <img src={goBtn} alt="" />
         </div>

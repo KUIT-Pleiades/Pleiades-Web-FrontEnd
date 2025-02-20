@@ -17,6 +17,8 @@ import MyStar from "./pages/Home/MyStar";
 import CreateStation from "./pages/Station/CreateStation/CreateStation";
 import Report from "./pages/Report/Report";
 import StationInside from "./pages/Station/StationInside/StationInside";
+import PersonalSetting from "./pages/Setting/PersonalSetting/PersonalSetting";
+import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
 
 export default function App() {
   return (
@@ -48,7 +50,10 @@ export default function App() {
           </Route>
           <Route path="/report" element={<Report />}></Route>
           <Route path="market" element={<Market />}></Route>
-          <Route path="setting" element={<Setting />}></Route>
+          <Route path="setting" element={<Setting />}>
+            <Route index element={<PersonalSetting />} />
+            <Route path="profile" element={<ProfileSetting />} />
+          </Route>
           <Route path="station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />

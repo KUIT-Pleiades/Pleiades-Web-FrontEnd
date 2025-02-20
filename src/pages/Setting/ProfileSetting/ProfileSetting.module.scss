@@ -1,0 +1,75 @@
+.profileContainer {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
+
+	box-sizing: border-box;
+
+	.header {
+		position: absolute;
+		width: 100%;
+		height: 80px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: var(--gray-11, #17151C);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.32px;
+		background: #FFF;
+		padding: 14px;
+		box-sizing: border-box;
+
+		img {
+			width: 7px;
+			height: 14px;
+		}
+
+		button {
+			border: none;
+			color: var(--gray-11, #17151C);
+			text-align: center;
+			font-family: Pretendard;
+			font-size: 15px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			letter-spacing: -0.3px;
+			cursor: pointer;
+		}
+	}
+}
+
+.profile {
+	position: relative;
+	top: 40dvh;
+	height: 51dvh;
+	width: 100%;
+	padding: 0 14px;
+	box-sizing: border-box;
+
+	.nameInput {
+		display: flex;
+		flex-direction: column;
+		height: 7dvh;
+	}
+
+	.idInput {
+		display: flex;
+		flex-direction: column;
+		height: 7dvh;
+	}
+
+	.ageInput {
+		display: flex;
+		flex-direction: column;
+		height: 7dvh;
+	}
+
+}
