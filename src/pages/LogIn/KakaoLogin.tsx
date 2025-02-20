@@ -3,34 +3,57 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { kakaoLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
 import LogInPending from "./LogInPending";
+import { fetchRequest } from "../../functions/fetchRequest";
+import { Message, User } from "../../interfaces/Interfaces";
+import { isMessage } from "../../functions/isMessage";
+import { useCharacterStore } from "../../store/useCharacterStore";
 
 export default function KakaoLogin() {
   const navigate = useNavigate();
   const url = useLocation();
-  const { setToken } = useAuth();
+  const { authorization, setToken } = useAuth();
+  const { updateUserInfo } = useCharacterStore();
   const urlParams = new URLSearchParams(url.search);
   const hash = urlParams.get("hash");
 
   useEffect(() => {
-    if (hash === null) {
+    if (!hash) {
       navigate("/loginfail");
       return;
     }
     const handleLogin = async () => {
-      if (hash !== null) {
-        const tokenData = await kakaoLogInRequest(hash);
-        if (tokenData === null) {
-          navigate("/loginfail");
-        } else {
-          setToken(tokenData.accessToken);
-          navigate("/home");
-        }
-      } else {
+      const tokenData = await kakaoLogInRequest(hash);
+      if (tokenData === null) {
         navigate("/loginfail");
+        return;
       }
+      setToken(tokenData.accessToken);
     };
+
     handleLogin();
-  }, [hash, navigate, setToken, url.search]);
+  }, [hash, navigate, setToken, updateUserInfo, url.search]);
+
+  useEffect(() => {
+    if (authorization) {
+      const getUser = async () => {
+        const userData = await fetchRequest<User | Message>(
+          "/home",
+          "GET",
+          null
+        );
+        if (userData !== null) {
+          if (isMessage(userData)) {
+            console.log(userData.message);
+            navigate("/onboarding");
+          } else {
+            updateUserInfo(userData);
+            navigate("/home");
+          }
+        } else navigate("/loginfail");
+      };
+      getUser();
+    }
+  }, [authorization, navigate, updateUserInfo]);
 
   return <LogInPending />;
 }

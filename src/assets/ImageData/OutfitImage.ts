@@ -1,36 +1,22 @@
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const top_01 = `${IMG_BASE_URL}top_01.png`;
-const top_02 = `${IMG_BASE_URL}top_02.png`;
-const top_03 = `${IMG_BASE_URL}top_03.png`;
-const top_04 = `${IMG_BASE_URL}top_04.png`;
-const top_05 = `${IMG_BASE_URL}top_05.png`;
-const top_06 = `${IMG_BASE_URL}top_06.png`;
-const top_07 = `${IMG_BASE_URL}top_07.png`;
-const top_08 = `${IMG_BASE_URL}top_08.png`;
-const top_09 = `${IMG_BASE_URL}top_09.png`;
+const topURLs: Record<string, string> = {};
+for (let i = 1; i < 13; i++) {
+  const num = i.toString().padStart(2, "0");
+  topURLs[`top_${num}`] = `${IMG_BASE_URL}top_${num}.png`;
+}
 
+const bottomURLs: Record<string, string> = {};
+for (let i = 1; i < 17; i++) {
+  const num = i.toString().padStart(2, "0");
+  bottomURLs[`bottom_${num}`] = `${IMG_BASE_URL}bottom_${num}.png`;
+}
 
-const bottom_01 = `${IMG_BASE_URL}bottom_01.png`;
-const bottom_02 = `${IMG_BASE_URL}bottom_02.png`;
-const bottom_03 = `${IMG_BASE_URL}bottom_03.png`;
-const bottom_04 = `${IMG_BASE_URL}bottom_04.png`;
-const bottom_05 = `${IMG_BASE_URL}bottom_05.png`;
-const bottom_06 = `${IMG_BASE_URL}bottom_06.png`;
-const bottom_07 = `${IMG_BASE_URL}bottom_07.png`;
-const bottom_08 = `${IMG_BASE_URL}bottom_08.png`;
-
-const shoes_01 = `${IMG_BASE_URL}shoes_01.png`;
-const shoes_02 = `${IMG_BASE_URL}shoes_02.png`;
-const shoes_03 = `${IMG_BASE_URL}shoes_03.png`;
-const shoes_04 = `${IMG_BASE_URL}shoes_04.png`;
-const shoes_05 = `${IMG_BASE_URL}shoes_05.png`;
-const shoes_06 = `${IMG_BASE_URL}shoes_06.png`;
-const shoes_07 = `${IMG_BASE_URL}shoes_07.png`;
-const shoes_08 = `${IMG_BASE_URL}shoes_08.png`;
-const shoes_09 = `${IMG_BASE_URL}shoes_09.png`;
-
-
+const shoesURLs: Record<string, string> = {};
+for (let i = 1; i < 10; i++) {
+  const num = i.toString().padStart(2, "0");
+  shoesURLs[`shoes_${num}`] = `${IMG_BASE_URL}shoes_${num}.png`;
+}
 
 export interface OutfitItem {
   name: string;
@@ -39,38 +25,9 @@ export interface OutfitItem {
 }
 
 const images = {
-  top: {
-    top_01,
-    top_02,
-    top_03,
-    top_04,
-    top_05,
-    top_06,
-    top_07,
-    top_08,
-    top_09,
-  },
-  bottom: {
-    bottom_01,
-    bottom_02,
-    bottom_03,
-    bottom_04,
-    bottom_05,
-    bottom_06,
-    bottom_07,
-    bottom_08,
-  },
-  shoes: {
-    shoes_01,
-    shoes_02,
-    shoes_03,
-    shoes_04,
-    shoes_05,
-    shoes_06,
-    shoes_07,
-    shoes_08,
-    shoes_09,
-  },
+  top: topURLs,
+  bottom: bottomURLs,
+  shoes: shoesURLs,
 };
 
 export const OutfitImages: OutfitItem[] = [

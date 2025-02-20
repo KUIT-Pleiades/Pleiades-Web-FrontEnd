@@ -19,7 +19,7 @@ export default function LogInPending() {
           <img className={s.spaceShip2} src={spaceShip} alt="우주선" />
           <img src={pleiadesLogo} width={125.53} height={90.32} alt="Logo" />
         </div>
-        <p className={s.subTitle}>로그인 성공!</p>
+        <p className={s.subTitle}>로그인 중!</p>
         <p className={s.title}>내 별로 비행중이에요</p>
       </div>
     </div>

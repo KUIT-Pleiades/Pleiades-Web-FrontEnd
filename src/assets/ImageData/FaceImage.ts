@@ -1,41 +1,22 @@
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const skin_01 = `${IMG_BASE_URL}skin_01.png`;
-const skin_02 = `${IMG_BASE_URL}skin_02.png`;
-const skin_03 = `${IMG_BASE_URL}skin_03.png`;
-const skin_04 = `${IMG_BASE_URL}skin_04.png`;
-const skin_05 = `${IMG_BASE_URL}skin_05.png`;
-const skin_06 = `${IMG_BASE_URL}skin_06.png`;
-const skin_07 = `${IMG_BASE_URL}skin_07.png`;
-// import skin02 from "../Character/face/skin/skin02.png";
-// import skin03 from "../Character/face/skin/skin03.png";
-// import skin04 from "../Character/face/skin/skin04.png";
-// import skin05 from "../Character/face/skin/skin05.png";
-// import skin06 from "../Character/face/skin/skin06.png";
-// import skin07 from "../Character/face/skin/skin07.png";
+const skinURLs: Record<string, string> = {};
+for (let i = 1; i < 8; i++) {
+  const num = i.toString().padStart(2, "0");
+  skinURLs[`skin_${num}`] = `${IMG_BASE_URL}skin_${num}.png`;
+}
 
-//import hair01 from "../Character/face/hair/hair01.png";
-const hair_01 = `${IMG_BASE_URL}hair_01.png`;
-const hair_02 = `${IMG_BASE_URL}hair_02.png`;
-const hair_03 = `${IMG_BASE_URL}hair_03.png`;
-const hair_04 = `${IMG_BASE_URL}hair_04.png`;
-const hair_05 = `${IMG_BASE_URL}hair_05.png`;
-const hair_06 = `${IMG_BASE_URL}hair_06.png`;
-const hair_07 = `${IMG_BASE_URL}hair_07.png`;
-const hair_08 = `${IMG_BASE_URL}hair_08.png`;
-const hair_09 = `${IMG_BASE_URL}hair_09.png`;
+const hairURLs: Record<string, string> = {};
+for (let i = 1; i < 24; i++) {
+  const num = i.toString().padStart(2, "0");
+  hairURLs[`hair_${num}`] = `${IMG_BASE_URL}hair_${num}.png`;
+}
 
-
-const face_01 = `${IMG_BASE_URL}face_01.png`;
-const face_02 = `${IMG_BASE_URL}face_02.png`;
-const face_03 = `${IMG_BASE_URL}face_03.png`;
-const face_04 = `${IMG_BASE_URL}face_04.png`;
-const face_05 = `${IMG_BASE_URL}face_05.png`;
-const face_06 = `${IMG_BASE_URL}face_06.png`;
-const face_07 = `${IMG_BASE_URL}face_07.png`;
-const face_08 = `${IMG_BASE_URL}face_08.png`;
-const face_09 = `${IMG_BASE_URL}face_09.png`;
-
+const faceURLs: Record<string, string> = {};
+for (let i = 1; i < 20; i++) {
+  const num = i.toString().padStart(2, "0");
+  faceURLs[`face_${num}`] = `${IMG_BASE_URL}face_${num}.png`;
+}
 
 export interface FaceItem {
   name: string;
@@ -44,37 +25,9 @@ export interface FaceItem {
 }
 
 const images = {
-  skin: {
-    skin_01,
-    skin_02,
-    skin_03,
-    skin_04,
-    skin_05,
-    skin_06,
-    skin_07,
-  },
-  hair: {
-    hair_01,
-    hair_02,
-    hair_03,
-    hair_04,
-    hair_05,
-    hair_06,
-    hair_07,
-    hair_08,
-    hair_09,
-  },
-  face: {
-    face_01,
-    face_02,
-    face_03,
-    face_04,
-    face_05,
-    face_06,
-    face_07,
-    face_08,
-    face_09,
-  },
+  skin: skinURLs,
+  hair: hairURLs,
+  face: faceURLs,
 };
 // FaceImages 배열 생성
 export const FaceImages: FaceItem[] = [

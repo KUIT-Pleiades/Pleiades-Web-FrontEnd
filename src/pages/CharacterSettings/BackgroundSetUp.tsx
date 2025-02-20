@@ -5,7 +5,7 @@ import openBtn from "../../assets/btnImg/openBtn.png";
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
 import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchRequest } from "../../functions/fetchRequest";
 
 interface BackgroundSetUpProps {
@@ -16,6 +16,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
   const IMG_MAKER = import.meta.env.VITE_IMG_MAKER;
   const navigate = useNavigate();
+  const location = useLocation();
   const { userInfo, updateUserInfo } = useCharacterStore();
 
   const backgroundStyle = {
@@ -54,8 +55,12 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
     console.log(data.profile);
     console.log(data.character);
 
+    const endpoint = location.pathname.includes("onboarding")
+      ? "/auth/signup"
+      : "/home/settings/character";
+
     const signupResponse = await fetchRequest<Message>(
-      "/auth/signup",
+      endpoint,
       "POST",
       signupData
     );
