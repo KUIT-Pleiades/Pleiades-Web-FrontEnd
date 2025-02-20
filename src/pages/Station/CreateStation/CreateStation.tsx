@@ -94,10 +94,14 @@ const CreateStation: React.FC = () => {
 
     // 이미지 파일명 추출 함수
     const getFileName = (path: string) => {
-      return path.split('/').pop()?.split('.')[0] || 'station_dim_01';
+      const fileName = path.split('/').pop(); // 경로에서 파일명 추출
+      if (!fileName) return 'station_dim_01';
+      const match = fileName.match(/station_dim_\d+/);
+      return match ? match[0] : 'station_dim_01';
     };
     
     const backgroundName = getFileName(background);
+    console.log('backgroundName: ', backgroundName);
 
     try {
       // 서버에 최종 데이터 전송
