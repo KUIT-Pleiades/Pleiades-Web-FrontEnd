@@ -104,5 +104,8 @@ export async function autoLogInRequest() {
       credentials: "include",
     });
     return response2.status === 200; //true
-  } else return false;
+  } else {
+    console.log("Unexpected Error");
+    return false;
+  }
 }
