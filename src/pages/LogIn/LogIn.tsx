@@ -9,8 +9,13 @@ import {
 } from "../../functions/logInRequest";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { isMessage } from "../../functions/isMessage";
+import { fetchRequest } from "../../functions/fetchRequest";
+import { Message, User } from "../../interfaces/Interfaces";
+import { useCharacterStore } from "../../store/useCharacterStore";
 
 export default function LogIn() {
+  const { updateUserInfo } = useCharacterStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +24,23 @@ export default function LogIn() {
         const status = await autoLogInRequest();
         if (status) {
           console.log(status);
-          navigate("/home");
+          //유저정보 받아와야함
+          const userData = await fetchRequest<User | Message>(
+            "/home",
+            "GET",
+            null
+          );
+          if (userData !== null) {
+            if (isMessage(userData)) {
+              console.log(userData.message);
+              navigate("/onboarding");
+            } else {
+              updateUserInfo(userData);
+              navigate("/home");
+            }
+          } else {
+            navigate("/loginfail");
+          }
         } else {
           //로그인화면에 남아있기
         }
@@ -29,7 +50,7 @@ export default function LogIn() {
       }
     };
     handleAutoLogIn();
-  }, [navigate]);
+  }, [navigate, updateUserInfo]);
 
   const naverLogIn = () => {
     window.location.href = naverLogInRedirect();

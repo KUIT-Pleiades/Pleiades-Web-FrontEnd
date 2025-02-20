@@ -21,6 +21,7 @@ const FaceTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredFaceImages.length;
+    console.log(count);
 
     filteredFaceImages.forEach(({ src }) => {
       const img = new Image();

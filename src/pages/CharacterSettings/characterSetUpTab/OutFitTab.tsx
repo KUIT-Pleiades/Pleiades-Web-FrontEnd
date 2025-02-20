@@ -21,6 +21,7 @@ const OutFitTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredOutfitImages.length;
+    console.log(count);
 
     filteredOutfitImages.forEach(({ src }) => {
       const img = new Image();

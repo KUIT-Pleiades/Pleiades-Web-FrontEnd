@@ -16,18 +16,18 @@ interface CharacterSetUpProps {
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [activeMenu, setActiveMenu] = useState("face");
-  const [loadCount, setLoadCount] = useState(0);
+  const [load, setLoad] = useState(false);
   const { userInfo, resetUserInfo } = useCharacterStore();
 
   const increaseLoadCount = () => {
-    setLoadCount(loadCount + 1);
+    setLoad(true);
   };
 
   // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
 
   return (
     <div className={s.characterSetUpContainer}>
-      {loadCount !== 3 && <Pending />}
+      {!load && <Pending />}
       <div className={s.showCharacter}>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>

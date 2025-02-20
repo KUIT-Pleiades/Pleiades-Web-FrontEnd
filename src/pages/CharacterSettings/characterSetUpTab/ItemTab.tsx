@@ -47,6 +47,7 @@ const ItemTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredItemImages.length;
+    console.log(count);
 
     filteredItemImages.forEach(({ src }) => {
       const img = new Image();
