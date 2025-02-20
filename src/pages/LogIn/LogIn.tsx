@@ -15,8 +15,12 @@ import { Message, User } from "../../interfaces/Interfaces";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
 export default function LogIn() {
-  const { updateUserInfo } = useCharacterStore();
+  const { userInfo, updateUserInfo } = useCharacterStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userInfo.userId) navigate("/home");
+  }, [navigate, userInfo.userId]);
 
   useEffect(() => {
     const handleAutoLogIn = async () => {
@@ -36,7 +40,6 @@ export default function LogIn() {
               navigate("/onboarding");
             } else {
               updateUserInfo(userData);
-              navigate("/home");
             }
           } else {
             navigate("/loginfail");
