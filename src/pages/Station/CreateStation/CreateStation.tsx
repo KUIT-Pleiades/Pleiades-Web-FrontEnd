@@ -105,8 +105,11 @@ const CreateStation: React.FC = () => {
 
     try {
       // 서버에 최종 데이터 전송
-      const response = await fetchRequest<{ stationId?: string; message?: string }>('/stations', 'POST', {
-        backgroundName: backgroundName,
+      const response = await fetchRequest<{
+        stationId?: string;
+        message?: string;
+      }>("/stations", "POST", {
+        stationBackground: backgroundName,
         name: stationName,
         intro: stationIntro,
         reportNoticeTime: reportNoticeTime,
