@@ -33,7 +33,7 @@ interface ShowTotalFriendsListProps {
   handleAcceptRequest: (friendId: string) => void;
   handleRejectRequest: (friendId: string) => void;
   handleDeleteRequest: (friendId: string) => void;
-  handleSendSignal: (friendId: string) => void;
+  handleSendSignal: (friendId: string, friendName: string) => void;
 }
 
 const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
@@ -51,16 +51,16 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
   const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
 
-  const sortedByRecent = useMemo(() => [...friendsData.friend], [friendsData.friend]);
+  const sortedByRecent = useMemo(() => [...(friendsData.friend ?? [])], [friendsData.friend]);
 
   const sortedByName = useMemo(() => {
-    return [...friendsData.friend].sort((a, b) => {
+    return [...(friendsData.friend ?? [])].sort((a, b) => {
       const isAKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(a.userName);
       const isBKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(b.userName);
-  
-      if (isAKorean && !isBKorean) return -1; // a가 한글이고 b가 영어면 a를 앞에 배치
-      if (!isAKorean && isBKorean) return 1; // a가 영어이고 b가 한글이면 b를 앞에 배치
-  
+
+      if (isAKorean && !isBKorean) return -1;
+      if (!isAKorean && isBKorean) return 1;
+
       return a.userName.localeCompare(b.userName, "ko-KR", { sensitivity: "base" });
     });
   }, [friendsData.friend]);
@@ -68,9 +68,10 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   const sortedFriends = sortCriteria === "최신순" ? sortedByRecent : sortedByName;
 
   useEffect(() => {
-    if(friendsData?.received?.length === 0) setIsShowFriendRequests(false);
-    if(friendsData?.friend?.length === 0) setIsShowMyFriends(false);
-    if(friendsData?.sent?.length === 0) setIsShowMyRequests(false);
+    if (!friendsData) return; // friendsData가 없으면 실행하지 않음
+    if (Array.isArray(friendsData.received) && friendsData.received.length === 0) setIsShowFriendRequests(false);
+    if (Array.isArray(friendsData.friend) && friendsData.friend.length === 0) setIsShowMyFriends(false);
+    if (Array.isArray(friendsData.sent) && friendsData.sent.length === 0) setIsShowMyRequests(false);
   }, [friendsData]);
 
   return (

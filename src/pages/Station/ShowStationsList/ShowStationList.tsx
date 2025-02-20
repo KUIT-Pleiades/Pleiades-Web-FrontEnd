@@ -12,19 +12,9 @@ import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
 import { fetchRequest } from '../../../functions/fetchRequest';
-// import background1 from '../../../assets/stationBackgroundImg/stationBackgroundImg_01.png';
-// import background2 from '../../../assets/stationBackgroundImg/stationBackgroundImg_02.png';
-// import background3 from '../../../assets/stationBackgroundImg/stationBackgroundImg_03.png';
-// import background4 from '../../../assets/stationBackgroundImg/stationBackgroundImg_04.png';
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-// 정거장 배경 이미지 매핑
-// const stationBackgrounds: { [key: string]: string } = {
-//   stationBackgroundImg_01: background1,
-//   stationBackgroundImg_02: background2,
-//   stationBackgroundImg_03: background3,
-//   stationBackgroundImg_04: background4,
-// };
+
 const stationBackgrounds: { [key: string]: string } = {
   station_01: `${IMG_BASE_URL}station_01.png`,
   station_02: `${IMG_BASE_URL}station_02.png`,

@@ -70,7 +70,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                                     handleSendSignal(user.userId);
                                     handleAddSearchHistory(user.userId);
                                 }}
-                                name={user.userName}
                             />
                         )}
                         <button

@@ -10,7 +10,6 @@ export interface imgTabProps {
 const FaceTab = ({ increaseLoadCount }: imgTabProps) => {
   const [faceTab, setFaceTab] = useState("전체");
   const { userInfo, updateUserInfo } = useCharacterStore();
-  const [count, setCount] = useState(0);
 
   const filteredFaceImages = useMemo(() => {
     if (faceTab === "전체") {
@@ -21,27 +20,29 @@ const FaceTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredFaceImages.length;
+    let loadedCount = 0;
 
     filteredFaceImages.forEach(({ src }) => {
       const img = new Image();
       img.src = src;
 
       img.onload = () => {
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
 
       img.onerror = () => {
         console.log(`${src} load failed`);
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
+      console.log(loadedCount);
     });
-  }, [count, filteredFaceImages, increaseLoadCount]);
+  }, [filteredFaceImages, increaseLoadCount]);
 
   const handleImageClick = (image: FaceItem) => {
     updateUserInfo({
@@ -55,38 +56,6 @@ const FaceTab = ({ increaseLoadCount }: imgTabProps) => {
       },
     });
   };
-
-  // const handleImageClick = useCallback(
-  //   (image: FaceItem) => {
-  //     switch (image.tags) {
-  //       case "피부":
-  //         updateUserInfo({
-  //           face: {
-  //             ...userInfo.face,
-  //             skinColor: image.name,
-  //           },
-  //         });
-  //         break;
-  //       case "머리":
-  //         updateUserInfo({
-  //           face: {
-  //             ...userInfo.face,
-  //             hair: image.name,
-  //           },
-  //         });
-  //         break;
-  //       case "얼굴":
-  //         updateUserInfo({
-  //           face: {
-  //             ...userInfo.face,
-  //             expression: image.name,
-  //           },
-  //         });
-  //         break;
-  //     }
-  //   },
-  //   [userInfo.face, updateUserInfo]
-  // );
 
   return (
     <div className={s.tabContainer}>

@@ -10,7 +10,6 @@ import { imgTabProps } from "./FaceTab";
 const OutFitTab = ({ increaseLoadCount }: imgTabProps) => {
   const [outfitTab, setOutfitTab] = useState("전체");
   const { userInfo, updateUserInfo } = useCharacterStore();
-  const [count, setCount] = useState(0);
 
   const filteredOutfitImages = useMemo(() => {
     if (outfitTab === "전체") {
@@ -21,27 +20,29 @@ const OutFitTab = ({ increaseLoadCount }: imgTabProps) => {
 
   useEffect(() => {
     const NUM_OF_IMG = filteredOutfitImages.length;
+    let loadedCount = 0;
 
     filteredOutfitImages.forEach(({ src }) => {
       const img = new Image();
       img.src = src;
 
       img.onload = () => {
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
 
       img.onerror = () => {
         console.log(`${src} load failed`);
-        setCount(count + 1);
-        if (count === NUM_OF_IMG) {
+        loadedCount++;
+        if (loadedCount === NUM_OF_IMG) {
           increaseLoadCount();
         }
       };
+      console.log(loadedCount);
     });
-  }, [count, filteredOutfitImages, increaseLoadCount]);
+  }, [filteredOutfitImages, increaseLoadCount]);
 
   const handleImageClick = useCallback(
     (image: OutfitItem) => {

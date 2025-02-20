@@ -1,0 +1,84 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; // 팝업 배경 투명
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: transparent; // 팝업 내부도 투명하게
+  border-radius: 1.875rem;
+  width: 78%;
+  height: 66%;
+  position: relative;
+  text-align: center;
+  background-image: url('../../../assets/Signal/signalBackground.png');
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalClose {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text{
+  &Title{
+    margin-top: 7dvh;
+    color: #E4D0E5;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  &First{
+    margin-top: 1dvh;
+    color: #BBC4E1;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.5625rem;
+  }
+  &Second{
+    color: #BBC4E1;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.5625rem;
+  }
+}
+
+.imageContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.outgoingImg {
+  width: 100%;
+  max-width: 21.2rem;
+}

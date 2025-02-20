@@ -4,12 +4,12 @@
   top: 0;
   width: 100dvw;
   height: 100dvh;
-  background: #00000050;
+  background: #00000080;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 100;
 }
 
 @keyframes jumping {

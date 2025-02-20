@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './FriendsTab.module.scss';
-//import { Character } from '../../interfaces/Interfaces';
-//import characterData from '../../mock/character1.json';
-//import friendsExampleData from '../../mock/socialInfo.json';
+import { useCharacterStore } from '../../store/useCharacterStore';
 
 // components
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
 import { fetchRequest } from '../../functions/fetchRequest';
+import SendSignalPopup from './SendSignalPopup/SendSignalPopup';
 
 // image files
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
-import { useCharacterStore } from '../../store/useCharacterStore';
 
 interface Friend {
     friendId: number;
@@ -30,9 +28,25 @@ interface FriendsData {
 const FriendsTab: React.FC = () => {
     const navigate = useNavigate();
     const { userInfo } = useCharacterStore();
+    console.log("userInfo: ", userInfo);
     const userName = userInfo.userName || "플레이아데스";
     const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
+    const [signalTo, setSignalTo] = useState<string>("");
+    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [isSendSignalPopupVisible, setIsSendSignalPopupVisible] = useState<boolean>(false);
+    const handleOpenSendSignalPopup = (friendName: string) => {
+        setSignalTo(friendName);
+        setIsSendSignalPopupVisible(true);
+    };
+    const handleCloseSendSignalPopup = () => {
+        setIsSendSignalPopupVisible(false);
+        setSignalTo("");
+    };
+    const handleImageSelected = (index: number) => {
+        setSelectedImageIndex(index);
+        console.log(`선택된 이미지 인덱스: ${selectedImageIndex}`);
+    };
 
     // friends interaction functions
     const handleDeleteFriend = async(friendId: string) => {
@@ -79,7 +93,7 @@ const FriendsTab: React.FC = () => {
             getFriendsList(); // 친구 목록 갱신
         } else console.error("친구 요청 취소 실패");
     }
-    const handleSendSignal = async (friendId: string) => {
+    const handleSendSignal = async (friendId: string, friendName: string) => {
         const response = await fetchRequest<{ message: string }>(
             `/friends/${friendId}/signal`,
             "POST",
@@ -87,6 +101,7 @@ const FriendsTab: React.FC = () => {
         );
         if (response) {
             console.log(response.message);
+            handleOpenSendSignalPopup(friendName);
         } else console.error("시그널 보내기 실패");
     }
 
@@ -98,7 +113,6 @@ const FriendsTab: React.FC = () => {
         }
     };
     useEffect(() => {
-        //setFriendsData(friendsExampleData);
         getFriendsList();
     }, []);
     useEffect(() => {
@@ -145,6 +159,14 @@ const FriendsTab: React.FC = () => {
                     <p className={s.noFriendSecondText}>ID를 검색해 친구를 추가해 보세요!</p>
                     <img src={pleiadesLogo} alt="pleiadesLogo" width={176} />
                 </div>
+            }
+            {isSendSignalPopupVisible &&
+                <SendSignalPopup
+                    username={signalTo}
+                    isSendSignalPopupVisible={isSendSignalPopupVisible}
+                    handleCloseSendSignalPopup={handleCloseSendSignalPopup}
+                    onImageSelected={handleImageSelected}
+                />
             }
         </div>
     )

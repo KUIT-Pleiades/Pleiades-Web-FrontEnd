@@ -3,20 +3,18 @@ import s from './SignalButton.module.scss';
 
 import signal from '../../assets/Signal/signalIcon.png';
 import onSignal from '../../assets/Signal/signalIcon.png';
-import signalPopupStars from '../../assets/Signal/signalPopupStars.svg';
 
 interface SignalButtonProps {
     onClickSignal: () => void;
-    name: string;
 }
 
-const SignalButton: React.FC<SignalButtonProps> = ({onClickSignal, name}) => {
+const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
     const [isSignalPopupVisible, setIsSignalPopupVisible] = useState(false);
     const showSignalPopup = () => {
         setIsSignalPopupVisible(true);
         setTimeout(() => {
             setIsSignalPopupVisible(false);
-        }, 1500);
+        }, 1000);
     };
 
     return (
@@ -35,13 +33,6 @@ const SignalButton: React.FC<SignalButtonProps> = ({onClickSignal, name}) => {
             >
                 <img src={signal} alt="signal" className={s.signalImg} />
             </button>
-            )}
-            {isSignalPopupVisible && (
-                <div className={s.signalPopup}>
-                    <img src={signalPopupStars} alt='signalPopupStars' className={s.signalPopupStarsUp} />
-                    {`${name}님을 쿡 찔렀어요!`}
-                    <img src={signalPopupStars} alt='signalPopupStars' className={s.signalPopupStarsDown} />
-                </div>
             )}
         </>
     )
