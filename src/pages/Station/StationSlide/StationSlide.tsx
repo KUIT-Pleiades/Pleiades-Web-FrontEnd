@@ -2,6 +2,7 @@ import s from "./StationSlide.module.scss";
 import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { fetchRequest } from "../../../functions/fetchRequest";
+import { useNavigate } from "react-router-dom";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import stationBackgroundImg_01 from "../../../assets/backgroundImg/stationbackgroundImg/stationBackgroundImg_01.png";
 import copyBtn from "../../../assets/btnImg/copyBtn.png"
@@ -46,6 +47,12 @@ const StationSlide: React.FC<StationSlideProps> = ({
   const handleSlideClick = (e: React.MouseEvent) => {
     // 이벤트 전파를 막아서 container의 onClick이 실행되지 않게 함
     e.stopPropagation();
+	};
+	
+	const navigate = useNavigate();
+
+	const handleSettingClick = () => {
+    navigate("/station/stationsetting");
   };
 
   const [isCopied, setIsCopied] = useState(false);
@@ -110,7 +117,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
           </div>
 
           <div className={s.content}>
-            <div className={s.settingButton}>
+            <div className={s.settingButton} onClick={handleSettingClick}>
               정거장 설정
               <span className={s.arrow}>›</span>
             </div>

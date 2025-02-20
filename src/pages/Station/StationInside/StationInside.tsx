@@ -50,6 +50,10 @@ const StationInside: React.FC = () => {
 
   const handleSettingClick = () => {
     setShowSlide(true);
+	};
+	
+	const handleCustomClick = () => {
+    navigate("/station/stationbackgroundsetting");
   };
 
   // 스테이션 데이터를 새로고침하는 함수
@@ -139,7 +143,7 @@ const StationInside: React.FC = () => {
           <p>{stationData.intro}</p>
         </div>
         <div className={s.btnGroup}>
-          <div className={s.customBtn}>
+          <div className={s.customBtn} onClick={handleCustomClick}>
             <img src={customBtn} alt="" />
           </div>
           <div className={s.settingBtn} onClick={handleSettingClick}>

@@ -20,6 +20,8 @@ import StationInside from "./pages/Station/StationInside/StationInside";
 import PersonalSetting from "./pages/Setting/PersonalSetting/PersonalSetting";
 import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
 import MarketMain from "./pages/Market/MarketMain/MarketMain";
+import StationSetting from "./pages/Station/StationSetting/StationSetting";
+import StationBackgroundSetting from "./pages/Station/StationSetting/StationBackgroundSetting";
 
 export default function App() {
   return (
@@ -61,6 +63,11 @@ export default function App() {
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
             <Route path="stationinside" element={<StationInside />} />
+            <Route path="stationsetting" element={<StationSetting />} />
+            <Route
+              path="stationbackgroundsetting"
+              element={<StationBackgroundSetting />}
+            />
           </Route>
           <Route path="friendtab" element={<FriendsTab />}></Route>
           <Route path="searchusers" element={<SearchUsers />}></Route>
