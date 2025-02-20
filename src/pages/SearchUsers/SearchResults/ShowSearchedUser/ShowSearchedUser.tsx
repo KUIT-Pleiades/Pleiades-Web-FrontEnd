@@ -81,7 +81,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         </button>
                     </div>
                 );
-
             case "SENT":
                 return (
                     <button
@@ -95,7 +94,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         요청 취소
                     </button>
                 );
-
             case "RECEIVED":
                 return (
                     <div className={s.buttonContainer}>
@@ -120,7 +118,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         </button>
                     </div>
                 );
-
             case "JUSTHUMAN":
             default:
                 return (

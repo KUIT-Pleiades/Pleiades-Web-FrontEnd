@@ -12,6 +12,7 @@ interface CreateStationBackgroundProps {
     handleBack: () => void;
     handleComplete: () => void;
 }
+//const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
 	backgrounds,
@@ -31,7 +32,6 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                 setIsOpen(false);
             }
         };
-
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
         } else {
@@ -65,14 +65,15 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
             {/* 슬라이드 박스 */}
             <div className={`${s.slideBox} ${isOpen ? s.open : ''}`} ref={containerRef}>
                 <div className={s.backgroundList}>
-                    {backgroundPrevs.map((prevSrc, index) => (
-                        <div
-                            key={prevSrc}
-                            className={`${s.backgroundItem} ${background === backgrounds[index] ? s.selected : ''}`}
-                            onClick={() => setBackground(backgrounds[index])}  // ✅ 원본 이미지 설정
-                            style={{ backgroundImage: `url(${prevSrc})` }}  // ✅ 온라인 URL 사용
-                        />
-                    ))}
+                {backgroundPrevs.map((prevSrc, index) => (
+                    <div
+                    key={prevSrc}
+                    // 선택된 배경과 일치하면 s.selected 클래스가 추가되어 스타일이 적용됩니다.
+                    className={`${s.backgroundItem} ${background === backgrounds[index] ? s.selected : ''}`}
+                    onClick={() => setBackground(backgrounds[index])}
+                    style={{ backgroundImage: `url(${prevSrc})` }}
+                    />
+                ))}
                 </div>
             </div>
 
@@ -82,8 +83,7 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                     <img src={slideBoxShowUpArrow} alt='arrow' />
                 </button>
             )}
-			<div className={s.bottomWhiteSpace}>
-			</div>
+			<div className={s.bottomWhiteSpace}></div>
         </div>
     );
 };
