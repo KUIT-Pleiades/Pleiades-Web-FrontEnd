@@ -85,6 +85,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
   return (
     <div style={backgroundStyle} className={s.background}>
+      <div className={s.dim} />
       {!loadingState && <Pending />}
       <div className={s.showCharacter} onClick={() => setShowList(false)}>
         <button className={s.previousBtn} onClick={onPrev}>
