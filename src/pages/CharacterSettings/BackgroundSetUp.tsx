@@ -7,6 +7,7 @@ import BackgroundTab from "./BackgroundTab";
 import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fetchRequest } from "../../functions/fetchRequest";
+import Pending from "../PageManagement/Pending";
 
 interface BackgroundSetUpProps {
   onPrev: () => void;
@@ -18,15 +19,20 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const [loadingState, setLoadingState] = useState(false);
+  const [showList, setShowList] = useState(true);
+
+  const handleLoadingState = () => {
+    setLoadingState(true);
+  };
 
   const backgroundStyle = {
     backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
     overflow: "hidden",
   };
 
-  const [showList, setShowList] = useState(true);
-
   const complete = async () => {
+    setLoadingState(false);
     const { profile, character, ...imageRequestData } = userInfo;
     console.log(`${profile}  ${character}`);
 
@@ -79,6 +85,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
   return (
     <div style={backgroundStyle} className={s.background}>
+      {!loadingState && <Pending />}
       <div className={s.showCharacter} onClick={() => setShowList(false)}>
         <button className={s.previousBtn} onClick={onPrev}>
           이전
@@ -187,7 +194,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
           overflow: "hidden",
         }}
       >
-        {showList && <BackgroundTab />}
+        {showList && <BackgroundTab increaseLoadCount={handleLoadingState} />}
       </div>
       {!showList && (
         <div className={s.bottomBar}>
