@@ -23,8 +23,11 @@ const SendSignalPopup: React.FC<SendSignalPopupProps> = ({
     return (
         <div className={s.modalOverlay}>
             <div className={s.modal}>
-                <button className={s.modalClose}>
-                    <img src={close} alt="close" onClick={handleCloseSendSignalPopup} />
+                <button
+                    className={s.modalClose}
+                    onClick={handleCloseSendSignalPopup}
+                 >
+                    <img src={close} alt="close" />
                 </button>
                 <div className={s.textArea}>
                     <span className={s.textTitle}>🚀 신호 발사 완료!</span>
