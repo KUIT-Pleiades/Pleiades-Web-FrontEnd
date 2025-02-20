@@ -45,7 +45,9 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
     if (!response.ok) {
       console.log("이미지 생성에 실패했습니다");
-      navigate("/onboarding");
+      console.log(`req: ${imageRequestData}`);
+      console.log(response);
+      navigate("/home");
     }
 
     const data: CharacterImg = await response.json();

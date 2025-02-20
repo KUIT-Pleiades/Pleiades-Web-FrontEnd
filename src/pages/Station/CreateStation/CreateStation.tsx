@@ -7,10 +7,6 @@ import { fetchRequest } from '../../../functions/fetchRequest';
 import CreateStationInfo from './CreateStationInfo/CreateStationInfo';
 import CreateStationBackground from './CreateStationBackground/CreateStationBackground';
 
-// import background1 from '../../../assets/stationBackgroundImg/stationBackgroundImg_01.png';
-// import background2 from '../../../assets/stationBackgroundImg/stationBackgroundImg_02.png';
-// import background3 from '../../../assets/stationBackgroundImg/stationBackgroundImg_03.png';
-// import background4 from '../../../assets/stationBackgroundImg/stationBackgroundImg_04.png';
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds = [
@@ -19,24 +15,13 @@ const stationBackgrounds = [
   `${IMG_BASE_URL}station_dim_03.png`,
   `${IMG_BASE_URL}station_dim_04.png`
 ];
-// const stationBackgrounds = [
-//   `${IMG_BASE_URL}station_dim_01.png`,
-//   `${IMG_BASE_URL}station_dim_02.png`,
-//   `${IMG_BASE_URL}station_dim_03.png`,
-//   `${IMG_BASE_URL}station_dim_04.png`
-// ];
+
 const stationBackgroundPrevs = [
   `${IMG_BASE_URL}stationBackgroundPrevImg_01.png`,
   `${IMG_BASE_URL}stationBackgroundPrevImg_02.png`,
   `${IMG_BASE_URL}stationBackgroundPrevImg_03.png`,
   `${IMG_BASE_URL}stationBackgroundPrevImg_04.png`
 ]
-// import backgroundPrev1 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_01.png';
-// import backgroundPrev2 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_02.png';
-// import backgroundPrev3 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_03.png';
-// import backgroundPrev4 from '../../../assets/stationBackgroundImg/stationBackgroundPrevImg_04.png';
-
-// const stationBackgroundPrevs = [backgroundPrev1, backgroundPrev2, backgroundPrev3, backgroundPrev4];
 
 const CreateStation: React.FC = () => {
   const navigate = useNavigate();
@@ -101,7 +86,7 @@ const CreateStation: React.FC = () => {
     };
     
     const backgroundName = getFileName(background);
-    console.log('backgroundName: ', backgroundName);
+    console.log('backgroundName:',backgroundName);
 
     try {
       // 서버에 최종 데이터 전송

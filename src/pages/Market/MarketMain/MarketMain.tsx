@@ -7,7 +7,7 @@ import pleiadesLogo from '../../../assets/pleiadesLogoPurple.png';
 const MarketMain: React.FC = () => {
     return (
         <div className={s.container}>
-            <MarketBar coinBalance={100} stoneBalance={300} />
+            <MarketBar coinBalance={0} stoneBalance={300} />
             <div className={s.officialMarketContainer}>
                 <h2 className={s.officialMarketTitle}>공식몰</h2>
                 <div className={s.announcement}>

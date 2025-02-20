@@ -15,7 +15,6 @@ const StationDisplay: React.FC<StationProps> = ({
     numOfUsers,
     background
 }) => {
-  console.log('display backgroundImg: ', background);
   return (
     <div className={s.stationBox}>
       <div className={s.stationBackground} style={{ backgroundImage: `url(${background})` }} />

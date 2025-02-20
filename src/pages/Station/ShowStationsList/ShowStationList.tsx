@@ -16,10 +16,10 @@ import { fetchRequest } from '../../../functions/fetchRequest';
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
-  station_01: `${IMG_BASE_URL}station_01.png`,
-  station_02: `${IMG_BASE_URL}station_02.png`,
-  station_03: `${IMG_BASE_URL}station_03.png`,
-  station_04: `${IMG_BASE_URL}station_04.png`,
+  station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
+  station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
+  station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
+  station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
 };
 const ShowStationList: React.FC = () => {
   const { userInfo } = useCharacterStore();
@@ -35,10 +35,10 @@ const ShowStationList: React.FC = () => {
   const fetchStations = async () => {
     try {
       const response = await fetchRequest<Stations>('/stations', 'GET', null);
-      console.log('정거장 불러오기 요청 보냄. 응답: ',response);
       if (response && Array.isArray(response.stations)) {
         setStations(response);
         console.log('정거장 불러오기 응답 잘 받음');
+        console.log('응답:', response);
       }
     } catch (error) {
       console.error('정거장 불러오기 실패:', error);
@@ -253,7 +253,7 @@ const ShowStationList: React.FC = () => {
                 <StationDisplay
                   name={station.name}
                   numOfUsers={station.numOfUsers}
-                  background={stationBackgrounds[station.stationBackground] || `${IMG_BASE_URL}station_01.png`}
+                  background={stationBackgrounds[station.stationBackground] || `${IMG_BASE_URL}station_dim_01.png`}
                 />
               </div>
             ))

@@ -8,9 +8,12 @@ import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
 import { fetchRequest } from '../../functions/fetchRequest';
 import SendSignalPopup from './SendSignalPopup/SendSignalPopup';
+import ReceiveSignalPopup from './ReceiveSignalPopup/ReceiveSignalPopup';
 
 // image files
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
+import backArrow from '../../assets/FriendsTab/backArrow.svg';
+import Pending from '../PageManagement/Pending';
 
 interface Friend {
     friendId: number;
@@ -18,22 +21,27 @@ interface Friend {
     userName: string;
     profile: string;
 }
-
 interface FriendsData {
     received: Friend[];
     friend: Friend[];
     sent: Friend[];
 }
+interface SignalFrom {
+    userId: string;
+    userName: string;
+    imageIndex: number;
+}
 
 const FriendsTab: React.FC = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(true);
     const { userInfo } = useCharacterStore();
-    console.log("userInfo: ", userInfo);
     const userName = userInfo.userName || "플레이아데스";
-    const [friendsData, setFriendsData] = useState<FriendsData | null>(null);
+    const [friendsData, setFriendsData] = useState<FriendsData>({ received: [], friend: [], sent: [] });
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
+
     const [signalTo, setSignalTo] = useState<string>("");
-    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [signalImageIndex, setSignalImageIndex] = useState<number>(-1);
     const [isSendSignalPopupVisible, setIsSendSignalPopupVisible] = useState<boolean>(false);
     const handleOpenSendSignalPopup = (friendName: string) => {
         setSignalTo(friendName);
@@ -43,10 +51,10 @@ const FriendsTab: React.FC = () => {
         setIsSendSignalPopupVisible(false);
         setSignalTo("");
     };
-    const handleImageSelected = (index: number) => {
-        setSelectedImageIndex(index);
-        console.log(`선택된 이미지 인덱스: ${selectedImageIndex}`);
-    };
+
+    const [signalsQueue, setSignalsQueue] = useState<SignalFrom[]>([]);
+    const [currentSignalIndex, setCurrentSignalIndex] = useState<number>(0);
+    const [isReceiveSignalPopupVisible, setIsReceiveSignalPopupVisible] = useState<boolean>(false);
 
     // friends interaction functions
     const handleDeleteFriend = async(friendId: string) => {
@@ -94,26 +102,95 @@ const FriendsTab: React.FC = () => {
         } else console.error("친구 요청 취소 실패");
     }
     const handleSendSignal = async (friendId: string, friendName: string) => {
+        const randomIndex = Math.floor(Math.random() * 3);
+        setSignalImageIndex(randomIndex);
         const response = await fetchRequest<{ message: string }>(
-            `/friends/${friendId}/signal`,
+            '/friends/signals',
             "POST",
-            { receiverId: friendId }
+            {
+                receiverId: friendId,
+                imageIndex: signalImageIndex
+            }
         );
         if (response) {
-            console.log(response.message);
-            handleOpenSendSignalPopup(friendName);
+            console.log('시그널 보내기 응답: ',response.message);
+            if(response.message === "Signal sent successfully" || response.message === "You already sent a signal") {
+                handleOpenSendSignalPopup(friendName);
+            }else if(response.message === "Invalid or expired token") {
+                navigate("/login");
+            }
+            
         } else console.error("시그널 보내기 실패");
     }
+    const handleReceiveSignal = async () => {
+        try {
+            const response = await fetchRequest<{ signals: SignalFrom[] }>('/friends/signals', 'GET', null);
+            if (response) {
+                if(response.signals.length > 0){
+                    console.log("📩 받은 시그널 목록:", response.signals);
+                    setSignalsQueue(response.signals);
+                    setCurrentSignalIndex(0);
+                    setIsReceiveSignalPopupVisible(true);
+                }
+            }
+        } catch (error) {
+            console.error("❌ 시그널 받기 실패:", error);
+        }
+    };
+    const handleDeleteSignal = async () => {
+        if (signalsQueue.length === 0) return;
+
+        const currentSignal = signalsQueue[currentSignalIndex];
+        try {
+            const response = await fetchRequest<{ message: string }>(
+                `/friends/signals/${currentSignal.userId}`,
+                "DELETE",
+                null
+            );
+
+            if (response) {
+                console.log("🗑️ 시그널 삭제 완료:", response.message);
+
+                // 다음 시그널로 이동
+                const nextIndex = currentSignalIndex + 1;
+                if (nextIndex < signalsQueue.length) {
+                    setCurrentSignalIndex(nextIndex);
+                } else {
+                    // 모든 시그널이 처리되면 팝업 닫기
+                    setIsReceiveSignalPopupVisible(false);
+                    setSignalsQueue([]);
+                }
+            }
+        } catch (error) {
+            console.error("❌ 시그널 삭제 실패:", error);
+        }
+    };
+    // const handleDeleteSignal = async (userId: string) => { // 시그널 삭제하는 코드
+    //     const response = await fetchRequest<{ message: string }>(
+    //         `/friends/signals/${userId}`,
+    //         "DELETE",
+    //         null
+    //     );
+    //     if (response) {
+    //         console.log(response.message);
+    //     } else console.error("시그널 삭제 실패");
+    // }
 
     const getFriendsList = async () => {
-        const response = await fetchRequest<FriendsData>("/friends", "GET", null);
-        if (response) {
-            console.log("친구 목록 새로고침. 응답: ",response);
-            setFriendsData(response);
+        try {
+            const response = await fetchRequest<FriendsData>("/friends", "GET", null);
+            if (response) {
+                console.log("📜 친구 목록 불러오기:", response);
+                setFriendsData(response);
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("❌ 친구 목록 불러오기 실패:", error);
         }
     };
     useEffect(() => {
         getFriendsList();
+        handleReceiveSignal();
     }, []);
     useEffect(() => {
         if (friendsData?.friend?.length === 0 && friendsData?.received?.length === 0 && friendsData?.sent?.length === 0) {
@@ -123,12 +200,23 @@ const FriendsTab: React.FC = () => {
         }
     }, [friendsData]);
 
-    if (!friendsData) return <div>Loading...</div>;
+    // if (!friendsData) {
+    //     setLoading(true);
+    // } else {
+    //     setLoading(false);
+    // }
 
     return (
         <div className={s.container}>
+            {loading && <Pending />}
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
+                <button
+                    className={s.backButton}
+                    onClick={() => {navigate("/home");}}
+                >
+                    <img src={backArrow} alt='backArrow' />
+                </button>
                 <div className={s.title}>
                     <span className={s.titleName}>{userName}</span>
                     <span className={s.titleText}>님의 친구목록</span>
@@ -163,11 +251,18 @@ const FriendsTab: React.FC = () => {
             {isSendSignalPopupVisible &&
                 <SendSignalPopup
                     username={signalTo}
-                    isSendSignalPopupVisible={isSendSignalPopupVisible}
                     handleCloseSendSignalPopup={handleCloseSendSignalPopup}
-                    onImageSelected={handleImageSelected}
+                    imageIndex={signalImageIndex}
                 />
             }
+            {/* ⚡️ 시그널 수신 팝업 */}
+            {isReceiveSignalPopupVisible && signalsQueue.length > 0 && (
+                <ReceiveSignalPopup
+                    username={signalsQueue[currentSignalIndex].userName}
+                    handleCloseReceiveSignalPopup={handleDeleteSignal} // 시그널 삭제 후 다음 시그널 표시
+                    imageIndex={signalsQueue[currentSignalIndex].imageIndex}
+                />
+            )}
         </div>
     )
 }

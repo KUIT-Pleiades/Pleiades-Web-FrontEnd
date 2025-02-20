@@ -18,11 +18,10 @@ interface User {
 interface RecentSearchProps {
     onUserClick: (id: string) => void;
     getRecentSearches: () => void;
-    recentSearchloading: boolean;
     recentSearches: User[];
 }
 
-const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, getRecentSearches, recentSearchloading, recentSearches }) => {
+const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, getRecentSearches, recentSearches }) => {
 
     const handleRemoveRecentSearch = async (searchedId: string) => {
         try {
@@ -48,9 +47,7 @@ const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, getRecentSearc
         <div className={s.recentSearchContainer}>
             <span className={s.recentSearchTitle}>최근 검색</span>
             <div className={s.separator} />
-            {recentSearchloading ? (
-                <div className={s.loading}>로딩 중...</div>
-            ) : recentSearches.length === 0 ? (
+            {recentSearches.length === 0 ? (
                 <div className={s.noRecentSearchContainer}>
                     <span className={s.noRecentSearch}>검색 내역이 없어요</span>
                 </div>

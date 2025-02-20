@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchRequest } from "../../../functions/fetchRequest";
 import s from "./PersonalSetting.module.scss";
 import goBtn from "../../../assets/btnImg/goBtn.png";
+import { useAuth } from "../../../store/authStore";
+import { useCharacterStore } from "../../../store/useCharacterStore";
 
 interface UserData {
   userId: string;
@@ -15,6 +17,13 @@ interface UserData {
 const PersonalSetting: React.FC = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const { clearToken } = useAuth();
+  const { resetUserInfo } = useCharacterStore();
+
+  const handleLogout = () => {
+    resetUserInfo();
+    clearToken();
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -52,7 +61,7 @@ const PersonalSetting: React.FC = () => {
 
         <div className={s.menuItem}>
           <span>로그인 계정</span>
-					<span className={s.accountEmail}>{userData?.email}</span>
+          <span className={s.accountEmail}>{userData?.email}</span>
           <img src={goBtn} alt="" />
         </div>
 
@@ -72,7 +81,9 @@ const PersonalSetting: React.FC = () => {
       </div>
 
       <div className={s.bottomButtons}>
-        <button className={s.logoutBtn}>로그아웃</button>
+        <button className={s.logoutBtn} onClick={handleLogout}>
+          로그아웃
+        </button>
         <span>|</span>
         <button className={s.withdrawBtn}>탈퇴하기</button>
       </div>

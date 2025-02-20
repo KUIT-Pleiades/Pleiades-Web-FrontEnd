@@ -9,6 +9,7 @@ import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
 import { fetchRequest } from '../../functions/fetchRequest';
 import RecentSearch from './RecentSearch/RecentSearch';
 import SearchResults from './SearchResults/SearchResults';
+import Pending from '../PageManagement/Pending';
 
 interface User {
     userId: string;
@@ -109,6 +110,7 @@ const SearchUsers: React.FC = () => {
     
     return (
         <div className={s.container}>
+            {recentSearchloading || loading && <Pending />}
             {/*================================ 제목 부분 ===================================*/}
             <div className={s.headContainer}>
                 <div className={s.searchSection}>
@@ -132,15 +134,13 @@ const SearchUsers: React.FC = () => {
                     <RecentSearch
                         onUserClick={handleRecentSearchClick}
                         getRecentSearches={getRecentSearches}
-                        recentSearchloading={recentSearchloading}
+                        //recentSearchloading={recentSearchloading}
                         recentSearches={recentSearches}
                     />
                 </div>
             }
             {/*================================ 검색 결과 ================================*/}
-            {loading ? (
-                <div className={s.loading}>검색 중...</div>
-            ) : filteredUsers.length > 0 ? (
+            {filteredUsers.length > 0 ? (
                 <div className={s.searchResultsContainer}>
                     <SearchResults
                         filteredUsers={filteredUsers}
