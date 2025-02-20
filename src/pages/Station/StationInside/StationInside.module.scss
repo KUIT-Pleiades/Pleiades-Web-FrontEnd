@@ -19,6 +19,7 @@
 	justify-content: space-between;
 
 	.backBtn {
+		z-index: 10;
 		padding-left: 17px;
 
 		img {
@@ -47,7 +48,6 @@
 			}
 		}
 	}
-
 
 	.header {
 		position: absolute;
