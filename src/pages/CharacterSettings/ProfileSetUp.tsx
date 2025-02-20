@@ -3,7 +3,7 @@ import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import popupStars from "../../assets/popupStars.svg";
+//import popupStars from "../../assets/popupStars.svg";
 import { fetchRequest } from "../../functions/fetchRequest";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -297,17 +297,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       </div>
       {isPokePopupVisible && (
         <div className={s.pokePopup}>
-          <img
-            src={popupStars}
-            alt="pokePopupStars"
-            className={s.pokePopupStarsUp}
-          />
           {`${errorMessage}`}
-          <img
-            src={popupStars}
-            alt="pokePopupStars"
-            className={s.pokePopupStarsDown}
-          />
         </div>
       )}
     </div>

@@ -4,7 +4,7 @@ import BottomBar from "../../pageLayout/BottomBar";
 export default function Setting() {
   return (
     <>
-      <Outlet />
+			<Outlet />
       <BottomBar />
     </>
   );

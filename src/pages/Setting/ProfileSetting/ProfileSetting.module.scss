@@ -1,0 +1,337 @@
+.profileContainer {
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
+
+	box-sizing: border-box;
+
+	.header {
+		position: absolute;
+		width: 100%;
+		height: 80px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: var(--gray-11, #17151C);
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.32px;
+		background: #FFF;
+		padding: 14px;
+		box-sizing: border-box;
+
+		img {
+			width: 7px;
+			height: 14px;
+		}
+
+		button {
+			border: none;
+			color: var(--gray-11, #17151C);
+			text-align: center;
+			font-family: Pretendard;
+			font-size: 15px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			letter-spacing: -0.3px;
+			cursor: pointer;
+		}
+	}
+}
+
+.container {
+	position: relative;
+}
+
+.profileImg {
+	position: absolute;
+	top: 80px;
+	width: 100%;
+	height: calc(30dvh - 80px);
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+
+	img {
+		height: calc(28dvh - 80px);
+	}
+}
+
+.profile {
+	position: absolute;
+	top: 30dvh;
+	height: 61dvh;
+	width: 100%;
+	padding: 0 14px;
+	box-sizing: border-box;
+
+	.nameInput {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		span {
+			color: var(--gray-22, #444);
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.26px;
+		}
+
+		input {
+			text-indent: 26px;
+			border-radius: 12px;
+			border: 1px solid #BEAADD;
+			background: #FFF;
+			font-family: Pretendard;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+			height: 5dvh;
+
+			&:focus {
+				outline: none; // 기본 포커스 테두리 제거
+				//border: 1px solid #9370DB; // 포커스 시 보라색 테두리
+
+			}
+
+			&::placeholder {
+				color: #E1E1E1;
+				font-family: Pretendard;
+				font-size: 14px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+				letter-spacing: -0.28px;
+			}
+		}
+	}
+
+		.idInput {
+			margin-top: 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			
+			
+
+			.idHeader{
+				display: flex;
+				justify-content: space-between;
+			}
+	
+			span {
+				color: var(--gray-22, #444);
+				font-family: Pretendard;
+				font-size: 13px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: normal;
+				letter-spacing: -0.26px;
+			}
+	
+			input {
+				text-indent: 26px;
+				border-radius: 12px;
+				border: none;
+				background: #FFF;
+				font-family: Pretendard;
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: normal;
+				letter-spacing: -0.32px;
+				height: 100%;
+				width: 100%;
+				box-sizing: border-box;
+	
+				&:focus {
+					outline: none; // 기본 포커스 테두리 제거
+					//border: 1px solid #9370DB; // 포커스 시 보라색 테두리
+	
+				}
+	
+				&::placeholder {
+					color: #E1E1E1;
+					font-family: Pretendard;
+					font-size: 14px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: normal;
+					letter-spacing: -0.28px;
+				}
+			}
+		}
+
+	.ageInput {
+		position: relative;
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+		height: 7dvh;
+		align-items: center;
+
+		.age{
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: var(--gray-22, #444);
+				font-family: Pretendard;
+				font-size: 13px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: normal;
+				letter-spacing: -0.26px;
+		}
+		
+
+		:global(.react-calendar){
+			max-width: 450px;
+		}
+	}
+
+}
+
+.btnContainer{
+	position: relative;
+			width: 100%;
+				height: 5dvh;
+				border: 1px solid #BEAADD;
+					border-radius: 12px;
+}
+
+.checkBtn {
+	position: absolute;
+	color: #FFF;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+	background: var(--color-5-main, #C0B9DB);
+	border-radius: 30px;
+	top: 1dvh;
+		right: 14px;
+		height: 3dvh;
+		width: 79px;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		border-radius: 30px;
+		background: var(--gray-6-bar, #CBCCCB);
+	}
+
+	&.available {
+		color: #C0B9DB;
+		background-color: #ffffff;
+	}
+}
+
+.idCheckMessage {
+	position: absolute;
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	right: 14px;
+
+	&.available {
+		color: var(--color-8-id, #8B6193); // 사용 가능할 때의 색상
+	}
+
+	&.unavailable {
+		color: #FF6767; // 사용 불가능할 때의 색상
+	}
+}
+
+.pokePopup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: var(--gray-9, #EDEFFF);
+	border: none;
+	border-radius: 0.75rem;
+	box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
+	padding: 0;
+	width: 70%;
+	height: 3.0625rem;
+	color: var(--gray-11, #17151C);
+	text-align: center;
+	font-family: "ElectricalSafety";
+	font-size: 0.9375rem;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	z-index: 1000;
+	animation: fadeInOut 1.5s ease-in-out;
+
+	@keyframes fadeInOut {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, -60%);
+		}
+
+		10% {
+			opacity: 1;
+			transform: translate(-50%, -50%);
+		}
+
+		90% {
+			opacity: 1;
+			transform: translate(-50%, -50%);
+		}
+
+		100% {
+			opacity: 0;
+			transform: translate(-50%, -40%);
+		}
+	}
+}
+
+.pokePopupStarsUp {
+	position: fixed;
+	top: -50%;
+	/* 팝업 상단에서 약간 위로 배치 */
+	left: 2%;
+	/* 팝업 왼쪽에서 약간 왼쪽으로 배치 */
+	width: 20px;
+	/* 별 이미지 크기 */
+	height: 20px;
+	/* 별 이미지 크기 */
+	z-index: 1001;
+	/* 팝업 위에 표시되도록 z-index 설정 */
+}
+
+.pokePopupStarsDown {
+	position: fixed;
+	bottom: -50%;
+	/* 팝업 상단에서 약간 위로 배치 */
+	right: 2%;
+	/* 팝업 왼쪽에서 약간 왼쪽으로 배치 */
+	width: 20px;
+	/* 별 이미지 크기 */
+	height: 20px;
+	/* 별 이미지 크기 */
+	z-index: 1001;
+	/* 팝업 위에 표시되도록 z-index 설정 */
+}
+
