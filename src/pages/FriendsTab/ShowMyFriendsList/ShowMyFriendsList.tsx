@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import s from './ShowMyFriendsList.module.scss';
-import { OtherUser } from '../../../interfaces/Interfaces';
+import React, { useState } from "react";
+import s from "./ShowMyFriendsList.module.scss";
+import { OtherUser } from "../../../interfaces/Interfaces";
 
 // components
-import DeleteFriendModal from '../../../components/DeleteFriendModal/DeleteFriendModal';
-import SignalButton from '../../../components/SignalButton/SignalButton';
+import DeleteFriendModal from "../../../components/DeleteFriendModal/DeleteFriendModal";
+import SignalButton from "../../../components/SignalButton/SignalButton";
 
 //image files
 //import profileImageSmall from '../../../assets/FriendsTab/profileImageSmall.png';
-import deleteFriendsButton from '../../../assets/FriendsTab/deleteFriendsButton.svg';
+import deleteFriendsButton from "../../../assets/FriendsTab/deleteFriendsButton.svg";
+import { useNavigate } from "react-router-dom";
 
 interface ShowMyFriendsListProps {
-    otherUser: OtherUser;
-    handleDeleteFriend: (id: string) => void;
-    handleSendSignal: (id: string, friendName: string) => void;
-    onActionFriendId: string;
-    setOnActionFriendId: (friendId: string) => void;
+  otherUser: OtherUser;
+  handleDeleteFriend: (id: string) => void;
+  handleSendSignal: (id: string, friendName: string) => void;
+  onActionFriendId: string;
+  setOnActionFriendId: (friendId: string) => void;
 }
 
 const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
@@ -25,11 +26,12 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
   onActionFriendId,
   setOnActionFriendId,
 }) => {
+  const navigate = useNavigate();
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
-
+  const userId = otherUser.friendId;
   const handleGoStation = () => {
-    //go to station
-  }
+    navigate("/friendstar", { state: { userId } });
+  };
 
   const handleOpenDeleteFriendModal = () => setIsDeleteFriendModalOpen(true);
   const handleCloseDeleteFriendModal = () => setIsDeleteFriendModalOpen(false);
@@ -49,25 +51,30 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
         <button
           className={s.showDeleteFriendModalButton}
           onClick={handleOpenDeleteFriendModal}
-        >친구 삭제</button>
+        >
+          친구 삭제
+        </button>
       );
     }
     return (
       <SignalButton
-        onClickSignal={() => handleSendSignal(otherUser.userId, otherUser.userName)}
+        onClickSignal={() =>
+          handleSendSignal(otherUser.userId, otherUser.userName)
+        }
       />
     );
   };
 
   return (
     <div className={s.container}>
-      <div
-        className={s.userInfoContainer}
-        onClick={handleGoStation}
-      >
+      <div className={s.userInfoContainer} onClick={handleGoStation}>
         {/*============= 프로필 사진 =============*/}
         <div className={s.profileImageContainer}>
-          <img src={otherUser.profile} alt={`${otherUser.userName}의 프로필 이미지`} className={s.profileImage} />
+          <img
+            src={otherUser.profile}
+            alt={`${otherUser.userName}의 프로필 이미지`}
+            className={s.profileImage}
+          />
         </div>
         {/*============= 이름, ID =============*/}
         <div className={s.nameId}>
@@ -78,7 +85,6 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
       <div className={s.emptySpace} onClick={handleGoStation} />
       {/*============= 버튼 =============*/}
       <div className={s.buttonContainer}>
-        
         <RenderButtons />
 
         <button
@@ -86,11 +92,12 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
           onClick={() => {
             if (onActionFriendId === otherUser.userId) {
               setOnActionFriendId("");
-            }else{
+            } else {
               setOnActionFriendId(otherUser.userId);
             }
-          }}>
-          <img src={deleteFriendsButton} alt='deleteFriendsButton' />
+          }}
+        >
+          <img src={deleteFriendsButton} alt="deleteFriendsButton" />
         </button>
       </div>
       {isDeleteFriendModalOpen && (
@@ -103,7 +110,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
         />
       )}
     </div>
-  )
-}
+  );
+};
 
 export default ShowMyFriendsList;

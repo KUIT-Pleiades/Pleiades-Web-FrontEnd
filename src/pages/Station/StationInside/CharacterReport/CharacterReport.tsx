@@ -5,13 +5,14 @@ import { formatDateTime } from "../../../../functions/formatDateTime";
 import s from "./CharacterReport.module.scss";
 import messageIcon from "../../../../assets/Icon/message.svg";
 import closeBtn from "../../../../assets/btnImg/closeBtn.svg";
+import { useNavigate } from "react-router-dom";
 
 interface ReportProps {
   onClose: () => void;
   memberName?: string;
   stationId: string;
-	userId: string;
-	profile: string;
+  userId: string;
+  profile: string;
 }
 
 interface ReportResponse {
@@ -30,9 +31,10 @@ const CharacterReport: React.FC<ReportProps> = ({
   onClose,
   memberName,
   stationId,
-	userId,
-	profile
+  userId,
+  profile,
 }) => {
+  const navigate = useNavigate();
   const [reportData, setReportData] = useState<ReportResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -69,12 +71,17 @@ const CharacterReport: React.FC<ReportProps> = ({
     <div className={s.container}>
       <div className={s.overlay}>
         <div className={s.title}>
-					<div className={s.bar1}></div>
-					<img src={profile} alt="" />
+          <div className={s.bar1}></div>
+          <img src={profile} alt="" />
           <div className={s.reportOner}>{memberName}님의 리포트</div>
           <div className={s.handleContainer}>
             <div className={s.reportUserId}>(@{userId})</div>
-            <button className={s.visitStar}>별 방문하기</button>
+            <button
+              className={s.visitStar}
+              onClick={() => navigate("/friendstar", { state: { userId } })}
+            >
+              별 방문하기
+            </button>
           </div>
           <div className={s.bar2}></div>
         </div>
