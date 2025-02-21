@@ -32,8 +32,9 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   };
 
   const complete = async () => {
+    setLoadingState(false);
     const { profile, character, ...imageRequestData } = userInfo;
-    console.log(`${profile}  ${character}`);
+    console.log(`${profile} ${character}`);
 
     const response = await fetch(IMG_MAKER, {
       method: "POST",
@@ -45,13 +46,11 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
     if (!response.ok) {
       console.log("이미지 생성에 실패했습니다");
-      console.log(`req: ${imageRequestData}`);
       console.log(response);
       navigate("/home");
     }
 
     const data: CharacterImg = await response.json();
-    console.log(data);
 
     // 두 번째 요청: 회원가입
     const signupData: UserInfo = {
@@ -59,8 +58,6 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
       character: data.character, // 첫 번째 요청에서 받은 이미지 URL
     };
-    console.log(data.profile);
-    console.log(data.character);
 
     const endpoint = location.pathname.includes("onboarding")
       ? "/auth/signup"
@@ -74,16 +71,13 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
 
     if (signupResponse === null) {
       console.log("회원가입 실패");
-      setLoadingState(false);
       navigate("/loginfail");
     } else if (signupResponse.message === "duplicate user") {
       console.log("회원가입 실패:", signupResponse.message);
-      setLoadingState(false);
       navigate("/login");
     } else {
       console.log("회원가입 성공:", signupResponse.message);
       updateUserInfo(signupData);
-      setLoadingState(false);
       navigate("/home");
     }
   };
