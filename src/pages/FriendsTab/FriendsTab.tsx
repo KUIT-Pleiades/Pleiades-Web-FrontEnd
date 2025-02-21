@@ -257,7 +257,7 @@ const FriendsTab: React.FC = () => {
                 <ReceiveSignalPopup
                     username={signalsQueue[currentSignalIndex].userName}
                     handleCloseReceiveSignalPopup={handleDeleteSignal} // 시그널 삭제 후 다음 시그널 표시
-                    imageIndex={signalsQueue[currentSignalIndex].imageIndex+1}
+                    imageIndex={signalsQueue[currentSignalIndex].imageIndex}
                 />
             )}
         </div>
