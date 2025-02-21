@@ -24,6 +24,8 @@ const ReceiveSignalPopup: React.FC<ReceiveSignalPopupProps> = ({
     const images = [receive1, receive2, receive3];
     if(0 <= imageIndex && imageIndex < 3){
         setIndex(imageIndex);
+    }else {
+        setIndex(Math.floor(Math.random() * 3));
     }
     const sentences1 = ["⚡️찌릿!", "🚀우주에서", "🔔띠링!"];
     const sentences2 = ["님이 보낸 신호를", "님이 보낸 신호가", "님의 신호를 받았어요."];
