@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMessage } from "../../functions/isMessage";
 import { fetchRequest } from "../../functions/fetchRequest";
-import { Message, User } from "../../interfaces/Interfaces";
+import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
 export default function LogIn() {
@@ -29,7 +29,7 @@ export default function LogIn() {
         if (status) {
           console.log(status);
           //유저정보 받아와야함
-          const userData = await fetchRequest<User | Message>(
+          const userData = await fetchRequest<UserInfo | Message>(
             "/home",
             "GET",
             null

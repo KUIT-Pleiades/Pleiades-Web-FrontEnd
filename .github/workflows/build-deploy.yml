@@ -26,6 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm install
+
       - name: Create .env file
         run: |
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
@@ -34,7 +35,8 @@ jobs:
           echo "VITE_PINATA_ENDPOINT=${{ secrets.VITE_PINATA_ENDPOINT }}" >> .env
           echo "VITE_IMG_MAKER=${{ secrets.VITE_IMG_MAKER }}" >> .env
       - run: npm run build --if-present
-      - uses: awact/s3-action@master
+      - name: S3 Deploy
+        uses: awact/s3-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
@@ -43,3 +45,11 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Clean CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "ap-northeast-2"
