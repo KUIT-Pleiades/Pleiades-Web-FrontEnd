@@ -3,6 +3,7 @@ import s from "./StationReport.module.scss";
 import { fetchRequest } from "../../../../functions/fetchRequest";
 // import { formatDateTime } from "../../../../functions/formatDateTime";
 import messageIcon from "../../../../assets/Icon/message.svg";
+import Pending from "../../../PageManagement/Pending";
 
 interface StationReportProps {
   stationId: string;
@@ -116,7 +117,7 @@ const StationReport: React.FC<StationReportProps> = ({
     setEditedAnswer(reportData?.answer || "");
   };
 
-  if (isLoading) return <div className={s.loading}>로딩 중...</div>;
+  if (isLoading) return <Pending />;
   if (!reportData) return null;
 
   return (
