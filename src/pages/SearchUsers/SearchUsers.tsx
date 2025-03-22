@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import s from './SearchUsers.module.scss';
 import { useNavigate } from 'react-router-dom';
-// import pleiadesAllUsers from '../../mock/pleiadesUsers.json';
-// import friendsExampleData from '../../mock/socialInfo.json';
 
 // components
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
@@ -10,23 +8,12 @@ import { fetchRequest } from '../../functions/fetchRequest';
 import RecentSearch from './RecentSearch/RecentSearch';
 import SearchResults from './SearchResults/SearchResults';
 import Pending from '../PageManagement/Pending';
-
-interface User {
-    userId: string;
-    userName: string;
-    profile: string;
-    status: "FRIEND" | "RECEIVED" | "SENT" | "JUSTHUMAN";
-}
-interface RecentSearchedUser {
-    userId: string;
-    userName: string;
-    profile: string;
-}
+import { SearchedUser, RecentSearchedUser } from '../../interfaces/Interfaces';
 
 const SearchUsers: React.FC = () => {
     const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+    const [filteredUsers, setFilteredUsers] = useState<SearchedUser[]>([]);
     const [showNoResultMessage, setShowNoResultMessage] = useState(false);
     const [recentSearches, setRecentSearches] = useState<RecentSearchedUser[]>([]);
     const [recentSearchloading, setRecentSearchLoading] = useState<boolean>(true);
@@ -53,11 +40,7 @@ const SearchUsers: React.FC = () => {
         setShowNoResultMessage(false);
     
         try {
-            // ❌ 잘못된 타입 추론 (response가 배열이 아님)
-            // const response = await fetchRequest<User[]>("/users?user_id=" + searchQuery, "GET", null);
-            
-            // ✅ 올바른 타입 적용 (response.users에 접근)
-            const response = await fetchRequest<{ users: User[] }>(
+            const response = await fetchRequest<{ users: SearchedUser[] }>(
                 `/users?user_id=${searchQuery}`,
                 "GET",
                 null

@@ -1,8 +1,3 @@
-/* CreateStationInfo.tsx
-   1단계: 정거장 정보(이름, 소개, 알림 시간) 입력 화면
-   - props로 상위에서 전달받은 상태와 setter 함수를 이용해 값을 업데이트
-   - "다음" 버튼 클릭 시 handleNext를 호출
-*/
 import React from 'react';
 import s from './CreateStationInfo.module.scss';
 

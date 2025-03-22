@@ -226,7 +226,28 @@ export interface OtherUser {
 }
 
 export interface Social {
-  friendRequest: OtherUser[];
-  Myfriends: OtherUser[];
-  MyRequests: OtherUser[];
+  received: OtherUser[];
+  friend: OtherUser[];
+  sent: OtherUser[];
+}
+
+/** Interfaces For Signal */
+export interface SignalFrom {
+  userId: string;
+  userName: string;
+  imageIndex: number;
+}
+
+/** Interfaces For Search */
+export interface SearchedUser {
+  userId: string;
+  userName: string;
+  profile: string;
+  status: "FRIEND" | "RECEIVED" | "SENT" | "JUSTHUMAN";
+}
+
+export interface RecentSearchedUser {
+  userId: string;
+  userName: string;
+  profile: string;
 }
