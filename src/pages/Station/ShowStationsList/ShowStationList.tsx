@@ -6,12 +6,12 @@ import { Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
+import { fetchRequest } from '../../../functions/fetchRequest';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
-import { fetchRequest } from '../../../functions/fetchRequest';
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 

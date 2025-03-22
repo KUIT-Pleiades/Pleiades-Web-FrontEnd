@@ -14,30 +14,14 @@ import ReceiveSignalPopup from './ReceiveSignalPopup/ReceiveSignalPopup';
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
 import backArrow from '../../assets/FriendsTab/backArrow.svg';
 import Pending from '../PageManagement/Pending';
-
-interface Friend {
-    friendId: number;
-    userId: string;
-    userName: string;
-    profile: string;
-}
-interface FriendsData {
-    received: Friend[];
-    friend: Friend[];
-    sent: Friend[];
-}
-interface SignalFrom {
-    userId: string;
-    userName: string;
-    imageIndex: number;
-}
+import { SignalFrom, Social } from '../../interfaces/Interfaces';
 
 const FriendsTab: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
     const { userInfo } = useCharacterStore();
     const userName = userInfo.userName || "플레이아데스";
-    const [friendsData, setFriendsData] = useState<FriendsData>({ received: [], friend: [], sent: [] });
+    const [friendsData, setFriendsData] = useState<Social>({ received: [], friend: [], sent: [] });
     const [hasNoFriend, setHasNoFriend] = useState<boolean>(false);
 
     const [signalTo, setSignalTo] = useState<string>("");
@@ -181,7 +165,7 @@ const FriendsTab: React.FC = () => {
 
     const getFriendsList = async () => {
         try {
-            const response = await fetchRequest<FriendsData>("/friends", "GET", null);
+            const response = await fetchRequest<Social>("/friends", "GET", null);
             if (response) {
                 console.log("📜 친구 목록 불러오기:", response);
                 setFriendsData(response);
