@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { naverLogInRequest } from "../../functions/logInRequest";
 import { useAuth } from "../../store/authStore";
 import LogInPending from "./LogInPending";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { isMessage } from "../../functions/isMessage";
 import { useCharacterStore } from "../../store/useCharacterStore";
@@ -36,7 +36,7 @@ export default function NaverLogin() {
   useEffect(() => {
     if (authorization) {
       const getUser = async () => {
-        const userData = await fetchRequest<UserInfo | Message>(
+        const userData = await axiosRequest<UserInfo | Message>(
           "/home",
           "GET",
           null

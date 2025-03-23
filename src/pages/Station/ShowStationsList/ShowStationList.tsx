@@ -6,7 +6,7 @@ import { Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
-import { fetchRequest } from '../../../functions/fetchRequest';
+import { axiosRequest } from '../../../functions/axiosRequest';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
@@ -34,7 +34,7 @@ const ShowStationList: React.FC = () => {
   // 정거장 목록 가져오기
   const fetchStations = async () => {
     try {
-      const response = await fetchRequest<Stations>('/stations', 'GET', null);
+      const response = await axiosRequest<Stations>('/stations', 'GET', null);
       if (response && Array.isArray(response.stations)) {
         setStations(response);
         console.log('정거장 불러오기 응답 잘 받음');
@@ -56,7 +56,11 @@ const ShowStationList: React.FC = () => {
   // 정거장 검색 및 입장
   const fetchSearchedStation = async (stationId: string) => {
     try {
-      const response = await fetchRequest<{ message: string }>(`/stations/${stationId}`, 'PATCH', null);
+      const response = await axiosRequest<{ message: string }>(
+        `/stations/${stationId}`,
+        "PATCH",
+        null
+      );
       console.log('정거장 검색어:', stationId);
   
       // 200 OK - 정거장 입장 성공
@@ -149,7 +153,11 @@ const ShowStationList: React.FC = () => {
   // 정거장 입장
   const handleEnterStation = async (stationId: string) => {
     try {
-        const response = await fetchRequest<{ message: string }>(`/stations/${stationId}`, 'PATCH', null);
+        const response = await axiosRequest<{ message: string }>(
+          `/stations/${stationId}`,
+          "PATCH",
+          null
+        );
         console.log('정거장 입장 요청:', stationId);
 
         // ✅ 200 OK - 정거장 입장 성공

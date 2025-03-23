@@ -4,7 +4,7 @@ import characterBackground from "../../assets/backgroundImg/characterBackground.
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 //import popupStars from "../../assets/popupStars.svg";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -53,7 +53,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   const checkDuplicateId = async (id: string) => {
     try {
-      const response = await fetchRequest<IdCheckResponse>(
+      const response = await axiosRequest<IdCheckResponse>(
         `/auth/checkId?userId=${id}`,
         "GET",
         null

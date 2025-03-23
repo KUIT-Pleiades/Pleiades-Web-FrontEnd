@@ -3,7 +3,7 @@ import s from './RecentSearch.module.scss';
 
 // components
 import ShowRecentSearchUsers from './ShowRecentSearchUser/ShowRecentSearchUser';
-import { fetchRequest } from '../../../functions/fetchRequest';
+import { axiosRequest } from '../../../functions/axiosRequest';
 import { RecentSearchedUser } from '../../../interfaces/Interfaces';
 
 interface RecentSearchProps {
@@ -16,10 +16,10 @@ const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, getRecentSearc
 
     const handleRemoveRecentSearch = async (searchedId: string) => {
         try {
-            const response = await fetchRequest<{ message: string }>(
-                `/users/histories/${searchedId}`,
-                "DELETE",
-                null
+            const response = await axiosRequest<{ message: string }>(
+              `/users/histories/${searchedId}`,
+              "DELETE",
+              null
             );
     
             if (!response) {

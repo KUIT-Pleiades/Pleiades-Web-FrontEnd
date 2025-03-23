@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import s from "./CreateStation.module.scss";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 
 // 하위 스텝 컴포넌트
 import SetStationInfo from "./SetStationInfo/SetStationInfo";
@@ -78,7 +78,7 @@ const StationSetting: React.FC = () => {
 
     try {
       // 서버에 최종 데이터 전송
-      const response = await fetchRequest<StationResquest>(
+      const response = await axiosRequest<StationResquest>(
         `/stations/${stationData.stationId}/settings`,
         "PATCH",
         {
