@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchRequest } from "../../../../functions/fetchRequest";
+import { axiosRequest } from "../../../../functions/axiosRequest";
 import { useState, useEffect } from "react";
 import { formatDateTime } from "../../../../functions/formatDateTime";
 import s from "./CharacterReport.module.scss";
@@ -43,7 +43,7 @@ const CharacterReport: React.FC<ReportProps> = ({
     const getReport = async () => {
       try {
         setIsLoading(true);
-        const response = await fetchRequest<ReportResponse>(
+        const response = await axiosRequest<ReportResponse>(
           `/stations/${stationId}/users/${userId}/report`,
           "GET",
           null

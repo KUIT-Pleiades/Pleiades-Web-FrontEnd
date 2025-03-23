@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 // components
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
-import { fetchRequest } from '../../functions/fetchRequest';
+import { axiosRequest } from '../../functions/axiosRequest';
 import RecentSearch from './RecentSearch/RecentSearch';
 import SearchResults from './SearchResults/SearchResults';
 import Pending from '../PageManagement/Pending';
@@ -40,10 +40,10 @@ const SearchUsers: React.FC = () => {
         setShowNoResultMessage(false);
     
         try {
-            const response = await fetchRequest<{ users: SearchedUser[] }>(
-                `/users?user_id=${searchQuery}`,
-                "GET",
-                null
+            const response = await axiosRequest<{ users: SearchedUser[] }>(
+              `/users?user_id=${searchQuery}`,
+              "GET",
+              null
             );
     
             console.log('검색 요청 완료. 검색어: ', searchQuery);
@@ -68,10 +68,10 @@ const SearchUsers: React.FC = () => {
 
     const getRecentSearches = async () => {
         setRecentSearchLoading(true);
-        const response = await fetchRequest<{ users: RecentSearchedUser[] }>(
-            "/users/histories",
-            "GET",
-            null
+        const response = await axiosRequest<{ users: RecentSearchedUser[] }>(
+          "/users/histories",
+          "GET",
+          null
         );
         if (response && response.users) {
             setRecentSearches(response.users);

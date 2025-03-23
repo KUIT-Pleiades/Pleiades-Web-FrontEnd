@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 import s from "./PersonalSetting.module.scss";
 import goBtn from "../../../assets/btnImg/goBtn.png";
 import { useAuth } from "../../../store/authStore";
@@ -28,7 +28,7 @@ const PersonalSetting: React.FC = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        const response = await fetchRequest<UserData>(
+        const response = await axiosRequest<UserData>(
           "/home/settings/profile",
           "GET",
           null

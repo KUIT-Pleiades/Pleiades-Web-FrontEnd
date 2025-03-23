@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./CreateStation.module.scss";
 import { useNavigate } from "react-router-dom";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 
 import SetStationBackground from "./SetStationBackground/SetStationBackground";
 
@@ -51,7 +51,7 @@ const StationBackgroundSetting: React.FC = () => {
 
     try {
       // 서버에 배경 데이터 전송
-      const response = await fetchRequest<{
+      const response = await axiosRequest<{
         message?: string;
       }>(`/stations/${stationId}/background`, "PATCH", {
         stationBackground: backgroundName,

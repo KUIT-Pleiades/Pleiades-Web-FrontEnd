@@ -10,7 +10,7 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMessage } from "../../functions/isMessage";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
@@ -29,7 +29,7 @@ export default function LogIn() {
         if (status) {
           console.log(status);
           //유저정보 받아와야함
-          const userData = await fetchRequest<UserInfo | Message>(
+          const userData = await axiosRequest<UserInfo | Message>(
             "/home",
             "GET",
             null

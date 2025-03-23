@@ -1,7 +1,7 @@
 import s from "./StationSlide.module.scss";
 import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 import { useNavigate } from "react-router-dom";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import copyBtn from "../../../assets/btnImg/copyBtn.png";
@@ -92,7 +92,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
   // 친구 요청 보내는 함수 추가
   const handleSendRequestFriend = async (friendId: string) => {
     try {
-      const response = await fetchRequest<{ message: string }>(
+      const response = await axiosRequest<{ message: string }>(
         `/friends/requests`,
         "POST",
         { receiverId: friendId }

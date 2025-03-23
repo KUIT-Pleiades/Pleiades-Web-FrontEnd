@@ -6,7 +6,7 @@ import { useCharacterStore } from '../../store/useCharacterStore';
 // components
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
-import { fetchRequest } from '../../functions/fetchRequest';
+import { axiosRequest } from '../../functions/axiosRequest';
 import SendSignalPopup from './SendSignalPopup/SendSignalPopup';
 import ReceiveSignalPopup from './ReceiveSignalPopup/ReceiveSignalPopup';
 
@@ -42,10 +42,10 @@ const FriendsTab: React.FC = () => {
 
     // friends interaction functions
     const handleDeleteFriend = async(friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "DELETE",
-            null
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "DELETE",
+          null
         );
         if (response) {
             console.log("친구 삭제 완료. 응답: ", response);
@@ -53,10 +53,10 @@ const FriendsTab: React.FC = () => {
         } else console.error("친구 삭제 실패");
     }
     const handleAcceptRequest = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "PATCH",
-            { status: "ACCEPTED" }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "PATCH",
+          { status: "ACCEPTED" }
         );
         if (response) {
             console.log(response.message);
@@ -64,10 +64,10 @@ const FriendsTab: React.FC = () => {
         } else console.error("친구 요청 수락 실패");
     };
     const handleRejectRequest = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "PATCH",
-            { status: "REJECTED" }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "PATCH",
+          { status: "REJECTED" }
         );
         if (response) {
             console.log(response.message);
@@ -75,10 +75,10 @@ const FriendsTab: React.FC = () => {
         } else console.error("친구 요청 거절 실패");
     }
     const handleDeleteRequest = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "DELETE",
-            null
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "DELETE",
+          null
         );
         if (response) {
             console.log('삭제 완료. 응답 메시지: ',response);
@@ -100,10 +100,14 @@ const FriendsTab: React.FC = () => {
         console.log("📤 시그널 보냄. to:", friendId, " | 이미지 인덱스:", imageIndex);
         
         try {
-            const response = await fetchRequest<{ message: string }>('/friends/signals', "POST", {
+            const response = await axiosRequest<{ message: string }>(
+              "/friends/signals",
+              "POST",
+              {
                 receiverId: friendId,
                 imageIndex: imageIndex,
-            });
+              }
+            );
     
             if (response) {
                 console.log("📩 시그널 보내기 응답:", response.message);
@@ -121,7 +125,11 @@ const FriendsTab: React.FC = () => {
     };
     const handleReceiveSignal = async () => {
         try {
-            const response = await fetchRequest<{ signals: SignalFrom[] }>('/friends/signals', 'GET', null);
+            const response = await axiosRequest<{ signals: SignalFrom[] }>(
+              "/friends/signals",
+              "GET",
+              null
+            );
             if (response) {
                 if(response.signals.length > 0){
                     console.log("📩 받은 시그널 목록:", response.signals);
@@ -139,10 +147,10 @@ const FriendsTab: React.FC = () => {
 
         const currentSignal = signalsQueue[currentSignalIndex];
         try {
-            const response = await fetchRequest<{ message: string }>(
-                `/friends/signals/${currentSignal.userId}`,
-                "DELETE",
-                null
+            const response = await axiosRequest<{ message: string }>(
+              `/friends/signals/${currentSignal.userId}`,
+              "DELETE",
+              null
             );
 
             if (response) {
@@ -165,7 +173,11 @@ const FriendsTab: React.FC = () => {
 
     const getFriendsList = async () => {
         try {
-            const response = await fetchRequest<Social>("/friends", "GET", null);
+            const response = await axiosRequest<Social>(
+              "/friends",
+              "GET",
+              null
+            );
             if (response) {
                 console.log("📜 친구 목록 불러오기:", response);
                 setFriendsData(response);

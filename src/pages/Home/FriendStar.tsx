@@ -4,7 +4,7 @@ import diary from "../../assets/home/diary.svg";
 import { getImage } from "../../functions/getImage";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 import { User } from "../../interfaces/Interfaces";
 import Pending from "../PageManagement/Pending";
 import { loadImage } from "../../functions/loadImage";
@@ -22,7 +22,7 @@ export default function FriendStar() {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const response = await fetchRequest<User>(`/home/${userId}`, "GET", null);
+      const response = await axiosRequest<User>(`/home/${userId}`, "GET", null);
       if (response !== null) {
         setUserData(response);
       } else {
