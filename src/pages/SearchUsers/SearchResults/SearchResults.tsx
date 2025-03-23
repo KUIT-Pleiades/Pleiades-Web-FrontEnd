@@ -2,7 +2,7 @@ import s from './SearchResults.module.scss';
 
 //components
 import ShowSearchedUser from './ShowSearchedUser/ShowSearchedUser';
-import { fetchRequest } from '../../../functions/fetchRequest';
+import { axiosRequest } from '../../../functions/axiosRequest';
 import { SearchedUser } from '../../../interfaces/Interfaces';
 
 interface SearchResultsProps {
@@ -18,10 +18,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
     }
     // ✅ 친구 요청 보내기
     const handleSendRequestFriend = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests`,
-            "POST",
-            { receiverId: friendId }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests`,
+          "POST",
+          { receiverId: friendId }
         );
         if (response) {
             console.log('친구 요청 보냄. to: ', friendId);
@@ -31,10 +31,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
 
     // ✅ 친구 요청 취소 or 삭제
     const handleDeleteRequest = async (friendId: string, type: "REQUEST" | "FRIEND") => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "DELETE",
-            null
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "DELETE",
+          null
         );
         if (response) {
             console.log('딜리트 실행 완료. 메시지: ', response.message);
@@ -48,10 +48,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
 
     // ✅ 친구 요청 거절
     const handleRejectRequest = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "PATCH",
-            { status: "REJECTED" }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "PATCH",
+          { status: "REJECTED" }
         );
         if (response) {
             console.log(response.message);
@@ -61,10 +61,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
 
     // ✅ 친구 요청 수락
     const handleAcceptRequest = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/requests/${friendId}`,
-            "PATCH",
-            { status: "ACCEPTED" }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/requests/${friendId}`,
+          "PATCH",
+          { status: "ACCEPTED" }
         );
         if (response) {
             console.log(response.message);
@@ -72,10 +72,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         } else console.error("친구 요청 수락 실패");
     };
     const handleSendSignal = async (friendId: string) => {
-        const response = await fetchRequest<{ message: string }>(
-            `/friends/${friendId}/signal`,
-            "POST",
-            { receiverId: friendId }
+        const response = await axiosRequest<{ message: string }>(
+          `/friends/${friendId}/signal`,
+          "POST",
+          { receiverId: friendId }
         );
         if (response) {
             console.log(response.message);
@@ -85,10 +85,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
     const handleAddSearchHistory = async (searchedId: string) => {
         console.log('검색기록 추가 시도..!');
         try {
-            const response = await fetchRequest<{ message: string }>(
-                "/users/histories",
-                "POST",
-                { searchedId: searchedId }
+            const response = await axiosRequest<{ message: string }>(
+              "/users/histories",
+              "POST",
+              { searchedId: searchedId }
             );
             if (response) {
                 console.log('최근 검색 기록 추가 완료. 추가한 사용자 아이디: ',searchedId);

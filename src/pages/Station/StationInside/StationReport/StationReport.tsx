@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import s from "./StationReport.module.scss";
-import { fetchRequest } from "../../../../functions/fetchRequest";
+import { axiosRequest } from "../../../../functions/axiosRequest";
 // import { formatDateTime } from "../../../../functions/formatDateTime";
 import messageIcon from "../../../../assets/Icon/message.svg";
 import Pending from "../../../PageManagement/Pending";
@@ -42,7 +42,7 @@ const StationReport: React.FC<StationReportProps> = ({
       console.log("API 호출 시작");
       try {
         setIsLoading(true);
-        const response = await fetchRequest<ReportResponse>(
+        const response = await axiosRequest<ReportResponse>(
           `/stations/${stationId}/report`,
           "GET",
           null
@@ -87,7 +87,7 @@ const StationReport: React.FC<StationReportProps> = ({
     }
     try {
       setIsSaving(true);
-      const response = await fetchRequest<ReportResponse>(
+      const response = await axiosRequest<ReportResponse>(
         `/stations/${stationId}/report`,
         "PATCH",
         {

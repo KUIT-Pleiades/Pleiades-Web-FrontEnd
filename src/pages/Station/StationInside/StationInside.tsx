@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { useNavigate } from "react-router-dom";
 import s from "./StationInside.module.scss";
@@ -61,7 +61,7 @@ const StationInside: React.FC = () => {
   const refreshStationData = async () => {
     if (!stationId) return;
     try {
-      const response = await fetchRequest<StationResponse>(
+      const response = await axiosRequest<StationResponse>(
         `/stations/${stationId}`,
         "GET",
         null
@@ -100,7 +100,7 @@ const StationInside: React.FC = () => {
 
       try {
         setIsLoading(true);
-        const response = await fetchRequest<StationResponse>(
+        const response = await axiosRequest<StationResponse>(
           `/stations/${stationId}`,
           "GET",
           null

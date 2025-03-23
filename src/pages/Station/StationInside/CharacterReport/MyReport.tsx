@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { fetchRequest } from "../../../../functions/fetchRequest";
+import { axiosRequest } from "../../../../functions/axiosRequest";
 import { formatDateTime } from "../../../../functions/formatDateTime";
 import s from "./CharacterReport.module.scss";
 import messageIcon from "../../../../assets/Icon/message.svg";
@@ -34,7 +34,7 @@ const MyReport: React.FC<ReportProps> = ({ onClose, stationId, userId }) => {
     const getReport = async () => {
       try {
         setIsLoading(true);
-        const response = await fetchRequest<{ report: Report }>(
+        const response = await axiosRequest<{ report: Report }>(
           `/stations/${stationId}/users/${userId}/report`,
           "GET",
           null
@@ -77,7 +77,7 @@ const MyReport: React.FC<ReportProps> = ({ onClose, stationId, userId }) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetchRequest<{ message: string }>(
+      const response = await axiosRequest<{ message: string }>(
         `/stations/${stationId}/report`,
         "PATCH",
         { answer: editedAnswer.trim() }

@@ -5,7 +5,7 @@ import SearchReportsBar from "./SearchReportsBar/SearchReportsBar";
 import ReportList from "./ReportList/ReportList";
 import { useState, useEffect } from "react";
 import SearchReport from "./SearchReport/SearchReport";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 import { useNavigate } from "react-router-dom";
 import Pending from "../PageManagement/Pending";
 
@@ -44,8 +44,8 @@ const Report = () => {
     const fetchInitialData = async () => {
       try {
         const [reportsResponse, historyResponse] = await Promise.all([
-          fetchRequest<{ reports: Report[] }>("/reports", "GET", null),
-          fetchRequest<SearchHistoryResponse>("/reports/history", "GET", null),
+          axiosRequest<{ reports: Report[] }>("/reports", "GET", null),
+          axiosRequest<SearchHistoryResponse>("/reports/history", "GET", null),
         ]);
 
         if (reportsResponse && reportsResponse.reports) {
@@ -80,7 +80,7 @@ const Report = () => {
     if (query.trim()) {
       try {
         // 1. 검색 실행
-        const searchResponse = await fetchRequest<{ reports: Report[] }>(
+        const searchResponse = await axiosRequest<{ reports: Report[] }>(
           `/reports?query=${encodeURIComponent(query.trim())}`,
           "GET",
           null
@@ -93,7 +93,7 @@ const Report = () => {
           setSearchValue("");
 
           // 2. 검색 후 업데이트된 검색 기록 가져오기
-          const historyResponse = await fetchRequest<SearchHistoryResponse>(
+          const historyResponse = await axiosRequest<SearchHistoryResponse>(
             "/reports/history",
             "GET",
             null
@@ -127,7 +127,7 @@ const Report = () => {
   const handleDeleteHistory = async (id: number) => {
     try {
       // 검색어 삭제 API 호출
-      await fetchRequest<void>(`/reports/history/${id}`, "DELETE", null);
+      await axiosRequest<void>(`/reports/history/${id}`, "DELETE", null);
 
       // 삭제 후 검색 기록 상태 업데이트
       setSearchHistory((prev) => prev.filter((item) => item.id !== id));
@@ -147,7 +147,7 @@ const Report = () => {
 
   const handleUpdateReport = async (reportId: number, newAnswer: string) => {
     try {
-      await fetchRequest<void>(`/reports/${reportId}`, "PATCH", {
+      await axiosRequest<void>(`/reports/${reportId}`, "PATCH", {
         answer: newAnswer.trim(),
       });
 
@@ -189,7 +189,7 @@ const Report = () => {
   const handleDeleteReport = async (reportId: number) => {
     try {
       // 서버에 삭제 요청
-      await fetchRequest<void>(`/reports/${reportId}`, "DELETE", null);
+      await axiosRequest<void>(`/reports/${reportId}`, "DELETE", null);
 
       // 성공적으로 삭제되면 로컬 상태 업데이트
       setReports((prevReports) =>

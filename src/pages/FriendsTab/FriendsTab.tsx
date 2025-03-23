@@ -4,7 +4,7 @@ import s from './FriendsTab.module.scss';
 import { useCharacterStore } from '../../store/useCharacterStore';
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
-import { axiosRequest } from '../../functions/axiosRequest'; // axiosRequest는 구조 변경 없이 그대로 사용
+import { axiosRequest } from '../../functions/axiosRequest';
 import SendSignalPopup from './SendSignalPopup/SendSignalPopup';
 import ReceiveSignalPopup from './ReceiveSignalPopup/ReceiveSignalPopup';
 import Pending from '../PageManagement/Pending';

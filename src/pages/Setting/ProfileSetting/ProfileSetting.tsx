@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./ProfileSetting.module.scss";
 import backBtn from "../../../assets/btnImg/backBtn.png";
-import { fetchRequest } from "../../../functions/fetchRequest";
+import { axiosRequest } from "../../../functions/axiosRequest";
 
 // interface IdCheckResponse {
 //   available: boolean;
@@ -154,7 +154,7 @@ const ProfileSetting: React.FC = () => {
         birthDate: userInfo.birthDate,
       };
 
-      const response = await fetchRequest<ProfileResponse>(
+      const response = await axiosRequest<ProfileResponse>(
         "/home/settings/profile",
         "POST",
         requestBody

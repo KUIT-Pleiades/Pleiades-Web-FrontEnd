@@ -6,7 +6,7 @@ import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
 import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchRequest } from "../../functions/fetchRequest";
+import { axiosRequest } from "../../functions/axiosRequest";
 import Pending from "../PageManagement/Pending";
 
 interface BackgroundSetUpProps {
@@ -63,7 +63,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       ? "/auth/signup"
       : "/home/settings/character";
 
-    const signupResponse = await fetchRequest<Message>(
+    const signupResponse = await axiosRequest<Message>(
       endpoint,
       "POST",
       signupData
