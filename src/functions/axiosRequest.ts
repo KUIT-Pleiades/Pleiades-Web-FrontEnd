@@ -3,6 +3,8 @@ import { AuthToken } from "../interfaces/Interfaces";
 import { useAuth } from "../store/authStore";
 import { Methods } from "../types/types";
 
+// aixos 전환
+
 const BASEURL = import.meta.env.VITE_SERVER_URL;
 
 const axiosInstance: AxiosInstance = axios.create({
