@@ -58,7 +58,7 @@ const ShowStationList: React.FC = () => {
     try {
       const response = await axiosRequest<{ message: string }>(
         `/stations/${stationId}`,
-        "GET",
+        "PATCH",
         null
       );
       console.log('정거장 검색어:', stationId);
@@ -155,7 +155,7 @@ const ShowStationList: React.FC = () => {
     try {
         const response = await axiosRequest<{ message: string }>(
           `/stations/${stationId}`,
-          "PATCH",
+          "GET",
           null
         );
         console.log('정거장 입장 요청:', stationId);
