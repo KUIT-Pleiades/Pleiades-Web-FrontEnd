@@ -46,7 +46,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   // ID 유효성 검사 함수
   const validateId = (id: string): boolean => {
-    // 영문, 숫자 조합 4-10자리 검사
+    // 영문, 숫자 조합 4-10자리 검사 -> 영어만 해도 되는 걸로
     const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,10}$/;
     return idRegex.test(id);
   };

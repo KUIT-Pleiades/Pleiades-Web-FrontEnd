@@ -32,9 +32,10 @@ export default function FriendStar() {
     getUserInfo();
   }, [userId]);
 
-  if (userData !== undefined) {
+	if (userData !== undefined) {
+		
     loadImage(userData.character, increaseLoad);
-    loadImage(userData.starBackground, increaseLoad);
+    loadImage(getImage(userData.starBackground), increaseLoad);
   }
 
   return (
