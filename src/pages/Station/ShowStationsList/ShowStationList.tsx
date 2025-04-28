@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import s from './ShowStationList.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Stations } from '../../../interfaces/Interfaces';
+import { Message, Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
@@ -12,6 +12,7 @@ import { axiosRequest } from '../../../functions/axiosRequest';
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
+import axiosInstance from '../../../api/axiosInstance';
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -149,10 +150,8 @@ const ShowStationList: React.FC = () => {
   // 정거장 입장
   const handleEnterStation = async (stationId: string) => {
     try {
-        const response = await axiosRequest<{ message: string }>(
+        const response = await axiosInstance.get<Message>(
           `/stations/${stationId}`,
-          "GET",
-          null
         );
         console.log('정거장 입장 요청:', stationId);
 
@@ -161,7 +160,7 @@ const ShowStationList: React.FC = () => {
             console.log("정거장 입장 성공:", response);
             enterStation(stationId);
             return;
-        }
+			}
 
         // ✅ 409 Conflict - 이미 정거장에 가입됨
         if (response.status === 409) {

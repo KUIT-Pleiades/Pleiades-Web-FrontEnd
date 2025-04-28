@@ -27,7 +27,7 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
-  const userId = otherUser.friendId;
+  const userId = otherUser.userId; // friendId를 userId로 변경
   const handleGoStation = () => {
     navigate("/friendstar", { state: { userId } });
   };
