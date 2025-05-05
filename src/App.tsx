@@ -22,7 +22,8 @@ import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
 import MarketMain from "./pages/Market/MarketMain/MarketMain";
 import StationSetting from "./pages/Station/StationSetting/StationSetting";
 import StationBackgroundSetting from "./pages/Station/StationSetting/StationBackgroundSetting";
-import FriendStar from "./pages/Home/FriendStar";
+import FriendStar from "./pages/FriendStar/FriendStar";
+import FriendReport from "./pages/FriendStar/FriendReport/FriendReport";
 
 export default function App() {
   return (
@@ -73,6 +74,7 @@ export default function App() {
           <Route path="friendtab" element={<FriendsTab />}></Route>
           <Route path="searchusers" element={<SearchUsers />}></Route>
           <Route path="friendstar" element={<FriendStar />}></Route>
+          <Route path="friendreport" element={<FriendReport />}></Route>
         </Route>
         <Route
           path="*"
