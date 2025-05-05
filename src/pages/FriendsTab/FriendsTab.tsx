@@ -147,6 +147,7 @@ const FriendsTab: React.FC = () => {
         } else if (response.message === "Invalid or expired token") {
           navigate("/login");
         }
+<<<<<<< HEAD
       } else {
         console.error("시그널 전송 실패");
       }
@@ -185,6 +186,80 @@ const FriendsTab: React.FC = () => {
         const nextIndex = currentSignalIndex + 1;
         if (nextIndex < signalsQueue.length) {
           setCurrentSignalIndex(nextIndex);
+=======
+    };
+    const handleReceiveSignal = async () => {
+        try {
+            const response = await axiosRequest<{ signals: SignalFrom[] }>(
+              "/friends/signals",
+              "GET",
+              null
+            );
+            if (response) {
+                if(response.data.signals.length > 0){
+                    console.log("📩 받은 시그널 목록:", response.data.signals);
+                    setSignalsQueue(response.data.signals);
+                    setCurrentSignalIndex(0);
+                    setIsReceiveSignalPopupVisible(true);
+                }
+            }
+        } catch (error) {
+            console.error("❌ 시그널 받기 실패:", error);
+        }
+    };
+    const handleDeleteSignal = async () => {
+        if (signalsQueue.length === 0) return;
+
+        const currentSignal = signalsQueue[currentSignalIndex];
+        try {
+            const response = await axiosRequest<{ message: string }>(
+              `/friends/signals/${currentSignal.userId}`,
+              "DELETE",
+              null
+            );
+
+            if (response) {
+                console.log("🗑️ 시그널 삭제 완료:", response.message);
+
+                // 다음 시그널로 이동
+                const nextIndex = currentSignalIndex + 1;
+                if (nextIndex < signalsQueue.length) {
+                    setCurrentSignalIndex(nextIndex);
+                } else {
+                    // 모든 시그널이 처리되면 팝업 닫기
+                    setIsReceiveSignalPopupVisible(false);
+                    setSignalsQueue([]);
+                }
+            }
+        } catch (error) {
+            console.error("❌ 시그널 삭제 실패:", error);
+        }
+    };
+
+    const getFriendsList = async () => {
+        try {
+            const response = await axiosRequest<Social>(
+              "/friends",
+              "GET",
+              null
+            );
+            if (response) {
+                console.log("📜 친구 목록 불러오기:", response);
+                setFriendsData(response.data);
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("❌ 친구 목록 불러오기 실패:", error);
+        }
+    };
+    useEffect(() => {
+        getFriendsList();
+        handleReceiveSignal();
+    }, []);
+    useEffect(() => {
+        if (friendsData?.friend?.length === 0 && friendsData?.received?.length === 0 && friendsData?.sent?.length === 0) {
+            setHasNoFriend(true); // 친구 없음
+>>>>>>> 924a5d19863e9ba5d69729df8011b5441a7e3054
         } else {
           // 모든 시그널 처리 후 팝업 닫기
           setIsReceiveSignalPopupVisible(false);

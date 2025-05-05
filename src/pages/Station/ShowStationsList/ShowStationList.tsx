@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import s from './ShowStationList.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Stations } from '../../../interfaces/Interfaces';
+import { Message, Stations } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
@@ -12,6 +12,7 @@ import { axiosRequest } from '../../../functions/axiosRequest';
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
+import axiosInstance from '../../../api/axiosInstance';
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -35,10 +36,11 @@ const ShowStationList: React.FC = () => {
   const fetchStations = async () => {
     try {
       const response = await axiosRequest<Stations>('/stations', 'GET', null);
-      if (response && Array.isArray(response.stations)) {
-        setStations(response);
-        console.log('정거장 불러오기 응답 잘 받음');
-        console.log('응답:', response);
+      if (response && Array.isArray(response.data.stations)) {
+        setStations(response.data);
+        console.log("정거장 불러오기 응답 잘 받음");
+        console.log("응답 상태:", response.status);
+        console.log("응답 데이터:", response.data);
       }
     } catch (error) {
       console.error('정거장 불러오기 실패:', error);
@@ -64,8 +66,8 @@ const ShowStationList: React.FC = () => {
       console.log('정거장 검색어:', stationId);
   
       // 200 OK - 정거장 입장 성공
-      if (response?.message === "Enter Station Success") {
-        console.log("정거장 입장 성공:", response);
+      if (response.status === 200 || response.status === 202) {
+        console.log("정거장 입장 성공");
         enterStation(stationId);
         return;
       }
@@ -78,23 +80,18 @@ const ShowStationList: React.FC = () => {
       }
   
       // 404 Not Found - 정거장이 존재하지 않음
-      if (response?.message === "Station not found") {
+      if (response.status === 404) {
         console.warn("정거장 없음:", response.message);
         handlePopupNoExistStation();
         return;
       }
   
       // 409 Conflict - 정거장 인원이 가득 찼거나 이미 가입된 경우
-      if (response?.message.includes("Station Full")) {
+      if (response.status === 409) {
         console.log('정거장 인원이 가득 찼습니다.');
         return;
       }
   
-      if (response?.message.includes("User already in the station")) {
-        console.log('이미 정거장에 가입되어 있습니다.');
-        enterStation(stationId);
-        return;
-      }
   
       // 예상하지 못한 메시지 처리
       console.warn("예상치 못한 응답:", response?.message);
@@ -153,22 +150,20 @@ const ShowStationList: React.FC = () => {
   // 정거장 입장
   const handleEnterStation = async (stationId: string) => {
     try {
-        const response = await axiosRequest<{ message: string }>(
+        const response = await axiosInstance.get<Message>(
           `/stations/${stationId}`,
-          "GET",
-          null
         );
         console.log('정거장 입장 요청:', stationId);
 
         // ✅ 200 OK - 정거장 입장 성공
-        if (response?.message === "Enter Station Success") {
+        if (response.status === 200 || response.status === 202) {
             console.log("정거장 입장 성공:", response);
             enterStation(stationId);
             return;
-        }
+			}
 
         // ✅ 409 Conflict - 이미 정거장에 가입됨
-        if (response?.message === "User already in the station") {
+        if (response.status === 409) {
             console.log("이미 정거장에 가입되어 있음:", response);
             enterStation(stationId);
             return;

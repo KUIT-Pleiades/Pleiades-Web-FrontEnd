@@ -46,7 +46,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
 
   // ID 유효성 검사 함수
   const validateId = (id: string): boolean => {
-    // 영문, 숫자 조합 4-10자리 검사
+    // 영문, 숫자 조합 4-10자리 검사 -> 영어만 해도 되는 걸로
     const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,10}$/;
     return idRegex.test(id);
   };
@@ -65,8 +65,8 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       }
 
       // 응답 메시지 사용
-      setIdCheckMessage(response.message);
-      return response.available;
+      setIdCheckMessage(response.data.message);
+      return response.data.available;
     } catch (error) {
       console.error("ID 중복확인 오류:", error);
       setIdCheckMessage("중복확인 중 오류가 발생했습니다.");
