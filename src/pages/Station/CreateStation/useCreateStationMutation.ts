@@ -64,12 +64,12 @@ export const useCreateStationMutation = () => {
           reportNoticeTime,
         }
       );
-
-      if (!response || !response.stationId) {
+      
+      if (!response || !response.data.stationId) {
         throw new Error(response?.message || "정거장 생성 실패");
       }
-
-      return response;
+      
+      return response.data;
     },
     onSuccess: (data) => {
       console.log("[CreateStation] 정거장 생성 성공 ✅", data);
