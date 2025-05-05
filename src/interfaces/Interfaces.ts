@@ -251,3 +251,18 @@ export interface RecentSearchedUser {
   userName: string;
   profile: string;
 }
+
+export interface StationResponse {
+  stationId: string;
+  name: string;
+  stationBackground: string;
+  intro?: string;
+  numberOfUsers?: number;
+  reportNoticeTime?: string;
+  createdAt?: string;
+}
+
+export interface CreateStationResponse {
+  stationId: string;
+  message?: string;
+}
