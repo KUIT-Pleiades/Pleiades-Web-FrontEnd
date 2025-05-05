@@ -26,7 +26,10 @@ const ShowStationList: React.FC = () => {
   const { userInfo } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const [stations, setStations] = useState<Stations>({ stations: [] });
-  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
+  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">(() => {
+    const saved = localStorage.getItem("sortCriteria");
+    return saved === "이름순" ? "이름순" : "최신순";
+  });
   const [isSearchStationModalVisible, setIsSearchStationModalVisible] = useState(false);
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
@@ -209,6 +212,11 @@ const ShowStationList: React.FC = () => {
     navigate('/station/stationinside');
   };
 
+  const handleChangeSortCriteria = (criteria: "최신순" | "이름순") => {
+    setSortCriteria(criteria);
+    localStorage.setItem("sortCriteria", criteria);
+  };
+
   useEffect(() => {
     fetchStations();
   }, []);
@@ -240,7 +248,7 @@ const ShowStationList: React.FC = () => {
       <div className={s.separator}>
         <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
         <div className={s.sortCriteriaBoxContainer}>
-          <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={setSortCriteria} textColor="#E1E1E1" />
+          <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
         </div>
       </div>
 
