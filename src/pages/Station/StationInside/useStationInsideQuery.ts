@@ -11,12 +11,12 @@ export const useStationInsideQuery = (stationId: string) => {
         "GET",
         null
       );
-      if (!response) {
+      if (!response || !response.data) {
         throw new Error("정거장 정보를 불러오지 못했습니다.");
       }
-      return response;
+      return response.data;
     },
-    enabled: !!stationId, // stationId 있을 때만 요청
-    staleTime: 1000 * 60 * 5, // 5분 캐시
+    enabled: !!stationId,
+    staleTime: 1000 * 60 * 5,
   });
 };
