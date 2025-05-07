@@ -1,0 +1,239 @@
+// ReportModal.module.scss
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal {
+	background: white;
+	width: calc(100% - 28px);
+	max-width: 500px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+
+	.modalHeader {
+		padding: 11px 17px 5px 17px;
+		border-bottom: 1px solid #eee;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		background: var(--gray-9, #EDEFFF);
+		border-radius: 10px 10px 0px 0px;
+		min-height: 50px; // 최소 높이 설정
+		height: auto; // 자동으로 늘어나도록 설정
+		box-sizing: border-box;
+
+		.modalQuestion {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start;
+
+			.messageIcon {
+				width: 31px;
+				height: 28.191px;
+				flex-shrink: 0;
+			}
+		}
+
+		.modalContent {
+			.question {
+				color: var(--gray-11, #17151C);
+				font-family: "ElectricalSafety";
+				font-size: 15px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+			}
+
+			.date {
+				color: var(--Gray4, #858585);
+				font-family: Pretendard;
+				font-size: 11px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+				letter-spacing: -0.22px;
+			}
+		}
+
+		.closeButton {
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 1px 0px 1px 16px;
+			color: #666;
+			line-height: 1;
+
+			&:hover {
+				color: #333;
+			}
+		}
+	}
+
+	.modalBody {
+		padding: 10px 17px;
+		box-shadow: 0 -4px 4px -3px rgba(0, 0, 0, 0.2);
+		height: auto;
+		min-height: 50px;
+
+		.answer {
+			color: var(--gray-11, #17151C);
+			font-family: "ElectricalSafety";
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			word-break: keep-all;
+			white-space: pre-wrap;
+			height: auto;
+			min-height: 50px;
+			overflow: hidden;
+		}
+	}
+}
+
+.infoWrapper {
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+
+	.modifedAt {
+		color: var(--Gray4, #858585);
+		font-family: Pretendard;
+		font-size: 11px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.22px;
+	}
+}
+
+.btnGroup {
+	color: var(--Gray4, #858585);
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.22px;
+	display: flex;
+	gap: 2px;
+}
+
+.modifyBtn {
+	color: var(--Gray4, #858585);
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.22px;
+}
+
+.deleteBtn {
+	color: var(--gray-7, #E1E1E1);
+	font-family: Pretendard;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.22px;
+
+	&.disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+}
+
+.editWrapper {
+	width: 100%;
+	height: auto;
+}
+
+.editAnswer {
+	width: 100%;
+	min-height: inherit;
+	height: auto;
+	resize: none;
+	color: var(--gray-11, #17151C);
+	font-family: "ElectricalSafety";
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	border: none;
+	caret-color: #BEAADD;
+
+	&:focus {
+		outline: none;
+		border: none;
+	}
+}
+
+.editFooter {
+	display: flex;
+	justify-content: space-between;
+}
+
+.characterCount {
+	color: var(--Gray4, #858585);
+	font-family: "Noto Sans KR";
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.3px;
+}
+
+.buttonGroup {
+	display: flex;
+	gap: 9px;
+}
+
+.saveBtn {
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 30px;
+	background: #402C44;
+	color: #FFF;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+}
+
+.cancelBtn {
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 30px;
+	background: var(--color-5-main, #C0B9DB);
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+}
+
+.error {
+	color: #ff0000;
+	font-size: 14px;
+	margin-top: 8px;
+	padding: 0 16px;
+}
