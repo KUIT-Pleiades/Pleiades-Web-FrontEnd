@@ -59,7 +59,11 @@ export default function FriendStar() {
         className={s.diary}
         src={diary}
         alt="일기장"
-        onClick={() => navigate("/friendreport", { state: { userId } })}
+        onClick={() =>
+          navigate("/friendreport", {
+            state: { userId, userName: userData?.userName },
+          })
+        }
       />
     </div>
   );
