@@ -1,13 +1,15 @@
+// src/pages/CharacterSettings/BackgroundSetUp.tsx
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import openBtn from "../../assets/btnImg/openBtn.png";
 
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
-import { CharacterImg, Message, UserInfo } from "../../interfaces/Interfaces";
-import { useLocation, useNavigate } from "react-router-dom";
-import { axiosRequest } from "../../functions/axiosRequest";
 import Pending from "../PageManagement/Pending";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useGenerateCharacterImageMutation } from "./hooks/useGenerateCharacterImageMutation";
+import { useSignupMutation } from "./hooks/useSignupMutation";
+import { UserInfo } from "../../interfaces/Interfaces";
 
 interface BackgroundSetUpProps {
   onPrev: () => void;
@@ -15,7 +17,6 @@ interface BackgroundSetUpProps {
 
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-  const IMG_MAKER = import.meta.env.VITE_IMG_MAKER;
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -26,61 +27,41 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
     setLoadingState(true);
   };
 
+  const generateImageMutation = useGenerateCharacterImageMutation();
+  const signupMutation = useSignupMutation(location.pathname.includes("onboarding"));
+
   const backgroundStyle = {
     backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
     overflow: "hidden",
   };
 
   const complete = async () => {
-    setLoadingState(false);
-    const { profile, character, ...imageRequestData } = userInfo;
-    console.log(`${profile} ${character}`);
+  setLoadingState(false);
 
-    const response = await fetch(IMG_MAKER, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(imageRequestData),
-    });
+  try {
+    const characterImg = await generateImageMutation.mutateAsync(userInfo);
 
-    if (!response.ok) {
-      console.log("이미지 생성에 실패했습니다");
-      console.log(response);
-      navigate("/home");
-    }
-
-    const data: CharacterImg = await response.json();
-
-    // 두 번째 요청: 회원가입
     const signupData: UserInfo = {
-      ...imageRequestData,
-      profile: data.profile, // 첫 번째 요청에서 받은 이미지 URL
-      character: data.character, // 첫 번째 요청에서 받은 이미지 URL
+      ...userInfo,
+      profile: characterImg.profile,
+      character: characterImg.character,
     };
 
-    const endpoint = location.pathname.includes("onboarding")
-      ? "/auth/signup"
-      : "/home/settings/character";
+    const response = await signupMutation.mutateAsync(signupData);
 
-    const signupResponse = await axiosRequest<Message>(
-      endpoint,
-      "POST",
-      signupData
-    );
-
-    if (signupResponse === null) {
-      console.log("회원가입 실패");
-      navigate("/loginfail");
-    } else if (signupResponse.message === "duplicate user") {
-      console.log("회원가입 실패:", signupResponse.message);
+    if (response.message === "duplicate user") {
+      console.log("회원가입 실패: 중복된 사용자");
       navigate("/login");
     } else {
-      console.log("회원가입 성공:", signupResponse.message);
+      console.log("회원가입 성공");
       updateUserInfo(signupData);
       navigate("/home");
     }
-  };
+  } catch (error) {
+    console.error("회원가입 또는 이미지 생성 실패", error);
+    navigate("/loginfail");
+  }
+};
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -94,95 +75,23 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         <button className={s.nextBtn} onClick={complete}>
           완료
         </button>
-        <p className={s.pDescription}>
-          내 캐릭터에 어울리는 배경을 골라보세요!
-        </p>
+        <p className={s.pDescription}>내 캐릭터에 어울리는 배경을 골라보세요!</p>
         <div className={s.characterContainer}>
-          <img
-            className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
-            alt="skin"
-          />
-          <img
-            className={s.characterFace}
-            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
-            alt="face"
-          />
-          <img
-            className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
-            alt="hair"
-          />
-          <img
-            className={s.characterTop}
-            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
-            alt="top"
-          />
-          <img
-            className={s.characterBottom}
-            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
-            alt="bottom"
-          />
-          <img
-            className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
-            alt="shoes"
-          />
-          {userInfo.item.head && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
-              alt="headItem"
-            />
-          )}
-          {userInfo.item.eyes && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
-              alt="faceItem"
-            />
-          )}
-          {userInfo.item.ears && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
-              alt="earItem"
-            />
-          )}
-          {userInfo.item.neck && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
-              alt="neckItem"
-            />
-          )}
-          {userInfo.item.leftWrist && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.rightWrist && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.leftHand && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.rightHand && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
-              alt="handItem"
-            />
+          <img className={s.characterSkin} src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`} alt="skin" />
+          <img className={s.characterFace} src={`${IMG_BASE_URL}${userInfo.face.expression}.png`} alt="face" />
+          <img className={s.characterHair} src={`${IMG_BASE_URL}${userInfo.face.hair}.png`} alt="hair" />
+          <img className={s.characterTop} src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`} alt="top" />
+          <img className={s.characterBottom} src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`} alt="bottom" />
+          <img className={s.characterShoes} src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`} alt="shoes" />
+          {Object.entries(userInfo.item).map(([key, value]) =>
+            value ? (
+              <img
+                key={key}
+                className={s.characterItem}
+                src={`${IMG_BASE_URL}${value}.png`}
+                alt={`${key}Item`}
+              />
+            ) : null
           )}
         </div>
       </div>
@@ -199,11 +108,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       {!showList && (
         <div className={s.bottomBar}>
           <div className={s.openBtn} onClick={() => setShowList(true)}>
-            <img
-              src={openBtn}
-              alt=""
-              style={{ width: "14px", marginTop: "9px" }}
-            />
+            <img src={openBtn} alt="" style={{ width: "14px", marginTop: "9px" }} />
           </div>
         </div>
       )}
