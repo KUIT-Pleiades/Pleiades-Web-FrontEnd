@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import s from "./ReceiveSignalPopup.module.scss";
 
 // image files
@@ -18,31 +18,17 @@ const ReceiveSignalPopup: React.FC<ReceiveSignalPopupProps> = ({
     handleCloseReceiveSignalPopup,
     imageIndex
 }) => {
-    const [isClosing, setIsClosing] = useState(false);
-
     const images = [receive1, receive2, receive3];
     const sentences1 = ["⚡️찌릿!", "🚀우주에서", "🔔띠링!"];
     const sentences2 = ["님이 보낸 신호를", "님이 보낸 신호가", "님의 신호를 받았어요."];
     const sentences3 = ["우주에서 포착!", "도착했어요!", "응답해볼까요?"];
 
-    const handleModalClose = () => {
-        // 애니메이션 효과 적용을 위해 isClosing 상태 변경
-        setIsClosing(true);
-        // 애니메이션 지속 시간(300ms) 후 부모의 핸들러 호출
-        setTimeout(() => {
-            handleCloseReceiveSignalPopup();
-            setIsClosing(false);
-        }, 300);
-    };
-
-
-
     return (
         <div className={s.modalOverlay}>
-            <div className={`${s.modal} ${isClosing ? s.fadeOut : ''}`}>
+            <div className={s.modal}>
                 <button
                     className={s.modalClose}
-                    onClick={handleModalClose}
+                    onClick={handleCloseReceiveSignalPopup}
                 >
                     <img src={close} alt="close" />
                 </button>
