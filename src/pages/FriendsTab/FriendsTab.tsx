@@ -1,5 +1,3 @@
-// src/pages/FriendsTab/FriendsTab.tsx
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './FriendsTab.module.scss';
@@ -39,6 +37,28 @@ const FriendsTab: React.FC = () => {
   const [signalsQueue, setSignalsQueue] = useState<SignalFrom[]>([]);
   const [currentSignalIndex, setCurrentSignalIndex] = useState(0);
   const [isReceiveSignalPopupVisible, setIsReceiveSignalPopupVisible] = useState(false);
+  //const [isClearAllSignal, setIsClearAllSignal] = useState(true);
+
+  
+  const handleDeleteFriend = async (friendId: string) => {
+    const res = await axiosRequest(`/friends/requests/${friendId}`, "DELETE", null);
+    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
+  };
+  
+  const handleAcceptRequest = async (friendId: string) => {
+    const res = await axiosRequest(`/friends/requests/${friendId}`, "PATCH", { status: "ACCEPTED" });
+    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
+  };
+  
+  const handleRejectRequest = async (friendId: string) => {
+    const res = await axiosRequest(`/friends/requests/${friendId}`, "PATCH", { status: "REJECTED" });
+    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
+  };
+  
+  const handleDeleteRequest = async (friendId: string) => {
+    const res = await axiosRequest(`/friends/requests/${friendId}`, "DELETE", null);
+    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
+  };
 
   const handleOpenSendSignalPopup = (friendName: string) => {
     setSignalTo(friendName);
@@ -48,26 +68,6 @@ const FriendsTab: React.FC = () => {
   const handleCloseSendSignalPopup = () => {
     setIsSendSignalPopupVisible(false);
     setSignalTo("");
-  };
-
-  const handleDeleteFriend = async (friendId: string) => {
-    const res = await axiosRequest(`/friends/requests/${friendId}`, "DELETE", null);
-    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
-  };
-
-  const handleAcceptRequest = async (friendId: string) => {
-    const res = await axiosRequest(`/friends/requests/${friendId}`, "PATCH", { status: "ACCEPTED" });
-    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
-  };
-
-  const handleRejectRequest = async (friendId: string) => {
-    const res = await axiosRequest(`/friends/requests/${friendId}`, "PATCH", { status: "REJECTED" });
-    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
-  };
-
-  const handleDeleteRequest = async (friendId: string) => {
-    const res = await axiosRequest(`/friends/requests/${friendId}`, "DELETE", null);
-    if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
   };
 
   const handleSendSignal = async (friendId: string, friendName: string) => {
@@ -108,6 +108,7 @@ const FriendsTab: React.FC = () => {
       );
   
       if (response.data.signals.length > 0) {
+        //setIsClearAllSignal(false);
         setSignalsQueue(response.data.signals);
         setCurrentSignalIndex(0);
         setIsReceiveSignalPopupVisible(true);
@@ -127,11 +128,16 @@ const FriendsTab: React.FC = () => {
           setCurrentSignalIndex(nextIndex);
         } else {
           setSignalsQueue([]);
+
+          //setIsClearAllSignal(true);
           setIsReceiveSignalPopupVisible(false);
         }
       }
     } catch (e) {
       console.error("시그널 삭제 실패:", e);
+      setSignalsQueue([]);
+      //setIsClearAllSignal(true);
+      setIsReceiveSignalPopupVisible(false);
     }
   };
 
