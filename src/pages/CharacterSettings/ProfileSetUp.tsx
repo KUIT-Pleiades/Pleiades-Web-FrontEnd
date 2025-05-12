@@ -3,8 +3,7 @@ import s from "./profileSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
-//import popupStars from "../../assets/popupStars.svg";
-import { axiosRequest } from "../../functions/axiosRequest";
+import { useIdCheckQuery } from "./hooks/useUserCharacterQuery"; // 새 훅 사용
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -13,26 +12,26 @@ interface ProfileSetUpProps {
   onPrev: () => void;
 }
 
-interface IdCheckResponse {
-  available: boolean;
-  message: string;
-}
-
 const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const [isValidId, setIsValidId] = useState<boolean>(false);
-  const [idExists, setIdExists] = useState<boolean>(false);
-  const [buttonText, setButtonText] = useState<string>("중복확인");
-  const [idCheckMessage, setIdCheckMessage] = useState<string>("");
   const [isIdChecked, setIsIdChecked] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isPokePopupVisible, setIsPokePopupVisible] = useState(false);
+  const [buttonText, setButtonText] = useState("중복확인");
 
   type DatePiece = Date | null;
   type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-  const defaultDate = new Date("2000-01-01"); // 원하는 날짜 지정
+  const defaultDate = new Date("2000-01-01");
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(defaultDate);
+
+  // TanStack Query hook
+  const {
+    data: idCheckData,
+    refetch,
+    isFetching
+  } = useIdCheckQuery(userInfo.userId || "", false);
 
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,34 +43,9 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
     [updateUserInfo]
   );
 
-  // ID 유효성 검사 함수
   const validateId = (id: string): boolean => {
-    // 영문, 숫자 조합 4-10자리 검사 -> 영어만 해도 되는 걸로
     const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{4,10}$/;
     return idRegex.test(id);
-  };
-
-  const checkDuplicateId = async (id: string) => {
-    try {
-      const response = await axiosRequest<IdCheckResponse>(
-        `/auth/checkId?userId=${id}`,
-        "GET",
-        null
-      );
-
-      if (response === null) {
-        setIdCheckMessage("서버 연결에 실패했습니다.");
-        return false;
-      }
-
-      // 응답 메시지 사용
-      setIdCheckMessage(response.data.message);
-      return response.data.available;
-    } catch (error) {
-      console.error("ID 중복확인 오류:", error);
-      setIdCheckMessage("중복확인 중 오류가 발생했습니다.");
-      return false;
-    }
   };
 
   const handleIdChange = useCallback(
@@ -79,176 +53,69 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
       const newId = e.target.value;
       updateUserInfo({ userId: newId });
       setIsValidId(validateId(newId));
-      setIdExists(false);
       setButtonText("중복확인");
+      setIsIdChecked(false);
     },
     [updateUserInfo]
   );
 
-  const memoizedIdCheck = useCallback(async () => {
-    if (!userInfo.userId) {
-      setIdCheckMessage("ID를 입력해주세요.");
-      return;
-    }
-
+  const handleIdCheck = async () => {
+    if (!userInfo.userId) return;
     if (!isValidId) {
-      setIdCheckMessage("올바른 ID 형식이 아닙니다.");
+      setButtonText("형식 오류");
       return;
     }
-
-    const isAvailable = await checkDuplicateId(userInfo.userId);
-
-    setIdExists(isAvailable);
-    setButtonText(isAvailable ? "사용가능" : "중복확인");
+    const result = await refetch();
+    if (result.data?.available) {
+      setButtonText("사용가능");
+    } else {
+      setButtonText("중복됨");
+    }
     setIsIdChecked(true);
-  }, [userInfo.userId, isValidId]);
+  };
 
   const handleDateChange = (date: SelectedDate) => {
     if (date instanceof Date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
-      const formattedDate = `${year}-${month}-${day}`;
-      updateUserInfo({ birthDate: formattedDate });
+      updateUserInfo({ birthDate: `${year}-${month}-${day}` });
     }
   };
 
   const handleNext = () => {
-    if (!userInfo.userName?.trim()) {
-      setErrorMessage("이름을 입력해주세요.");
-      showErrorPopup();
-      return;
-    }
-    if (!userInfo.userId) {
-      setErrorMessage("ID를 입력해주세요.");
-      showErrorPopup();
-      return;
-    }
-    if (!idExists) {
-      setErrorMessage("ID 중복확인이 필요합니다.");
-      showErrorPopup();
-      return;
-    }
-    if (!userInfo.birthDate) {
-      setErrorMessage("생년월일을 선택해주세요.");
-      showErrorPopup();
-      return;
-    }
+    if (!userInfo.userName?.trim()) return showError("이름을 입력해주세요.");
+    if (!userInfo.userId) return showError("ID를 입력해주세요.");
+    if (!isIdChecked || !idCheckData?.available)
+      return showError("ID 중복확인이 필요합니다.");
+    if (!userInfo.birthDate) return showError("생년월일을 선택해주세요.");
     onNext();
   };
 
-  const showErrorPopup = () => {
+  const showError = (msg: string) => {
+    setErrorMessage(msg);
     setIsPokePopupVisible(true);
-    setTimeout(() => {
-      setIsPokePopupVisible(false);
-    }, 1500);
+    setTimeout(() => setIsPokePopupVisible(false), 1500);
   };
 
   return (
     <div className={s.profileSetUpContainer}>
       <div className={s.showCharacter}>
-        <button className={s.previousBtn} onClick={onPrev}>
-          이전
-        </button>
+        <button className={s.previousBtn} onClick={onPrev}>이전</button>
         <p className={s.pHeader}>캐릭터 설정하기</p>
-        <button className={s.nextBtn} onClick={handleNext}>
-          다음
-        </button>
+        <button className={s.nextBtn} onClick={handleNext}>다음</button>
         <p className={s.pDescription}>내 캐릭터에 이름과 나이를 지어주세요!</p>
         <div className={s.characterContainer}>
-          <img
-            className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
-            alt="skin"
-          />
-          <img
-            className={s.characterFace}
-            src={`${IMG_BASE_URL}${userInfo.face.expression}.png`}
-            alt="face"
-          />
-          <img
-            className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
-            alt="hair"
-          />
-          <img
-            className={s.characterTop}
-            src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
-            alt="top"
-          />
-          <img
-            className={s.characterBottom}
-            src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
-            alt="bottom"
-          />
-          <img
-            className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
-            alt="shoes"
-          />
-          {userInfo.item.head && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.head}.png`}
-              alt="headItem"
-            />
-          )}
-          {userInfo.item.eyes && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.eyes}.png`}
-              alt="faceItem"
-            />
-          )}
-          {userInfo.item.ears && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.ears}.png`}
-              alt="earItem"
-            />
-          )}
-          {userInfo.item.neck && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.neck}.png`}
-              alt="neckItem"
-            />
-          )}
-          {userInfo.item.leftWrist && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.leftWrist}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.rightWrist && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.rightWrist}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.leftHand && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.leftHand}.png`}
-              alt="handItem"
-            />
-          )}
-          {userInfo.item.rightHand && (
-            <img
-              className={s.characterItem}
-              src={`${IMG_BASE_URL}${userInfo.item.rightHand}.png`}
-              alt="handItem"
-            />
-          )}
+          <img className={s.characterSkin} src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`} alt="skin" />
+          <img className={s.characterFace} src={`${IMG_BASE_URL}${userInfo.face.expression}.png`} alt="face" />
+          <img className={s.characterHair} src={`${IMG_BASE_URL}${userInfo.face.hair}.png`} alt="hair" />
+          <img className={s.characterTop} src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`} alt="top" />
+          <img className={s.characterBottom} src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`} alt="bottom" />
+          <img className={s.characterShoes} src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`} alt="shoes" />
         </div>
-        <img
-          className={s.characterBackground}
-          src={characterBackground}
-          alt="캐릭터후광"
-        />
+        <img className={s.characterBackground} src={characterBackground} alt="후광" />
       </div>
+
       <div className={s.inputContainer}>
         <input
           type="text"
@@ -267,22 +134,19 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             className={s.idInput}
           />
           {isIdChecked && (
-            <div
-              className={`${s.idCheckMessage} ${
-                idExists ? s.available : s.unavailable
-              }`}
-            >
-              {idCheckMessage}
+            <div className={`${s.idCheckMessage} ${idCheckData?.available ? s.available : s.unavailable}`}>
+              {idCheckData?.message || "확인 실패"}
             </div>
           )}
           <button
-            onClick={memoizedIdCheck}
-            className={`${s.checkBtn} ${idExists ? s.available : ""}`}
-            disabled={!isValidId}
+            onClick={handleIdCheck}
+            className={`${s.checkBtn} ${idCheckData?.available ? s.available : ""}`}
+            disabled={!isValidId || isFetching}
           >
-            {buttonText}
+            {isFetching ? "확인중..." : buttonText}
           </button>
         </div>
+
         <div className={s.ageContainer}>
           <div className={s.age}>생년월일</div>
           <Calendar
@@ -295,11 +159,8 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           />
         </div>
       </div>
-      {isPokePopupVisible && (
-        <div className={s.pokePopup}>
-          {`${errorMessage}`}
-        </div>
-      )}
+
+      {isPokePopupVisible && <div className={s.pokePopup}>{errorMessage}</div>}
     </div>
   );
 };
