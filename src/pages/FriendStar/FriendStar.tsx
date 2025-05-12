@@ -8,6 +8,7 @@ import { axiosRequest } from "../../functions/axiosRequest";
 import { User } from "../../interfaces/Interfaces";
 import Pending from "../PageManagement/Pending";
 import { loadImage } from "../../functions/loadImage";
+import backBtn from "../../assets/btnImg/whiteBackBtn.png";
 
 
 export default function FriendStar() {
@@ -49,6 +50,9 @@ export default function FriendStar() {
       <img className={s.background} src={background} alt="background" />
       <div className={s.dim} />
       <div className={s.title}>
+        <button className={s.backButton} onClick={() => navigate(-1)}>
+          <img src={backBtn} alt="backArrow" />
+        </button>
         <img className={s.planet} src={pleiadeslogo} alt="star" />
         <p className={s.owner}>{userData ? userData.userName : ""}님의 별</p>
       </div>
