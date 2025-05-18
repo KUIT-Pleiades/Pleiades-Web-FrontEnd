@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import s from './ShowSearchedUser.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 // 이미지 파일
 import deleteFriendsButton from '../../../../assets/SearchUsers/deleteFriendsButton.svg';
@@ -28,14 +29,15 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
     handleSendSignal,
     handleAddSearchHistory,
 }) => {
+    const navigate = useNavigate();
     const [showDeleteFriendButton, setShowDeleteFriendButton] = useState(false);
     const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
     
     // ✅ 팝업 상태 (이제 개별 유저마다 관리됨)
-    const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | null>(null);
+    const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | "DELETE" | null>(null);
 
     // ✅ 팝업 표시 함수
-    const showPopup = (type: "REFUSE" | "WITHDRAW" | "SEND") => {
+    const showPopup = (type: "REFUSE" | "WITHDRAW" | "SEND" | "DELETE") => {
         setPopupType(type);
         setTimeout(() => {
             setPopupType(null);
@@ -128,9 +130,18 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
         }
     };
 
+    const handelClickProfile = () => {
+        const userId = user.userId;
+        navigate("/friendstar", { state: { userId } });
+        handleAddSearchHistory(user.userId);
+    }
+
     return (
         <div className={s.userContainer}>
-            <div className={s.profileSection}>
+            <div
+                className={s.profileSection}
+                onClick={handelClickProfile}
+            >
                 <div className={s.profileImageContainer}>
                     <img src={user.profile} alt={`${user.userName}'s profile`} className={s.profileImage} />
                 </div>
@@ -150,6 +161,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         {popupType === "REFUSE" && "친구 요청을 거절했어요"}
                         {popupType === "WITHDRAW" && "친구 요청을 취소했어요"}
                         {popupType === "SEND" && "친구 요청을 완료했어요!"}
+                        {popupType === "DELETE" && "삭제되었습니다"}
                     </span>
                     {popupType === "SEND" && <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>}
                 </div>
@@ -166,6 +178,8 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     }}
                     onDelete={() => {
                         handleDeleteRequest(user.userId, "FRIEND");
+                        setIsDeleteFriendModalOpen(false);
+                        showPopup("DELETE");
                     }}
                 />
             )}
