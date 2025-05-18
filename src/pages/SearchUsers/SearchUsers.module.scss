@@ -55,15 +55,6 @@
     width: 93%;
 }
 
-.searchResultContainer{
-    width: 93%;
-    max-height: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0;
-}
-
 .searchResultTitle{
     width: 100%;
     padding-bottom: 0.62rem;
@@ -79,10 +70,15 @@
 }
 
 .searchResultsContainer {
-    width: 93%;
+    //width: 93%;
+    width: 100%;
     height: auto;
     overflow-y: auto;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .noResultModal{
