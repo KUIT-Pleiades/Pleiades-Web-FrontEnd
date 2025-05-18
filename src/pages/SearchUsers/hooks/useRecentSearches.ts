@@ -42,6 +42,10 @@ export const useRecentSearches = () => {
       }
     },
 
+    onSuccess: (_data, deletedId) => {
+      console.log(`✅ 검색기록 삭제 성공: userId=${deletedId}`);
+    },
+
     // ✅ 완료 후 정합성 재검증
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['recentSearches'] });
