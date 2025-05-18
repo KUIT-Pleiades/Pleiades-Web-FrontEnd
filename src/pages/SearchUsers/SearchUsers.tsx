@@ -19,6 +19,7 @@ const SearchUsers: React.FC = () => {
   const {
     data: searchResults,
     isLoading: isSearching,
+    refetch: refetchSearchResults,
   } = useSearchUsers(searchValue, triggerSearch);
 
   const {
@@ -75,7 +76,7 @@ const SearchUsers: React.FC = () => {
         <div className={s.searchResultsContainer}>
           <SearchResults
             filteredUsers={searchResults}
-            refreshSearch={() => setTriggerSearch(true)}
+            refreshSearch={() => refetchSearchResults()}
           />
         </div>
       ) : (

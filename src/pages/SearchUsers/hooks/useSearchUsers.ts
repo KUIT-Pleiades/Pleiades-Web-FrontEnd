@@ -4,7 +4,7 @@ import { axiosRequest } from '../../../functions/axiosRequest';
 import { SearchedUser } from '../../../interfaces/Interfaces';
 
 export const useSearchUsers = (keyword: string, enabled: boolean) => {
-  return useQuery({
+  const query = useQuery({
     queryKey: ['searchUsers', keyword],
     queryFn: async () => {
       const response = await axiosRequest<{ users: SearchedUser[] }>(
@@ -16,4 +16,6 @@ export const useSearchUsers = (keyword: string, enabled: boolean) => {
     },
     enabled,
   });
+
+  return query; // ✅ data, isLoading, refetch 등 외부에서 사용 가능
 };
