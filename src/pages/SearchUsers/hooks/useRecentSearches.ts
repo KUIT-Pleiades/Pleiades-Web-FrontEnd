@@ -36,7 +36,7 @@ export const useRecentSearches = () => {
     },
 
     // ❌ 실패 시 롤백
-    onError: (err, deletedId, context) => {
+    onError: (_err, _deletedId, context) => {
       if (context?.previousData) {
         queryClient.setQueryData(['recentSearches'], context.previousData);
       }
