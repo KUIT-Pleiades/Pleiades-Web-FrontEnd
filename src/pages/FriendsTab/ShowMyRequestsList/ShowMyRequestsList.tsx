@@ -17,7 +17,7 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
     }, 1500);
     setTimeout(() => {
       handleDeleteRequest(otherUser.userId);
-    }, 1000);
+    }, 900);
   };
 
   return (
