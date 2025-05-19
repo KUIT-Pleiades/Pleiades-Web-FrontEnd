@@ -24,12 +24,18 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
     setTimeout(() => {
       setIsAcceptFriendPopupVisible(false);
     }, 1500);
+    setTimeout(() => {
+      handleAcceptRequest(otherUser.userId);
+    }, 1000);
   };
   const showRefuseFriendPopup = () => {
     setIsRefuseFriendPopupVisible(true);
     setTimeout(() => {
       setIsRefuseFriendPopupVisible(false);
     }, 1500);
+    setTimeout(() => {
+      handleRejectRequest(otherUser.userId);
+    }, 1000);
   };
   
   return (
@@ -51,7 +57,7 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
         <button
           className={s.acceptButton}
           onClick={() => {
-            handleAcceptRequest(otherUser.userId);
+            //handleAcceptRequest(otherUser.userId);
             showAcceptFriendPopup();
           }}
         >수락</button>
@@ -59,7 +65,7 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
         <button
           className={s.declineButton}
           onClick={() => {
-            handleRejectRequest(otherUser.userId);
+            // handleRejectRequest(otherUser.userId);
             showRefuseFriendPopup();
           }}
         >거절</button>
