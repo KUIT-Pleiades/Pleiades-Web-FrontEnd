@@ -41,7 +41,18 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
         setPopupType(type);
         setTimeout(() => {
             setPopupType(null);
-        }, 1500); // 1.5초 후 자동 닫힘
+        }, 1500);
+        setTimeout(() => {
+            if(type === "DELETE"){
+                handleDeleteRequest(user.userId, "FRIEND");
+            } else if(type === "WITHDRAW"){
+                handleDeleteRequest(user.userId, "REQUEST");
+            } else if(type === "REFUSE"){
+                handleRejectRequest(user.userId);
+            } else if(type === "SEND"){
+                handleSendRequestFriend(user.userId);
+            }
+        }, 1000);
     };
 
     // 버튼 렌더링 함수
@@ -81,7 +92,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.withdrawRequestButton}
                         onClick={() => {
-                            handleDeleteRequest(user.userId, "REQUEST");
+                            //handleDeleteRequest(user.userId, "REQUEST");
                             showPopup("WITHDRAW");
                             handleAddSearchHistory(user.userId);
                         }}
@@ -104,7 +115,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         <button
                             className={s.refuseRequestButton}
                             onClick={() => {
-                                handleRejectRequest(user.userId);
+                                //handleRejectRequest(user.userId);
                                 showPopup("REFUSE");
                                 handleAddSearchHistory(user.userId);
                             }}
@@ -119,7 +130,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.sendRequestButton}
                         onClick={() => {
-                            handleSendRequestFriend(user.userId);
+                            //handleSendRequestFriend(user.userId);
                             showPopup("SEND");
                             handleAddSearchHistory(user.userId);
                         }}
@@ -177,7 +188,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         setIsDeleteFriendModalOpen(false);
                     }}
                     onDelete={() => {
-                        handleDeleteRequest(user.userId, "FRIEND");
+                        //handleDeleteRequest(user.userId, "FRIEND");
                         setIsDeleteFriendModalOpen(false);
                         showPopup("DELETE");
                     }}

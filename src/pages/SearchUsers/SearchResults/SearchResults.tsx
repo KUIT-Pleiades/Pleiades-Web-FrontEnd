@@ -11,11 +11,7 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch }) => {
-    const doRefresh = () => {
-        setTimeout(() => {
-            refreshSearch();
-        }, 1290);
-    }
+
     // ✅ 친구 요청 보내기
     const handleSendRequestFriend = async (friendId: string) => {
         const response = await axiosRequest<{ message: string }>(
@@ -25,7 +21,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log('친구 요청 보냄. to: ', friendId);
-            doRefresh();
+            refreshSearch();
         } else console.error("친구 요청 실패");
     };
 
@@ -38,11 +34,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log('딜리트 실행 완료. 메시지: ', response.message);
-            if(type === "REQUEST"){
-                doRefresh();
-            }else{
-                refreshSearch();
-            }
+            refreshSearch();
         } else console.error(type === "REQUEST" ? "친구 요청 취소 실패" : "친구 삭제 실패");
     };
 
@@ -55,7 +47,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
         );
         if (response) {
             console.log(response.message);
-            doRefresh();
+            refreshSearch();
         } else console.error("친구 요청 거절 실패");
     };
 
@@ -93,7 +85,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             if (response) {
                 console.log('최근 검색 기록 추가 완료. 추가한 사용자 아이디: ',searchedId);
                 console.log('응답: ', response);
-                //getRecentSearches();
             } else {
                 console.error("최근 검색 기록 추가 실패");
             }

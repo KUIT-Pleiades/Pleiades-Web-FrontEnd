@@ -154,7 +154,6 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     background-color: #EDEFFF;
     padding: 1rem;
     border-radius: 0.75rem;
@@ -166,7 +165,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeInOut 1.5s ease-in-out;
+    opacity: 0;
+    transform: translate(-50%, -40%);
+    animation: fadeIn 0.3s ease-out forwards, fadeOut 0.5s ease-in 1s forwards; // ✅ 두 단계로 나눔
     
     &Title {
         color: #17151C;
@@ -189,23 +190,26 @@
         letter-spacing: -0.01375rem;
         margin-top: 0.44rem;
     }
+}
 
-    @keyframes fadeInOut {
-        0% {
-            opacity: 0;
-            transform: translate(-50%, -60%);
-        }
-        10% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        90% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        100% {
-            opacity: 0;
-            transform: translate(-50%, -40%);
-        }
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
 }
