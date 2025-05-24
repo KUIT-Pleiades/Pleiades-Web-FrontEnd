@@ -15,7 +15,7 @@ interface SearchedUserProps {
     handleSendRequestFriend: (friendId: string) => void;
     handleDeleteRequest: (friendId: string, type: "REQUEST" | "FRIEND") => void;
     handleRejectRequest: (friendId: string) => void;
-    handleSendSignal: (friendId: string) => void;
+    handleSendSignal: (friendId: string, friendName: string) => void;
     handleAcceptRequest: (friendId: string) => void;
     handleAddSearchHistory: (searchedId: string) => void;
 }
@@ -74,7 +74,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         ) : (
                             <SignalButton
                                 onClickSignal={() => {
-                                    handleSendSignal(user.userId);
+                                    handleSendSignal(user.userId, user.userName);
                                     handleAddSearchHistory(user.userId);
                                 }}
                             />

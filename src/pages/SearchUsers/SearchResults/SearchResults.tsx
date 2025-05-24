@@ -4,6 +4,8 @@ import s from './SearchResults.module.scss';
 import ShowSearchedUser from './ShowSearchedUser/ShowSearchedUser';
 import { axiosRequest } from '../../../functions/axiosRequest';
 import { SearchedUser } from '../../../interfaces/Interfaces';
+import { useSignalManager } from '../../../components/Signal/useSignalManager';
+import SendSignalPopup from '../../../components/Signal/SendSignalModal';
 
 interface SearchResultsProps {
     filteredUsers: SearchedUser[];
@@ -11,6 +13,14 @@ interface SearchResultsProps {
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch }) => {
+
+    const {
+        signalTo,
+        signalImageIndex,
+        isSendSignalPopupVisible,
+        sendSignal,
+        closeSendSignalPopup,
+    } = useSignalManager();
 
     // ✅ 친구 요청 보내기
     const handleSendRequestFriend = async (friendId: string) => {
@@ -63,16 +73,16 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             refreshSearch();
         } else console.error("친구 요청 수락 실패");
     };
-    const handleSendSignal = async (friendId: string) => {
-        const response = await axiosRequest<{ message: string }>(
-          `/friends/${friendId}/signal`,
-          "POST",
-          { receiverId: friendId }
-        );
-        if (response) {
-            console.log(response.message);
-        } else console.error("시그널 보내기 실패");
-    }
+    // const handleSendSignal = async (friendId: string) => {
+    //     const response = await axiosRequest<{ message: string }>(
+    //       `/friends/${friendId}/signal`,
+    //       "POST",
+    //       { receiverId: friendId }
+    //     );
+    //     if (response) {
+    //         console.log(response.message);
+    //     } else console.error("시그널 보내기 실패");
+    // }
 
     const handleAddSearchHistory = async (searchedId: string) => {
         console.log('검색기록 추가 시도..!');
@@ -103,11 +113,20 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
                         handleDeleteRequest={handleDeleteRequest}
                         handleRejectRequest={handleRejectRequest}
                         handleAcceptRequest={handleAcceptRequest}
-                        handleSendSignal={handleSendSignal}
+                        //handleSendSignal={handleSendSignal}
+                        handleSendSignal={sendSignal}
                         handleAddSearchHistory={handleAddSearchHistory}
                     />
                 </div>
             ))}
+
+            {isSendSignalPopupVisible && (
+                <SendSignalPopup
+                    username={signalTo}
+                    handleCloseSendSignalPopup={closeSendSignalPopup}
+                    imageIndex={signalImageIndex}
+                />
+            )}
         </div>
     )
 }

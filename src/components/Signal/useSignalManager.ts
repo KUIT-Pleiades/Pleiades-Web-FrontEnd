@@ -34,6 +34,7 @@ export const useSignalManager = () => {
 
       if (response.data.message === "Signal sent successfully" || response.data.message === "You already sent a signal") {
         openSendSignalPopup(friendName);
+        console.log("시그널 전송 성공:", response.data.message);
       } else if (response.data.message === "Invalid or expired token") {
         navigate("/login");
       }
