@@ -39,6 +39,12 @@ const SearchUsers: React.FC = () => {
     setTriggerSearch(true);
   };
 
+  // 임시로 만든 전체삭제 함수
+  const handleClearAll = () => {
+    if (!recentSearches) return;
+    recentSearches.forEach(user => removeRecent(user.userId));
+  };
+
   return (
     <div className={s.container}>
       {(isSearching || isRecentLoading) && <Pending />}
@@ -70,6 +76,7 @@ const SearchUsers: React.FC = () => {
             recentSearches={recentSearches || []}
             onUserClick={handleRecentClick}
             onRemove={removeRecent}
+            onClearAll={handleClearAll}
           />
         </div>
       ) : searchResults && searchResults.length > 0 ? (

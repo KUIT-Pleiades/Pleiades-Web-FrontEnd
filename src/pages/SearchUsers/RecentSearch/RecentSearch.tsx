@@ -9,13 +9,22 @@ import { RecentSearchedUser } from '../../../interfaces/Interfaces';
 interface RecentSearchProps {
     onUserClick: (id: string) => void;
     onRemove: (id: string) => void;
+    onClearAll: () => void;
     recentSearches: RecentSearchedUser[] | undefined;
 }
 
-const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, onRemove, recentSearches }) => {
+const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, onRemove, onClearAll, recentSearches }) => {
     return (
         <div className={s.recentSearchContainer}>
-            <span className={s.recentSearchTitle}>최근 검색</span>
+            <div className={s.recentSearchHeader}>
+                <span className={s.recentSearchTitle}>최근 검색</span>
+                <span
+                    className={s.recentSearchClearAll}
+                    onClick={onClearAll}
+                >
+                    전체삭제
+                </span>
+            </div>
             <div className={s.separator} />
 
             {!recentSearches || recentSearches.length === 0 ? (

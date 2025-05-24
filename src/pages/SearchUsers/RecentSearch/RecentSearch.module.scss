@@ -1,20 +1,40 @@
 .recentSearchContainer{
     width: 100%;
 }
-.recentSearchTitle{
-    color: #444;
-    font-family: "Pretendard";
-    font-size: 0.8125rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.01625rem;
+.recentSearchHeader{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    //margin-bottom: 0.62rem;
+}
+.recentSearch{
+    &Title{
+        color: #444;
+        font-family: "Pretendard";
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01625rem;
+        padding-bottom: 0.62rem;
+    }
+    &ClearAll{
+        color: #444;
+        font-family: "Pretendard";
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -0.01625rem;
+        padding-bottom: 0.62rem;
+    }
 }
 .separator{
     width: 100%;
     height: 1px;
     background-color: #C0B9DB;
-    margin-top: 0.62rem;
+    //margin-top: 0.62rem;
     margin-bottom: 01.13rem;
 }
 .noRecentSearchContainer{
