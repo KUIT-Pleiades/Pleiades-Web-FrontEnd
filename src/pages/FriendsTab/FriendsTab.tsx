@@ -5,13 +5,14 @@ import { useCharacterStore } from '../../store/useCharacterStore';
 import ShowTotalFriendsList from './ShowTotalFriendsList/ShowTotalFriendsList';
 import SearchUsersBar from '../../components/SearchUsersBar/SearchUsersBar';
 import { axiosRequest } from '../../functions/axiosRequest';
-import SendSignalPopup from './SendSignalPopup/SendSignalPopup';
-import ReceiveSignalPopup from './ReceiveSignalPopup/ReceiveSignalPopup';
 import Pending from '../PageManagement/Pending';
-import { SignalFrom, Social } from '../../interfaces/Interfaces';
+import { Social } from '../../interfaces/Interfaces';
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
 import backArrow from '../../assets/FriendsTab/backArrow.svg';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import SendSignalPopup from '../../components/Signal/SendSignalModal';
+import ReceiveSignalPopup from '../../components/Signal/ReceivedSignalModal';
+import { useSignalManager } from '../../components/Signal/useSignalManager';
 
 // 🔧 axios 응답 구조에 맞게 response.data 리턴
 const getFriendsList = async (): Promise<Social> => {
@@ -31,12 +32,18 @@ const FriendsTab: React.FC = () => {
   });
 
   const [hasNoFriend, setHasNoFriend] = useState(false);
-  const [signalTo, setSignalTo] = useState("");
-  const [signalImageIndex, setSignalImageIndex] = useState(0);
-  const [isSendSignalPopupVisible, setIsSendSignalPopupVisible] = useState(false);
-  const [signalsQueue, setSignalsQueue] = useState<SignalFrom[]>([]);
-  const [currentSignalIndex, setCurrentSignalIndex] = useState(0);
-  const [isReceiveSignalPopupVisible, setIsReceiveSignalPopupVisible] = useState(false);
+
+  const {
+    signalTo,
+    signalImageIndex,
+    isSendSignalPopupVisible,
+    isReceiveSignalPopupVisible,
+    signalsQueue,
+    currentSignalIndex,
+    sendSignal,
+    closeSendSignalPopup,
+    closeReceiveSignalPopup,
+  } = useSignalManager();
 
   
   const handleDeleteFriend = async (friendId: string) => {
@@ -59,89 +66,6 @@ const FriendsTab: React.FC = () => {
     if (res) queryClient.invalidateQueries({ queryKey: ["friends"] });
   };
 
-  const handleOpenSendSignalPopup = (friendName: string) => {
-    setSignalTo(friendName);
-    setIsSendSignalPopupVisible(true);
-  };
-
-  const handleCloseSendSignalPopup = () => {
-    setIsSendSignalPopupVisible(false);
-    setSignalTo("");
-  };
-
-  const handleSendSignal = async (friendId: string, friendName: string) => {
-    const randomIndex = Math.floor(Math.random() * 3);
-    setSignalImageIndex(() => {
-      sendSignalRequest(friendId, friendName, randomIndex);
-      return randomIndex;
-    });
-  };
-
-  const sendSignalRequest = async (friendId: string, friendName: string, imageIndex: number) => {
-    try {
-      const response = await axiosRequest<{ message: string }>(
-        "/friends/signals",
-        "POST",
-        {
-          receiverId: friendId,
-          imageIndex: imageIndex,
-        }
-      );
-  
-      if (response.data.message === "Signal sent successfully" || response.data.message === "You already sent a signal") {
-        handleOpenSendSignalPopup(friendName);
-      } else if (response.data.message === "Invalid or expired token") {
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("시그널 전송 중 오류:", error);
-    }
-  };
-
-  const handleReceiveSignal = async () => {
-    try {
-      const response = await axiosRequest<{ signals: SignalFrom[] }>(
-        "/friends/signals",
-        "GET",
-        null
-      );
-  
-      if (response.data.signals.length > 0) {
-        //setIsClearAllSignal(false);
-        setSignalsQueue(response.data.signals);
-        setCurrentSignalIndex(0);
-        setIsReceiveSignalPopupVisible(true);
-      }
-    } catch (error) {
-      console.error("시그널 수신 실패:", error);
-    }
-  };
-
-  const closeSignalPopup = () => {
-    const currentSignal = signalsQueue[currentSignalIndex];
-    const nextIndex = currentSignalIndex + 1;
-    if (nextIndex < signalsQueue.length) {
-      setCurrentSignalIndex(nextIndex);
-    } else {
-      setSignalsQueue([]);
-      setIsReceiveSignalPopupVisible(false);
-    }
-    handleDeleteSignal(currentSignal);
-  }
-
-  const handleDeleteSignal = async (currentSignal: SignalFrom) => {
-    try {
-      const res = await axiosRequest(`/friends/signals/${currentSignal.userId}`, "DELETE", null);
-      if (res) {
-        console.log("시그널 삭제 성공");
-      } else {
-        console.log("시그널 삭제 실패");
-      }
-    } catch (e) {
-      console.error("시그널 삭제 실패:", e);
-    }
-  };
-
   useEffect(() => {
     setHasNoFriend(
       friendsData.friend.length === 0 &&
@@ -149,10 +73,6 @@ const FriendsTab: React.FC = () => {
       friendsData.sent.length === 0
     );
   }, [friendsData]);
-
-  useEffect(() => {
-    handleReceiveSignal();
-  }, []);
 
   return (
     <div className={s.container}>
@@ -178,7 +98,7 @@ const FriendsTab: React.FC = () => {
           handleAcceptRequest={handleAcceptRequest}
           handleRejectRequest={handleRejectRequest}
           handleDeleteRequest={handleDeleteRequest}
-          handleSendSignal={handleSendSignal}
+          handleSendSignal={sendSignal}
         />
       </div>
 
@@ -193,7 +113,7 @@ const FriendsTab: React.FC = () => {
       {isSendSignalPopupVisible && (
         <SendSignalPopup
           username={signalTo}
-          handleCloseSendSignalPopup={handleCloseSendSignalPopup}
+          handleCloseSendSignalPopup={closeSendSignalPopup}
           imageIndex={signalImageIndex}
         />
       )}
@@ -201,7 +121,7 @@ const FriendsTab: React.FC = () => {
       {isReceiveSignalPopupVisible && signalsQueue.length > 0 && (
         <ReceiveSignalPopup
           username={signalsQueue[currentSignalIndex].userName}
-          handleCloseReceiveSignalPopup={closeSignalPopup}
+          handleCloseReceiveSignalPopup={closeReceiveSignalPopup}
           imageIndex={signalsQueue[currentSignalIndex].imageIndex}
         />
       )}
