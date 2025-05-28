@@ -1,4 +1,3 @@
-// src/functions/useStationListQuery.ts
 import { useQuery } from "@tanstack/react-query";
 import { Stations } from "../../../interfaces/Interfaces";
 import { axiosRequest } from '../../../functions/axiosRequest';

@@ -10,9 +10,10 @@ import SendSignalPopup from '../../../components/Signal/SendSignalModal';
 interface SearchResultsProps {
     filteredUsers: SearchedUser[];
     refreshSearch: () => void;
+    refetchRecentSearches: () => void;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch, refetchRecentSearches }) => {
 
     const {
         signalTo,
@@ -73,16 +74,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             refreshSearch();
         } else console.error("친구 요청 수락 실패");
     };
-    // const handleSendSignal = async (friendId: string) => {
-    //     const response = await axiosRequest<{ message: string }>(
-    //       `/friends/${friendId}/signal`,
-    //       "POST",
-    //       { receiverId: friendId }
-    //     );
-    //     if (response) {
-    //         console.log(response.message);
-    //     } else console.error("시그널 보내기 실패");
-    // }
 
     const handleAddSearchHistory = async (searchedId: string) => {
         console.log('검색기록 추가 시도..!');
@@ -95,6 +86,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
             if (response) {
                 console.log('최근 검색 기록 추가 완료. 추가한 사용자 아이디: ',searchedId);
                 console.log('응답: ', response);
+                refetchRecentSearches();
             } else {
                 console.error("최근 검색 기록 추가 실패");
             }
@@ -113,7 +105,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
                         handleDeleteRequest={handleDeleteRequest}
                         handleRejectRequest={handleRejectRequest}
                         handleAcceptRequest={handleAcceptRequest}
-                        //handleSendSignal={handleSendSignal}
                         handleSendSignal={sendSignal}
                         handleAddSearchHistory={handleAddSearchHistory}
                     />

@@ -26,6 +26,7 @@ const SearchUsers: React.FC = () => {
     data: recentSearches,
     isLoading: isRecentLoading,
     remove: removeRecent,
+    refetch: refetchRecentSearches,
   } = useRecentSearches();
 
   const handleSearch = () => {
@@ -83,7 +84,8 @@ const SearchUsers: React.FC = () => {
         <div className={s.searchResultsContainer}>
           <SearchResults
             filteredUsers={searchResults}
-            refreshSearch={() => refetchSearchResults()}
+            refreshSearch={refetchSearchResults}
+            refetchRecentSearches={refetchRecentSearches}
           />
         </div>
       ) : (
