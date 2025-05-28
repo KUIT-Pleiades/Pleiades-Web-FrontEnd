@@ -139,9 +139,11 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
     };
 
     const handelClickProfile = () => {
-        const userId = user.userId;
-        navigate("/friendstar", { state: { userId } });
-        handleAddSearchHistory(user.userId);
+        if(user.status === "FRIEND"){
+            const userId = user.userId;
+            navigate("/friendstar", { state: { userId } });
+            handleAddSearchHistory(user.userId);
+        }
     }
 
     return (
