@@ -92,7 +92,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.withdrawRequestButton}
                         onClick={() => {
-                            //handleDeleteRequest(user.userId, "REQUEST");
                             showPopup("WITHDRAW");
                             handleAddSearchHistory(user.userId);
                         }}
@@ -115,7 +114,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         <button
                             className={s.refuseRequestButton}
                             onClick={() => {
-                                //handleRejectRequest(user.userId);
                                 showPopup("REFUSE");
                                 handleAddSearchHistory(user.userId);
                             }}
@@ -130,7 +128,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.sendRequestButton}
                         onClick={() => {
-                            //handleSendRequestFriend(user.userId);
                             showPopup("SEND");
                             handleAddSearchHistory(user.userId);
                         }}
@@ -188,7 +185,6 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         setIsDeleteFriendModalOpen(false);
                     }}
                     onDelete={() => {
-                        //handleDeleteRequest(user.userId, "FRIEND");
                         setIsDeleteFriendModalOpen(false);
                         showPopup("DELETE");
                     }}
