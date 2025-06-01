@@ -2,8 +2,14 @@
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.44rem;
     margin-bottom: 1.12rem;
+  }
+
+  .profileSection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.44rem;
   }
   
   .profileImageContainer {
@@ -21,7 +27,7 @@
   }
   
   .userInfo {
-    flex: 1;
+    //flex: 1;
     height: 2.19rem;
     display: flex;
     flex-direction: column;
@@ -50,4 +56,6 @@
   .removeButton {
     background: none;
     border: none;
+    height: 2.19rem;
+    padding-left: 0.44rem;
   }

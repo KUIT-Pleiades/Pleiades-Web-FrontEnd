@@ -17,9 +17,10 @@
   }
   
   .stationInfo {
+    box-sizing: border-box;
     height: 3.5rem;
     border: 1px solid #C0B9DB;
-    border-top: none;
+    //border-top: none;
     border-radius: 0rem 0rem 0.625rem 0.625rem;
 
     display: flex;

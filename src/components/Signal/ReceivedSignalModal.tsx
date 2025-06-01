@@ -1,19 +1,19 @@
 import React from "react";
-import s from "./ReceiveSignalPopup.module.scss";
+import s from "./ReceiveSignalModal.module.scss";
 
 // image files
-import close from '../../../assets/Signal/close.svg';
-import receive1 from '../../../assets/Signal/수신_1.webp';
-import receive2 from '../../../assets/Signal/수신_2.webp';
-import receive3 from '../../../assets/Signal/수신_3.webp';
+import close from '../../assets/Signal/close.svg';
+import receive1 from '../../assets/Signal/수신_1.webp';
+import receive2 from '../../assets/Signal/수신_2.webp';
+import receive3 from '../../assets/Signal/수신_3.webp';
 
-interface ReceiveSignalPopupProps {
+interface ReceiveSignalModalProps {
     username: string;
     handleCloseReceiveSignalPopup: () => void;
     imageIndex: number;
 }
 
-const ReceiveSignalPopup: React.FC<ReceiveSignalPopupProps> = ({
+const ReceiveSignalModal: React.FC<ReceiveSignalModalProps> = ({
     username,
     handleCloseReceiveSignalPopup,
     imageIndex
@@ -49,4 +49,4 @@ const ReceiveSignalPopup: React.FC<ReceiveSignalPopupProps> = ({
     );
 };
 
-export default ReceiveSignalPopup;
+export default ReceiveSignalModal;
