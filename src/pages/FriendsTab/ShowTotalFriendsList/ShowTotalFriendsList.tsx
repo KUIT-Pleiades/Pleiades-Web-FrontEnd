@@ -36,7 +36,10 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
   const [onActionFriendId, setOnActionFriendId] = useState<string>("");
   const [showAllFriends, setShowAllFriends] = useState<boolean>(false);
-  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">("최신순");
+  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">(() => {
+    const saved = localStorage.getItem("friendSortCriteria");
+    return saved === "이름순" ? "이름순" : "최신순";
+  });
 
   const sortedByRecent = useMemo(() => [...(friendsData.friend ?? [])], [friendsData.friend]);
 
@@ -60,6 +63,11 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
     if (Array.isArray(friendsData.friend) && friendsData.friend.length === 0) setIsShowMyFriends(false);
     if (Array.isArray(friendsData.sent) && friendsData.sent.length === 0) setIsShowMyRequests(false);
   }, [friendsData]);
+
+  const handleChangeSortCriteria = (criteria: "최신순" | "이름순") => {
+    setSortCriteria(criteria);
+    localStorage.setItem("friendSortCriteria", criteria);
+  };
 
   return (
     <div className={s.friendsList}>
@@ -119,7 +127,7 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
             <div className={s.sortCriteriaBoxContainer}>
               <SortCriteriaBox
                 sortCriteria={sortCriteria}
-                setSortCriteria={setSortCriteria}
+                setSortCriteria={handleChangeSortCriteria}
               />
             </div>
             <div className={s.myFriendsSection}>

@@ -15,6 +15,9 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
     setTimeout(() => {
       setisCancelRequestPopupVisible(false);
     }, 1500);
+    setTimeout(() => {
+      handleDeleteRequest(otherUser.userId);
+    }, 1000);
   };
 
   return (
@@ -36,7 +39,7 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
         <button
           className={s.cancelButton}
           onClick={() => {
-            handleDeleteRequest(otherUser.userId)
+            // handleDeleteRequest(otherUser.userId)
             showCancelRequestPopup();
           }}
         >취소</button>

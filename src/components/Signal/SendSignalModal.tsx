@@ -1,19 +1,19 @@
 import React from "react";
-import s from "./SendSignalPopup.module.scss";
+import s from "./SendSignalModal.module.scss";
 
 // image files
-import close from '../../../assets/Signal/close.svg';
-import outgoing1 from '../../../assets/Signal/발신_1.webp';
-import outgoing2 from '../../../assets/Signal/발신_2.webp';
-import outgoing3 from '../../../assets/Signal/발신_3.webp';
+import close from '../../assets/Signal/close.svg';
+import outgoing1 from '../../assets/Signal/발신_1.webp';
+import outgoing2 from '../../assets/Signal/발신_2.webp';
+import outgoing3 from '../../assets/Signal/발신_3.webp';
 
-interface SendSignalPopupProps {
+interface SendSignalModalProps {
     username: string;
     handleCloseSendSignalPopup: () => void;
     imageIndex: number;
 }
 
-const SendSignalPopup: React.FC<SendSignalPopupProps> = ({
+const SendSignalModal: React.FC<SendSignalModalProps> = ({
     username,
     handleCloseSendSignalPopup,
     imageIndex
@@ -48,4 +48,4 @@ const SendSignalPopup: React.FC<SendSignalPopupProps> = ({
     );
 };
 
-export default SendSignalPopup;
+export default SendSignalModal;

@@ -9,6 +9,7 @@
 }
 
 .userInfoContainer{
+    flex: 1;
     width: auto;
     height: 2.1875rem;
     display: flex;
@@ -17,10 +18,10 @@
     margin: 0;
     padding: 0;
 }
-.emptySpace{
-    height: 2.1875rem;
-    flex: 1;
-}
+// .emptySpace{
+//     height: 2.1875rem;
+//     flex: 1;
+// }
 
 .profileImageContainer{
     border-radius: 50%;
