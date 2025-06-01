@@ -4,6 +4,7 @@ import { axiosRequest } from "../../../../functions/axiosRequest";
 // import { formatDateTime } from "../../../../functions/formatDateTime";
 import messageIcon from "../../../../assets/Icon/message.svg";
 import Pending from "../../../PageManagement/Pending";
+import { useNavigate } from "react-router-dom";
 
 interface StationReportProps {
   stationId: string;
@@ -36,6 +37,7 @@ const StationReport: React.FC<StationReportProps> = ({
   const [editedAnswer, setEditedAnswer] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const maxLength = 150;
+	const navigate = useNavigate();
 
   useEffect(() => {
     const getReportData = async () => {
@@ -113,8 +115,9 @@ const StationReport: React.FC<StationReportProps> = ({
     }
   };
 
-  const handleCancel = () => {
-    setEditedAnswer(reportData?.answer || "");
+	const handleCancel = () => {
+		console.log("취소 버튼 클릭됨");
+    navigate(-1);
   };
 
   if (isLoading) return <Pending />;
