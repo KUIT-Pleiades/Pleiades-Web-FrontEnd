@@ -2,17 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 import s from './ShowStationList.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Message, Stations } from '../../../interfaces/Interfaces';
+import { Message, Stations, Station } from '../../../interfaces/Interfaces';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
-import StationDisplay from './StationDisplay/StationDisplay';
+//import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
+import axiosInstance from '../../../api/axiosInstance';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
-import axiosInstance from '../../../api/axiosInstance';
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -22,6 +22,7 @@ const stationBackgrounds: { [key: string]: string } = {
   station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
   station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
 };
+
 const ShowStationList: React.FC = () => {
   const { userInfo } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
@@ -35,12 +36,29 @@ const ShowStationList: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [isNoExistStationPopupVisible, setIsNoExistStationPopupVisible] = useState(false);
 
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [carouselStations, setCarouselStations] = useState<Station[]>([]); // 최신 5개 정거장
+  const currentStation = carouselStations[backgroundIndex]; // 현재 정거장 정보
+
+  useEffect(() => {
+    if (carouselStations.length === 0) return;
+
+    const interval = setInterval(() => {
+      setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [carouselStations]);
+
   // 정거장 목록 가져오기
   const fetchStations = async () => {
     try {
       const response = await axiosRequest<Stations>('/stations', 'GET', null);
       if (response && Array.isArray(response.data.stations)) {
-        setStations(response.data);
+        setStations({ stations: response.data.stations });
+        const top5 = response.data.stations.slice(0, 5);
+        setCarouselStations(top5);
+
         console.log("정거장 불러오기 응답 잘 받음");
         console.log("응답 상태:", response.status);
         console.log("응답 데이터:", response.data);
@@ -245,7 +263,61 @@ const ShowStationList: React.FC = () => {
         </div>
       </div>
 
-      <div className={s.separator}>
+      {
+        sortedStations.length == 0 ? (
+          <>
+            <div className={s.separator}>
+              <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
+              <div className={s.sortCriteriaBoxContainer}>
+                <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
+              </div>
+            </div>
+            <div className={s.stationListWrapper}>
+              <div className={s.stationListContainer}>
+                <div className={s.noStation}>
+                  <span className={s.noStationTitle}>아직 등록된 정거장이 없어요...</span>
+                  <span className={s.noStationText}>정거장을 검색하거나, 새로운 정거장을 만들어 보세요!</span>
+                  <img className={s.noStationLogo} src={noStationLogo} alt="noStationLogo" />
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className={s.bodyWrapper}>
+            {/* 배경 이미지 슬라이더 */}
+            <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
+              <div
+                className={s.backgroundImageStatic}
+                style={{
+                  backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground]})`,
+                }}
+              />
+            </div>
+            {/* 콘텐츠는 이 아래에 표시 */}
+            {/* <div className={s.contentAboveBackground}>
+              <div className={s.stationListWrapper}>
+                <div className={s.stationListContainer}>
+                  {sortedStations.map((station) => (
+                    <div
+                      key={station.stationId}
+                      className={s.stationDisplayWrapper}
+                      onClick={() => handleEnterStation(station.stationId)}
+                    >
+                      <StationDisplay
+                        name={station.name}
+                        numOfUsers={station.numOfUsers}
+                        background={stationBackgrounds[station.stationBackground] || `${IMG_BASE_URL}station_dim_01.png`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div> */}
+          </div>
+        )
+      }
+
+      {/* <div className={s.separator}>
         <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
         <div className={s.sortCriteriaBoxContainer}>
           <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
@@ -276,7 +348,7 @@ const ShowStationList: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* 검색한 정거장이 없을 때 나타나는 팝업 */}
       {isNoExistStationPopupVisible && 

@@ -16,7 +16,7 @@
 
 .headContainer {
     width: 100%;
-    height: 9%;
+    height: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,6 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1.25rem;
 }
 
 .titleText {
@@ -45,6 +46,23 @@
     justify-content: space-between;
     align-items: center;
     width: 3rem;
+}
+
+.bodyWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // 배경이 바깥으로 나가지 않도록
+}
+.backgroundImageStatic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
 }
 
 .separator {
