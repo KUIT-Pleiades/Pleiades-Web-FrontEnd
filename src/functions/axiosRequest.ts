@@ -13,7 +13,7 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   const { authorization } = useAuth.getState();
   if (authorization) {
-    config.headers["Authorization"] = `admin danpung628@naver.com`;
+    config.headers["Authorization"] = `Bearer ${authorization}`;
   }
   return config;
 });
