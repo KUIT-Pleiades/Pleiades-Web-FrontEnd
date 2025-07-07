@@ -1,0 +1,57 @@
+/* ShowStationsList/StationListBottomSheet/StationListBottomSheet.module.scss */
+
+$sheet-radius : 20px;
+$header-height: 40px;
+
+/* 공통 Wrapper */
+.wrapper {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 0;
+  /* top 은 JS, bottom 은 BottomBar 높이로 제어 */
+}
+
+.open   { /* 클래스명이 추가로 붙으면 열림 */
+  /* top 값은 인라인 style에서 제어 */
+}
+
+.closed {
+  /* top 값은 인라인 style에서 제어 */
+}
+
+/* ----- Header 영역 ----- */
+.header {
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #c4c4c4;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ----- Content 영역 ----- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px;
+}

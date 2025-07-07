@@ -1,59 +1,59 @@
 .container {
-    position: relative;
-    border: none;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url("../../../assets/StationList/stationListBackGround.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("../../../assets/StationList/stationListBackGround.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .headContainer {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 0.23rem;
+  width: 100%;
+  height: 10dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0.23rem;
 }
 
 .title {
-    width: 92%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.25rem;
+  width: 92%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
 }
 
 .titleText {
-    color: #FFF;
-    text-align: center;
-    font-family: Pretendard;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.02rem;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.02rem;
 }
 
 .titleButtons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 3rem;
 }
 
 .bodyWrapper {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden; // 배경이 바깥으로 나가지 않도록
+  height: calc(100% - 9dvh);
+  overflow: hidden;
 }
+
 .backgroundImageStatic {
   position: absolute;
   top: 0;
@@ -65,145 +65,136 @@
   z-index: 0;
 }
 
+/* 정거장이 없을 때 */
 .separator {
-    border-bottom: 1px solid #E1E1E1;
-    width: 92%;
-    padding-bottom: 0.94rem;
-    position: relative;
+  position: relative;
+  width: 92%;
+  padding-bottom: 0.94rem;
+  border-bottom: 1px solid #e1e1e1;
 }
 
 .totalNumOfStations {
-    color: #CBCCCB;
-    font-family: Pretendard;
-    font-size: 0.8125rem;
-    font-weight: 400;
-    margin-top: 1.65rem;
+  color: #cbcccb;
+  font-family: Pretendard;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  margin-top: 1.65rem;
 }
 
 .sortCriteriaBoxContainer {
-    position: absolute;
-    right: -0.75rem;
-    bottom: 2.28rem;
+  position: absolute;
+  right: -0.75rem;
+  bottom: 2.28rem;
 }
 
 .stationListWrapper {
-    width: 100%;
-    flex: 1;
-    margin-bottom: 9dvh;
-    padding-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto;
+  width: 100%;
+  flex: 1;
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
 }
 
 .stationListContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 92%;
-    margin-top: 1rem;
-    gap: 0.94rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 92%;
+  margin-top: 1rem;
+  gap: 0.94rem 0;
 }
 
 .stationDisplayWrapper {
-    width: 48%;
+  width: 48%;
 }
 
+/* 정거장 없음 안내 */
 .noStation {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    &Title {
-        color: #FFF;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: -0.02rem;
-        margin-bottom: 1.12rem;
-    }
-
-    &Text {
-        color: #FFF;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 0.8125rem;
-        font-weight: 400;
-        letter-spacing: -0.01625rem;
-        margin-bottom: 3rem;
-    }
-
-    &Logo {
-        width: 10.97269rem;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.popup {
-    &NoExistStation {
-        width: 50%;
-        padding: 0.9rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        box-shadow: 0px 0px 10px 0px rgba(23, 21, 28, 0.30);
-        background-color: #EDEFFF;
-        border-radius: 0.75rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeInOut 1.5s ease-in-out;
-        opacity: 0;
-        z-index: 9999;
-    }
+.noStationTitle {
+  color: #fff;
+  font-family: "ElectricalSafety";
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 1.12rem;
+  letter-spacing: -0.02rem;
+}
 
-    @keyframes fadeInOut {
-        0% {
-            opacity: 0;
-            transform: translate(-50%, -60%);
-        }
-        10% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        90% {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        100% {
-            opacity: 0;
-            transform: translate(-50%, -40%);
-        }
-    }
+.noStationText {
+  color: #fff;
+  font-family: "ElectricalSafety";
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: -0.01625rem;
+}
 
-    &Title {
-        color: #858585;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 0.6875rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        letter-spacing: -0.01375rem;
-        margin-bottom: 0.56rem;
-    }
+.noStationLogo {
+  width: 10.97269rem;
+}
 
-    &Text {
-        color: #17151C;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 0.9375rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-    }
+/* 정거장 없음 팝업 */
+.popupNoExistStation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  padding: 0.9rem;
+  transform: translate(-50%, -50%);
+  background-color: #edefff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 10px rgba(23, 21, 28, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInOut 1.5s ease-in-out;
+  z-index: 9999;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+}
+
+.popupTitle {
+  color: #858585;
+  font-family: "ElectricalSafety";
+  font-size: 0.6875rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 0.56rem;
+  letter-spacing: -0.01375rem;
+}
+
+.popupText {
+  color: #17151c;
+  font-family: "ElectricalSafety";
+  font-size: 0.9375rem;
+  font-weight: 400;
+  text-align: center;
 }

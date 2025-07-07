@@ -39,7 +39,7 @@ export default function BottomBar() {
   ];
 
   return (
-    <div className={s.bottomBar}>
+    <nav id="bottom-bar" className={s.bottomBar}>
       {bottomBarContents.map((item) => (
         <BottomBarItem
           key={item.tag}
@@ -49,6 +49,6 @@ export default function BottomBar() {
           link={item.link}
         />
       ))}
-    </div>
+    </nav>
   );
 }
