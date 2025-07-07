@@ -11,7 +11,7 @@ import FaceItems from "./characterSetUpTab/FaceItems";
 import FashionItems from "./characterSetUpTab/FashionItems";
 
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+//const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -85,12 +85,14 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             <>
               <img
                 className={s.characterTop} // 상의
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+								//src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+								src={`/${userInfo.outfit.top}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom} // 하의
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+								//src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+								src={`/${userInfo.outfit.bottom}`}
                 alt="bottom"
               />
             </>
@@ -99,13 +101,15 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {isWearingSet && (
             <img
               className={s.characterSet} // 세트 의상
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+							//src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+							src={`/${userInfo.outfit.set}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes} // 신발
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+						//src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+						src={`/${userInfo.outfit.shoes}`}
             alt="shoes"
           />
           {/* --- 아이템 --- */}
@@ -120,7 +124,8 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
                 key={part}
                 // s.head, s.ears 와 같이 동적으로 클래스 이름을 매핑합니다.
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}`}
+								//src={`${IMG_BASE_URL}${src}`}
+								src={`/${src}`}
                 alt={part}
               />
             );

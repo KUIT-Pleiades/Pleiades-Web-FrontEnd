@@ -48,7 +48,9 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
         const typedPartName = partName as keyof typeof userInfo.outfit;
         const isEquipped = userInfo.outfit[typedPartName] === itemName;
         const newValue = isEquipped ? "" : itemName;
-        const newOutfit = { ...userInfo.outfit };
+				const newOutfit = { ...userInfo.outfit };
+				
+				//console.log(mainCategory, partName, itemName);
 
         if (typedPartName === "set" && newValue) {
           newOutfit.top = "";

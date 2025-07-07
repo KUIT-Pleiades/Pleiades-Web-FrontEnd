@@ -58,18 +58,18 @@ const initialUserInfo: UserInfo = {
   profile:
     "https://gateway.pinata.cloud/ipfs/QmURNcGX98UAecKyEELM39117X7RwQZE8B1dtm56B4vxEJ",
   face: {
-    skinColor: "skin_01",
-    hair: "hair_01",
-    eyes: "eyes_01", // 기본값 추가
-    nose: "nose_01", // 기본값 추가
-    mouth: "mouth_01", // 기본값 추가
+    skinColor: "face_skin_01.png",
+    hair: "face_hair_01.png",
+    eyes: "face_eyes_01.png", // 기본값 추가
+    nose: "face_nose_01.png", // 기본값 추가
+    mouth: "face_mouth_01.png", // 기본값 추가
     mole: "", // 점은 기본값 없음
   },
   outfit: {
-    top: "top_01",
-    bottom: "bottom_01",
+    top: "fashion_top_01.png",
+    bottom: "fashion_bottom_01.png",
     set: "", // 세트는 기본값 없음
-    shoes: "shoes_01",
+    shoes: "fashion_shoes_01.png",
   },
   item: {
     head: "",

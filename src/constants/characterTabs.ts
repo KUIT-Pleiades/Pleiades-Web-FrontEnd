@@ -37,13 +37,15 @@ export const getCategoryFromFileName = (fileName: string): string => {
  * Zustand 스토어를 업데이트할 때 사용됩니다.
  */
 export const getMainCategory = (fileName: string) => {
-    if (fileName.startsWith('face_')) return 'face';
-    if (fileName.startsWith('fashion_')) return 'outfit';
-    // 악세서리는 outfit.item 이 아닌 item 객체에 속하므로 별도 처리
-    if (fileName.startsWith('fashion_acc_')) return 'item';
-    return 'unknown';
-}
+  if (fileName.startsWith("face_")) return "face";
 
+  // [수정] 더 구체적인 'fashion_acc_'를 먼저 확인하도록 순서를 변경합니다.
+  if (fileName.startsWith("fashion_acc_")) return "item";
+
+  if (fileName.startsWith("fashion_")) return "outfit";
+
+  return "unknown";
+};
 /**
  * 파일 이름에서 세부 파츠(skinColor, hair, top 등)를 반환하는 함수입니다.
  * Zustand 스토어를 업데이트할 때 사용됩니다.
@@ -78,7 +80,7 @@ export const getPartName = (fileName: string): string => {
     // 악세서리
     case "fashion_acc_head":
       return "head";
-    case "fashion_acc_eyes_item":
+    case "fashion_acc_eyes":
       return "eyes_item";
     case "fashion_acc_ears":
       return "ears";
