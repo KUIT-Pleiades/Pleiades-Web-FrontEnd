@@ -48,15 +48,52 @@ export const getMainCategory = (fileName: string) => {
  * 파일 이름에서 세부 파츠(skinColor, hair, top 등)를 반환하는 함수입니다.
  * Zustand 스토어를 업데이트할 때 사용됩니다.
  */
-export const getPartName = (fileName: string) => {
-    const category = getCategoryFromFileName(fileName);
-    // face_skin -> skinColor, fashion_acc_head -> head 와 같이 변환
-    if(category.startsWith('face_')) return category.substring(5); // "face_" 제거
-    if(category.startsWith('fashion_top')) return 'top';
-    if(category.startsWith('fashion_bottom')) return 'bottom';
-    if(category.startsWith('fashion_set')) return 'set';
-    if(category.startsWith('fashion_shoes')) return 'shoes';
-    if(category.startsWith('fashion_acc_')) return category.substring(12); // "fashion_acc_" 제거
+export const getPartName = (fileName: string): string => {
+  const category = getCategoryFromFileName(fileName); // 예: "face_skin", "fashion_acc_head"
 
-    return category;
-}
+  // 파일 카테고리에 맞는 정확한 UserInfo 키를 반환하도록 매핑합니다.
+  switch (category) {
+    // 얼굴
+    case "face_skin":
+      return "skinColor"; // "skin"이 아닌 "skinColor"
+    case "face_hair":
+      return "hair";
+    case "face_eyes":
+      return "eyes";
+    case "face_nose":
+      return "nose";
+    case "face_mouth":
+      return "mouth";
+    case "face_mole":
+      return "mole";
+    // 의상
+    case "fashion_top":
+      return "top";
+    case "fashion_bottom":
+      return "bottom";
+    case "fashion_set":
+      return "set";
+    case "fashion_shoes":
+      return "shoes";
+    // 악세서리
+    case "fashion_acc_head":
+      return "head";
+    case "fashion_acc_eyes_item":
+      return "eyes_item";
+    case "fashion_acc_ears":
+      return "ears";
+    case "fashion_acc_neck":
+      return "neck";
+    case "fashion_acc_leftWrist":
+      return "leftWrist";
+    case "fashion_acc_rightWrist":
+      return "rightWrist";
+    case "fashion_acc_leftHand":
+      return "leftHand";
+    case "fashion_acc_rightHand":
+      return "rightHand";
+    // 일치하는 것이 없으면 빈 문자열 반환
+    default:
+      return "";
+  }
+};

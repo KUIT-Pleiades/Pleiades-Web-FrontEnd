@@ -43,33 +43,39 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {/* --- 얼굴 --- */}
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}.png`}
+            //src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
+            src={`/${userInfo.face.skinColor}`}
             alt="skin"
           />
           <img
             className={s.characterEyes} // 눈
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}.png`}
+						//src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
+						src={`/${userInfo.face.eyes}`}
             alt="eyes"
           />
           <img
             className={s.characterNose} // 코
-            src={`${IMG_BASE_URL}${userInfo.face.nose}.png`}
+						//src={`${IMG_BASE_URL}${userInfo.face.nose}`}
+						src={`/${userInfo.face.nose}`}
             alt="nose"
           />
           <img
             className={s.characterNose} // 입
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}.png`}
+						//src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
+						src={`/${userInfo.face.mouth}`}
             alt="mouth"
           />
           <img
             className={s.characterHair} // 머리카락
-            src={`${IMG_BASE_URL}${userInfo.face.hair}.png`}
+						//src={`${IMG_BASE_URL}${userInfo.face.hair}`}
+						src={`/${userInfo.face.hair}`}
             alt="hair"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole} // 점
-              src={`${IMG_BASE_URL}${userInfo.face.mole}.png`}
+							//src={`${IMG_BASE_URL}${userInfo.face.mole}`}
+							src={`/${userInfo.face.mole}`}
               alt="mole"
             />
           )}
@@ -79,12 +85,12 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             <>
               <img
                 className={s.characterTop} // 상의
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}.png`}
+                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom} // 하의
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}.png`}
+                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
                 alt="bottom"
               />
             </>
@@ -93,13 +99,13 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {isWearingSet && (
             <img
               className={s.characterSet} // 세트 의상
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}.png`}
+              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes} // 신발
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}.png`}
+            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
             alt="shoes"
           />
           {/* --- 아이템 --- */}
@@ -114,7 +120,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
                 key={part}
                 // s.head, s.ears 와 같이 동적으로 클래스 이름을 매핑합니다.
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}.png`}
+                src={`${IMG_BASE_URL}${src}`}
                 alt={part}
               />
             );
