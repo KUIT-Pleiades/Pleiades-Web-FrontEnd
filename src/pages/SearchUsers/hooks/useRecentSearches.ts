@@ -52,10 +52,42 @@ export const useRecentSearches = () => {
     },
   });
 
+  const deleteAllMutation = useMutation({
+    mutationFn: () =>
+      axiosRequest(`/users/histories`, "DELETE", null),
+
+    // ✅ Optimistic UI 업데이트
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['recentSearches'] });
+      const previousData = queryClient.getQueryData<RecentSearchedUser[]>(['recentSearches']);
+
+      queryClient.setQueryData<RecentSearchedUser[]>(['recentSearches'], []);
+
+      return { previousData };
+    },
+
+    // ❌ 실패 시 롤백
+    onError: (_err, _variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['recentSearches'], context.previousData);
+      }
+    },
+
+    onSuccess: () => {
+      console.log(`✅ 검색기록 전체삭제 성공`);
+    },
+
+    // ✅ 완료 후 정합성 재검증
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['recentSearches'] });
+    },
+  });
+
   return {
     data,
     isLoading,
     refetch,
     remove: deleteMutation.mutate,
+    removeAll: deleteAllMutation.mutate,
   };
 };
