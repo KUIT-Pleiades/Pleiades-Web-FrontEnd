@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import {
   FashionImages,
-  type FashionItem,
 } from "../../../assets/ImageData/FashionImage";
 import {
   getCategoryFromFileName,
