@@ -33,7 +33,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const signupMutation = useSignupMutation(location.pathname.includes("onboarding"));
 
   const backgroundStyle = {
-    backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground}.png)`,
+    backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground})`,
     overflow: "hidden",
   };
 
