@@ -1,7 +1,9 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { OutfitImages } from "../../../assets/ImageData/OutfitImage";
-import { ItemImages } from "../../../assets/ImageData/ItemImage";
+import {
+  FashionImages,
+  type FashionItem,
+} from "../../../assets/ImageData/FashionImage";
 import {
   getCategoryFromFileName,
   getMainCategory,
@@ -14,46 +16,42 @@ interface FashionItemsProps {
   increaseLoadCount: () => void;
 }
 
-// 의상과 아이템 이미지 데이터를 하나의 배열로 합칩니다.
-const allFashionItems = [...OutfitImages, ...ItemImages];
-
 const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
-  // 현재 선택된 세부 탭에 따라 보여줄 아이템 목록을 결정합니다.
+  // --- [수정] 필터링 로직이 훨씬 간단해집니다. ---
   const filteredItems = useMemo(() => {
     if (activeTab === "all") {
-      return allFashionItems;
+      return FashionImages; // 항상 FashionImages 배열 하나만 사용
     }
-    // '악세서리' 탭일 경우 ItemImages만 필터링합니다.
+    // 'fashion_acc' 탭이면 'fashion_acc_'로 시작하는 아이템만 필터링
     if (activeTab === "fashion_acc") {
-      return ItemImages;
+      return FashionImages.filter((item) =>
+        item.name.startsWith("fashion_acc_")
+      );
     }
-    // 그 외 탭들은 OutfitImages에서 필터링합니다.
-    return OutfitImages.filter((item) =>
+    // 그 외 탭들은 해당 id로 시작하는 아이템만 필터링
+    return FashionImages.filter((item) =>
       getCategoryFromFileName(item.name).startsWith(activeTab)
     );
   }, [activeTab]);
 
-  // 아이템 클릭 시 실행될 함수 (타입 에러 수정 완료)
+  // handleItemClick 함수는 수정할 필요 없이 그대로 작동합니다.
   const handleItemClick = useCallback(
     (itemName: string) => {
-      const mainCategory = getMainCategory(itemName); // 'outfit' 또는 'item'
-      const partName = getPartName(itemName); // 'top', 'bottom', 'head' 등
+      const mainCategory = getMainCategory(itemName);
+      const partName = getPartName(itemName);
 
       if (!mainCategory || !partName) return;
 
-      // 'outfit' 카테고리일 경우
       if (mainCategory === "outfit") {
         const typedPartName = partName as keyof typeof userInfo.outfit;
         const isEquipped = userInfo.outfit[typedPartName] === itemName;
         const newValue = isEquipped ? "" : itemName;
-
         const newOutfit = { ...userInfo.outfit };
 
         if (typedPartName === "set" && newValue) {
-          // 세트를 입을 때
           newOutfit.top = "";
           newOutfit.bottom = "";
           newOutfit.set = newValue;
@@ -61,22 +59,16 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
           (typedPartName === "top" || typedPartName === "bottom") &&
           newValue
         ) {
-          // 상의/하의를 입을 때
           newOutfit.set = "";
           newOutfit[typedPartName] = newValue;
         } else {
-          // 그 외 (신발, 선택 해제 등)
           newOutfit[typedPartName] = newValue;
         }
-
         updateUserInfo({ outfit: newOutfit });
-
-        // 'item' 카테고리일 경우
       } else if (mainCategory === "item") {
         const typedPartName = partName as keyof typeof userInfo.item;
         const isEquipped = userInfo.item[typedPartName] === itemName;
         const newValue = isEquipped ? "" : itemName;
-
         updateUserInfo({
           item: {
             ...userInfo.item,
@@ -94,7 +86,6 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
 
   return (
     <div className={s.tabContainer}>
-      {/* 세부 탭 UI (전체, 상의, 하의...) */}
       <div className={s.tab}>
         {tabs.map((tab) => (
           <button
@@ -106,8 +97,6 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
           </button>
         ))}
       </div>
-
-      {/* 필터링된 아이템 목록 UI */}
       <div className={s.tabContent}>
         <div className={s.gridItems}>
           {filteredItems.map((item) => (
