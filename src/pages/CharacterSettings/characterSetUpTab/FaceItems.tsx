@@ -34,17 +34,27 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
   // 아이템을 클릭했을 때 Zustand 스토어의 상태를 업데이트하는 함수
   const handleItemClick = useCallback(
     (item: FaceItem) => {
-      // 파일명에서 실제 업데이트할 파츠 이름('skinColor', 'hair' 등)을 가져옵니다.
       const partName = getPartName(item.name);
       if (!partName) return;
 
-      // 현재 선택된 아이템을 다시 클릭하면 선택을 해제합니다. (점 같은 부위에 적용)
+      // --- [추가] 선택 해제가 가능한 파츠 목록을 정의합니다. ---
+      const optionalParts = ["mole"];
+
+      // 현재 클릭한 아이템이 이미 선택된 아이템인지 확인
       const isDeselecting =
         userInfo.face[partName as keyof typeof userInfo.face] === item.name;
+
+      // --- [수정] 선택 해제는 optionalParts 목록에 있는 파츠만 가능하도록 변경 ---
+      if (isDeselecting && !optionalParts.includes(partName)) {
+        // 이미 선택된 아이템을 다시 클릭했지만, 필수 파츠(피부, 머리 등)인 경우
+        // 아무것도 하지 않고 함수를 종료합니다.
+        return;
+      }
 
       updateUserInfo({
         face: {
           ...userInfo.face,
+          // optionalParts는 선택 해제가 가능하고, 나머지는 항상 선택 상태를 유지합니다.
           [partName]: isDeselecting ? "" : item.name,
         },
       });

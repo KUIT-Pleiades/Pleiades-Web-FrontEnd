@@ -36,7 +36,6 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
     );
   }, [activeTab]);
 
-  // handleItemClick 함수는 수정할 필요 없이 그대로 작동합니다.
   const handleItemClick = useCallback(
     (itemName: string) => {
       const mainCategory = getMainCategory(itemName);
@@ -47,24 +46,40 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
       if (mainCategory === "outfit") {
         const typedPartName = partName as keyof typeof userInfo.outfit;
         const isEquipped = userInfo.outfit[typedPartName] === itemName;
-        const newValue = isEquipped ? "" : itemName;
-				const newOutfit = { ...userInfo.outfit };
-				
-				//console.log(mainCategory, partName, itemName);
+        const newOutfit = { ...userInfo.outfit };
 
+        const mandatoryParts = ["top", "bottom", "set", "shoes"];
+        if (isEquipped && mandatoryParts.includes(typedPartName)) {
+          return;
+        }
+
+        const newValue = isEquipped ? "" : itemName;
+
+        // --- [수정] 세트 <-> 상/하의 전환 로직을 개선합니다. ---
         if (typedPartName === "set" && newValue) {
+          // 1. 세트를 입을 때: 상의와 하의를 비웁니다.
           newOutfit.top = "";
           newOutfit.bottom = "";
           newOutfit.set = newValue;
-        } else if (
-          (typedPartName === "top" || typedPartName === "bottom") &&
-          newValue
-        ) {
+        } else if (typedPartName === "top" && newValue) {
+          // 2. 상의를 입을 때: 세트를 비우고, 만약 하의가 비어있다면 기본 하의를 입힙니다.
           newOutfit.set = "";
-          newOutfit[typedPartName] = newValue;
+          newOutfit.top = newValue;
+          if (!newOutfit.bottom) {
+            newOutfit.bottom = "fashion_bottom_01.png"; // 기본 하의
+          }
+        } else if (typedPartName === "bottom" && newValue) {
+          // 3. 하의를 입을 때: 세트를 비우고, 만약 상의가 비어있다면 기본 상의를 입힙니다.
+          newOutfit.set = "";
+          newOutfit.bottom = newValue;
+          if (!newOutfit.top) {
+            newOutfit.top = "fashion_top_01.png"; // 기본 상의
+          }
         } else {
+          // 4. 그 외 (신발 선택 등)
           newOutfit[typedPartName] = newValue;
         }
+
         updateUserInfo({ outfit: newOutfit });
       } else if (mainCategory === "item") {
         const typedPartName = partName as keyof typeof userInfo.item;
@@ -80,6 +95,7 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
     },
     [userInfo, updateUserInfo]
   );
+
 
   useEffect(() => {
     increaseLoadCount();
