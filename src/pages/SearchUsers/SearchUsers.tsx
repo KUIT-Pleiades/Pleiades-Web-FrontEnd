@@ -26,6 +26,7 @@ const SearchUsers: React.FC = () => {
     data: recentSearches,
     isLoading: isRecentLoading,
     remove: removeRecent,
+    removeAll: removeAllRecent,
     refetch: refetchRecentSearches,
   } = useRecentSearches();
 
@@ -43,7 +44,7 @@ const SearchUsers: React.FC = () => {
   // 임시로 만든 전체삭제 함수
   const handleClearAll = () => {
     if (!recentSearches) return;
-    recentSearches.forEach(user => removeRecent(user.userId));
+    removeAllRecent();
   };
 
   return (
