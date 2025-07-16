@@ -6,6 +6,7 @@ import s from "./PersonalSetting.module.scss";
 import goBtn from "../../../assets/btnImg/goBtn.png";
 import { useAuth } from "../../../store/authStore";
 import { useCharacterStore } from "../../../store/useCharacterStore";
+import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
 
 interface UserData {
   userId: string;
@@ -18,31 +19,40 @@ interface UserData {
 const PersonalSetting: React.FC = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const { clearToken } = useAuth();
   const { resetUserInfo } = useCharacterStore();
 
-  const handleLogout = async () => {
-  try {
-    await axiosRequest("/auth/logout", "POST", null);
-    
-		// 200 OK든 404든 상관없이 클라이언트 토큰 제거
-		resetUserInfo();
-    clearToken();
-    navigate("/login");
-    
-  } catch (error) {
-    console.error("로그아웃 요청 실패:", error);
-    
-    // 404 "User not found" 에러라도 로그아웃 처리
-		if (axios.isAxiosError(error) && error.response?.status === 404) {
-      console.log("사용자를 찾을 수 없지만 로그아웃 처리합니다.");
+  const handleLogoutConfirm = async () => {
+    try {
+      await axiosRequest("/auth/logout", "POST", null);
+
+      // 200 OK든 404든 상관없이 클라이언트 토큰 제거
+      resetUserInfo();
+      clearToken();
+      navigate("/login");
+
+    } catch (error) {
+      console.error("로그아웃 요청 실패:", error);
+
+      // 404 "User not found" 에러라도 로그아웃 처리
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        console.log("사용자를 찾을 수 없지만 로그아웃 처리합니다.");
+      }
+
+      // 어떤 에러든 클라이언트 상태는 초기화
+      clearToken();
+      navigate("/login");
     }
-    
-    // 어떤 에러든 클라이언트 상태는 초기화
-    clearToken();
-    navigate("/login");
-  }
-};
+  };
+
+  const openLogoutModal = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = () => {
+    setIsLogoutModalOpen(false);
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -100,12 +110,22 @@ const PersonalSetting: React.FC = () => {
       </div>
 
       <div className={s.bottomButtons}>
-        <button className={s.logoutBtn} onClick={handleLogout}>
+        <button className={s.logoutBtn} onClick={openLogoutModal}>
           로그아웃
         </button>
         <span>|</span>
         <button className={s.withdrawBtn}>탈퇴하기</button>
       </div>
+
+      {isLogoutModalOpen && (
+				<ConfirmModal
+					userId={userData?.userId || ""}
+					profile={userData?.profile || ""}
+          message="로그아웃 하시겠습니까?"
+          onConfirm={handleLogoutConfirm}
+          onCancel={closeLogoutModal}
+        />
+      )}
     </div>
   );
 };
