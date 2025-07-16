@@ -60,9 +60,9 @@ const initialUserInfo: UserInfo = {
   face: {
     skinColor: "face_skin_01.png",
     hair: "face_hair_01.png",
-    eyes: "face_eyes_01.png", // 기본값 추가
+    eyes: "face_eyes_001.png", // 기본값 추가
     nose: "face_nose_01.png", // 기본값 추가
-    mouth: "face_mouth_01.png", // 기본값 추가
+    mouth: "face_mouth_001.png", // 기본값 추가
     mole: "", // 점은 기본값 없음
   },
   outfit: {
