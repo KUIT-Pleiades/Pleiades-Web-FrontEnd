@@ -161,7 +161,6 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         style={{
           transition: "transform 0.3s ease-in-out",
           transform: showList ? "translateY(0)" : "translateY(100%)",
-          overflow: "hidden",
         }}
       >
         {showList && <BackgroundTab increaseLoadCount={handleLoadingState} />}
