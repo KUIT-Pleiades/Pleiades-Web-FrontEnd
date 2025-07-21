@@ -1,20 +1,23 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import s from './ShowStationList.module.scss';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import s from './ShowStationList.module.scss';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Message, Stations } from '../../../interfaces/Interfaces';
+import { Message, Stations, Station } from '../../../interfaces/Interfaces';
+//import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
+import StationListBottomSheet2 from './StationListBottomSheet/StationListBottomSheet';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
-import StationDisplay from './StationDisplay/StationDisplay';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
+import axiosInstance from '../../../api/axiosInstance';
+//import StationDisplay from './StationDisplay/StationDisplay';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
-import axiosInstance from '../../../api/axiosInstance';
+import StationListBottomSheetOpen from './StationListBottomSheet/StationListBottomSheetOpen';
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
   station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
@@ -22,212 +25,192 @@ const stationBackgrounds: { [key: string]: string } = {
   station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
   station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
 };
+
 const ShowStationList: React.FC = () => {
   const { userInfo } = useCharacterStore();
-  const userName = userInfo.userName || "플레이아데스";
-  const [stations, setStations] = useState<Stations>({ stations: [] });
-  const [sortCriteria, setSortCriteria] = useState<"최신순" | "이름순">(() => {
-    const saved = localStorage.getItem("sortCriteria");
-    return saved === "이름순" ? "이름순" : "최신순";
-  });
-  const [isSearchStationModalVisible, setIsSearchStationModalVisible] = useState(false);
   const navigate = useNavigate();
+  const userName = userInfo.userName || '플레이아데스';
+
+  const [stations, setStations] = useState<Stations>({ stations: [] });
+  const [sortCriteria, setSortCriteria] = useState<'최신순' | '이름순'>(
+    () => (localStorage.getItem('sortCriteria') === '이름순' ? '이름순' : '최신순')
+  );
+  const [isSearchStationModalVisible, setIsSearchStationModalVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [isNoExistStationPopupVisible, setIsNoExistStationPopupVisible] = useState(false);
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [carouselStations, setCarouselStations] = useState<Station[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const currentStation = carouselStations[backgroundIndex];
 
-  // 정거장 목록 가져오기
-  const fetchStations = async () => {
-    try {
-      const response = await axiosRequest<Stations>('/stations', 'GET', null);
-      if (response && Array.isArray(response.data.stations)) {
-        setStations(response.data);
-        console.log("정거장 불러오기 응답 잘 받음");
-        console.log("응답 상태:", response.status);
-        console.log("응답 데이터:", response.data);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+
+  useEffect(() => {
+    // 🔧 MOCK DATA 시작
+    // const mockStations: Station[] = Array.from({ length: 10 }, (_, i) => ({
+    //   stationId: `MOCKID${i + 1}`,
+    //   name: `정거장${i + 1}`,
+    //   numOfUsers: Math.floor(Math.random() * 7),
+    //   stationBackground: `station_dim_0${(i % 4) + 1}` as 'station_dim_01' | 'station_dim_02' | 'station_dim_03' | 'station_dim_04',
+    // }));
+    // setStations({ stations: mockStations });
+    // setCarouselStations(mockStations.slice(0, 5));
+    // 🔧 MOCK DATA 끝
+
+    // 실제 서버 요청은 아래 주석 처리
+    
+    const fetchStations = async () => {
+      try {
+        const response = await axiosRequest<Stations>('/stations', 'GET', null);
+        if (response?.data?.stations) {
+          setStations({ stations: response.data.stations });
+          setCarouselStations(response.data.stations.slice(0, 5));
+        }
+      } catch (error) {
+        console.error('정거장 불러오기 실패:', error);
       }
-    } catch (error) {
-      console.error('정거장 불러오기 실패:', error);
+    };
+    fetchStations();
+    
+  }, []);
+
+  useEffect(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    if (!isOpenBottomSheet) {
+      intervalRef.current = setInterval(() => {
+        setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+      }, 5000);
     }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [carouselStations, isOpenBottomSheet]);
+
+  const sortedStations = useMemo(() => {
+    const copied = [...stations.stations];
+    return sortCriteria === '이름순'
+      ? copied.sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+      : copied;
+  }, [stations, sortCriteria]);
+
+  const handleChangeSortCriteria = (criteria: '최신순' | '이름순') => {
+    setSortCriteria(criteria);
+    localStorage.setItem('sortCriteria', criteria);
   };
 
-  // 정거장 없음 팝업 표시 (1.5초 후 자동 닫힘)
   const handlePopupNoExistStation = () => {
     setIsNoExistStationPopupVisible(true);
-    setTimeout(() => {
-      setIsNoExistStationPopupVisible(false);
-    }, 1500);
+    setTimeout(() => setIsNoExistStationPopupVisible(false), 1500);
   };
 
-  // 정거장 검색 및 입장
   const fetchSearchedStation = async (stationId: string) => {
     try {
-      const response = await axiosRequest<{ message: string }>(
-        `/stations/${stationId}`,
-        "PATCH",
-        null
-      );
-      console.log('정거장 검색어:', stationId);
-  
-      // 200 OK - 정거장 입장 성공
-      if (response.status === 200 || response.status === 202) {
-        console.log("정거장 입장 성공");
-        enterStation(stationId);
-        return;
-      }
-  
-      // 401 Unauthorized - 로그인 필요
-      if (response?.message === "Invalid or expired token") {
-        console.log('로그인이 필요합니다.');
-        navigate('/login');
-        return;
-      }
-  
-      // 404 Not Found - 정거장이 존재하지 않음
-      if (response.status === 404) {
-        console.warn("정거장 없음:", response.message);
-        handlePopupNoExistStation();
-        return;
-      }
-  
-      // 409 Conflict - 정거장 인원이 가득 찼거나 이미 가입된 경우
-      if (response.status === 409) {
-        console.log('정거장 인원이 가득 찼습니다.');
-        return;
-      }
-  
-  
-      // 예상하지 못한 메시지 처리
-      console.warn("예상치 못한 응답:", response?.message);
-      console.log('정거장 입장 중 예상치 못한 오류가 발생했습니다.');
-  
+      const response = await axiosRequest(`/stations/${stationId}`, 'PATCH', null);
+
+      if (response.status === 200 || response.status === 202) return enterStation(stationId);
+      if (response.status === 404) return handlePopupNoExistStation();
+      if (response?.message === 'Invalid or expired token') return navigate('/login');
     } catch (error: unknown) {
-      console.error('정거장 검색 오류:', error);
-  
-      if (typeof error === 'object' && error !== null && 'response' in error) {
-        const axiosError = error as { response?: { status?: number; data?: { message: string } } };
-        const { status, data } = axiosError.response || {};
-  
-        if (data) {
-          console.warn(`서버 응답 (${status}):`, data.message);
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'response' in error
+      ) {
+        const axiosError = error as {
+          response?: {
+            status?: number;
+            data?: { message?: string };
+          };
+        };
+
+        const status = axiosError.response?.status;
+        const message = axiosError.response?.data?.message;
+
+        if (status === 401) navigate('/login');
+        else if (status === 404) handlePopupNoExistStation();
+        else if (status === 409) {
+          if (message?.includes('User already')) enterStation(stationId);
         }
-  
-        switch (status) {
-          case 401:
-            console.log('로그인이 필요합니다.');
-            navigate('/login');
-            break;
-          case 404:
-            handlePopupNoExistStation();
-            break;
-          case 409:
-            if (data?.message?.includes('Station Full')) {
-              console.log('정거장 인원이 가득 찼습니다.');
-            } else if (data?.message?.includes('User already in the station')) {
-              console.log('이미 정거장에 가입되어 있습니다.');
-              enterStation(stationId);
-            }
-            break;
-          default:
-            console.log('정거장 입장 중 오류가 발생했습니다.');
-        }
-      } else {
-        console.log('서버에 연결할 수 없습니다. 네트워크 상태를 확인해주세요.');
-      }
+      } else console.error('서버에 연결할 수 없습니다.');
     }
   };
 
-  // 검색 모달 닫기
-  const closeSearchStationModal = () => {
-    setIsSearchStationModalVisible(false);
-    setSearchValue('');
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchValue.trim()) await fetchSearchedStation(searchValue);
   };
 
-  // 검색 실행
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (searchValue.trim() !== '') {
-      await fetchSearchedStation(searchValue);
-    }
-  };
-
-  // 정거장 입장
   const handleEnterStation = async (stationId: string) => {
-    try {
-        const response = await axiosInstance.get<Message>(
-          `/stations/${stationId}`,
-        );
-        console.log('정거장 입장 요청:', stationId);
+  try {
+    const response = await axiosInstance.get<Message>(`/stations/${stationId}`);
 
-        // ✅ 200 OK - 정거장 입장 성공
-        if (response.status === 200 || response.status === 202) {
-            console.log("정거장 입장 성공:", response);
-            enterStation(stationId);
-            return;
-			}
-
-        // ✅ 409 Conflict - 이미 정거장에 가입됨
-        if (response.status === 409) {
-            console.log("이미 정거장에 가입되어 있음:", response);
-            enterStation(stationId);
-            return;
-        }
-
-    } catch (error: unknown) {
-        console.error('정거장 입장 중 오류 발생:', error);
-
-        // ✅ 응답이 있는 경우 (서버에서 오류 메시지 반환)
-        if (typeof error === 'object' && error !== null && 'response' in error) {
-            const axiosError = error as { response?: { status?: number; data?: { message: string } } };
-            const { status, data } = axiosError.response || {};
-            console.warn(`서버 응답 (${status}):`, data?.message);
-
-            // ✅ 401 Unauthorized - 로그인 필요
-            if (status === 401 && data?.message === "Invalid or expired token") {
-                console.log("로그인이 필요합니다.");
-                navigate('/login'); // 로그인 페이지로 이동
-                return;
-            }
-            // ✅ 404 Not Found - 정거장 없음
-            if (status === 404 && data?.message === "Station not found") {
-                console.warn("정거장이 존재하지 않습니다.");
-                handlePopupNoExistStation(); // 정거장 없음 팝업 표시
-                return;
-            }
-            // ✅ 409 Conflict - 정거장 인원이 가득 참
-            if (status === 409 && data?.message === "Station Full. You cannot enter the station.") {
-                console.log("정거장 인원이 가득 찼습니다.");
-                alert("정거장이 가득 찼습니다. 다른 정거장을 찾아보세요.");
-                return;
-            }
-        }
-
-        // ✅ 예상치 못한 오류 처리
-        console.log("정거장 입장 중 알 수 없는 오류가 발생했습니다.");
-        alert("정거장 입장 중 오류가 발생했습니다. 다시 시도해주세요.");
+    if ([200, 202, 409].includes(response.status)) {
+      return enterStation(stationId);
     }
-  };
+  } catch (error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'response' in error
+    ) {
+      const axiosError = error as {
+        response?: {
+          status?: number;
+          data?: { message?: string };
+        };
+      };
+
+      const status = axiosError.response?.status;
+      const message = axiosError.response?.data?.message;
+
+      if (status === 401) navigate('/login');
+      else if (status === 404) handlePopupNoExistStation();
+      else if (status === 409) {
+        if (message?.includes('User already')) enterStation(stationId);
+        else if (message?.includes('Station Full')) alert('정거장이 가득 찼습니다. 다른 정거장을 찾아보세요.');
+      }
+    } else console.error('서버에 연결할 수 없습니다.');
+  }
+};
 
   const enterStation = (stationId: string) => {
     sessionStorage.setItem('stationId', stationId);
     navigate('/station/stationinside');
   };
 
-  const handleChangeSortCriteria = (criteria: "최신순" | "이름순") => {
-    setSortCriteria(criteria);
-    localStorage.setItem("sortCriteria", criteria);
+  const closeSearchStationModal = () => {
+    setIsSearchStationModalVisible(false);
+    setSearchValue('');
   };
 
-  useEffect(() => {
-    fetchStations();
-  }, []);
+  const resetSliderInterval = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+    }, 5000);
+  };
 
-  const sortedByRecent = useMemo(() => [...stations.stations], [stations]);
+  const goToNextStation = () => {
+    setBackgroundIndex((prev) => {
+      const next = (prev + 1) % carouselStations.length;
+      return next;
+    });
+    resetSliderInterval();
+  };
 
-  const sortedByName = useMemo(() => {
-    return [...stations.stations].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
-  }, [stations]);
+  const goToPrevStation = () => {
+    setBackgroundIndex((prev) => {
+      const next = (prev - 1 + carouselStations.length) % carouselStations.length;
+      return next;
+    });
+    resetSliderInterval();
+  };
 
-  const sortedStations = sortCriteria === "최신순" ? sortedByRecent : sortedByName;
+  const openCloseBottomSheet = () => {
+    setIsOpenBottomSheet((prev) => !prev);
+  };
 
   return (
     <div className={s.container}>
@@ -245,38 +228,58 @@ const ShowStationList: React.FC = () => {
         </div>
       </div>
 
-      <div className={s.separator}>
-        <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
-        <div className={s.sortCriteriaBoxContainer}>
-          <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
-        </div>
-      </div>
-
-      <div className={s.stationListWrapper}>
-        <div className={s.stationListContainer}>
-          {sortedStations.length > 0 ? (
-            sortedStations.map((station) => (
-              <div
-                key={station.stationId}
-                className={s.stationDisplayWrapper}
-                onClick={() => handleEnterStation(station.stationId)}
-              >
-                <StationDisplay
-                  name={station.name}
-                  numOfUsers={station.numOfUsers}
-                  background={stationBackgrounds[station.stationBackground] || `${IMG_BASE_URL}station_dim_01.png`}
-                />
+      {
+        sortedStations.length == 0 ? (
+          <>
+            <div className={s.separator}>
+              <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
+              <div className={s.sortCriteriaBoxContainer}>
+                <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
               </div>
-            ))
-          ) : (
-            <div className={s.noStation}>
-              <span className={s.noStationTitle}>아직 등록된 정거장이 없어요...</span>
-              <span className={s.noStationText}>정거장을 검색하거나, 새로운 정거장을 만들어 보세요!</span>
-              <img className={s.noStationLogo} src={noStationLogo} alt="noStationLogo" />
             </div>
-          )}
-        </div>
-      </div>
+            <div className={s.stationListWrapper}>
+              <div className={s.stationListContainer}>
+                <div className={s.noStation}>
+                  <span className={s.noStationTitle}>아직 등록된 정거장이 없어요...</span>
+                  <span className={s.noStationText}>정거장을 검색하거나, 새로운 정거장을 만들어 보세요!</span>
+                  <img className={s.noStationLogo} src={noStationLogo} alt="noStationLogo" />
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className={s.bodyWrapper}>
+            {/* 배경 이미지 슬라이더 */}
+            <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
+              <div
+                className={s.backgroundImageStatic}
+                style={{
+                  backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground]})`,
+                }}
+              />
+              <div className={s.dimOverlay} />
+            </div>
+            {currentStation &&
+              (isOpenBottomSheet ? (
+                <StationListBottomSheetOpen
+                  sortedStations={sortedStations}
+                  sortCriteria={sortCriteria}
+                  setSortCriteria={handleChangeSortCriteria}
+                  openCloseBottomSheet={openCloseBottomSheet}
+                  handleEnterStation={handleEnterStation}
+                />
+              ) : (
+                <StationListBottomSheet2
+                  station={currentStation}
+                  onEnter={handleEnterStation}
+                  goLeft={goToPrevStation}
+                  goRight={goToNextStation}
+                  openCloseBottomSheet={openCloseBottomSheet}
+                />
+              ))}
+          </div>
+        )
+      }
 
       {/* 검색한 정거장이 없을 때 나타나는 팝업 */}
       {isNoExistStationPopupVisible && 

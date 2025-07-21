@@ -1,0 +1,130 @@
+// StationListBottomSheet2.module.scss
+.bottomSheetContainer {
+  position: absolute;
+  bottom: 9dvh;
+  left: 0;
+  width: 100%;
+  height: 7.8125rem;
+  z-index: 2;
+  color: white;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 4.3125rem;
+
+  &LeftButton {
+    padding-left: 0.88rem;
+    padding-right: 0.88rem;
+  }
+  &RightButton {
+    padding-left: 0.88rem;
+    padding-right: 0.88rem;
+  }
+
+  &Title {
+    flex: 1;
+
+    &StationName {
+      color: #FFF;
+      font-family: Pretendard;
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      padding: 0;
+      margin: 0;
+      margin-bottom: 0.69rem;
+    }
+
+    &StationInfo {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      &CreationDate {
+        color: #FFF;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 0.6875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+      &NumOfUsers {
+        display: flex;
+        flex-direction: row;
+
+        &Num {
+          color: #C0B9DB;
+          text-align: center;
+          font-family: Pretendard;
+          font-size: 0.6875rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+        &Text {
+          color: #858585;
+          font-family: Pretendard;
+          font-size: 0.6875rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+      &LastActive {
+        display: flex;
+        flex-direction: row;
+
+        &Icon {
+          margin-right: 0.23rem;
+        }
+        &Text {
+          color: #FFF;
+          font-family: Pretendard;
+          font-size: 0.6875rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+      }
+    }
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 0.625rem;
+  background-color: white;
+  margin: 0 0.5rem;
+}
+
+.handle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 3.5rem;
+  background-color: #1B142A;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+
+  &Icon {
+    padding-top: 0.69rem;
+    padding-bottom: 0.62rem;
+  }
+  &Text {
+    width: 94%;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 0;
+    margin: 0;
+  }
+}
