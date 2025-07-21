@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './ShowStationList.module.scss';
 import { useCharacterStore } from '../../../store/useCharacterStore';
 import { Message, Stations, Station } from '../../../interfaces/Interfaces';
-import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
+//import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
+import StationListBottomSheet2 from './StationListBottomSheet/StationListBottomSheet';
 import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
@@ -14,6 +15,7 @@ import axiosInstance from '../../../api/axiosInstance';
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
+import StationListBottomSheetOpen from './StationListBottomSheet/StationListBottomSheetOpen';
 
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -38,10 +40,25 @@ const ShowStationList: React.FC = () => {
   const [isNoExistStationPopupVisible, setIsNoExistStationPopupVisible] = useState(false);
   const [backgroundIndex, setBackgroundIndex] = useState(0);
   const [carouselStations, setCarouselStations] = useState<Station[]>([]);
-
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentStation = carouselStations[backgroundIndex];
 
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+
   useEffect(() => {
+    // 🔧 MOCK DATA 시작
+    // const mockStations: Station[] = Array.from({ length: 10 }, (_, i) => ({
+    //   stationId: `MOCKID${i + 1}`,
+    //   name: `정거장${i + 1}`,
+    //   numOfUsers: Math.floor(Math.random() * 7),
+    //   stationBackground: `station_dim_0${(i % 4) + 1}` as 'station_dim_01' | 'station_dim_02' | 'station_dim_03' | 'station_dim_04',
+    // }));
+    // setStations({ stations: mockStations });
+    // setCarouselStations(mockStations.slice(0, 5));
+    // 🔧 MOCK DATA 끝
+
+    // 실제 서버 요청은 아래 주석 처리
+    
     const fetchStations = async () => {
       try {
         const response = await axiosRequest<Stations>('/stations', 'GET', null);
@@ -54,15 +71,22 @@ const ShowStationList: React.FC = () => {
       }
     };
     fetchStations();
+    
   }, []);
 
   useEffect(() => {
-    if (carouselStations.length === 0) return;
-    const interval = setInterval(() => {
-      setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [carouselStations]);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    if (!isOpenBottomSheet) {
+      intervalRef.current = setInterval(() => {
+        setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+      }, 5000);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [carouselStations, isOpenBottomSheet]);
 
   const sortedStations = useMemo(() => {
     const copied = [...stations.stations];
@@ -85,17 +109,9 @@ const ShowStationList: React.FC = () => {
     try {
       const response = await axiosRequest(`/stations/${stationId}`, 'PATCH', null);
 
-      if (response.status === 200 || response.status === 202) {
-        return enterStation(stationId);
-      }
-
-      if (response.status === 404) {
-        return handlePopupNoExistStation();
-      }
-
-      if (response?.message === 'Invalid or expired token') {
-        return navigate('/login');
-      }
+      if (response.status === 200 || response.status === 202) return enterStation(stationId);
+      if (response.status === 404) return handlePopupNoExistStation();
+      if (response?.message === 'Invalid or expired token') return navigate('/login');
     } catch (error: unknown) {
       if (
         typeof error === 'object' &&
@@ -112,18 +128,12 @@ const ShowStationList: React.FC = () => {
         const status = axiosError.response?.status;
         const message = axiosError.response?.data?.message;
 
-        if (status === 401) {
-          navigate('/login');
-        } else if (status === 404) {
-          handlePopupNoExistStation();
-        } else if (status === 409) {
-          if (message?.includes('User already')) {
-            enterStation(stationId);
-          }
+        if (status === 401) navigate('/login');
+        else if (status === 404) handlePopupNoExistStation();
+        else if (status === 409) {
+          if (message?.includes('User already')) enterStation(stationId);
         }
-      } else {
-        console.error('서버에 연결할 수 없습니다.');
-      }
+      } else console.error('서버에 연결할 수 없습니다.');
     }
   };
 
@@ -155,20 +165,13 @@ const ShowStationList: React.FC = () => {
       const status = axiosError.response?.status;
       const message = axiosError.response?.data?.message;
 
-      if (status === 401) {
-        navigate('/login');
-      } else if (status === 404) {
-        handlePopupNoExistStation();
-      } else if (status === 409) {
-        if (message?.includes('User already')) {
-          enterStation(stationId);
-        } else if (message?.includes('Station Full')) {
-          alert('정거장이 가득 찼습니다. 다른 정거장을 찾아보세요.');
-        }
+      if (status === 401) navigate('/login');
+      else if (status === 404) handlePopupNoExistStation();
+      else if (status === 409) {
+        if (message?.includes('User already')) enterStation(stationId);
+        else if (message?.includes('Station Full')) alert('정거장이 가득 찼습니다. 다른 정거장을 찾아보세요.');
       }
-    } else {
-      console.error('서버에 연결할 수 없습니다.');
-    }
+    } else console.error('서버에 연결할 수 없습니다.');
   }
 };
 
@@ -180,6 +183,33 @@ const ShowStationList: React.FC = () => {
   const closeSearchStationModal = () => {
     setIsSearchStationModalVisible(false);
     setSearchValue('');
+  };
+
+  const resetSliderInterval = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+    }, 5000);
+  };
+
+  const goToNextStation = () => {
+    setBackgroundIndex((prev) => {
+      const next = (prev + 1) % carouselStations.length;
+      return next;
+    });
+    resetSliderInterval();
+  };
+
+  const goToPrevStation = () => {
+    setBackgroundIndex((prev) => {
+      const next = (prev - 1 + carouselStations.length) % carouselStations.length;
+      return next;
+    });
+    resetSliderInterval();
+  };
+
+  const openCloseBottomSheet = () => {
+    setIsOpenBottomSheet((prev) => !prev);
   };
 
   return (
@@ -227,13 +257,26 @@ const ShowStationList: React.FC = () => {
                   backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground]})`,
                 }}
               />
+              <div className={s.dimOverlay} />
             </div>
-            {currentStation && (
-              <StationListBottomSheet
-                station={currentStation}
-                onEnter={handleEnterStation} 
-              />
-            )}
+            {currentStation &&
+              (isOpenBottomSheet ? (
+                <StationListBottomSheetOpen
+                  sortedStations={sortedStations}
+                  sortCriteria={sortCriteria}
+                  setSortCriteria={handleChangeSortCriteria}
+                  openCloseBottomSheet={openCloseBottomSheet}
+                  handleEnterStation={handleEnterStation}
+                />
+              ) : (
+                <StationListBottomSheet2
+                  station={currentStation}
+                  onEnter={handleEnterStation}
+                  goLeft={goToPrevStation}
+                  goRight={goToNextStation}
+                  openCloseBottomSheet={openCloseBottomSheet}
+                />
+              ))}
           </div>
         )
       }
@@ -254,36 +297,3 @@ const ShowStationList: React.FC = () => {
 };
 
 export default ShowStationList;
-
-{/* <div className={s.separator}>
-        <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
-        <div className={s.sortCriteriaBoxContainer}>
-          <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
-        </div>
-      </div>
-
-      <div className={s.stationListWrapper}>
-        <div className={s.stationListContainer}>
-          {sortedStations.length > 0 ? (
-            sortedStations.map((station) => (
-              <div
-                key={station.stationId}
-                className={s.stationDisplayWrapper}
-                onClick={() => handleEnterStation(station.stationId)}
-              >
-                <StationDisplay
-                  name={station.name}
-                  numOfUsers={station.numOfUsers}
-                  background={stationBackgrounds[station.stationBackground] || `${IMG_BASE_URL}station_dim_01.png`}
-                />
-              </div>
-            ))
-          ) : (
-            <div className={s.noStation}>
-              <span className={s.noStationTitle}>아직 등록된 정거장이 없어요...</span>
-              <span className={s.noStationText}>정거장을 검색하거나, 새로운 정거장을 만들어 보세요!</span>
-              <img className={s.noStationLogo} src={noStationLogo} alt="noStationLogo" />
-            </div>
-          )}
-        </div>
-      </div> */}

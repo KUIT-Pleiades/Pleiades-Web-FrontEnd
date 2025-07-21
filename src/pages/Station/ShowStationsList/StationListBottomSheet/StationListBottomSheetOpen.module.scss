@@ -1,0 +1,92 @@
+// StationListBottomSheet2.module.scss
+.bottomSheetContainer {
+  position: absolute;
+  bottom: 9dvh;
+  left: 0;
+  width: 100%;
+  height: 82%;
+  z-index: 2;
+  background-color: #1B142A;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  color: white;
+}
+
+.handle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 3.5rem;
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+
+  &Icon {
+    padding-top: 0.69rem;
+    padding-bottom: 0.62rem;
+  }
+  &Text {
+    width: 94%;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.separator {
+  position: relative;
+  width: 94%;
+  padding-bottom: 0.94rem;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.totalNumOfStations {
+  color: #cbcccb;
+  font-family: Pretendard;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  //margin-top: 1.65rem;
+}
+
+.sortCriteriaBoxContainer {
+  position: absolute;
+  right: -0.75rem;
+  bottom: 2.28rem;
+}
+
+.stationListWrapper {
+  width: 100%;
+  flex: 1;
+  padding-bottom: 9dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.stationListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 94%;
+  margin-top: 1rem;
+  gap: 0.94rem 0;
+}
+
+.stationDisplayWrapper {
+  width: 48%;
+}
