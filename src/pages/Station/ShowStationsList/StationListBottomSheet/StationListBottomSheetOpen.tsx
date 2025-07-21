@@ -1,4 +1,3 @@
-import React from "react";
 import s from "./StationListBottomSheetOpen.module.scss";
 
 import handleIcon from "../../../../assets/StationList/bottomSheetHandle.svg";
