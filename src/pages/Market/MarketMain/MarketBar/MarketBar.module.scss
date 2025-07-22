@@ -1,36 +1,50 @@
 .marketBarContainer {
-    width: 100%;
-    height: 9%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-  
-.assets {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1rem;
-    margin-right: 0.88rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 16px;
+	height: 10dvh;
+	width: 100dvw;
 }
 
-.item {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 1rem;
+.leftLinks {
+	display: flex;
+	gap: 28px;
+	padding-left: 14px;
+
+	a {
+		text-decoration: none;
+		color: #777;
+			text-align: center;
+			font-family: "Noto Sans KR";
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+
+		&.active {
+			font-weight: bold;
+			color: var(--gray-22, #444);
+		}
+	}
 }
 
-.balance {
-    color: #000;
-    text-align: center;
-    font-family: "Pretendard";
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    letter-spacing: -0.02rem;
-    
-    width: 2rem;
-    margin-left: 0.3rem;
+.rightLink {
+	padding-right: 16px;
+	a {
+		text-decoration: none;
+		color: var(--gray-22, #444);
+			text-align: center;
+			font-family: "Noto Sans KR";
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+
+		&.active {
+			font-weight: bold;
+		}
+	}
 }

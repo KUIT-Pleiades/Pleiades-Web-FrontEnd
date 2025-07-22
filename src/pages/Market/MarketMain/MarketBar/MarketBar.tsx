@@ -1,24 +1,31 @@
+import { NavLink } from "react-router-dom";
 import s from "./MarketBar.module.scss";
-import coinImg from "../../../../assets/market/coin.svg";
-import stoneImg from "../../../../assets/market/stone.svg";
 
-interface MarketBarProps {
-  coinBalance: number;
-  stoneBalance: number;
-}
-
-export default function MarketBar({ coinBalance, stoneBalance }: MarketBarProps) {
+export default function MarketBar() {
   return (
     <div className={s.marketBarContainer}>
-      <div className={s.assets}>
-        <div className={s.item}>
-          <img src={coinImg} alt="coin" />
-          <p className={s.balance}>{coinBalance}</p>
-        </div>
-        <div className={s.item}>
-          <img src={stoneImg} alt="stone" />
-          <p className={s.balance}>{stoneBalance}</p>
-        </div>
+      <div className={s.leftLinks}>
+        <NavLink
+          to="."
+          end
+          className={({ isActive }) => (isActive ? s.active : "")}
+        >
+          공식몰
+        </NavLink>
+        <NavLink
+          to="used"
+          className={({ isActive }) => (isActive ? s.active : "")}
+        >
+          중고몰
+        </NavLink>
+      </div>
+      <div className={s.rightLink}>
+        <NavLink
+          to="my"
+          className={({ isActive }) => (isActive ? s.active : "")}
+        >
+          MY
+        </NavLink>
       </div>
     </div>
   );
