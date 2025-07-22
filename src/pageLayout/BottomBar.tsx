@@ -11,6 +11,9 @@ import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.png"
 import BottomBarItem from "./BottomBarItem";
 
 export default function BottomBar() {
+  //const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const isDarkMode = true;
+
   const bottomBarContents: BarContent[] = [
     {
       tag: "별",
@@ -39,7 +42,10 @@ export default function BottomBar() {
   ];
 
   return (
-    <nav id="bottom-bar" className={s.bottomBar}>
+    <nav
+      id="bottom-bar"
+      className={`${s.bottomBar} ${isDarkMode ? s.bottomBarDark : s.bottomBarLight}`}
+    >
       {bottomBarContents.map((item) => (
         <BottomBarItem
           key={item.tag}
@@ -47,6 +53,7 @@ export default function BottomBar() {
           defaultImg={item.defaultImg}
           selectedImg={item.selectedImg}
           link={item.link}
+          isDarkMode={isDarkMode}
         />
       ))}
     </nav>

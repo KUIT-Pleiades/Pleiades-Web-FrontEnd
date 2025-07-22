@@ -9,8 +9,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0% 8%;
-  background-color: #f8f8fa;
   z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+.bottomBarDark{
+  background-color: #1B142A;
+}
+.bottomBarLight{
+  background-color: #f8f8fa;
 }
 
 .barItem {
@@ -23,13 +29,24 @@
   text-decoration: none;
 }
 
-.icon {
+.iconDark, .iconLight {
   width: 80%;
   height: 50%;
   object-fit: contain;
 }
 
-.itemTag {
+.itemTagDark {
+  width: 100%;
+  font-family: "Pretendard";
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  margin-top: 1dvh;
+  margin-bottom: 1dvh;
+}
+
+.itemTagLight {
   width: 100%;
   font-family: "Pretendard";
   font-size: 12px;
