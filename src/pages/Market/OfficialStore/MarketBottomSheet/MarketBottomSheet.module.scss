@@ -17,6 +17,8 @@
 	border-top-right-radius: 20px;
 	box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
 
+	z-index: 100;
+
 	/* 중요: 모바일에서 드래그 시 페이지 전체가 스크롤되는 현상을 방지합니다. */
 	touch-action: none;
 	cursor: grab;
