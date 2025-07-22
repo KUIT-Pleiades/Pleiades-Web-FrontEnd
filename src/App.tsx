@@ -19,7 +19,7 @@ import Report from "./pages/Report/Report";
 import StationInside from "./pages/Station/StationInside/StationInside";
 import PersonalSetting from "./pages/Setting/PersonalSetting/PersonalSetting";
 import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
-import OfficialStore from "./pages/Market/OfficialStore";
+import OfficialStore from "./pages/Market/OfficialStore/OfficialStore";
 import UsedStore from "./pages/Market/UsedStore";
 import MyPage from "./pages/Market/MyPage";
 import StationSetting from "./pages/Station/StationSetting/StationSetting";

@@ -1,9 +1,10 @@
-import { useCharacterStore } from "../../store/useCharacterStore";
+import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./OfficialStore.module.scss";
-import characterBackground from "../../assets/backgroundImg/characterBackground.png";
-import resetBtn from "../../assets/btnImg/resetBtn.svg";
-import addBagBtn from "../../assets/btnImg/addBagBtn.svg";
-import heartBtn from "../../assets/btnImg/heartBtn.svg";
+import MarketBottomSheet from "./MarketBottomSheet/MarketBottomSheet";
+import characterBackground from "../../../assets/backgroundImg/characterBackground.png";
+import resetBtn from "../../../assets/btnImg/resetBtn.svg";
+import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
+import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 
 export default function OfficialStore() {
   const { userInfo, resetUserInfo } = useCharacterStore();
@@ -107,7 +108,8 @@ export default function OfficialStore() {
             onClick={() => {}}
           />
         </div>
-      </div>
+			</div>
+			<MarketBottomSheet />
     </div>
   );
 }

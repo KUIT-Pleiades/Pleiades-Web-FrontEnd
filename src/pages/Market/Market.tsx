@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 //import BottomBar from "../../pageLayout/BottomBar";
-import MarketBar from "./MarketMain/MarketBar/MarketBar";
+import MarketBar from "./MarketBar/MarketBar";
 
 export default function Market() {
   return (
