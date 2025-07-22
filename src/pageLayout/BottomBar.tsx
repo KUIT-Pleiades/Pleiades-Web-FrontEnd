@@ -8,35 +8,44 @@ import shopIcon from "../assets/bottomBarImg/shop.svg";
 import selectedShopIcon from "../assets/bottomBarImg/shopSelected.png";
 import settingIcon from "../assets/bottomBarImg/settingIcon.svg";
 import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.png";
+import starIconDark from "../assets/bottomBarImg/starIconDark.svg";
+import stationIconDark from "../assets/bottomBarImg/stationIconDark.svg";
+import shopIconDark from "../assets/bottomBarImg/shopDark.svg";
+import settingIconDark from "../assets/bottomBarImg/settingIconDark.svg";
 import BottomBarItem from "./BottomBarItem";
+import { useLocation } from "react-router-dom";
 
 export default function BottomBar() {
-  //const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const isDarkMode = true;
+  const location = useLocation();
+  const isDarkMode = location.pathname.includes("/station");
 
   const bottomBarContents: BarContent[] = [
     {
       tag: "별",
       defaultImg: starIcon,
       selectedImg: selectedStarIcon,
+      darkModeImg: starIconDark,
       link: "/home",
     },
     {
       tag: "정거장",
       defaultImg: stationIcon,
       selectedImg: selectedStationIcon,
+      darkModeImg: stationIconDark,
       link: "/station",
     },
     {
       tag: "상점",
       defaultImg: shopIcon,
       selectedImg: selectedShopIcon,
+      darkModeImg: shopIconDark,
       link: "/market",
     },
     {
       tag: "설정",
       defaultImg: settingIcon,
       selectedImg: selectedSettingIcon,
+      darkModeImg: settingIconDark,
       link: "/setting",
     },
   ];
@@ -52,6 +61,7 @@ export default function BottomBar() {
           itemTag={item.tag}
           defaultImg={item.defaultImg}
           selectedImg={item.selectedImg}
+          darkModeImg={item.darkModeImg}
           link={item.link}
           isDarkMode={isDarkMode}
         />

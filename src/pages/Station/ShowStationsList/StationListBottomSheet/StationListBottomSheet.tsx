@@ -7,6 +7,31 @@ import slideRight from "../../../../assets/StationList/slideRight.svg";
 import lastActiveIcon from "../../../../assets/StationList/lastActiveIcon.svg";
 import handleIcon from "../../../../assets/StationList/bottomSheetHandle.svg";
 
+const getTimeAgoText = (time: string): string => {
+  const now = new Date().getTime();
+  const past = new Date(time).getTime();
+  const diffMs = now - past;
+
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+  const week = 7 * day;
+
+  if (diffMs < 10 * minute) return "방금전";
+  if (diffMs < hour) return `${Math.floor(diffMs / minute)}분 전`;
+  if (diffMs < day) return `${Math.floor(diffMs / hour)}시간 전`;
+  if (diffMs < week) return `${Math.floor(diffMs / day)}일 전`;
+  return "오래전";
+}
+
+const formatDate = (isoString: string): string => {
+  const date = new Date(isoString);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}.${mm}.${dd}`;
+};
+
 interface Props {
   station: Station;
   onEnter: (id: string) => void;
@@ -14,13 +39,6 @@ interface Props {
   goRight: () => void;
   openCloseBottomSheet: () => void;
 }
-
-// export interface Station {
-//   stationId: string;
-//   name: string;
-//   numOfUsers: number;
-//   stationBackground: string;
-// }
 
 export default function StationListBottomSheet({ station, onEnter, goLeft, goRight, openCloseBottomSheet }: Props) {
 
@@ -39,7 +57,7 @@ export default function StationListBottomSheet({ station, onEnter, goLeft, goRig
           <h2 className={s.headerTitleStationName}>{station.name}</h2>
           <div className={s.headerTitleStationInfo}>
             <p className={s.headerTitleStationInfoCreationDate}>
-              생성일 2025.임시.02
+              생성일 {formatDate(station.createdAt)}
             </p>
 
             <div className={s.divider} />
@@ -62,7 +80,7 @@ export default function StationListBottomSheet({ station, onEnter, goLeft, goRig
                 className={s.headerTitleStationInfoLastActiveIcon}
               />
               <span className={s.headerTitleStationInfoLastActiveText}>
-                방금전
+                {getTimeAgoText(station.lastActive)}
               </span>
             </div>
           </div>

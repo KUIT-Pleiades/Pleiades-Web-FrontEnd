@@ -2,14 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './ShowStationList.module.scss';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Message, Stations, Station } from '../../../interfaces/Interfaces';
-//import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
-import StationListBottomSheet2 from './StationListBottomSheet/StationListBottomSheet';
-import SortCriteriaBox from '../../../components/SortCriteriaBox/SortCriteriaBox';
+import { Message, Stations, Station, SortOptionForStations } from '../../../interfaces/Interfaces';
+import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
+//import SortCriteriaBoxForStation from '../../../components/SortCriteriaBox/SortCriteriaBoxForStation';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
 import axiosInstance from '../../../api/axiosInstance';
-//import StationDisplay from './StationDisplay/StationDisplay';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
@@ -32,8 +30,9 @@ const ShowStationList: React.FC = () => {
   const userName = userInfo.userName || '플레이아데스';
 
   const [stations, setStations] = useState<Stations>({ stations: [] });
-  const [sortCriteria, setSortCriteria] = useState<'최신순' | '이름순'>(
-    () => (localStorage.getItem('sortCriteria') === '이름순' ? '이름순' : '최신순')
+
+  const [sortCriteria, setSortCriteria] = useState<SortOptionForStations>(
+    () => (localStorage.getItem('sortCriteria') as SortOptionForStations) || '새로운 활동순'
   );
   const [isSearchStationModalVisible, setIsSearchStationModalVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -47,30 +46,33 @@ const ShowStationList: React.FC = () => {
 
   useEffect(() => {
     // 🔧 MOCK DATA 시작
-    // const mockStations: Station[] = Array.from({ length: 10 }, (_, i) => ({
-    //   stationId: `MOCKID${i + 1}`,
-    //   name: `정거장${i + 1}`,
-    //   numOfUsers: Math.floor(Math.random() * 7),
-    //   stationBackground: `station_dim_0${(i % 4) + 1}` as 'station_dim_01' | 'station_dim_02' | 'station_dim_03' | 'station_dim_04',
-    // }));
-    // setStations({ stations: mockStations });
-    // setCarouselStations(mockStations.slice(0, 5));
+    const mockStations: Station[] = Array.from({ length: 10 }, (_, i) => ({
+      stationId: `MOCKID${i + 1}`,
+      name: `정거장${i + 1}`,
+      numOfUsers: Math.floor(Math.random() * 7),
+      stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
+      createdAt: new Date(Date.now() - i * 10000000).toISOString(),
+      lastActive: new Date(Date.now() - i * 5000000).toISOString(),
+      isFavorite: i % 3 === 0,
+    }));
+    setStations({ stations: mockStations });
+    setCarouselStations(mockStations.slice(0, 5));
     // 🔧 MOCK DATA 끝
 
     // 실제 서버 요청은 아래 주석 처리
     
-    const fetchStations = async () => {
-      try {
-        const response = await axiosRequest<Stations>('/stations', 'GET', null);
-        if (response?.data?.stations) {
-          setStations({ stations: response.data.stations });
-          setCarouselStations(response.data.stations.slice(0, 5));
-        }
-      } catch (error) {
-        console.error('정거장 불러오기 실패:', error);
-      }
-    };
-    fetchStations();
+    // const fetchStations = async () => {
+    //   try {
+    //     const response = await axiosRequest<Stations>('/stations', 'GET', null);
+    //     if (response?.data?.stations) {
+    //       setStations({ stations: response.data.stations });
+    //       setCarouselStations(response.data.stations.slice(0, 5));
+    //     }
+    //   } catch (error) {
+    //     console.error('정거장 불러오기 실패:', error);
+    //   }
+    // };
+    // fetchStations();
     
   }, []);
 
@@ -90,12 +92,28 @@ const ShowStationList: React.FC = () => {
 
   const sortedStations = useMemo(() => {
     const copied = [...stations.stations];
-    return sortCriteria === '이름순'
-      ? copied.sort((a, b) => a.name.localeCompare(b.name, 'ko'))
-      : copied;
+    return copied
+      .sort((a, b) => {
+        // 1. 즐겨찾기 여부 우선 정렬 (true가 앞으로)
+        if (a.isFavorite && !b.isFavorite) return -1;
+        if (!a.isFavorite && b.isFavorite) return 1;
+
+        // 2. 선택한 정렬 기준 적용
+        switch (sortCriteria) {
+          case '이름순':
+            return a.name.localeCompare(b.name, 'ko');
+          case '최근 가입순':
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          case '오래된 가입순':
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          case '새로운 활동순':
+          default:
+            return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
+        }
+      });
   }, [stations, sortCriteria]);
 
-  const handleChangeSortCriteria = (criteria: '최신순' | '이름순') => {
+  const handleChangeSortCriteria = (criteria: SortOptionForStations) => {
     setSortCriteria(criteria);
     localStorage.setItem('sortCriteria', criteria);
   };
@@ -232,9 +250,9 @@ const ShowStationList: React.FC = () => {
         sortedStations.length == 0 ? (
           <>
             <div className={s.separator}>
-              <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
+              <span className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</span>
               <div className={s.sortCriteriaBoxContainer}>
-                <SortCriteriaBox sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" />
+                {/* <SortCriteriaBoxForStation sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" /> */}
               </div>
             </div>
             <div className={s.stationListWrapper}>
@@ -269,7 +287,7 @@ const ShowStationList: React.FC = () => {
                   handleEnterStation={handleEnterStation}
                 />
               ) : (
-                <StationListBottomSheet2
+                <StationListBottomSheet
                   station={currentStation}
                   onEnter={handleEnterStation}
                   goLeft={goToPrevStation}

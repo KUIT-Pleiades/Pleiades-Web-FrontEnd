@@ -78,10 +78,13 @@
 
 /* 정거장이 없을 때 */
 .separator {
-  position: relative;
   width: 92%;
   padding-bottom: 0.94rem;
   border-bottom: 1px solid #e1e1e1;
+  overflow: visible;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .totalNumOfStations {
@@ -92,11 +95,6 @@
   margin-top: 1.65rem;
 }
 
-.sortCriteriaBoxContainer {
-  position: absolute;
-  right: -0.75rem;
-  bottom: 2.28rem;
-}
 
 .stationListWrapper {
   width: 100%;
