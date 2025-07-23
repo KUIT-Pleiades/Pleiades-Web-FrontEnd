@@ -30,12 +30,7 @@ const partCounts = {
 // 반복문을 통해 각 파츠의 URL을 동적으로 생성합니다.
 for (const [part, count] of Object.entries(partCounts)) {
   for (let i = 1; i <= count; i++) {
-    let num;
-    if (part === "face_eyes" || part === "face_mouth") {
-      num = i.toString().padStart(3, "0");
-    } else {
-      num = i.toString().padStart(2, "0");
-    }
+    const num = i.toString(); // padStart를 제거하고 숫자를 바로 문자열로 변환
     const fileName = `${part}_${num}.png`;
     partURLs[part][fileName] = `${IMG_BASE_URL}${fileName}`;
   }

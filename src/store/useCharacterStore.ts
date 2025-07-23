@@ -52,24 +52,24 @@ const initialUserInfo: UserInfo = {
   userId: "",
   userName: "",
   birthDate: "",
-  starBackground: "bg_star_01.png", // 기본 배경 이미지
+  starBackground: "bg_star_1.png", // 기본 배경 이미지
   character:
     "https://gateway.pinata.cloud/ipfs/QmWC4899NqLPTqMSVFNZS5qzSUvCH1agcCdRzRrFe1um85",
   profile:
     "https://gateway.pinata.cloud/ipfs/QmURNcGX98UAecKyEELM39117X7RwQZE8B1dtm56B4vxEJ",
   face: {
-    skinColor: "face_skin_01.png",
-    hair: "face_hair_01.png",
-    eyes: "face_eyes_001.png", // 기본값 추가
-    nose: "face_nose_01.png", // 기본값 추가
-    mouth: "face_mouth_001.png", // 기본값 추가
+    skinColor: "face_skin_1.png",
+    hair: "face_hair_1.png",
+    eyes: "face_eyes_1.png", // 기본값 추가
+    nose: "face_nose_1.png", // 기본값 추가
+    mouth: "face_mouth_1.png", // 기본값 추가
     mole: "", // 점은 기본값 없음
   },
   outfit: {
-    top: "fashion_top_01.png",
-    bottom: "fashion_bottom_01.png",
+    top: "fashion_top_1.png",
+    bottom: "fashion_bottom_1.png",
     set: "", // 세트는 기본값 없음
-    shoes: "fashion_shoes_01.png",
+    shoes: "fashion_shoes_1.png",
   },
   item: {
     head: "",

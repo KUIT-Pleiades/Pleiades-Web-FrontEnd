@@ -14,8 +14,8 @@ const totalBackgrounds = 5;
 
 // 반복문을 통해 모든 배경 아이템의 정보를 동적으로 생성
 for (let i = 1; i <= totalBackgrounds; i++) {
-  const num = i.toString().padStart(2, "0");
-    const fileName = `bg_star_${num}.png`; // "bg_star_01.png" 형식
+  const num = i.toString();
+  const fileName = `bg_star_${num}.png`;
 
   BackgroundImages.push({
     name: fileName,
