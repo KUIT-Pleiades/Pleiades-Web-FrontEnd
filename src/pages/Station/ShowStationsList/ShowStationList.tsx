@@ -4,7 +4,7 @@ import s from './ShowStationList.module.scss';
 import { useCharacterStore } from '../../../store/useCharacterStore';
 import { Message, Stations, Station, SortOptionForStations } from '../../../interfaces/Interfaces';
 import StationListBottomSheet from './StationListBottomSheet/StationListBottomSheet';
-//import SortCriteriaBoxForStation from '../../../components/SortCriteriaBox/SortCriteriaBoxForStation';
+import SortCriteriaBoxForStation from '../../../components/SortCriteriaBox/SortCriteriaBoxForStation';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
 import axiosInstance from '../../../api/axiosInstance';
@@ -46,33 +46,33 @@ const ShowStationList: React.FC = () => {
 
   useEffect(() => {
     // 🔧 MOCK DATA 시작
-    const mockStations: Station[] = Array.from({ length: 10 }, (_, i) => ({
-      stationId: `MOCKID${i + 1}`,
-      name: `정거장${i + 1}`,
-      numOfUsers: Math.floor(Math.random() * 7),
-      stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
-      createdAt: new Date(Date.now() - i * 10000000).toISOString(),
-      lastActive: new Date(Date.now() - i * 5000000).toISOString(),
-      isFavorite: i % 3 === 0,
-    }));
-    setStations({ stations: mockStations });
-    setCarouselStations(mockStations.slice(0, 5));
+    // const mockStations: Station[] = Array.from({ length: 2 }, (_, i) => ({
+    //   stationId: `MOCKID${i + 1}`,
+    //   name: `정거장${i + 1}`,
+    //   numOfUsers: Math.floor(Math.random() * 7),
+    //   stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
+    //   createdAt: new Date(Date.now() - i * 10000000).toISOString(),
+    //   lastActive: new Date(Date.now() - i * 5000000).toISOString(),
+    //   isFavorite: i % 3 === 0,
+    // }));
+    // setStations({ stations: mockStations });
+    // setCarouselStations(mockStations.slice(0, 5));
     // 🔧 MOCK DATA 끝
 
     // 실제 서버 요청은 아래 주석 처리
     
-    // const fetchStations = async () => {
-    //   try {
-    //     const response = await axiosRequest<Stations>('/stations', 'GET', null);
-    //     if (response?.data?.stations) {
-    //       setStations({ stations: response.data.stations });
-    //       setCarouselStations(response.data.stations.slice(0, 5));
-    //     }
-    //   } catch (error) {
-    //     console.error('정거장 불러오기 실패:', error);
-    //   }
-    // };
-    // fetchStations();
+    const fetchStations = async () => {
+      try {
+        const response = await axiosRequest<Stations>('/stations', 'GET', null);
+        if (response?.data?.stations) {
+          setStations({ stations: response.data.stations });
+          setCarouselStations(response.data.stations.slice(0, 5));
+        }
+      } catch (error) {
+        console.error('정거장 불러오기 실패:', error);
+      }
+    };
+    fetchStations();
     
   }, []);
 
@@ -250,10 +250,14 @@ const ShowStationList: React.FC = () => {
         sortedStations.length == 0 ? (
           <>
             <div className={s.separator}>
-              <span className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</span>
-              <div className={s.sortCriteriaBoxContainer}>
-                {/* <SortCriteriaBoxForStation sortCriteria={sortCriteria} setSortCriteria={handleChangeSortCriteria} textColor="#E1E1E1" /> */}
-              </div>
+                <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
+                <div className={s.sortCriteriaBoxContainer}>
+                    <SortCriteriaBoxForStation
+                        sortCriteria={sortCriteria}
+                        setSortCriteria={setSortCriteria}
+                        textColor="#E1E1E1"
+                    />
+                </div>
             </div>
             <div className={s.stationListWrapper}>
               <div className={s.stationListContainer}>

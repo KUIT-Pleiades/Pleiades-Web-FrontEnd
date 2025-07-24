@@ -1,0 +1,41 @@
+// //SortCriteriaBoxForStation.module.scss
+
+.container{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.sortBySectionClose, .sortBySectionOpen{
+    padding-top: 0.3rem;
+    padding-right: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: end;
+}
+.arrowShowDown, .arrowHideUp{
+    padding-left: 0.3rem;
+}
+.sortCriteriaSelectButton, .sortCriteriaText{
+    text-align: right;
+    font-family: Pretendard;
+    font-size: 0.8125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.01875rem;
+}
+
+.sortBySectionOpen{
+    background-color: #FFFFFF;
+    border-radius: 0.75rem;
+    padding-left: 0.6rem;
+    padding-bottom: 0.3rem;
+}
+
+.buttonContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}

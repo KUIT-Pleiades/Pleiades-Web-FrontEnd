@@ -67,7 +67,6 @@ export default function StationListBottomSheetOpen({
                                     `${IMG_BASE_URL}station_dim_01.png`
                                 }
                                 isFavorite={station.isFavorite}
-                                //isFavorite={false}
                             />
                         </div>
                     ))}

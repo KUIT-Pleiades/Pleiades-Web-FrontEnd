@@ -78,21 +78,31 @@
 
 /* 정거장이 없을 때 */
 .separator {
-  width: 92%;
+  position: relative;
+  width: 93%;
   padding-bottom: 0.94rem;
   border-bottom: 1px solid #e1e1e1;
-  overflow: visible;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 .totalNumOfStations {
-  color: #cbcccb;
+  padding-top: 0.35rem;
+  color: #E1E1E1;
+  text-align: right;
   font-family: Pretendard;
   font-size: 0.8125rem;
+  font-style: normal;
   font-weight: 400;
-  margin-top: 1.65rem;
+  line-height: normal;
+  letter-spacing: -0.01875rem;
+}
+
+.sortCriteriaBoxContainer {
+  margin: 0;
+  padding: 0;
 }
 
 
