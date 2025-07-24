@@ -1,7 +1,7 @@
 # FrontEnd
 
 ### 플레이아데스
-- Pleiades
+- Private SNS For your mates, Pleiades
 
 ### 배포링크
 

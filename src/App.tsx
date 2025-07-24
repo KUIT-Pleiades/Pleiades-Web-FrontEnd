@@ -19,7 +19,9 @@ import Report from "./pages/Report/Report";
 import StationInside from "./pages/Station/StationInside/StationInside";
 import PersonalSetting from "./pages/Setting/PersonalSetting/PersonalSetting";
 import ProfileSetting from "./pages/Setting/ProfileSetting/ProfileSetting";
-import MarketMain from "./pages/Market/MarketMain/MarketMain";
+import OfficialStore from "./pages/Market/OfficialStore/OfficialStore";
+import UsedStore from "./pages/Market/UsedStore";
+import MyPage from "./pages/Market/MyPage";
 import StationSetting from "./pages/Station/StationSetting/StationSetting";
 import StationBackgroundSetting from "./pages/Station/StationSetting/StationBackgroundSetting";
 import FriendStar from "./pages/FriendStar/FriendStar";
@@ -55,7 +57,9 @@ export default function App() {
           </Route>
           <Route path="/report" element={<Report />}></Route>
           <Route path="market" element={<Market />}>
-            <Route index element={<MarketMain />} />
+            <Route index element={<OfficialStore />} />
+            <Route path="used" element={<UsedStore />} />
+            <Route path="my" element={<MyPage />} />
           </Route>
           <Route path="setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />

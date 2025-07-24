@@ -44,7 +44,7 @@ const partCounts = {
 // 반복문을 통해 모든 패션 아이템의 URL을 동적으로 생성
 for (const [part, count] of Object.entries(partCounts)) {
   for (let i = 1; i <= count; i++) {
-    const num = i.toString().padStart(2, "0");
+    const num = i.toString(); // padStart를 제거하고 숫자를 바로 문자열로 변환
     const fileName = `${part}_${num}.png`;
     partURLs[part][fileName] = `${IMG_BASE_URL}${fileName}`;
   }
