@@ -18,10 +18,10 @@ import StationListBottomSheetOpen from './StationListBottomSheet/StationListBott
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
-  station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
-  station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
-  station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
-  station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
+    station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
+    station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
+    station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
+    station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
 };
 
 const ShowStationList: React.FC = () => {
@@ -46,33 +46,33 @@ const ShowStationList: React.FC = () => {
 
   useEffect(() => {
     // 🔧 MOCK DATA 시작
-    // const mockStations: Station[] = Array.from({ length: 2 }, (_, i) => ({
-    //   stationId: `MOCKID${i + 1}`,
-    //   name: `정거장${i + 1}`,
-    //   numOfUsers: Math.floor(Math.random() * 7),
-    //   stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
-    //   createdAt: new Date(Date.now() - i * 10000000).toISOString(),
-    //   lastActive: new Date(Date.now() - i * 5000000).toISOString(),
-    //   isFavorite: i % 3 === 0,
-    // }));
-    // setStations({ stations: mockStations });
-    // setCarouselStations(mockStations.slice(0, 5));
+    const mockStations: Station[] = Array.from({ length: 0 }, (_, i) => ({
+      stationId: `MOCKID${i + 1}`,
+      name: `정거장${i + 1}`,
+      numOfUsers: Math.floor(Math.random() * 7),
+      stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
+      createdAt: new Date(Date.now() - i * 10000000).toISOString(),
+      lastActive: new Date(Date.now() - i * 5000000).toISOString(),
+      isFavorite: i % 3 === 0,
+    }));
+    setStations({ stations: mockStations });
+    setCarouselStations(mockStations.slice(0, 5));
     // 🔧 MOCK DATA 끝
 
     // 실제 서버 요청은 아래 주석 처리
     
-    const fetchStations = async () => {
-      try {
-        const response = await axiosRequest<Stations>('/stations', 'GET', null);
-        if (response?.data?.stations) {
-          setStations({ stations: response.data.stations });
-          setCarouselStations(response.data.stations.slice(0, 5));
-        }
-      } catch (error) {
-        console.error('정거장 불러오기 실패:', error);
-      }
-    };
-    fetchStations();
+    // const fetchStations = async () => {
+    //   try {
+    //     const response = await axiosRequest<Stations>('/stations', 'GET', null);
+    //     if (response?.data?.stations) {
+    //       setStations({ stations: response.data.stations });
+    //       setCarouselStations(response.data.stations.slice(0, 5));
+    //     }
+    //   } catch (error) {
+    //     console.error('정거장 불러오기 실패:', error);
+    //   }
+    // };
+    // fetchStations();
     
   }, []);
 
@@ -267,6 +267,7 @@ const ShowStationList: React.FC = () => {
                   <img className={s.noStationLogo} src={noStationLogo} alt="noStationLogo" />
                 </div>
               </div>
+              <div className={s.dimOverlayNoStation} />
             </div>
           </>
         ) : (
