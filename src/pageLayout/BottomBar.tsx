@@ -1,13 +1,13 @@
 import { BarContent } from "../types/types";
 import s from "./BottomBar.module.scss";
 import starIcon from "../assets/bottomBarImg/starIcon.svg";
-import selectedStarIcon from "../assets/bottomBarImg/starIconSelected.png";
+import selectedStarIcon from "../assets/bottomBarImg/starIconSelected.svg";
 import stationIcon from "../assets/bottomBarImg/stationIcon.svg";
-import selectedStationIcon from "../assets/bottomBarImg/stationIconSelected.png";
+import selectedStationIcon from "../assets/bottomBarImg/stationIconSelected.svg";
 import shopIcon from "../assets/bottomBarImg/shop.svg";
-import selectedShopIcon from "../assets/bottomBarImg/shopSelected.png";
+import selectedShopIcon from "../assets/bottomBarImg/shopIconSelected.svg";
 import settingIcon from "../assets/bottomBarImg/settingIcon.svg";
-import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.png";
+import selectedSettingIcon from "../assets/bottomBarImg/settingIconSelected.svg";
 import starIconDark from "../assets/bottomBarImg/starIconDark.svg";
 import stationIconDark from "../assets/bottomBarImg/stationIconDark.svg";
 import shopIconDark from "../assets/bottomBarImg/shopDark.svg";
