@@ -1,9 +1,9 @@
 import s from "./StationListBottomSheetOpen.module.scss";
 
 import handleIcon from "../../../../assets/StationList/bottomSheetHandle.svg";
-import { Station } from "../../../../interfaces/Interfaces";
-import SortCriteriaBox from "../../../../components/SortCriteriaBox/SortCriteriaBox";
+import { SortOptionForStations, Station } from "../../../../interfaces/Interfaces";
 import StationDisplay from "../StationDisplay/StationDisplay";
+import SortCriteriaBoxForStation from "../../../../components/SortCriteriaBox/SortCriteriaBoxForStation";
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
@@ -15,8 +15,8 @@ const stationBackgrounds: { [key: string]: string } = {
 
 interface Props {
   sortedStations: Station[];
-  sortCriteria: '최신순' | '이름순';
-  setSortCriteria: (criteria: '최신순' | '이름순') => void;
+  sortCriteria: SortOptionForStations;
+  setSortCriteria: (criteria: SortOptionForStations) => void;
   openCloseBottomSheet: () => void;
   handleEnterStation: (stationId: string) => void;
 }
@@ -43,7 +43,7 @@ export default function StationListBottomSheetOpen({
             <div className={s.separator}>
                 <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
                 <div className={s.sortCriteriaBoxContainer}>
-                    <SortCriteriaBox
+                    <SortCriteriaBoxForStation
                         sortCriteria={sortCriteria}
                         setSortCriteria={setSortCriteria}
                         textColor="#E1E1E1"
@@ -66,8 +66,7 @@ export default function StationListBottomSheetOpen({
                                     stationBackgrounds[station.stationBackground] ||
                                     `${IMG_BASE_URL}station_dim_01.png`
                                 }
-                                //isFavorite={station.isFavorite}
-                                isFavorite={false}
+                                isFavorite={station.isFavorite}
                             />
                         </div>
                     ))}

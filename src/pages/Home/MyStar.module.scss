@@ -41,11 +41,12 @@
   width: calc(100dvw - 2em);
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .planet {
   width: 25.686px;
-  height: 18.479px;
+  //height: 18.479px;
   flex-shrink: 0;
 }
 

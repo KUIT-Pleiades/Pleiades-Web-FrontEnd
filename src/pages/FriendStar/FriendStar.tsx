@@ -1,5 +1,5 @@
 import s from "./FriendStar.module.scss";
-import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.png";
+import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.svg";
 import diary from "../../assets/home/diary.svg";
 import { getImage } from "../../functions/getImage";
 import { useNavigate, useLocation } from "react-router-dom";

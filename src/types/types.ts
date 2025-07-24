@@ -2,6 +2,7 @@ export type BarContent = {
   tag: string;
   defaultImg: string;
   selectedImg: string;
+  darkModeImg: string;
   link: string;
 };
 

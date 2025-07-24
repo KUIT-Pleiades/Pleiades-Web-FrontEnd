@@ -261,11 +261,16 @@ export interface Station {
   name: string;
   numOfUsers: number;
   stationBackground: string;
+  createdAt: string;
+  lastActive: string;
+  isFavorite: boolean;
 }
 
 export interface Stations {
   stations: Station[];
 }
+
+export type SortOptionForStations = '새로운 활동순' | '최근 가입순' | '오래된 가입순' | '이름순';
 
 export interface StationMember {
   userId: string;

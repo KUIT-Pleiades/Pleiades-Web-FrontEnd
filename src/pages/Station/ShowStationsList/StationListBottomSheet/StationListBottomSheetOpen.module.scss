@@ -10,6 +10,9 @@
   border-top-left-radius: 1.25rem;
   border-top-right-radius: 1.25rem;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .handle {
@@ -26,7 +29,7 @@
     padding-bottom: 0.62rem;
   }
   &Text {
-    width: 94%;
+    width: 93%;
     color: #FFF;
     font-family: Pretendard;
     font-size: 1rem;
@@ -39,50 +42,81 @@
 }
 
 .content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 .separator {
   position: relative;
-  width: 94%;
+  width: 93%;
   padding-bottom: 0.94rem;
   border-bottom: 1px solid #e1e1e1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .totalNumOfStations {
-  color: #cbcccb;
+  padding-top: 0.35rem;
+  color: #E1E1E1;
+  text-align: right;
   font-family: Pretendard;
   font-size: 0.8125rem;
+  font-style: normal;
   font-weight: 400;
-  //margin-top: 1.65rem;
+  line-height: normal;
+  letter-spacing: -0.01875rem;
 }
 
 .sortCriteriaBoxContainer {
-  position: absolute;
-  right: -0.75rem;
-  bottom: 2.28rem;
+  margin: 0;
+  padding: 0;
 }
 
 .stationListWrapper {
   width: 100%;
   flex: 1;
-  padding-bottom: 9dvh;
+  padding-bottom: 2dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  // ✅ 스크롤바 막대 숨기기
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(
+      180deg,
+      rgba(30, 30, 57, 0.0) 0%,
+      #1E1E39 100%
+    );
+    pointer-events: none;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    z-index: 0;
+  }
 }
 
 .stationListContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 94%;
+  width: 93%;
   margin-top: 1rem;
   gap: 0.94rem 0;
 }
