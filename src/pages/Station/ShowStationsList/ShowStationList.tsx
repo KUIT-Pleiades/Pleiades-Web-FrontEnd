@@ -8,6 +8,7 @@ import SortCriteriaBoxForStation from '../../../components/SortCriteriaBox/SortC
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
 import axiosInstance from '../../../api/axiosInstance';
+import { Methods } from '../../../types/types';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
@@ -46,7 +47,7 @@ const ShowStationList: React.FC = () => {
 
   useEffect(() => {
     // 🔧 MOCK DATA 시작
-    const mockStations: Station[] = Array.from({ length: 0 }, (_, i) => ({
+    const mockStations: Station[] = Array.from({ length: 20 }, (_, i) => ({
       stationId: `MOCKID${i + 1}`,
       name: `정거장${i + 1}`,
       numOfUsers: Math.floor(Math.random() * 7),
@@ -230,6 +231,25 @@ const ShowStationList: React.FC = () => {
     setIsOpenBottomSheet((prev) => !prev);
   };
 
+  // 즐겨찾기 관련
+  const toggleFavoriteInParent = async (stationId: string, isFavorite: boolean) => {
+      try {
+          const method: Methods = isFavorite ? 'DELETE' : 'POST';
+          console.log(`즐겨찾기 ${isFavorite ? '제거' : '추가'}: ${stationId}`);
+          const response = await axiosRequest(`/stations/${stationId}/favorite`, method, null);
+
+          if (response.status === 200) {
+              console.log(`즐겨찾기 ${isFavorite ? '제거' : '추가'} 성공: ${stationId}`);
+              const updated = stations.stations.map(station =>
+                  station.stationId === stationId ? { ...station, isFavorite: !isFavorite } : station
+              );
+              setStations({ stations: updated });
+          }
+      } catch {
+          console.log('즐겨찾기 변경에 실패했습니다.');
+      }
+  };
+
   return (
     <div className={s.container}>
       <div className={s.headContainer}>
@@ -290,6 +310,7 @@ const ShowStationList: React.FC = () => {
                   setSortCriteria={handleChangeSortCriteria}
                   openCloseBottomSheet={openCloseBottomSheet}
                   handleEnterStation={handleEnterStation}
+                  onToggleFavorite={toggleFavoriteInParent}
                 />
               ) : (
                 <StationListBottomSheet
