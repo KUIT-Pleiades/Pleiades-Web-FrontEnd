@@ -7,6 +7,7 @@ import goBtn from "../../../assets/btnImg/goBtn.png";
 import { useAuth } from "../../../store/authStore";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import ConfirmModal from "../../../components/ConfirmModal/ConfirmModal";
+import DeleteAccountModal from "../../../components/ConfirmModal/DeleteAccountModal";
 
 interface UserData {
   userId: string;
@@ -19,14 +20,14 @@ interface UserData {
 const PersonalSetting: React.FC = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+	const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const { clearToken } = useAuth();
   const { resetUserInfo } = useCharacterStore();
 
   const handleLogoutConfirm = async () => {
     try {
       await axiosRequest("/auth/logout", "POST", null);
-
       // 200 OK든 404든 상관없이 클라이언트 토큰 제거
       resetUserInfo();
       clearToken();
@@ -44,7 +45,23 @@ const PersonalSetting: React.FC = () => {
       clearToken();
       navigate("/login");
     }
+	};
+	
+	const handleWithdrawConfirm = async () => {
+    try {
+      await axiosRequest("/auth/withdraw", "DELETE", null);
+      resetUserInfo();
+      clearToken();
+      navigate("/login");
+    } catch (error) {
+      console.error("회원 탈퇴 요청 실패:", error);
+
+      // 어떤 에러든 클라이언트 상태는 초기화
+      clearToken();
+      navigate("/login");
+    }
   };
+
 
   const openLogoutModal = () => {
     setIsLogoutModalOpen(true);
@@ -52,6 +69,14 @@ const PersonalSetting: React.FC = () => {
 
   const closeLogoutModal = () => {
     setIsLogoutModalOpen(false);
+	};
+	
+	const openWithdrawModal = () => {
+    setIsWithdrawModalOpen(true);
+  };
+
+  const closeWithdrawModal = () => {
+    setIsWithdrawModalOpen(false);
   };
 
   useEffect(() => {
@@ -114,16 +139,27 @@ const PersonalSetting: React.FC = () => {
           로그아웃
         </button>
         <span>|</span>
-        <button className={s.withdrawBtn}>탈퇴하기</button>
+        <button className={s.withdrawBtn} onClick={openWithdrawModal}>
+          탈퇴하기
+        </button>
       </div>
 
       {isLogoutModalOpen && (
-				<ConfirmModal
-					userId={userData?.userId || ""}
-					profile={userData?.profile || ""}
+        <ConfirmModal
+          userId={userData?.userId || ""}
+          profile={userData?.profile || ""}
           message="로그아웃 하시겠습니까?"
           onConfirm={handleLogoutConfirm}
           onCancel={closeLogoutModal}
+        />
+      )}
+
+      {isWithdrawModalOpen && (
+        <DeleteAccountModal
+          userId={userData?.userId || ""}
+          profile={userData?.profile || ""}
+          onConfirm={handleWithdrawConfirm}
+          onCancel={closeWithdrawModal}
         />
       )}
     </div>
