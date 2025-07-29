@@ -21,16 +21,18 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const location = useLocation();
   const { userInfo, updateUserInfo } = useCharacterStore();
   const [loadingState, setLoadingState] = useState(false);
-	const [showList, setShowList] = useState(true);
-	
-	const isWearingSet = !!userInfo.outfit.set;
+  const [showList, setShowList] = useState(true);
+
+  const isWearingSet = !!userInfo.outfit.set;
 
   const handleLoadingState = () => {
     setLoadingState(true);
   };
 
   const generateImageMutation = useGenerateCharacterImageMutation();
-  const signupMutation = useSignupMutation(location.pathname.includes("onboarding"));
+  const signupMutation = useSignupMutation(
+    location.pathname.includes("onboarding")
+  );
 
   const backgroundStyle = {
     backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground})`,
@@ -38,32 +40,32 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   };
 
   const complete = async () => {
-  setLoadingState(false);
+    setLoadingState(false);
 
-  try {
-    const characterImg = await generateImageMutation.mutateAsync(userInfo);
+    try {
+      const characterImg = await generateImageMutation.mutateAsync(userInfo);
 
-    const signupData: UserInfo = {
-      ...userInfo,
-      profile: characterImg.profile,
-      character: characterImg.character,
-    };
+      const signupData: UserInfo = {
+        ...userInfo,
+        profile: characterImg.profile,
+        character: characterImg.character,
+      };
 
-    const response = await signupMutation.mutateAsync(signupData);
+      const response = await signupMutation.mutateAsync(signupData);
 
-    if (response.message === "duplicate user") {
-      console.log("회원가입 실패: 중복된 사용자");
-      navigate("/login");
-    } else {
-      console.log("회원가입 성공");
-      updateUserInfo(signupData);
-      navigate("/home");
+      if (response.message === "duplicate user") {
+        console.log("회원가입 실패: 중복된 사용자");
+        navigate("/login");
+      } else {
+        console.log("회원가입 성공");
+        updateUserInfo(signupData);
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("회원가입 또는 이미지 생성 실패", error);
+      navigate("/loginfail");
     }
-  } catch (error) {
-    console.error("회원가입 또는 이미지 생성 실패", error);
-    navigate("/loginfail");
-  }
-};
+  };
 
   return (
     <div style={backgroundStyle} className={s.background}>
@@ -108,13 +110,11 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
               alt="mole"
             />
           )}
-
           <img
             className={s.characterHair}
             src={`${IMG_BASE_URL}${userInfo.face.hair}`}
             alt="hair"
           />
-
           {!isWearingSet && (
             <>
               <img
@@ -136,13 +136,11 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
               alt="set"
             />
           )}
-
           <img
             className={s.characterShoes}
             src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
             alt="shoes"
           />
-
           {Object.entries(userInfo.item).map(([part, src]) => {
             if (!src) return null;
             return (
