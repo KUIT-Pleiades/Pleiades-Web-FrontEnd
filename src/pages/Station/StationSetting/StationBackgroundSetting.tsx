@@ -8,23 +8,23 @@ import SetStationBackground from "./SetStationBackground/SetStationBackground";
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds = [
-  `${IMG_BASE_URL}station_dim_01.png`,
-  `${IMG_BASE_URL}station_dim_02.png`,
-  `${IMG_BASE_URL}station_dim_03.png`,
-  `${IMG_BASE_URL}station_dim_04.png`,
+  `${IMG_BASE_URL}bg_station_1.png`,
+  `${IMG_BASE_URL}bg_station_2.png`,
+  `${IMG_BASE_URL}bg_station_3.png`,
+  `${IMG_BASE_URL}bg_station_4.png`,
 ];
 const stationBackgroundPrevs = [
-  `${IMG_BASE_URL}stationBackgroundPrevImg_01.png`,
-  `${IMG_BASE_URL}stationBackgroundPrevImg_02.png`,
-  `${IMG_BASE_URL}stationBackgroundPrevImg_03.png`,
-  `${IMG_BASE_URL}stationBackgroundPrevImg_04.png`,
+  `${IMG_BASE_URL}rec_bg_station_1.png`,
+  `${IMG_BASE_URL}rec_bg_station_2.png`,
+  `${IMG_BASE_URL}rec_bg_station_3.png`,
+  `${IMG_BASE_URL}rec_bg_station_4.png`,
 ];
 
 const StationBackgroundSetting: React.FC = () => {
   const navigate = useNavigate();
 
   const [background, setBackground] = useState(
-    `${IMG_BASE_URL}station_dim_01.png`
+    `${IMG_BASE_URL}bg_station_1.png`
   );
 
   const handleBack = () => {
@@ -35,9 +35,9 @@ const StationBackgroundSetting: React.FC = () => {
     // 이미지 파일명 추출 함수
     const getFileName = (path: string) => {
       const fileName = path.split("/").pop(); // 경로에서 파일명 추출
-      if (!fileName) return "station_dim_01";
-      const match = fileName.match(/station_dim_\d+/);
-      return match ? match[0] : "station_dim_01";
+      if (!fileName) return "bg_station_1";
+      const match = fileName.match(/bg_station_\d+/);
+      return match ? match[0] : "bg_station_1";
     };
 
     const stationId = sessionStorage.getItem("stationId");
