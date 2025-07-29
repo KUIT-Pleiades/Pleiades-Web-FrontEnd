@@ -18,10 +18,10 @@ import StationListBottomSheetOpen from './StationListBottomSheet/StationListBott
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
-  station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
-  station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
-  station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
-  station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
+  bg_station_1: `${IMG_BASE_URL}bg_station_1.png`,
+  bg_station_2: `${IMG_BASE_URL}bg_station_2.png`,
+  bg_station_3: `${IMG_BASE_URL}bg_station_3.png`,
+  bg_station_4: `${IMG_BASE_URL}bg_station_4.png`,
 };
 
 const ShowStationList: React.FC = () => {
@@ -50,7 +50,7 @@ const ShowStationList: React.FC = () => {
     //   stationId: `MOCKID${i + 1}`,
     //   name: `정거장${i + 1}`,
     //   numOfUsers: Math.floor(Math.random() * 7),
-    //   stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
+    //   stationBackground: `bg_station_${(i % 4) + 1}` as Station['stationBackground'],
     //   createdAt: new Date(Date.now() - i * 10000000).toISOString(),
     //   lastActive: new Date(Date.now() - i * 5000000).toISOString(),
     //   isFavorite: i % 3 === 0,
