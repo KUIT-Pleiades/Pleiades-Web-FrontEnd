@@ -11,8 +11,21 @@ import backBtn from "../../../assets/btnImg/backBtn.png";
 import coin from "../../../assets/market/coin.svg"
 import stone from "../../../assets/market/stone.svg";
 
+// 일반 아이콘
+import faceIcon from "../../../assets/market/face.svg";
+import clothIcon from "../../../assets/market/cloth.svg";
+import backgroundIcon from "../../../assets/market/background.svg";
+
+// 흰색 아이콘
+import faceWhiteIcon from "../../../assets/market/face_white.svg";
+import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
+import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
+
+export type CategoryType = 'face' | 'cloth' | 'background';
+
 export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState('official');
+  const [activeCategory, setActiveCategory] = useState<CategoryType>('face');
   const navigate = useNavigate();
   const { userInfo, resetUserInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -21,12 +34,9 @@ export default function OfficialUsedStore() {
   return (
     <div className={s.container}>
       <div className={s.header}>
-        {/* 왼쪽: 뒤로가기 버튼 */}
         <button className={s.backButton} onClick={() => navigate(-1)}>
           <img src={backBtn} alt="뒤로가기" />
         </button>
-
-        {/* 오른쪽: 탭 버튼 그룹 */}
         <div className={s.tabGroup}>
           <button
             onClick={() => setActiveTab("official")}
@@ -130,7 +140,24 @@ export default function OfficialUsedStore() {
                 alt={part}
               />
             );
-          })}
+					})}
+					<div className={s.categoryTab}>
+						<button 
+              className={`${s.faceTab} ${activeCategory === 'face' ? s.activeCategory : ''}`}
+              onClick={() => setActiveCategory('face')}>
+							<img src={activeCategory === 'face' ? faceWhiteIcon : faceIcon} alt="얼굴 카테고리" />
+						</button>
+						<button 
+              className={`${s.clothTab} ${activeCategory === 'cloth' ? s.activeCategory : ''}`}
+              onClick={() => setActiveCategory('cloth')}>
+							<img src={activeCategory === 'cloth' ? clothWhiteIcon : clothIcon} alt="의상 카테고리" />
+						</button>
+						<button 
+              className={`${s.backgroundTab} ${activeCategory === 'background' ? s.activeCategory : ''}`}
+              onClick={() => setActiveCategory('background')}>
+							<img src={activeCategory === 'background' ? backgroundWhiteIcon : backgroundIcon} alt="배경 카테고리" />
+						</button>
+					</div>
           <div className={s.buttonContainer}>
             <img
               className={s.resetBtn}
@@ -153,11 +180,10 @@ export default function OfficialUsedStore() {
           </div>
         </div>
       </div>
-      {activeTab === "official" ? (
-        <MarketBottomSheet />
-      ) : (
-        <div>중고몰 컨텐츠</div>
-      )}
+      <MarketBottomSheet 
+        activeTab={activeTab}
+        activeCategory={activeCategory}
+      />
     </div>
   );
 }
