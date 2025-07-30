@@ -11,20 +11,30 @@ interface StationProps {
   numOfUsers: number;
   background: string;
   isFavorite: boolean;
+  onToggleFavorite: () => void;
 }
 
 const StationDisplay: React.FC<StationProps> = ({
     name,
     numOfUsers,
     background,
-    isFavorite
+    isFavorite,
+    onToggleFavorite
 }) => {
   return (
     <div className={s.stationBox}>
       <div className={s.stationBackground} style={{ backgroundImage: `url(${background})` }} />
       <div className={s.stationInfo}>
         <div className={s.stationDetail}>
-          <img src={isFavorite ? favoriteFilled : favoriteOutline} alt='favoriteIcon' className={s.favoriteIcon} />
+          <img
+            src={isFavorite ? favoriteFilled : favoriteOutline}
+            alt='favoriteIcon'
+            className={s.favoriteIcon}
+            onClick={(e) => {
+              e.stopPropagation(); // 상위 클릭 이벤트 방지
+              onToggleFavorite(); // 즐겨찾기 토글 함수 실행
+            }}
+          />
           <div className={s.stationNumOfUsers}>
             <img src={stationNumOfUsersIcon} alt='stationNumOfUsersIcon' />
             <span className={s.stationNumOfUsersCurrent}>{numOfUsers}</span>
