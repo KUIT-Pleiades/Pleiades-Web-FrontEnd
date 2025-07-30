@@ -1,13 +1,14 @@
 import React from 'react';
-import styles from "./MarketBottomSheet.module.scss";
-import { CategoryType } from './OfficialUsedStore'; // 타입 임포트
+import s from "./MarketBottomSheet.module.scss";
+import { CategoryType } from '.././OfficialUsedStore'; // 타입 임포트
 
 interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
+  isCollapsed: boolean;
 }
 
-const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory }) => {
+const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed }) => {
 
   const renderContent = () => {
     if (activeTab === 'official') {
@@ -36,10 +37,12 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
   };
 
   return (
-    <div className={styles.sheetContainer}>
-      <div className={styles.content}>
-        {renderContent()}
-      </div>
+    <div
+      className={s.sheetContainer}
+      style={{ height: isCollapsed ? "3dvh" : "" }}
+    >
+      <div className={s.bar}></div>
+      {!isCollapsed && <div className={s.content}>{renderContent()}</div>}
     </div>
   );
 };

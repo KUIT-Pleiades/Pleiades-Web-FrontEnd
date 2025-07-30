@@ -26,7 +26,14 @@ export type CategoryType = 'face' | 'cloth' | 'background';
 export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState('official');
   const [activeCategory, setActiveCategory] = useState<CategoryType>('face');
+  const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const navigate = useNavigate();
+
+  const handleContentClick = () => {
+    if (activeCategory === 'background') {
+      setIsSheetCollapsed(!isSheetCollapsed);
+    }
+  };
   const { userInfo, resetUserInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
   const isWearingSet = !!userInfo.outfit.set;
@@ -52,7 +59,11 @@ export default function OfficialUsedStore() {
           </button>
         </div>
       </div>
-      <div className={s.content}>
+      <div 
+        className={s.content}
+        onClick={handleContentClick}
+        style={{ height: isSheetCollapsed ? '90dvh' : '' }}
+      >
         <div className={s.itemInfoBar}>
 					<div className={s.itemName}>
 						<p>아이템 이름 asdfqewrasdf</p>
@@ -183,6 +194,7 @@ export default function OfficialUsedStore() {
       <MarketBottomSheet 
         activeTab={activeTab}
         activeCategory={activeCategory}
+        isCollapsed={isSheetCollapsed}
       />
     </div>
   );
