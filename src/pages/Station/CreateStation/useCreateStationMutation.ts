@@ -41,9 +41,9 @@ export const useCreateStationMutation = () => {
       // 배경 파일명 추출
       const getFileName = (path: string) => {
         const fileName = path.split("/").pop();
-        if (!fileName) return "station_dim_01";
-        const match = fileName.match(/station_dim_\d+/);
-        return match ? match[0] : "station_dim_01";
+        if (!fileName) return "bg_station_1";
+        const match = fileName.match(/bg_station_\d+/);
+        return match ? match[0] : "bg_station_1";
       };
       const backgroundName = getFileName(background);
 

@@ -28,7 +28,7 @@
     transform: translateY(-100vh);
   }
   20% {
-    transform: translateY(3vh);
+    transform: translateY(2vh);
   }
   40% {
     transform: translateY(-6vh);
@@ -60,6 +60,8 @@
   margin-bottom: 3%;
   color: #ffffff;
   z-index: 1;
+  opacity: 0;
+  animation: textFadeIn 0.5s forwards;
 }
 
 .title {
@@ -70,6 +72,8 @@
   margin-bottom: 15%;
   color: #e4d0e5;
   z-index: 1;
+  opacity: 0;
+  animation: textFadeIn 0.5s forwards;
 }
 
 @keyframes fade {
@@ -129,4 +133,13 @@
   animation-duration: 1.2s;
   animation-iteration-count: 1;
   animation-direction: alternate;
+}
+
+@keyframes textFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

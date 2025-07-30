@@ -8,10 +8,10 @@ import SortCriteriaBoxForStation from "../../../../components/SortCriteriaBox/So
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 const stationBackgrounds: { [key: string]: string } = {
-    station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
-    station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
-    station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
-    station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
+  bg_station_1: `${IMG_BASE_URL}bg_station_1.png`,
+  bg_station_2: `${IMG_BASE_URL}bg_station_2.png`,
+  bg_station_3: `${IMG_BASE_URL}bg_station_3.png`,
+  bg_station_4: `${IMG_BASE_URL}bg_station_4.png`,
 };
 
 interface Props {
