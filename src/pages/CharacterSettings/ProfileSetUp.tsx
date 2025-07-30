@@ -30,10 +30,10 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const {
     data: idCheckData,
     refetch,
-    isFetching
+    isFetching,
   } = useIdCheckQuery(userInfo.userId || "", false);
 
-	const isWearingSet = !!userInfo.outfit.set;
+  const isWearingSet = !!userInfo.outfit.set;
 
   const handleNameChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

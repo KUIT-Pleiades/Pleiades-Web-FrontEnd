@@ -11,7 +11,7 @@ export default function Pending() {
         width={125.53}
         height={90.32}
       />
-      <p className={s.subTitle}>화면을 불러오는 중이에요!</p>
+      <p className={s.subTitle}>정보를 불러오는 중이에요!</p>
       <h3 className={s.title}>잠시만 기다려주세요</h3>
     </div>
   );
