@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./OfficialUsedStore.module.scss";
 import MarketBottomSheet from "./MarketBottomSheet/MarketBottomSheet";
@@ -8,7 +8,7 @@ import resetBtn from "../../../assets/btnImg/resetBtn.svg";
 import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
 import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
-import coin from "../../../assets/market/coin.svg"
+import coin from "../../../assets/market/coin.svg";
 import stone from "../../../assets/market/stone.svg";
 
 // 일반 아이콘
@@ -21,16 +21,16 @@ import faceWhiteIcon from "../../../assets/market/face_white.svg";
 import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
 import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
 
-export type CategoryType = 'face' | 'cloth' | 'background';
+export type CategoryType = "face" | "cloth" | "background";
 
 export default function OfficialUsedStore() {
-  const [activeTab, setActiveTab] = useState('official');
-  const [activeCategory, setActiveCategory] = useState<CategoryType>('face');
+  const [activeTab, setActiveTab] = useState("official");
+  const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const navigate = useNavigate();
 
   const handleContentClick = () => {
-    if (activeCategory === 'background') {
+    if (activeCategory === "background") {
       setIsSheetCollapsed(!isSheetCollapsed);
     }
   };
@@ -59,15 +59,14 @@ export default function OfficialUsedStore() {
           </button>
         </div>
       </div>
-      <div 
+      <div
         className={s.content}
-        onClick={handleContentClick}
-        style={{ height: isSheetCollapsed ? '90dvh' : '' }}
+        style={{ height: isSheetCollapsed ? "90dvh" : "" }}
       >
         <div className={s.itemInfoBar}>
-					<div className={s.itemName}>
-						<p>아이템 이름 asdfqewrasdf</p>
-					</div>
+          <div className={s.itemName}>
+            <p>아이템 이름 asdfqewrasdf</p>
+          </div>
           <div className={s.itemAssets}>
             <div className={s.asset}>
               <img src={coin} alt="코인" />
@@ -77,7 +76,7 @@ export default function OfficialUsedStore() {
             </div>
           </div>
         </div>
-        <div className={s.characterContainer}>
+        <div className={s.characterContainer} onClick={handleContentClick}>
           <img
             className={s.characterBackground}
             src={characterBackground}
@@ -151,47 +150,85 @@ export default function OfficialUsedStore() {
                 alt={part}
               />
             );
-					})}
-					<div className={s.categoryTab}>
-						<button 
-              className={`${s.faceTab} ${activeCategory === 'face' ? s.activeCategory : ''}`}
-              onClick={() => setActiveCategory('face')}>
-							<img src={activeCategory === 'face' ? faceWhiteIcon : faceIcon} alt="얼굴 카테고리" />
-						</button>
-						<button 
-              className={`${s.clothTab} ${activeCategory === 'cloth' ? s.activeCategory : ''}`}
-              onClick={() => setActiveCategory('cloth')}>
-							<img src={activeCategory === 'cloth' ? clothWhiteIcon : clothIcon} alt="의상 카테고리" />
-						</button>
-						<button 
-              className={`${s.backgroundTab} ${activeCategory === 'background' ? s.activeCategory : ''}`}
-              onClick={() => setActiveCategory('background')}>
-							<img src={activeCategory === 'background' ? backgroundWhiteIcon : backgroundIcon} alt="배경 카테고리" />
-						</button>
-					</div>
+          })}
+          <div className={s.categoryTab}>
+            <button
+              className={`${s.faceTab} ${
+                activeCategory === "face" ? s.activeCategory : ""
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCategory("face");
+              }}
+            >
+              <img
+                src={activeCategory === "face" ? faceWhiteIcon : faceIcon}
+                alt="얼굴 카테고리"
+              />
+            </button>
+            <button
+              className={`${s.clothTab} ${
+                activeCategory === "cloth" ? s.activeCategory : ""
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCategory("cloth");
+              }}
+            >
+              <img
+                src={activeCategory === "cloth" ? clothWhiteIcon : clothIcon}
+                alt="의상 카테고리"
+              />
+            </button>
+            <button
+              className={`${s.backgroundTab} ${
+                activeCategory === "background" ? s.activeCategory : ""
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCategory("background");
+              }}
+            >
+              <img
+                src={
+                  activeCategory === "background"
+                    ? backgroundWhiteIcon
+                    : backgroundIcon
+                }
+                alt="배경 카테고리"
+              />
+            </button>
+          </div>
           <div className={s.buttonContainer}>
             <img
               className={s.resetBtn}
               src={resetBtn}
               alt="리셋 버튼"
-              onClick={resetUserInfo}
+              onClick={(e) => {
+                e.stopPropagation();
+                resetUserInfo();
+              }}
             />
             <img
               className={s.addBagBtn}
               src={addBagBtn}
               alt="장바구니 버튼"
-              onClick={() => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             />
             <img
               className={s.heartBtn}
               src={heartBtn}
               alt="좋아요 버튼"
-              onClick={() => {}}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             />
           </div>
         </div>
       </div>
-      <MarketBottomSheet 
+      <MarketBottomSheet
         activeTab={activeTab}
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
