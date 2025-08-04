@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./MarketBottomSheet.module.scss";
 import { CategoryType } from '.././OfficialUsedStore'; // 타입 임포트
+import ThemeCategoryTabs from './ThemeCategoryTabs';
 
 interface MarketBottomSheetProps {
   activeTab: string;
@@ -42,7 +43,12 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       style={{ height: isCollapsed ? "2dvh" : "" }}
     >
       <div className={s.barContainer}><div className={s.bar}></div></div>
-      {!isCollapsed && <div className={s.content}>{renderContent()}</div>}
+      {!isCollapsed && (
+        <>
+          <ThemeCategoryTabs />
+          <div className={s.content}>{renderContent()}</div>
+        </>
+      )}
     </div>
   );
 };
