@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import s from "./OfficialUsedStore.module.scss";
@@ -28,6 +28,12 @@ export default function OfficialUsedStore() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeCategory !== "background") {
+      setIsSheetCollapsed(false);
+    }
+  }, [activeCategory]);
 
   const handleContentClick = () => {
     if (activeCategory === "background") {
@@ -61,7 +67,7 @@ export default function OfficialUsedStore() {
       </div>
       <div
         className={s.content}
-        style={{ height: isSheetCollapsed ? "90dvh" : "" }}
+        style={{ height: isSheetCollapsed ? "91dvh" : "" }}
       >
         <div className={s.itemInfoBar}>
           <div className={s.itemName}>

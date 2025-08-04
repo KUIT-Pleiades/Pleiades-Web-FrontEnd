@@ -39,9 +39,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
   return (
     <div
       className={s.sheetContainer}
-      style={{ height: isCollapsed ? "3dvh" : "" }}
+      style={{ height: isCollapsed ? "2dvh" : "" }}
     >
-      <div className={s.bar}></div>
+      <div className={s.barContainer}><div className={s.bar}></div></div>
       {!isCollapsed && <div className={s.content}>{renderContent()}</div>}
     </div>
   );
