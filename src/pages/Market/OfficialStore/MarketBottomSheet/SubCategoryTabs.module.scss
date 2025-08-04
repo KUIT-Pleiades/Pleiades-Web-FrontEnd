@@ -1,20 +1,24 @@
 .container {
-  display: flex;
-  padding: 10px;
-  background-color: #fff;
+	display: flex;
+	padding: 10px;
+	background-color: #fff;
 }
 
 .tab {
-  padding: 8px 16px;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-  font-size: 14px;
-  color: #888;
-  transition: color 0.3s;
+	padding: 8px 12px;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	font-size: 14px;
+	color: var(--gray-3, #5F5F5F);
+	font-family: Pretendard;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 
-  &.active {
-    color: #000;
-    font-weight: bold;
-  }
+	&.active {
+		color: #000;
+		font-weight: bold;
+	}
 }

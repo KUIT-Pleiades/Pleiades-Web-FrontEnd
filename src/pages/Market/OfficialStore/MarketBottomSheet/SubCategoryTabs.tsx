@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
-import { CategoryType } from '../../OfficialUsedStore';
+import { CategoryType } from '../OfficialUsedStore';
 
 interface SubCategoryTabsProps {
   activeCategory: CategoryType;
