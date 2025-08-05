@@ -2,6 +2,12 @@
 	display: flex;
 	padding: 10px;
 	background-color: #fff;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tabs {
+	display: flex;
 }
 
 .tab {
@@ -21,4 +27,12 @@
 		color: #000;
 		font-weight: bold;
 	}
+}
+
+.searchButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	margin-top: 5px;
 }

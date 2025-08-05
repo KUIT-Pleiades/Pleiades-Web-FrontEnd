@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
 import { CategoryType } from '../OfficialUsedStore';
+import searchBtn from '../../../../assets/btnImg/blackSearchBtn.svg';
 
 interface SubCategoryTabsProps {
   activeCategory: CategoryType;
@@ -26,15 +27,20 @@ export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps
 
   return (
     <div className={s.container}>
-      {tabs.map((tab) => (
-        <button
-          key={tab}
-          className={`${s.tab} ${activeSubTab === tab ? s.active : ''}`}
-          onClick={() => setActiveSubTab(tab)}
-        >
-          {tab}
-        </button>
-      ))}
+      <div className={s.tabs}>
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`${s.tab} ${activeSubTab === tab ? s.active : ''}`}
+            onClick={() => setActiveSubTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+      <button className={s.searchButton}>
+        <img src={searchBtn} alt="search" />
+      </button>
     </div>
   );
 }
