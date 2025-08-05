@@ -39,13 +39,15 @@
 .searchContainer {
 	display: flex;
 	flex-grow: 1;
+  align-items: center;
+  position: relative;
 }
 
 .searchInput {
 	width: 100%;
 	border-radius: 50px;
 	border: 1px solid var(--gray-7, #E1E1E1);
-	padding: 10px;
+	padding: 10px 10px 10px 35px;
 	color: var(--Gray4, #858585);
 	font-family: Pretendard;
 	font-size: 13px;
@@ -57,4 +59,11 @@
 	&:focus {
 		outline: #C0B9DB;
 	}
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  width: 20px;
+  height: 20px;
 }

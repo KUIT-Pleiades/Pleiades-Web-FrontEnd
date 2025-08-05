@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
 import { CategoryType } from '../OfficialUsedStore';
 import searchBtn from "../../../../assets/btnImg/blackSearchBtn.svg";
+import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
 import closeBtn from '../../../../assets/btnImg/closeBtn.svg';
 
 interface SubCategoryTabsProps {
@@ -36,14 +37,19 @@ export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps
     <div className={s.container}>
       {isSearching ? (
         <div className={s.searchContainer}>
-          <input type="text" placeholder="아이템, 키워드를 검색해보세요" className={s.searchInput} />
+          <img src={searchBtnGray} alt="search icon" className={s.searchIcon} />
+          <input
+            type="text"
+            placeholder="아이템, 키워드를 검색해보세요"
+            className={s.searchInput}
+          />
         </div>
       ) : (
         <div className={s.tabs}>
           {tabs.map((tab) => (
             <button
               key={tab}
-              className={`${s.tab} ${activeSubTab === tab ? s.active : ''}`}
+              className={`${s.tab} ${activeSubTab === tab ? s.active : ""}`}
               onClick={() => setActiveSubTab(tab)}
             >
               {tab}
