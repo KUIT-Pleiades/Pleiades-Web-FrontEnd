@@ -33,6 +33,28 @@
 	background: none;
 	border: none;
 	cursor: pointer;
-	padding: 0;
-	margin-top: 5px;
+	padding: 10px;
+}
+
+.searchContainer {
+	display: flex;
+	flex-grow: 1;
+}
+
+.searchInput {
+	width: 100%;
+	border-radius: 50px;
+	border: 1px solid var(--gray-7, #E1E1E1);
+	padding: 10px;
+	color: var(--Gray4, #858585);
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.26px;
+
+	&:focus {
+		outline: #C0B9DB;
+	}
 }
