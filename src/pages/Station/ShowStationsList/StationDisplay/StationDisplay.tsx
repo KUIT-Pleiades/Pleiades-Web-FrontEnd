@@ -10,7 +10,7 @@ interface StationProps {
   name: string;
   numOfUsers: number;
   background: string;
-  isFavorite: boolean;
+  favorite: boolean;
   onToggleFavorite: () => void;
 }
 
@@ -18,7 +18,7 @@ const StationDisplay: React.FC<StationProps> = ({
     name,
     numOfUsers,
     background,
-    isFavorite,
+    favorite,
     onToggleFavorite
 }) => {
   return (
@@ -27,7 +27,7 @@ const StationDisplay: React.FC<StationProps> = ({
       <div className={s.stationInfo}>
         <div className={s.stationDetail}>
           <img
-            src={isFavorite ? favoriteFilled : favoriteOutline}
+            src={favorite ? favoriteFilled : favoriteOutline}
             alt='favoriteIcon'
             className={s.favoriteIcon}
             onClick={(e) => {
