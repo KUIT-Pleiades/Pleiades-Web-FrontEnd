@@ -1,45 +1,4 @@
-// StationListBottomSheet2.module.scss
-.bottomSheetContainer {
-  position: absolute;
-  bottom: 9dvh;
-  left: 0;
-  width: 100%;
-  height: 82%;
-  z-index: 2;
-  background-color: #1B142A;
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.handle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 3.5rem;
-  border-top-left-radius: 1.25rem;
-  border-top-right-radius: 1.25rem;
-
-  &Icon {
-    padding-top: 0.69rem;
-    padding-bottom: 0.62rem;
-  }
-  &Text {
-    width: 93%;
-    color: #FFF;
-    font-family: Pretendard;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    padding: 0;
-    margin: 0;
-  }
-}
+//StationBottomSheetContent.module.scss
 
 .content {
   width: 100%;
