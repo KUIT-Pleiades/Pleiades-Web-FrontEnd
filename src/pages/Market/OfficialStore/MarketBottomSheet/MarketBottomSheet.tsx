@@ -37,19 +37,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       switch (activeCategory) {
         case 'face':
           return (
-            <div className={s.gridContainer}>
+            <div className={s.gridItems}>
               {mockFaceItems.map((item) => (
-                <div key={item.id} className={s.item}>
-                  <img
-                    src={`${IMG_BASE_URL}${item.name}`}
-                    alt={item.name}
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      objectFit: "cover",
-                    }}
-                  />
-									<div>{item.price}<img src={stone}/></div>
+                <div key={item.id}>
+                  <div className={s.item}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                  </div>
+                  <div className={s.itemPrice}>
+                    {item.price}
+                    <img src={stone} />
+                  </div>
                 </div>
               ))}
             </div>
@@ -72,8 +69,10 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       <div className={s.barContainer}><div className={s.bar}></div></div>
       {!isCollapsed && (
         <>
-          <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} />
-          <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} />
+          <div style={{ flexShrink: 0 }}>
+            <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} />
+            <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} />
+          </div>
           <div className={s.content}>{renderContent()}</div>
         </>
       )}
