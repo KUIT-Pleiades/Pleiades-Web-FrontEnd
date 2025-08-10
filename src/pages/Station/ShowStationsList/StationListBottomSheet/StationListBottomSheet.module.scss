@@ -113,7 +113,7 @@
   border-top-right-radius: 1.25rem;
   position: relative;
 
-  // 흐린 하얀색 딤 오버레이 추가
+  //딤 오버레이 추가
   &::before {
     content: "";
     position: absolute;
