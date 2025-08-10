@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from "./MarketBottomSheet.module.scss";
 import { CategoryType } from '.././OfficialUsedStore'; // 타입 임포트
 import ThemeCategoryTabs from './ThemeCategoryTabs';
@@ -11,6 +11,11 @@ interface MarketBottomSheetProps {
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed }) => {
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearchToggle = () => {
+    setIsSearching(!isSearching);
+  };
 
   const renderContent = () => {
     if (activeTab === 'official') {
@@ -46,8 +51,8 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       <div className={s.barContainer}><div className={s.bar}></div></div>
       {!isCollapsed && (
         <>
-          <ThemeCategoryTabs />
-          <SubCategoryTabs activeCategory={activeCategory} />
+          <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} />
+          <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} />
           <div className={s.content}>{renderContent()}</div>
         </>
       )}

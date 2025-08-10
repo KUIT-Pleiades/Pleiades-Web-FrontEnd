@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
 import { CategoryType } from '../OfficialUsedStore';
-import searchBtn from "../../../../assets/btnImg/blackSearchBtn.svg";
 import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
-import closeBtn from '../../../../assets/btnImg/closeBtn.svg';
 
 interface SubCategoryTabsProps {
   activeCategory: CategoryType;
+  isSearching: boolean;
 }
 
 const SUB_CATEGORIES: Record<CategoryType, string[]> = {
@@ -15,23 +14,17 @@ const SUB_CATEGORIES: Record<CategoryType, string[]> = {
   background: ['전체', '별', '우주정거장'],
 };
 
-export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps) {
+export default function SubCategoryTabs({ activeCategory, isSearching }: SubCategoryTabsProps) {
   const [activeSubTab, setActiveSubTab] = useState('전체');
-  const [isSearching, setIsSearching] = useState(false);
   const tabs = SUB_CATEGORIES[activeCategory];
 
   useEffect(() => {
     setActiveSubTab('전체');
-    setIsSearching(false);
   }, [activeCategory]);
 
   if (!tabs) {
     return null;
   }
-
-  const handleSearchClick = () => {
-    setIsSearching(!isSearching);
-  };
 
   return (
     <div className={s.container}>
@@ -57,9 +50,6 @@ export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps
           ))}
         </div>
       )}
-      <button className={s.searchButton} onClick={handleSearchClick}>
-        <img src={isSearching ? closeBtn : searchBtn} alt="search" />
-      </button>
     </div>
   );
 }
