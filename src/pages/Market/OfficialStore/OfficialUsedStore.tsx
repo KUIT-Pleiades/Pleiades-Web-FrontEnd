@@ -27,6 +27,7 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
+  const [selectedItemName, setSelectedItemName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,9 +71,12 @@ export default function OfficialUsedStore() {
         style={{ height: isSheetCollapsed ? "91dvh" : "" }}
       >
         <div className={s.itemInfoBar}>
-          <div className={s.itemName}>
-            <p>아이템 이름 asdfqewrasdf</p>
-          </div>
+          {selectedItemName && (
+            <div className={s.itemName}>
+              <p>{selectedItemName}</p>
+            </div>
+          )}
+
           <div className={s.itemAssets}>
             <div className={s.asset}>
               <img src={coin} alt="코인" />
@@ -238,6 +242,7 @@ export default function OfficialUsedStore() {
         activeTab={activeTab}
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
+        onItemSelect={setSelectedItemName}
       />
     </div>
   );

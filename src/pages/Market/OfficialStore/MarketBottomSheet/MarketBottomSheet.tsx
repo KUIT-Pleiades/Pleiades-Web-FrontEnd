@@ -12,9 +12,10 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
+  onItemSelect: (name: string) => void;
 }
 
-const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed }) => {
+const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed, onItemSelect }) => {
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSearchToggle = () => {
@@ -39,7 +40,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
           return (
             <div className={s.gridItems}>
               {mockFaceItems.map((item) => (
-                <div key={item.id}>
+                <div key={item.id} onClick={() => onItemSelect(item.descripsion)}>
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
                   </div>
