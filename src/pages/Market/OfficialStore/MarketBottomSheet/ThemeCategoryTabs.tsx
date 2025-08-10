@@ -13,11 +13,14 @@ interface ThemeCategoryTabsProps {
 const THEME_CATEGORIES = [
   "좋아요",
   "추천",
-  "☀️ 여름 ",
-  "NEW",
-  "HOT",
-  "K-POP",
+  "여름",
   "데일리",
+  "K-POP",
+  "겨울",
+  "심플",
+  "러블리",
+  "봄",
+  "포인트",
 ];
 
 export default function ThemeCategoryTabs({ onSearchToggle, isSearching }: ThemeCategoryTabsProps) {

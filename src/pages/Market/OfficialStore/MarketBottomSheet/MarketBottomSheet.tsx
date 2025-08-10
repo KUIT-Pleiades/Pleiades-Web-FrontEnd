@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import s from "./MarketBottomSheet.module.scss";
-import { CategoryType } from '.././OfficialUsedStore'; // 타입 임포트
+import { CategoryType } from '.././OfficialUsedStore'; 
 import ThemeCategoryTabs from './ThemeCategoryTabs';
 import SubCategoryTabs from './SubCategoryTabs';
+import { mockFaceItems } from './MockData/mockFaceItem';
+import stone from "../../../../assets/market/stone.svg";
+
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
 interface MarketBottomSheetProps {
   activeTab: string;
@@ -32,7 +36,24 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
     } else if (activeTab === 'used') {
       switch (activeCategory) {
         case 'face':
-          return <div>중고몰 - 얼굴 아이템 목록</div>;
+          return (
+            <div className={s.gridContainer}>
+              {mockFaceItems.map((item) => (
+                <div key={item.id} className={s.item}>
+                  <img
+                    src={`${IMG_BASE_URL}${item.name}`}
+                    alt={item.name}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "cover",
+                    }}
+                  />
+									<div>{item.price}<img src={stone}/></div>
+                </div>
+              ))}
+            </div>
+          );
         case 'cloth':
           return <div>중고몰 - 의상 아이템 목록</div>;
         case 'background':
