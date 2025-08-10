@@ -37,8 +37,8 @@
 }
 
 .themeIcon {
-  width: 16px;
-  height: 15px;
+	width: 16px;
+	height: 15px;
 	margin-top: 3px;
 }
 
@@ -46,58 +46,14 @@
 	background: none;
 	border: none;
 	cursor: pointer;
-	padding: 8.5px;
-}
-
-.themeContainer {
-	display: flex;
-	overflow-x: auto;
-	white-space: nowrap;
-
-	&::-webkit-scrollbar {
-		display: none;
-	}
-
-	-ms-overflow-style: none;
-	scrollbar-width: none;
-}
-
-.themeTab {
-	padding: 8px 16px;
-	cursor: pointer;
-	border: none;
-	background-color: transparent;
-	color: var(--gray-22, #444);
-	font-family: Pretendard;
-	font-size: 15px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-
-	&.active {
-		color: #000;
-		font-weight: bold;
-	}
-}
-
-.themeIcon {
-  width: 16px;
-  height: 15px;
-	margin-top: 3px;
-}
-
-.searchButton {
-	background: none;
-	border: none;
-	cursor: pointer;
-	padding: 8.5px;
+	margin-top: 1px;
 }
 
 .searchContainer {
 	display: flex;
 	flex-grow: 1;
-  align-items: center;
-  position: relative;
+	align-items: center;
+	position: relative;
 }
 
 .searchInput {
@@ -119,8 +75,8 @@
 }
 
 .searchIcon {
-  position: absolute;
-  left: 10px;
-  width: 20px;
-  height: 20px;
+	position: absolute;
+	left: 10px;
+	width: 20px;
+	height: 20px;
 }
