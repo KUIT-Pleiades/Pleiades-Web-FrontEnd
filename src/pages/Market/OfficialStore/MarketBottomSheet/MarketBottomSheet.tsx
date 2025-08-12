@@ -40,13 +40,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
           return (
             <div className={s.gridItems}>
               {mockFaceItems.map((item) => (
-                <div key={item.id} onClick={() => onItemSelect(item.descripsion)}>
+                <div
+                  key={item.id}
+                  onClick={() => onItemSelect(item.descripsion)}
+                >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
                   </div>
                   <div className={s.itemPrice}>
-                    {item.price}
                     <img src={stone} />
+                    {item.price}
                   </div>
                 </div>
               ))}

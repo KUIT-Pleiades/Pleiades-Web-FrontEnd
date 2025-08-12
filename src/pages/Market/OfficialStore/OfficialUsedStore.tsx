@@ -71,11 +71,14 @@ export default function OfficialUsedStore() {
         style={{ height: isSheetCollapsed ? "91dvh" : "" }}
       >
         <div className={s.itemInfoBar}>
-          {selectedItemName && (
-            <div className={s.itemName}>
-              <p>{selectedItemName}</p>
-            </div>
-          )}
+          <div
+            className={s.itemName}
+            style={{
+              visibility: selectedItemName ? "visible" : "hidden",
+            }}
+          >
+            <p>{selectedItemName}</p>
+          </div>
 
           <div className={s.itemAssets}>
             <div className={s.asset}>
