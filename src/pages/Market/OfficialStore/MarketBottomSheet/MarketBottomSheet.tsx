@@ -17,6 +17,8 @@ interface MarketBottomSheetProps {
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed, onItemSelect }) => {
   const [isSearching, setIsSearching] = useState(false);
+  const [activeTheme, setActiveTheme] = useState("추천");
+  const [activeSubTab, setActiveSubTab] = useState("전체");
 
   const handleSearchToggle = () => {
     setIsSearching(!isSearching);
@@ -36,10 +38,24 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       }
     } else if (activeTab === 'used') {
       switch (activeCategory) {
-        case 'face':
+        case 'face': {
+          const typeMap: { [key: string]: string } = {
+            '머리': 'HAIR',
+            '눈': 'EYES',
+            '코': 'NOSE',
+            '입': 'MOUTH',
+            '점': 'MOLE',
+          };
+
+          const filteredItems = mockFaceItems.filter(item => {
+            const themeMatch = activeTheme === '추천' || item.theme.includes(activeTheme);
+            const typeMatch = activeSubTab === '전체' || item.type === typeMap[activeSubTab];
+            return themeMatch && typeMatch;
+          });
+
           return (
             <div className={s.gridItems}>
-              {mockFaceItems.map((item) => (
+              {filteredItems.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => onItemSelect(item.descripsion)}
@@ -55,6 +71,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
               ))}
             </div>
           );
+        }
         case 'cloth':
           return <div>중고몰 - 의상 아이템 목록</div>;
         case 'background':
@@ -74,8 +91,8 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       {!isCollapsed && (
         <>
           <div style={{ flexShrink: 0 }}>
-            <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} />
-            <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} />
+            <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} activeTheme={activeTheme} onThemeChange={setActiveTheme} />
+            <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} activeSubTab={activeSubTab} onSubTabChange={setActiveSubTab} />
           </div>
           <div className={s.content}>{renderContent()}</div>
         </>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
 import { CategoryType } from '../OfficialUsedStore';
 import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
@@ -6,6 +6,8 @@ import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
 interface SubCategoryTabsProps {
   activeCategory: CategoryType;
   isSearching: boolean;
+  activeSubTab: string;
+  onSubTabChange: (subTab: string) => void;
 }
 
 const SUB_CATEGORIES: Record<CategoryType, string[]> = {
@@ -14,13 +16,12 @@ const SUB_CATEGORIES: Record<CategoryType, string[]> = {
   background: ['전체', '별', '우주정거장'],
 };
 
-export default function SubCategoryTabs({ activeCategory, isSearching }: SubCategoryTabsProps) {
-  const [activeSubTab, setActiveSubTab] = useState('전체');
+export default function SubCategoryTabs({ activeCategory, isSearching, activeSubTab, onSubTabChange }: SubCategoryTabsProps) {
   const tabs = SUB_CATEGORIES[activeCategory];
 
   useEffect(() => {
-    setActiveSubTab('전체');
-  }, [activeCategory]);
+    onSubTabChange('전체');
+  }, [activeCategory, onSubTabChange]);
 
   if (!tabs) {
     return null;
@@ -43,7 +44,7 @@ export default function SubCategoryTabs({ activeCategory, isSearching }: SubCate
             <button
               key={tab}
               className={`${s.tab} ${activeSubTab === tab ? s.active : ""}`}
-              onClick={() => setActiveSubTab(tab)}
+              onClick={() => onSubTabChange(tab)}
             >
               {tab}
             </button>

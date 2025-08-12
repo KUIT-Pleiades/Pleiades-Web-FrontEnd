@@ -1,4 +1,3 @@
-import { useState } from "react";
 import s from "./ThemeCategoryTabs.module.scss";
 import heartIcon from "../../../../assets/Icon/heart.svg";
 import filledHeartIcon from "../../../../assets/Icon/filledHeart.svg";
@@ -8,6 +7,8 @@ import closeBtn from '../../../../assets/btnImg/closeBtn.svg';
 interface ThemeCategoryTabsProps {
   onSearchToggle: () => void;
   isSearching: boolean;
+  activeTheme: string;
+  onThemeChange: (theme: string) => void;
 }
 
 const THEME_CATEGORIES = [
@@ -23,9 +24,7 @@ const THEME_CATEGORIES = [
   "포인트",
 ];
 
-export default function ThemeCategoryTabs({ onSearchToggle, isSearching }: ThemeCategoryTabsProps) {
-  const [activeTheme, setActiveTheme] = useState("추천");
-
+export default function ThemeCategoryTabs({ onSearchToggle, isSearching, activeTheme, onThemeChange }: ThemeCategoryTabsProps) {
   return (
     <div className={s.container}>
       <div className={s.themeContainer}>
@@ -33,7 +32,7 @@ export default function ThemeCategoryTabs({ onSearchToggle, isSearching }: Theme
           <button
             key={theme}
             className={`${s.themeTab} ${activeTheme === theme ? s.active : ""}`}
-            onClick={() => setActiveTheme(theme)}
+            onClick={() => onThemeChange(theme)}
           >
             {theme === '좋아요' ? (
               <img
