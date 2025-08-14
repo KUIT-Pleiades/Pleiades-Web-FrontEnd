@@ -6,6 +6,9 @@
   height: 7.8125rem;
   z-index: 2;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
@@ -15,12 +18,12 @@
   height: 4.3125rem;
 
   &LeftButton {
-    padding-left: 0.88rem;
-    padding-right: 0.88rem;
+    padding-left: 3dvw;
+    padding-right: 3dvw;
   }
   &RightButton {
-    padding-left: 0.88rem;
-    padding-right: 0.88rem;
+    padding-left: 3dvw;
+    padding-right: 3dvw;
   }
 
   &Title {
