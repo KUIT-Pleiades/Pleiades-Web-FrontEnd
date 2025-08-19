@@ -118,7 +118,13 @@ export default function OfficialUsedStore() {
       </div>
       <div
         className={s.content}
-        style={{ height: isSheetCollapsed ? "91dvh" : "" }}
+        style={{
+          height: isSheetCollapsed ? "91dvh" : "",
+          backgroundImage:
+            activeCategory === "background" && tryOnUserInfo.starBackground
+              ? `url(${IMG_BASE_URL}${tryOnUserInfo.starBackground})`
+              : "none", // 배경 이미지가 없을 때는 'none'으로 설정
+        }}
       >
         <div className={s.itemInfoBar}>
           <div

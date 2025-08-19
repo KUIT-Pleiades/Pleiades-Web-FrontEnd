@@ -69,6 +69,8 @@
 	height: 55dvh; // 컨텐츠 영역 높이
 	background: var(--gray-8, #F8F8FA);
 	flex-direction: column;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .characterContainer {
