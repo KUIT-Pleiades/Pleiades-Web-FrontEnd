@@ -4,6 +4,8 @@ import { CategoryType } from ".././OfficialUsedStore";
 import ThemeCategoryTabs from "./ThemeCategoryTabs";
 import SubCategoryTabs from "./SubCategoryTabs";
 import { mockFaceItems } from "./MockData/mockFaceItem";
+import { mockClothItems } from "./MockData/mockClothItem";
+import { mockBackgroundItems } from "./MockData/mockBackgroundItem";
 import stone from "../../../../assets/market/stone.svg";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -65,7 +67,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => onItemSelect(item.name, item.descripsion, item.type)}
+                  onClick={() =>
+                    onItemSelect(item.name, item.descripsion, item.type)
+                  }
                 >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
@@ -79,10 +83,79 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             </div>
           );
         }
-        case "cloth":
-          return <div>중고몰 - 의상 아이템 목록</div>;
-        case "background":
-          return <div>중고몰 - 배경 아이템 목록</div>;
+        case "cloth": {
+          const typeMap: { [key: string]: string } = {
+            상의: "TOP",
+            하의: "BOTTOM",
+            세트: "SET",
+            신발: "SHOES",
+            악세서리: "MOLE",
+          };
+
+          const filteredItems = mockClothItems.filter((item) => {
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+            const typeMatch =
+              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+            return themeMatch && typeMatch;
+          });
+
+          return (
+            <div className={s.gridItems}>
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    onItemSelect(item.name, item.descripsion, item.type)
+                  }
+                >
+                  <div className={s.item}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                  </div>
+                  <div className={s.itemPrice}>
+                    <img src={stone} />
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        case "background": {
+          const typeMap: { [key: string]: string } = {
+            별: "STARBACKGROUND",
+            우주정거장: "STATIONBACKGROUND",
+          };
+
+          const filteredItems = mockBackgroundItems.filter((item) => {
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+            const typeMatch =
+              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+            return themeMatch && typeMatch;
+          });
+
+          return (
+            <div className={s.gridItems}>
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    onItemSelect(item.name, item.descripsion, item.type)
+                  }
+                >
+                  <div className={s.item}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                  </div>
+                  <div className={s.itemPrice}>
+                    <img src={stone} />
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
         default:
           return null;
       }

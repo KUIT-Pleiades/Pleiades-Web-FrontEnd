@@ -11,7 +11,7 @@ export const mockClothItems = [
   },
   {
     id: 6002,
-    name: "fashion_top_2.png", // 임의의 파일명
+    name: "fashion_top_2.png",
     descripsion: "스트라이프 셔츠",
     type: "TOP",
     price: 180,
@@ -30,7 +30,7 @@ export const mockClothItems = [
   },
   {
     id: 7002,
-    name: "fashion_bottom_2.png", // 임의의 파일명
+    name: "fashion_bottom_2.png",
     descripsion: "검정 슬랙스",
     type: "BOTTOM",
     price: 190,
@@ -56,5 +56,33 @@ export const mockClothItems = [
     price: 150,
     theme: ["데일리", "심플"],
     created_at: "2025-08-06",
+  },
+  // 액세서리
+  {
+    id: 10001,
+    name: "fashion_acc_ears_1.png",
+    descripsion: "베이지 버킷햇",
+    type: "EARS",
+    price: 80,
+    theme: ["여름", "캐주얼"],
+    created_at: "2025-08-07",
+  },
+  {
+    id: 10002,
+    name: "fashion_acc_head_1.png",
+    descripsion: "동그란 안경",
+    type: "HEAD",
+    price: 60,
+    theme: ["심플", "포인트"],
+    created_at: "2025-08-07",
+  },
+  {
+    id: 10003,
+    name: "fashion_acc_neck_1.png",
+    descripsion: "진주 목걸이",
+    type: "NECK",
+    price: 120,
+    theme: ["러블리", "봄"],
+    created_at: "2025-08-07",
   },
 ];

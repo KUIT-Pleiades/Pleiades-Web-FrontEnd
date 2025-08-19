@@ -69,7 +69,7 @@ export default function OfficialUsedStore() {
           return { ...prev, face: { ...prev.face, mouth: name } };
         case "MOLE":
           return { ...prev, face: { ...prev.face, mole: name } };
-        // outfit, item 도 같은 방식으로 확장
+        
         default:
           return prev;
       }
