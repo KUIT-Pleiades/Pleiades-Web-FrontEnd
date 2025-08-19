@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import s from "./MarketBottomSheet.module.scss";
-import { CategoryType } from '.././OfficialUsedStore'; 
-import ThemeCategoryTabs from './ThemeCategoryTabs';
-import SubCategoryTabs from './SubCategoryTabs';
-import { mockFaceItems } from './MockData/mockFaceItem';
+import { CategoryType } from ".././OfficialUsedStore";
+import ThemeCategoryTabs from "./ThemeCategoryTabs";
+import SubCategoryTabs from "./SubCategoryTabs";
+import { mockFaceItems } from "./MockData/mockFaceItem";
 import stone from "../../../../assets/market/stone.svg";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -12,10 +12,15 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
-  onItemSelect: (name: string) => void;
+  onItemSelect: (name: string, descripsion: string, type: string) => void;
 }
 
-const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, activeCategory, isCollapsed, onItemSelect }) => {
+const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
+  activeTab,
+  activeCategory,
+  isCollapsed,
+  onItemSelect,
+}) => {
   const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
   const [activeSubTab, setActiveSubTab] = useState("전체");
@@ -25,31 +30,33 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
   };
 
   const renderContent = () => {
-    if (activeTab === 'official') {
+    if (activeTab === "official") {
       switch (activeCategory) {
-        case 'face':
+        case "face":
           return <div>공식몰 - 얼굴 아이템 목록</div>;
-        case 'cloth':
+        case "cloth":
           return <div>공식몰 - 의상 아이템 목록</div>;
-        case 'background':
+        case "background":
           return <div>공식몰 - 배경 아이템 목록</div>;
         default:
           return null;
       }
-    } else if (activeTab === 'used') {
+    } else if (activeTab === "used") {
       switch (activeCategory) {
-        case 'face': {
+        case "face": {
           const typeMap: { [key: string]: string } = {
-            '머리': 'HAIR',
-            '눈': 'EYES',
-            '코': 'NOSE',
-            '입': 'MOUTH',
-            '점': 'MOLE',
+            머리: "HAIR",
+            눈: "EYES",
+            코: "NOSE",
+            입: "MOUTH",
+            점: "MOLE",
           };
 
-          const filteredItems = mockFaceItems.filter(item => {
-            const themeMatch = activeTheme === '추천' || item.theme.includes(activeTheme);
-            const typeMatch = activeSubTab === '전체' || item.type === typeMap[activeSubTab];
+          const filteredItems = mockFaceItems.filter((item) => {
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+            const typeMatch =
+              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
             return themeMatch && typeMatch;
           });
 
@@ -58,7 +65,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
               {filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => onItemSelect(item.descripsion)}
+                  onClick={() => onItemSelect(item.name, item.descripsion, item.type)}
                 >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
@@ -72,9 +79,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
             </div>
           );
         }
-        case 'cloth':
+        case "cloth":
           return <div>중고몰 - 의상 아이템 목록</div>;
-        case 'background':
+        case "background":
           return <div>중고몰 - 배경 아이템 목록</div>;
         default:
           return null;
@@ -87,12 +94,24 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({ activeTab, active
       className={s.sheetContainer}
       style={{ height: isCollapsed ? "2dvh" : "" }}
     >
-      <div className={s.barContainer}><div className={s.bar}></div></div>
+      <div className={s.barContainer}>
+        <div className={s.bar}></div>
+      </div>
       {!isCollapsed && (
         <>
           <div style={{ flexShrink: 0 }}>
-            <ThemeCategoryTabs onSearchToggle={handleSearchToggle} isSearching={isSearching} activeTheme={activeTheme} onThemeChange={setActiveTheme} />
-            <SubCategoryTabs activeCategory={activeCategory} isSearching={isSearching} activeSubTab={activeSubTab} onSubTabChange={setActiveSubTab} />
+            <ThemeCategoryTabs
+              onSearchToggle={handleSearchToggle}
+              isSearching={isSearching}
+              activeTheme={activeTheme}
+              onThemeChange={setActiveTheme}
+            />
+            <SubCategoryTabs
+              activeCategory={activeCategory}
+              isSearching={isSearching}
+              activeSubTab={activeSubTab}
+              onSubTabChange={setActiveSubTab}
+            />
           </div>
           <div className={s.content}>{renderContent()}</div>
         </>

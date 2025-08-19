@@ -10,6 +10,7 @@ import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import coin from "../../../assets/market/coin.svg";
 import stone from "../../../assets/market/stone.svg";
+import { UserInfo } from "../../../interfaces/Interfaces";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -27,7 +28,54 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
-  const [selectedItemName, setSelectedItemName] = useState("");
+
+  const { userInfo } = useCharacterStore();
+  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+  const isWearingSet = !!userInfo.outfit.set;
+
+  const [initialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
+
+  // 미리보기 상태 (캐릭터 프리뷰용)
+  const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
+    structuredClone(userInfo)
+  );
+
+  const [selectedItem, setSelectedItem] = useState<{
+    name: string;
+    description: string;
+    type: string;
+  }>({
+    name: "",
+    description: "",
+    type: "",
+	});
+	
+	const handleItemSelect = (
+    name: string,
+    description: string,
+    type: string
+  ) => {
+    setSelectedItem({ name, description, type });
+
+    setTryOnUserInfo((prev) => {
+      switch (type) {
+        case "HAIR":
+          return { ...prev, face: { ...prev.face, hair: name } };
+        case "EYES":
+          return { ...prev, face: { ...prev.face, eyes: name } };
+        case "NOSE":
+          return { ...prev, face: { ...prev.face, nose: name } };
+        case "MOUTH":
+          return { ...prev, face: { ...prev.face, mouth: name } };
+        case "MOLE":
+          return { ...prev, face: { ...prev.face, mole: name } };
+        // outfit, item 도 같은 방식으로 확장
+        default:
+          return prev;
+      }
+    });
+  };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,10 +88,12 @@ export default function OfficialUsedStore() {
     if (activeCategory === "background") {
       setIsSheetCollapsed(!isSheetCollapsed);
     }
+	};
+	
+	const handleReset = () => {
+    setTryOnUserInfo(structuredClone(initialUserInfo));
+    setSelectedItem({ name: "", description: "", type: "" });
   };
-  const { userInfo, resetUserInfo } = useCharacterStore();
-  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-  const isWearingSet = !!userInfo.outfit.set;
 
   return (
     <div className={s.container}>
@@ -74,10 +124,10 @@ export default function OfficialUsedStore() {
           <div
             className={s.itemName}
             style={{
-              visibility: selectedItemName ? "visible" : "hidden",
+              visibility: selectedItem.description ? "visible" : "hidden",
             }}
           >
-            <p>{selectedItemName}</p>
+            <p>{selectedItem.description}</p>
           </div>
 
           <div className={s.itemAssets}>
@@ -97,46 +147,46 @@ export default function OfficialUsedStore() {
           />
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.skinColor}`}
             alt="skin"
           />
           <img
             className={s.characterEyes}
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.eyes}`}
             alt="eyes"
           />
           <img
             className={s.characterNose}
-            src={`${IMG_BASE_URL}${userInfo.face.nose}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.nose}`}
             alt="nose"
           />
           <img
             className={s.characterMouth}
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.mouth}`}
             alt="mouth"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole}
-              src={`${IMG_BASE_URL}${userInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.mole}`}
               alt="mole"
             />
           )}
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.hair}`}
             alt="hair"
           />
           {!isWearingSet && (
             <>
               <img
                 className={s.characterTop}
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.top}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom}
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.bottom}`}
                 alt="bottom"
               />
             </>
@@ -144,16 +194,16 @@ export default function OfficialUsedStore() {
           {isWearingSet && (
             <img
               className={s.characterSet}
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.set}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.shoes}`}
             alt="shoes"
           />
-          {Object.entries(userInfo.item).map(([part, src]) => {
+          {Object.entries(tryOnUserInfo.item).map(([part, src]) => {
             if (!src) return null;
             return (
               <img
@@ -219,7 +269,7 @@ export default function OfficialUsedStore() {
               alt="리셋 버튼"
               onClick={(e) => {
                 e.stopPropagation();
-                resetUserInfo();
+                handleReset();
               }}
             />
             <img
@@ -245,7 +295,7 @@ export default function OfficialUsedStore() {
         activeTab={activeTab}
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
-        onItemSelect={setSelectedItemName}
+        onItemSelect={handleItemSelect}
       />
     </div>
   );
