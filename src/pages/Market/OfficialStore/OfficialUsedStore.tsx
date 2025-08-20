@@ -87,13 +87,23 @@ export default function OfficialUsedStore() {
         // 의상 아이템
         case "TOP":
           newState.outfit.top = name;
-					newState.outfit.set = "";
-					newState.outfit.bottom = initialUserInfo.outfit.bottom;
+          newState.outfit.set = "";
+          // 👇 직전에 세트 의상을 입고 있었는지 확인
+          if (prev.outfit.set) {
+            // 세트를 입고 있었다면 -> 초기 하의로 복구
+            newState.outfit.bottom = initialUserInfo.outfit.bottom;
+          }
+          // 세트를 안 입고 있었다면 -> 기존 하의를 그대로 유지 (아무것도 안 함)
           break;
         case "BOTTOM":
           newState.outfit.bottom = name;
-					newState.outfit.set = "";
-					newState.outfit.top = initialUserInfo.outfit.top;
+          newState.outfit.set = "";
+          // 👇 직전에 세트 의상을 입고 있었는지 확인
+          if (prev.outfit.set) {
+            // 세트를 입고 있었다면 -> 초기 상의로 복구
+            newState.outfit.top = initialUserInfo.outfit.top;
+          }
+          // 세트를 안 입고 있었다면 -> 기존 상의를 그대로 유지 (아무것도 안 함)
           break;
         case "SET":
           newState.outfit.set = name;
