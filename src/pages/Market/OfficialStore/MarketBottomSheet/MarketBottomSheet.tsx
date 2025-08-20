@@ -64,6 +64,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           };
 
           const filteredItems = mockFaceItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
             const themeMatch =
               activeTheme === "추천" || item.theme.includes(activeTheme);
             const typeMatch =
@@ -116,6 +119,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           };
 
           const filteredItems = mockClothItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
             const themeMatch =
               activeTheme === "추천" || item.theme.includes(activeTheme);
 
@@ -165,6 +171,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           };
 
           const filteredItems = mockBackgroundItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
             const themeMatch =
               activeTheme === "추천" || item.theme.includes(activeTheme);
             const typeMatch =
