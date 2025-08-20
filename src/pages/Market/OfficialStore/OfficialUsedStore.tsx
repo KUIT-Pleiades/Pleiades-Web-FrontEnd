@@ -48,9 +48,9 @@ export default function OfficialUsedStore() {
     name: "",
     description: "",
     type: "",
-	});
-	
-	const handleItemSelect = (
+  });
+
+  const handleItemSelect = (
     name: string,
     description: string,
     type: string
@@ -58,21 +58,78 @@ export default function OfficialUsedStore() {
     setSelectedItem({ name, description, type });
 
     setTryOnUserInfo((prev) => {
+      const newState = structuredClone(prev);
+
       switch (type) {
+        // 얼굴 아이템
         case "HAIR":
-          return { ...prev, face: { ...prev.face, hair: name } };
-        case "EYES":
-          return { ...prev, face: { ...prev.face, eyes: name } };
+          newState.face.hair = name;
+          break;
+        case "EYES": // 얼굴 파츠 '눈'
+          newState.face.eyes = name;
+          break;
         case "NOSE":
-          return { ...prev, face: { ...prev.face, nose: name } };
+          newState.face.nose = name;
+          break;
         case "MOUTH":
-          return { ...prev, face: { ...prev.face, mouth: name } };
+          newState.face.mouth = name;
+          break;
         case "MOLE":
-          return { ...prev, face: { ...prev.face, mole: name } };
-        
-        default:
-          return prev;
+          newState.face.mole = name;
+          break;
+
+        // 의상 아이템
+        case "TOP":
+          newState.outfit.top = name;
+          newState.outfit.set = "";
+          break;
+        case "BOTTOM":
+          newState.outfit.bottom = name;
+          newState.outfit.set = "";
+          break;
+        case "SET":
+          newState.outfit.set = name;
+          newState.outfit.top = "";
+          newState.outfit.bottom = "";
+          break;
+        case "SHOES":
+          newState.outfit.shoes = name;
+          break;
+
+        // 악세서리 아이템
+        case "EYESITEM": // ✨ 악세서리 '눈' 아이템 처리
+          newState.item.eyes_item = name;
+          break;
+        case "EARS":
+          newState.item.ears = name;
+          break;
+        case "HEAD":
+          newState.item.head = name;
+          break;
+        case "NECK":
+          newState.item.neck = name;
+          break;
+        case "LEFTWRIST":
+          newState.item.leftWrist = name;
+          break;
+        case "RIGHTWRIST":
+          newState.item.rightWrist = name;
+          break;
+        case "LEFTHAND":
+          newState.item.leftHand = name;
+          break;
+        case "RIGHTHAND":
+          newState.item.rightHand = name;
+          break;
+
+        // 배경 아이템
+        case "STARBACKGROUND":
+        case "STATIONBACKGROUND":
+          newState.starBackground = name;
+          break;
       }
+
+      return newState;
     });
   };
 
@@ -88,9 +145,9 @@ export default function OfficialUsedStore() {
     if (activeCategory === "background") {
       setIsSheetCollapsed(!isSheetCollapsed);
     }
-	};
-	
-	const handleReset = () => {
+  };
+
+  const handleReset = () => {
     setTryOnUserInfo(structuredClone(initialUserInfo));
     setSelectedItem({ name: "", description: "", type: "" });
   };

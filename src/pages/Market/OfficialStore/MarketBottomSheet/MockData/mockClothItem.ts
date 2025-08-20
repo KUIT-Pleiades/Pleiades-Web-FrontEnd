@@ -116,7 +116,7 @@ export const mockClothItems = [
     id: 10008,
     name: "fashion_acc_eyes_1.png",
     description: "블랙 선글라스",
-    type: "EYES",
+    type: "EYESITEM",
     price: 130,
     theme: ["여름", "시크", "포인트"],
     created_at: "2025-08-10",

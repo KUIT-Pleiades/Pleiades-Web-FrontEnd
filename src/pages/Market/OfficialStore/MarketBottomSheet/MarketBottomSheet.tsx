@@ -86,13 +86,13 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
 				case "cloth": {
 					const accessoryTypes = [
             "EARS",
+            "EYESITEM",
             "HEAD",
             "NECK",
             "LEFTWRIST",
             "RIGHTWRIST",
             "LEFTHAND",
             "RIGHTHAND",
-            "EYES",
           ];
           const typeMap: { [key: string]: string } = {
             상의: "TOP",
