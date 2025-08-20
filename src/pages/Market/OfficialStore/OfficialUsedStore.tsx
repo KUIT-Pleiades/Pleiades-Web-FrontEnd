@@ -7,6 +7,7 @@ import characterBackground from "../../../assets/backgroundImg/characterBackgrou
 import resetBtn from "../../../assets/btnImg/resetBtn.svg";
 import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
 import heartBtn from "../../../assets/btnImg/heartBtn.svg";
+import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import coin from "../../../assets/market/coin.svg";
 import stone from "../../../assets/market/stone.svg";
@@ -28,6 +29,7 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
+  const [likedItems, setLikedItems] = useState(new Set<number>());
 
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -41,21 +43,24 @@ export default function OfficialUsedStore() {
   );
 
   const [selectedItem, setSelectedItem] = useState<{
+    id: number | null;
     name: string;
     description: string;
     type: string;
   }>({
+    id: null,
     name: "",
     description: "",
     type: "",
   });
 
-  const handleItemSelect = (
+	const handleItemSelect = (
+    id: number,
     name: string,
     description: string,
     type: string
   ) => {
-    setSelectedItem({ name, description, type });
+    setSelectedItem({ id, name, description, type });
 
     setTryOnUserInfo((prev) => {
       const newState = structuredClone(prev);
@@ -149,7 +154,7 @@ export default function OfficialUsedStore() {
 
   const handleReset = () => {
     setTryOnUserInfo(structuredClone(initialUserInfo));
-    setSelectedItem({ name: "", description: "", type: "" });
+    setSelectedItem({ id: null, name: "", description: "", type: "" });
   };
 
   return (
@@ -345,10 +350,21 @@ export default function OfficialUsedStore() {
             />
             <img
               className={s.heartBtn}
-              src={heartBtn}
+              src={selectedItem.id !== null && likedItems.has(selectedItem.id) ? redHeartBtn : heartBtn}
               alt="좋아요 버튼"
               onClick={(e) => {
                 e.stopPropagation();
+                if (selectedItem.id !== null) {
+                  setLikedItems(prevLikedItems => {
+                      const newLikedItems = new Set(prevLikedItems);
+                      if (newLikedItems.has(selectedItem.id!)) {
+                          newLikedItems.delete(selectedItem.id!);
+                      } else {
+                          newLikedItems.add(selectedItem.id!);
+                      }
+                      return newLikedItems;
+                  });
+                }
               }}
             />
           </div>
@@ -359,6 +375,7 @@ export default function OfficialUsedStore() {
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
+        likedItems={likedItems}
       />
     </div>
   );

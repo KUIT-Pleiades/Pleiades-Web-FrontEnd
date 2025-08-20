@@ -7,6 +7,7 @@ import { mockFaceItems } from "./MockData/mockFaceItem";
 import { mockClothItems } from "./MockData/mockClothItem";
 import { mockBackgroundItems } from "./MockData/mockBackgroundItem";
 import stone from "../../../../assets/market/stone.svg";
+import heartBtn from "../../../../assets/Icon/redHeart.svg";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -14,7 +15,8 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
-  onItemSelect: (name: string, discription: string, type: string) => void;
+  onItemSelect: (id: number, name: string, description: string, type: string) => void;
+  likedItems: Set<number>;
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -22,6 +24,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   activeCategory,
   isCollapsed,
   onItemSelect,
+  likedItems,
 }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
@@ -74,11 +77,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.description, item.type)
+                    onItemSelect(item.id, item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
                   </div>
                   <div className={s.itemPrice}>
                     <img src={stone} />
@@ -130,11 +138,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.description, item.type)
+                    onItemSelect(item.id, item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
                   </div>
                   <div className={s.itemPrice}>
                     <img src={stone} />
@@ -165,11 +178,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.description, item.type)
+                    onItemSelect(item.id, item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
                   </div>
                   <div className={s.itemPrice}>
                     <img src={stone} />
