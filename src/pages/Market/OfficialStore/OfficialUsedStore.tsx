@@ -7,9 +7,11 @@ import characterBackground from "../../../assets/backgroundImg/characterBackgrou
 import resetBtn from "../../../assets/btnImg/resetBtn.svg";
 import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
 import heartBtn from "../../../assets/btnImg/heartBtn.svg";
+import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import coin from "../../../assets/market/coin.svg";
 import stone from "../../../assets/market/stone.svg";
+import { UserInfo } from "../../../interfaces/Interfaces";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -27,6 +29,128 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
+  const [likedItems, setLikedItems] = useState(new Set<number>());
+
+  const { userInfo } = useCharacterStore();
+  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+
+  const [initialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
+
+  // 미리보기 상태 (캐릭터 프리뷰용)
+  const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
+    structuredClone(userInfo)
+	);
+	
+	const isWearingSet = !!tryOnUserInfo.outfit.set;
+
+  const [selectedItem, setSelectedItem] = useState<{
+    id: number | null;
+    name: string;
+    description: string;
+    type: string;
+  }>({
+    id: null,
+    name: "",
+    description: "",
+    type: "",
+  });
+
+	const handleItemSelect = (
+    id: number,
+    name: string,
+    description: string,
+    type: string
+  ) => {
+    setSelectedItem({ id, name, description, type });
+
+    setTryOnUserInfo((prev) => {
+      const newState = structuredClone(prev);
+
+      switch (type) {
+        // 얼굴 아이템
+        case "HAIR":
+          newState.face.hair = name;
+          break;
+        case "EYES": // 얼굴 파츠 '눈'
+          newState.face.eyes = name;
+          break;
+        case "NOSE":
+          newState.face.nose = name;
+          break;
+        case "MOUTH":
+          newState.face.mouth = name;
+          break;
+        case "MOLE":
+          newState.face.mole = name;
+          break;
+
+        // 의상 아이템
+        case "TOP":
+          newState.outfit.top = name;
+          newState.outfit.set = "";
+          // 👇 직전에 세트 의상을 입고 있었는지 확인
+          if (prev.outfit.set) {
+            // 세트를 입고 있었다면 -> 초기 하의로 복구
+            newState.outfit.bottom = initialUserInfo.outfit.bottom;
+          }
+          // 세트를 안 입고 있었다면 -> 기존 하의를 그대로 유지 (아무것도 안 함)
+          break;
+        case "BOTTOM":
+          newState.outfit.bottom = name;
+          newState.outfit.set = "";
+          // 👇 직전에 세트 의상을 입고 있었는지 확인
+          if (prev.outfit.set) {
+            // 세트를 입고 있었다면 -> 초기 상의로 복구
+            newState.outfit.top = initialUserInfo.outfit.top;
+          }
+          // 세트를 안 입고 있었다면 -> 기존 상의를 그대로 유지 (아무것도 안 함)
+          break;
+        case "SET":
+          newState.outfit.set = name;
+          newState.outfit.top = "";
+          newState.outfit.bottom = "";
+          break;
+        case "SHOES":
+          newState.outfit.shoes = name;
+          break;
+
+        // 악세서리 아이템
+        case "EYESITEM": // ✨ 악세서리 '눈' 아이템 처리
+          newState.item.eyes_item = name;
+          break;
+        case "EARS":
+          newState.item.ears = name;
+          break;
+        case "HEAD":
+          newState.item.head = name;
+          break;
+        case "NECK":
+          newState.item.neck = name;
+          break;
+        case "LEFTWRIST":
+          newState.item.leftWrist = name;
+          break;
+        case "RIGHTWRIST":
+          newState.item.rightWrist = name;
+          break;
+        case "LEFTHAND":
+          newState.item.leftHand = name;
+          break;
+        case "RIGHTHAND":
+          newState.item.rightHand = name;
+          break;
+
+        // 배경 아이템
+        case "STARBACKGROUND":
+        case "STATIONBACKGROUND":
+          newState.starBackground = name;
+          break;
+      }
+
+      return newState;
+    });
+  };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,9 +164,11 @@ export default function OfficialUsedStore() {
       setIsSheetCollapsed(!isSheetCollapsed);
     }
   };
-  const { userInfo, resetUserInfo } = useCharacterStore();
-  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-  const isWearingSet = !!userInfo.outfit.set;
+
+  const handleReset = () => {
+    setTryOnUserInfo(structuredClone(initialUserInfo));
+    setSelectedItem({ id: null, name: "", description: "", type: "" });
+  };
 
   return (
     <div className={s.container}>
@@ -67,12 +193,24 @@ export default function OfficialUsedStore() {
       </div>
       <div
         className={s.content}
-        style={{ height: isSheetCollapsed ? "91dvh" : "" }}
+        style={{
+          height: isSheetCollapsed ? "91dvh" : "",
+          backgroundImage:
+            activeCategory === "background" && tryOnUserInfo.starBackground
+              ? `url(${IMG_BASE_URL}${tryOnUserInfo.starBackground})`
+              : "none", // 배경 이미지가 없을 때는 'none'으로 설정
+        }}
       >
         <div className={s.itemInfoBar}>
-          <div className={s.itemName}>
-            <p>아이템 이름 asdfqewrasdf</p>
+          <div
+            className={s.itemName}
+            style={{
+              visibility: selectedItem.description ? "visible" : "hidden",
+            }}
+          >
+            <p>{selectedItem.description}</p>
           </div>
+
           <div className={s.itemAssets}>
             <div className={s.asset}>
               <img src={coin} alt="코인" />
@@ -90,46 +228,46 @@ export default function OfficialUsedStore() {
           />
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.skinColor}`}
             alt="skin"
           />
           <img
             className={s.characterEyes}
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.eyes}`}
             alt="eyes"
           />
           <img
             className={s.characterNose}
-            src={`${IMG_BASE_URL}${userInfo.face.nose}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.nose}`}
             alt="nose"
           />
           <img
             className={s.characterMouth}
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.mouth}`}
             alt="mouth"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole}
-              src={`${IMG_BASE_URL}${userInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.mole}`}
               alt="mole"
             />
           )}
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.face.hair}`}
             alt="hair"
           />
           {!isWearingSet && (
             <>
               <img
                 className={s.characterTop}
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.top}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom}
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.bottom}`}
                 alt="bottom"
               />
             </>
@@ -137,16 +275,16 @@ export default function OfficialUsedStore() {
           {isWearingSet && (
             <img
               className={s.characterSet}
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.set}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+            src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.shoes}`}
             alt="shoes"
           />
-          {Object.entries(userInfo.item).map(([part, src]) => {
+          {Object.entries(tryOnUserInfo.item).map(([part, src]) => {
             if (!src) return null;
             return (
               <img
@@ -212,7 +350,7 @@ export default function OfficialUsedStore() {
               alt="리셋 버튼"
               onClick={(e) => {
                 e.stopPropagation();
-                resetUserInfo();
+                handleReset();
               }}
             />
             <img
@@ -225,10 +363,21 @@ export default function OfficialUsedStore() {
             />
             <img
               className={s.heartBtn}
-              src={heartBtn}
+              src={selectedItem.id !== null && likedItems.has(selectedItem.id) ? redHeartBtn : heartBtn}
               alt="좋아요 버튼"
               onClick={(e) => {
                 e.stopPropagation();
+                if (selectedItem.id !== null) {
+                  setLikedItems(prevLikedItems => {
+                      const newLikedItems = new Set(prevLikedItems);
+                      if (newLikedItems.has(selectedItem.id!)) {
+                          newLikedItems.delete(selectedItem.id!);
+                      } else {
+                          newLikedItems.add(selectedItem.id!);
+                      }
+                      return newLikedItems;
+                  });
+                }
               }}
             />
           </div>
@@ -238,6 +387,8 @@ export default function OfficialUsedStore() {
         activeTab={activeTab}
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
+        onItemSelect={handleItemSelect}
+        likedItems={likedItems}
       />
     </div>
   );

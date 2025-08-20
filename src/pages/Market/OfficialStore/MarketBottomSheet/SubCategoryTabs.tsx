@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import s from './SubCategoryTabs.module.scss';
 import { CategoryType } from '../OfficialUsedStore';
-import searchBtn from "../../../../assets/btnImg/blackSearchBtn.svg";
 import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
-import closeBtn from '../../../../assets/btnImg/closeBtn.svg';
 
 interface SubCategoryTabsProps {
   activeCategory: CategoryType;
+  isSearching: boolean;
+  activeSubTab: string;
+  onSubTabChange: (subTab: string) => void;
 }
 
 const SUB_CATEGORIES: Record<CategoryType, string[]> = {
@@ -15,23 +16,16 @@ const SUB_CATEGORIES: Record<CategoryType, string[]> = {
   background: ['전체', '별', '우주정거장'],
 };
 
-export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps) {
-  const [activeSubTab, setActiveSubTab] = useState('전체');
-  const [isSearching, setIsSearching] = useState(false);
+export default function SubCategoryTabs({ activeCategory, isSearching, activeSubTab, onSubTabChange }: SubCategoryTabsProps) {
   const tabs = SUB_CATEGORIES[activeCategory];
 
   useEffect(() => {
-    setActiveSubTab('전체');
-    setIsSearching(false);
-  }, [activeCategory]);
+    onSubTabChange('전체');
+  }, [activeCategory, onSubTabChange]);
 
   if (!tabs) {
     return null;
   }
-
-  const handleSearchClick = () => {
-    setIsSearching(!isSearching);
-  };
 
   return (
     <div className={s.container}>
@@ -50,16 +44,13 @@ export default function SubCategoryTabs({ activeCategory }: SubCategoryTabsProps
             <button
               key={tab}
               className={`${s.tab} ${activeSubTab === tab ? s.active : ""}`}
-              onClick={() => setActiveSubTab(tab)}
+              onClick={() => onSubTabChange(tab)}
             >
               {tab}
             </button>
           ))}
         </div>
       )}
-      <button className={s.searchButton} onClick={handleSearchClick}>
-        <img src={isSearching ? closeBtn : searchBtn} alt="search" />
-      </button>
     </div>
   );
 }
