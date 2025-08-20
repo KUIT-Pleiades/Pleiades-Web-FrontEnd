@@ -33,14 +33,15 @@ export default function OfficialUsedStore() {
 
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
-  const isWearingSet = !!userInfo.outfit.set;
 
   const [initialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
 
   // 미리보기 상태 (캐릭터 프리뷰용)
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
-  );
+	);
+	
+	const isWearingSet = !!tryOnUserInfo.outfit.set;
 
   const [selectedItem, setSelectedItem] = useState<{
     id: number | null;
@@ -86,11 +87,13 @@ export default function OfficialUsedStore() {
         // 의상 아이템
         case "TOP":
           newState.outfit.top = name;
-          newState.outfit.set = "";
+					newState.outfit.set = "";
+					newState.outfit.bottom = initialUserInfo.outfit.bottom;
           break;
         case "BOTTOM":
           newState.outfit.bottom = name;
-          newState.outfit.set = "";
+					newState.outfit.set = "";
+					newState.outfit.top = initialUserInfo.outfit.top;
           break;
         case "SET":
           newState.outfit.set = name;
