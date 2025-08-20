@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./MarketBottomSheet.module.scss";
 import { CategoryType } from ".././OfficialUsedStore";
 import ThemeCategoryTabs from "./ThemeCategoryTabs";
@@ -26,6 +26,12 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
   const [activeSubTab, setActiveSubTab] = useState("전체");
+
+  // activeCategory prop이 변경될 때마다 실행됩니다.
+  useEffect(() => {
+    // 하위 탭 상태를 '전체'로 초기화합니다.
+    setActiveSubTab("전체");
+  }, [activeCategory]);
 
   const handleSearchToggle = () => {
     setIsSearching(!isSearching);
@@ -83,8 +89,8 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             </div>
           );
         }
-				case "cloth": {
-					const accessoryTypes = [
+        case "cloth": {
+          const accessoryTypes = [
             "EARS",
             "EYESITEM",
             "HEAD",
@@ -98,8 +104,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             상의: "TOP",
             하의: "BOTTOM",
             세트: "SET",
-						신발: "SHOES",
-						
+            신발: "SHOES",
           };
 
           const filteredItems = mockClothItems.filter((item) => {
