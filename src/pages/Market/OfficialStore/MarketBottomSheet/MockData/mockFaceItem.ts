@@ -3,7 +3,7 @@ export const mockFaceItems = [
   {
     id: 1234,
     name: "face_eyes_1.png",
-    descripsion: "파란눈",
+    description: "파란눈",
     type: "EYES",
     price: 100,
     theme: ["여름", "데일리", "K-POP"],
@@ -12,7 +12,7 @@ export const mockFaceItems = [
   {
     id: 1235,
     name: "face_eyes_2.png",
-    descripsion: "초록눈",
+    description: "초록눈",
     type: "EYES",
     price: 150,
     theme: ["여름", "K-POP"],
@@ -22,7 +22,7 @@ export const mockFaceItems = [
   {
     id: 2234,
     name: "face_nose_1.png",
-    descripsion: "작은코",
+    description: "작은코",
     type: "NOSE",
     price: 80,
     theme: ["겨울", "심플"],
@@ -33,7 +33,7 @@ export const mockFaceItems = [
   {
     id: 3234,
     name: "face_mouth_1.png",
-    descripsion: "미소입",
+    description: "미소입",
     type: "MOUTH",
     price: 110,
     theme: ["러블리", "봄"],
@@ -42,7 +42,7 @@ export const mockFaceItems = [
   {
     id: 3235,
     name: "face_mouth_2.png",
-    descripsion: "도톰입술",
+    description: "도톰입술",
     type: "MOUTH",
     price: 120,
     theme: ["여름"],
@@ -52,7 +52,7 @@ export const mockFaceItems = [
   {
     id: 4234,
     name: "face_mole_1.png",
-    descripsion: "왼쪽볼점",
+    description: "왼쪽볼점",
     type: "MOLE",
     price: 60,
     theme: ["포인트"],
@@ -63,7 +63,7 @@ export const mockFaceItems = [
   {
     id: 5234,
     name: "face_hair_1.png",
-    descripsion: "단발머리",
+    description: "단발머리",
     type: "HAIR",
     price: 200,
     theme: ["K-POP", "여름"],
@@ -72,7 +72,7 @@ export const mockFaceItems = [
   {
     id: 5235,
     name: "face_hair_2.png",
-    descripsion: "긴생머리",
+    description: "긴생머리",
     type: "HAIR",
     price: 210,
     theme: ["겨울", "데일리"],

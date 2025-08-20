@@ -14,7 +14,7 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
-  onItemSelect: (name: string, descripsion: string, type: string) => void;
+  onItemSelect: (name: string, discription: string, type: string) => void;
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -68,7 +68,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.descripsion, item.type)
+                    onItemSelect(item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
@@ -83,20 +83,39 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             </div>
           );
         }
-        case "cloth": {
+				case "cloth": {
+					const accessoryTypes = [
+            "EARS",
+            "HEAD",
+            "NECK",
+            "LEFTWRIST",
+            "RIGHTWRIST",
+            "LEFTHAND",
+            "RIGHTHAND",
+            "EYES",
+          ];
           const typeMap: { [key: string]: string } = {
             상의: "TOP",
             하의: "BOTTOM",
             세트: "SET",
-            신발: "SHOES",
-            악세서리: "MOLE",
+						신발: "SHOES",
+						
           };
 
           const filteredItems = mockClothItems.filter((item) => {
             const themeMatch =
               activeTheme === "추천" || item.theme.includes(activeTheme);
-            const typeMatch =
-              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+
+            let typeMatch = false;
+            if (activeSubTab === "전체") {
+              typeMatch = true;
+            } else if (activeSubTab === "악세서리") {
+              // activeSubTab이 '악세서리'이면, item.type이 accessoryTypes 배열에 포함되는지 확인합니다.
+              typeMatch = accessoryTypes.includes(item.type);
+            } else {
+              typeMatch = item.type === typeMap[activeSubTab];
+            }
+
             return themeMatch && typeMatch;
           });
 
@@ -106,7 +125,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.descripsion, item.type)
+                    onItemSelect(item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
@@ -141,7 +160,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.name, item.descripsion, item.type)
+                    onItemSelect(item.name, item.description, item.type)
                   }
                 >
                   <div className={s.item}>
