@@ -1,15 +1,21 @@
 import s from './MarketHome.module.scss';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import MarketButton from './HomeComponent/MarketButton';
+
+import mallIcon from '../../assets/market/home/mallIcon.svg';
+import sellMyItemIcon from '../../assets/market/home/sellMyItemIcon.svg';
+import myItemsIcon from '../../assets/market/home/myItemsIcon.svg';
+import transactionDetailsIcon from '../../assets/market/home/transactionDetailsIcon.svg';
 
 const MarketHome: React.FC = () => {
     const navigate = useNavigate();
 
     const buttons = [
-        { label: '공식/중고몰', path: '/market/official-store'},
-        { label: '내 아이템 판매', path: '/market/my-item-sell'},
-        { label: '내 상품 관리', path: '/market/my-product-management'},
-        { label: '거래 내역', path: '/market/transaction-history'},
+        { label: '공식/중고몰', subText: '쇼핑하러 가볼까요?', path: '/market/official-store', icon: mallIcon},
+        { label: '내 아이템 판매', subText: '아이템 팔고 스톤 벌자!', path: '/market/my-item-sell', icon: sellMyItemIcon},
+        { label: '판매 중인 아이템', subText: '상품을 관리해요', path: '/market/my-product-management', icon: myItemsIcon},
+        { label: '거래내역', subText: '거래내역이 궁금할땐', path: '/market/transaction-history', icon: transactionDetailsIcon},
     ];
 
     return (
@@ -21,13 +27,14 @@ const MarketHome: React.FC = () => {
             <div className={s.content}>
                 <div className={s.gridContainer}>
                     {buttons.map((btn, idx) => (
-                        <div
+                        <MarketButton
                             key={idx}
-                            className={s.marketButton}
-                            onClick={() => navigate(btn.path)} // ✅ 클릭 시 이동
-                        >
-                            <div className={s.label}>{btn.label}</div>
-                        </div>
+                            idx={idx}
+                            label={btn.label}
+                            subText={btn.subText}
+                            icon={btn.icon}
+                            onClick={() => navigate(btn.path)}
+                        />
                     ))}
                 </div>
             </div>
