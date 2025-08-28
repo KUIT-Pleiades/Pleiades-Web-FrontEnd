@@ -1,0 +1,81 @@
+.container {
+    width: 100dvw;
+    height: 91dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 100dvw;
+    height: 78.55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &Title {
+        padding-top: 37.55px;
+
+        color: #17151C;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.32px;
+    }
+}
+
+.content {
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #E4D0E5;
+
+    position: relative;
+}
+
+/* ✅ 2x2 그리드 레이아웃 */
+.gridContainer {
+    position: absolute;
+
+    bottom: 42px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2칸 */
+    grid-gap: 16px 12px; /* 박스 사이 간격 */
+    width: 100%;
+    max-width: 93dvw;
+}
+
+/* ✅ 버튼 스타일 */
+.marketButton {
+    background-color: white;
+    height: 97px;
+    border-radius: 10px;
+    text-align: center;
+    color: #444;
+    text-decoration: none;
+    cursor: pointer;
+    //transition: background-color 0.3s ease, transform 0.1s ease;
+
+    // &:hover {
+    //     background-color: #A68EDD;
+    //     color: #FFFFFF;
+    //     transform: translateY(-2px);
+    // }
+}
+
+
+.icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
