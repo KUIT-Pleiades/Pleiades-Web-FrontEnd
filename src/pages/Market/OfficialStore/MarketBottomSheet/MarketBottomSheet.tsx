@@ -190,7 +190,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                     onItemSelect(item.id, item.name, item.description, item.type)
                   }
                 >
-                  <div className={s.item}>
+                  <div className={s.backgroundItem}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
                     {likedItems.has(item.id) && (
                       <div className={s.heartIconContainer}>
