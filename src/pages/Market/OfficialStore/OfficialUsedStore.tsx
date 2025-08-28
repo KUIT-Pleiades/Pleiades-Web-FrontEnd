@@ -32,6 +32,7 @@ export default function OfficialUsedStore() {
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [likedItems, setLikedItems] = useState(new Set<number>());
   const [isCartModalOpen, setCartModalOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -59,11 +60,15 @@ export default function OfficialUsedStore() {
     type: "",
   });
 
+  const handleSearchToggle = () => {
+    setIsSearching(!isSearching);
+  };
+
   const handleItemSelect = (
     id: number,
     name: string,
-		description: string,
-		price: number,
+    description: string,
+    price: number,
     type: string
   ) => {
     setSelectedItem({ id, name, description, price, type });
@@ -423,7 +428,9 @@ export default function OfficialUsedStore() {
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
-        likedItems={likedItems}
+				likedItems={likedItems}
+				isSearching={isSearching}
+				onSearchToggle={handleSearchToggle}
       />
     </div>
   );
