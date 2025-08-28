@@ -12,6 +12,7 @@ import backBtn from "../../../assets/btnImg/backBtn.png";
 import coin from "../../../assets/market/coin.svg";
 import stone from "../../../assets/market/stone.svg";
 import { UserInfo } from "../../../interfaces/Interfaces";
+import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -30,6 +31,7 @@ export default function OfficialUsedStore() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [likedItems, setLikedItems] = useState(new Set<number>());
+  const [isCartModalOpen, setCartModalOpen] = useState(false);
 
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -39,29 +41,32 @@ export default function OfficialUsedStore() {
   // 미리보기 상태 (캐릭터 프리뷰용)
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
-	);
-	
-	const isWearingSet = !!tryOnUserInfo.outfit.set;
+  );
+
+  const isWearingSet = !!tryOnUserInfo.outfit.set;
 
   const [selectedItem, setSelectedItem] = useState<{
     id: number | null;
     name: string;
     description: string;
+    price: number;
     type: string;
   }>({
     id: null,
     name: "",
     description: "",
+    price: 0,
     type: "",
   });
 
-	const handleItemSelect = (
+  const handleItemSelect = (
     id: number,
     name: string,
-    description: string,
+		description: string,
+		price: number,
     type: string
   ) => {
-    setSelectedItem({ id, name, description, type });
+    setSelectedItem({ id, name, description, price, type });
 
     setTryOnUserInfo((prev) => {
       const newState = structuredClone(prev);
@@ -167,11 +172,36 @@ export default function OfficialUsedStore() {
 
   const handleReset = () => {
     setTryOnUserInfo(structuredClone(initialUserInfo));
-    setSelectedItem({ id: null, name: "", description: "", type: "" });
+    setSelectedItem({
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
+  };
+
+  const handleAddToCartClick = () => {
+    if (selectedItem.id !== null) {
+      setCartModalOpen(true);
+    }
+  };
+
+  const handleConfirmAddToCart = () => {
+    // Add item to cart logic here
+    console.log("Item added to cart:", selectedItem);
+    setCartModalOpen(false);
   };
 
   return (
     <div className={s.container}>
+      {isCartModalOpen && (
+        <AddToCartModal
+          item={selectedItem}
+          onConfirm={handleConfirmAddToCart}
+          onCancel={() => setCartModalOpen(false)}
+        />
+      )}
       <div className={s.header}>
         <button className={s.backButton} onClick={() => navigate(-1)}>
           <img src={backBtn} alt="뒤로가기" />
@@ -359,23 +389,28 @@ export default function OfficialUsedStore() {
               alt="장바구니 버튼"
               onClick={(e) => {
                 e.stopPropagation();
+                handleAddToCartClick();
               }}
             />
             <img
               className={s.heartBtn}
-              src={selectedItem.id !== null && likedItems.has(selectedItem.id) ? redHeartBtn : heartBtn}
+              src={
+                selectedItem.id !== null && likedItems.has(selectedItem.id)
+                  ? redHeartBtn
+                  : heartBtn
+              }
               alt="좋아요 버튼"
               onClick={(e) => {
                 e.stopPropagation();
                 if (selectedItem.id !== null) {
-                  setLikedItems(prevLikedItems => {
-                      const newLikedItems = new Set(prevLikedItems);
-                      if (newLikedItems.has(selectedItem.id!)) {
-                          newLikedItems.delete(selectedItem.id!);
-                      } else {
-                          newLikedItems.add(selectedItem.id!);
-                      }
-                      return newLikedItems;
+                  setLikedItems((prevLikedItems) => {
+                    const newLikedItems = new Set(prevLikedItems);
+                    if (newLikedItems.has(selectedItem.id!)) {
+                      newLikedItems.delete(selectedItem.id!);
+                    } else {
+                      newLikedItems.add(selectedItem.id!);
+                    }
+                    return newLikedItems;
                   });
                 }
               }}

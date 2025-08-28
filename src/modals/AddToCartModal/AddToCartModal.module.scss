@@ -1,0 +1,89 @@
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal {
+	position: relative;
+	padding: 18px;
+	border-radius: 12px;
+	text-align: center;
+	width: 60%;
+	background: var(--gray-8, #F8F8FA);
+}
+
+.cancelButton {
+	position: absolute;
+	right: 18px;
+}
+
+.itemDescription {
+	margin-top: 50px;
+	margin-bottom: 32px;
+	color: var(--gray-22, #444);
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	
+}
+
+.itemImage {
+	width: 50%;
+	object-fit: contain;
+	border-radius: 5px;
+	background: white;
+	overflow: hidden;
+	box-shadow: 0px 0px 4px 0.5px rgba(41, 34, 41, 0.2);
+}
+
+
+.itemPrice {
+	margin: 18px 0;
+	color: #000;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+}
+
+
+.modalButton {
+	border: none;
+	cursor: pointer;
+}
+
+.confirmButton {
+	border-radius: 30px;
+	background: var(--color-5-main, #C0B9DB);
+	color: #FFF;
+	width: 96px;
+	height: 35px;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+	margin-bottom: 3px;
+}
+

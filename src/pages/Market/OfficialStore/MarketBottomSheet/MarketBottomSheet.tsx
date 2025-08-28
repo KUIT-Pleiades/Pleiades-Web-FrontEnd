@@ -15,7 +15,7 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
-  onItemSelect: (id: number, name: string, description: string, type: string) => void;
+  onItemSelect: (id: number, name: string, description: string, price: number , type: string) => void;
   likedItems: Set<number>;
 }
 
@@ -80,7 +80,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(item.id, item.name, item.description, item.price, item.type)
                   }
                 >
                   <div className={s.item}>
@@ -144,7 +144,13 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
                   }
                 >
                   <div className={s.item}>
@@ -187,7 +193,13 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
                   }
                 >
                   <div className={s.backgroundItem}>
