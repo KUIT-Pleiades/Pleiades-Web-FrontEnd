@@ -39,6 +39,63 @@
     background-repeat: no-repeat;
 
     position: relative;
+
+    &::after { /* 변경됨: 하단 딤 추가 */
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        /* 딤 높이 조절(필요 시 12~28px 사이로 조정) */
+        height: 3px;
+
+        /* 위는 투명 → 아래는 살짝 어두움 */
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.10) 100%
+        );
+
+        /* 클릭 방해 X */
+        pointer-events: none;
+
+        /* 필요한 경우 레이어 우선순위 조절 */
+        z-index: 1;
+    }
+}
+
+.topInformationSection {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.userName {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+
+    &MarketSmallIcon {
+        width: 25px;
+        height: 25px;
+        margin-left: 9px;
+    }
+
+    &Text {
+        color: #444;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.32px;
+
+        margin-left: 5px;
+        margin-bottom: 1px;
+    }
 }
 
 /* ✅ 2x2 그리드 레이아웃 */

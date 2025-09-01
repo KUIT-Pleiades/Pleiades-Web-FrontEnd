@@ -2,7 +2,9 @@ import s from './MarketHome.module.scss';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MarketButton from './HomeComponent/MarketButton';
+import { useCharacterStore } from '../../store/useCharacterStore';
 
+import marketSmallIcon from '../../assets/market/home/marketSmallIcon.svg';
 import mallIcon from '../../assets/market/home/mallIcon.svg';
 import sellMyItemIcon from '../../assets/market/home/sellMyItemIcon.svg';
 import myItemsIcon from '../../assets/market/home/myItemsIcon.svg';
@@ -10,6 +12,8 @@ import transactionDetailsIcon from '../../assets/market/home/transactionDetailsI
 
 const MarketHome: React.FC = () => {
     const navigate = useNavigate();
+    const { userInfo } = useCharacterStore();
+    const userName = userInfo.userName || '플레이아데스';
 
     const buttons = [
         { label: '공식/중고몰', subText: '쇼핑하러 가볼까요?', path: '/market/official-store', icon: mallIcon},
@@ -25,6 +29,19 @@ const MarketHome: React.FC = () => {
             </div>
 
             <div className={s.content}>
+
+                <div className={s.topInformationSection}>
+                    <div className={s.userName}>
+                        <img src={marketSmallIcon} alt='market small icon' className={s.userNameMarketSmallIcon} />
+                        <span className={s.userNameText}>
+                            {userName}님의 상점
+                        </span>
+                    </div>
+                    <div className={s.coinAndStone}>
+
+                    </div>
+                </div>
+
                 <div className={s.gridContainer}>
                     {buttons.map((btn, idx) => (
                         <MarketButton
