@@ -27,6 +27,7 @@ import MarketHome from "./pages/Market/MarketHome";
 import MyItemSell from "./pages/Market/MyItemSell/MyItemSell";
 import MyProductManagement from "./pages/Market/MyProductManagement/MyProductManagement";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
+import Market from "./pages/Market/Market";
 
 export default function App() {
   return (
@@ -57,33 +58,31 @@ export default function App() {
             ></Route>
           </Route>
           <Route path="/report" element={<Report />}></Route>
-          <Route path="market" element={<Home />}>
+
+          {/* 상점 관련 루트 */}
+          <Route path="market" element={<Market />}>
             <Route index element={<MarketHome />} />
+            <Route path="official-store" element={<OfficialUsedStore />} />
+            <Route path="my-item-sell" element={<MyItemSell />} />
+            <Route path="my-product-management" element={<MyProductManagement />} />
+            <Route path="transaction-history" element={<TransactionHistory />} />
           </Route>
-          <Route path="market/official-store" element={<OfficialUsedStore />} />
-          <Route path="market/my-item-sell" element={<MyItemSell />} />
-          <Route
-            path="market/my-product-management"
-            element={<MyProductManagement />}
-          />
-          <Route
-            path="market/transaction-history"
-            element={<TransactionHistory />}
-          />
+
+          {/* 세팅 관련 루트 */}
           <Route path="setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
             <Route path="profile" element={<ProfileSetting />} />
           </Route>
+
+          {/* 정거장 관련 루트 */}
           <Route path="station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
             <Route path="stationinside" element={<StationInside />} />
             <Route path="stationsetting" element={<StationSetting />} />
-            <Route
-              path="stationbackgroundsetting"
-              element={<StationBackgroundSetting />}
-            />
+            <Route path="stationbackgroundsetting" element={<StationBackgroundSetting />} />
           </Route>
+
           <Route path="friendtab" element={<FriendsTab />}></Route>
           <Route path="searchusers" element={<SearchUsers />}></Route>
           <Route path="friendstar" element={<FriendStar />}></Route>

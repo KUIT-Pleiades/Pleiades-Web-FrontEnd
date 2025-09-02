@@ -19,10 +19,10 @@ const MarketHome: React.FC = () => {
     const userCharacter = `${userInfo.character}`;
 
     const buttons = [
-        { label: '공식/중고몰', subText: '쇼핑하러 가볼까요?', path: '/market/official-store', icon: mallIcon},
-        { label: '내 아이템 판매', subText: '아이템 팔고 스톤 벌자!', path: '/market/my-item-sell', icon: sellMyItemIcon},
-        { label: '판매 중인 아이템', subText: '상품을 관리해요', path: '/market/my-product-management', icon: myItemsIcon},
-        { label: '거래내역', subText: '거래내역이 궁금할땐', path: '/market/transaction-history', icon: transactionDetailsIcon},
+        { label: '공식/중고몰', subText: '쇼핑하러 가볼까요?', path: 'official-store', icon: mallIcon},
+        { label: '내 아이템 판매', subText: '아이템 팔고 스톤 벌자!', path: 'my-item-sell', icon: sellMyItemIcon},
+        { label: '판매 중인 아이템', subText: '상품을 관리해요', path: 'my-product-management', icon: myItemsIcon},
+        { label: '거래내역', subText: '거래내역이 궁금할땐', path: 'transaction-history', icon: transactionDetailsIcon},
     ];
 
     return (
