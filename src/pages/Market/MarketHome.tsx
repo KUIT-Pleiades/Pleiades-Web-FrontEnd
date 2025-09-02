@@ -3,8 +3,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MarketButton from './HomeComponent/MarketButton';
 import { useCharacterStore } from '../../store/useCharacterStore';
+import AssetBox from '../../components/Asset/AssetBox';
 
 import marketSmallIcon from '../../assets/market/home/marketSmallIcon.svg';
+import characterBackground from '../../assets/market/home/characterBackground.svg';
 import mallIcon from '../../assets/market/home/mallIcon.svg';
 import sellMyItemIcon from '../../assets/market/home/sellMyItemIcon.svg';
 import myItemsIcon from '../../assets/market/home/myItemsIcon.svg';
@@ -14,6 +16,7 @@ const MarketHome: React.FC = () => {
     const navigate = useNavigate();
     const { userInfo } = useCharacterStore();
     const userName = userInfo.userName || '플레이아데스';
+    const userCharacter = `${userInfo.character}`;
 
     const buttons = [
         { label: '공식/중고몰', subText: '쇼핑하러 가볼까요?', path: '/market/official-store', icon: mallIcon},
@@ -37,11 +40,22 @@ const MarketHome: React.FC = () => {
                             {userName}님의 상점
                         </span>
                     </div>
+                    
                     <div className={s.coinAndStone}>
-
+                        <AssetBox
+                            coinAmount={5}
+                            stoneAmount={312}
+                        />
                     </div>
                 </div>
 
+                <div className={s.characterContainer}>
+                    <img className={s.characterBackground} src={characterBackground} alt="캐릭터 배경" />
+                    <img className={s.character} src={userCharacter} alt="캐릭터" />
+                </div>
+
+                
+                
                 <div className={s.gridContainer}>
                     {buttons.map((btn, idx) => (
                         <MarketButton
@@ -55,6 +69,8 @@ const MarketHome: React.FC = () => {
                     ))}
                 </div>
             </div>
+            {/* <img className={s.characterBackground} src={characterBackground} alt="캐릭터 배경" />
+            <img className={s.character} src={userCharacter} alt="캐릭터" /> */}
         </div>
     );
 };
