@@ -9,9 +9,8 @@ import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
 import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
-import coin from "../../../assets/market/coin.svg";
-import stone from "../../../assets/market/stone.svg";
 import { UserInfo } from "../../../interfaces/Interfaces";
+import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -22,6 +21,8 @@ import backgroundIcon from "../../../assets/market/background.svg";
 import faceWhiteIcon from "../../../assets/market/face_white.svg";
 import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
 import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
+import AssetBox from "../../../components/Asset/AssetBox";
+import CompleteCartModal from "../../../modals/AddToCartModal/CompleteCartModal";
 
 export type CategoryType = "face" | "cloth" | "background";
 
@@ -30,6 +31,9 @@ export default function OfficialUsedStore() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [likedItems, setLikedItems] = useState(new Set<number>());
+	const [isCartModalOpen, setCartModalOpen] = useState(false);
+	const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -39,29 +43,36 @@ export default function OfficialUsedStore() {
   // 미리보기 상태 (캐릭터 프리뷰용)
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
-	);
-	
-	const isWearingSet = !!tryOnUserInfo.outfit.set;
+  );
+
+  const isWearingSet = !!tryOnUserInfo.outfit.set;
 
   const [selectedItem, setSelectedItem] = useState<{
     id: number | null;
     name: string;
     description: string;
+    price: number;
     type: string;
   }>({
     id: null,
     name: "",
     description: "",
+    price: 0,
     type: "",
   });
 
-	const handleItemSelect = (
+  const handleSearchToggle = () => {
+    setIsSearching(!isSearching);
+  };
+
+  const handleItemSelect = (
     id: number,
     name: string,
     description: string,
+    price: number,
     type: string
   ) => {
-    setSelectedItem({ id, name, description, type });
+    setSelectedItem({ id, name, description, price, type });
 
     setTryOnUserInfo((prev) => {
       const newState = structuredClone(prev);
@@ -167,11 +178,67 @@ export default function OfficialUsedStore() {
 
   const handleReset = () => {
     setTryOnUserInfo(structuredClone(initialUserInfo));
-    setSelectedItem({ id: null, name: "", description: "", type: "" });
+    setSelectedItem({
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
+  };
+
+  const handleAddToCartClick = () => {
+    if (selectedItem.id !== null) {
+      setCartModalOpen(true);
+    }
+  };
+
+  const handleConfirmAddToCart = () => {
+    console.log("Item added to cart:", selectedItem);
+
+    // Add item to cart logic here
+    setCartModalOpen(false);
+    setCompleteCartModalOpen(true);
+  };
+	
+	const handleCompleteCart = () => {
+		// 구매 완료 후 처리 로직
+		setCompleteCartModalOpen(false);
+	}
+
+	const handleGoToCustom = () => {
+    navigate("/home/charactersetting");
+  };
+
+  const handleCategoryChange = (category: CategoryType) => {
+    setActiveCategory(category);
+    setSelectedItem({
+      // 미리보기(tryOnUserInfo)는 건드리지 않습니다.
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
   };
 
   return (
     <div className={s.container}>
+      {isCartModalOpen && (
+        <AddToCartModal
+          item={selectedItem}
+          onConfirm={handleConfirmAddToCart}
+          onCancel={() => setCartModalOpen(false)}
+        />
+      )}
+      {isCompleteCartModalOpen && (
+        <CompleteCartModal
+          item={selectedItem}
+          onConfirm={handleCompleteCart}
+          onCustom={handleGoToCustom}
+          onCancel={() => setCartModalOpen(false)}
+        />
+      )}
       <div className={s.header}>
         <button className={s.backButton} onClick={() => navigate(-1)}>
           <img src={backBtn} alt="뒤로가기" />
@@ -212,12 +279,7 @@ export default function OfficialUsedStore() {
           </div>
 
           <div className={s.itemAssets}>
-            <div className={s.asset}>
-              <img src={coin} alt="코인" />
-              <span>5</span>
-              <img src={stone} alt="돌맹이" />
-              <span>312</span>
-            </div>
+            <AssetBox coinAmount={5} stoneAmount={312} />
           </div>
         </div>
         <div className={s.characterContainer} onClick={handleContentClick}>
@@ -302,7 +364,8 @@ export default function OfficialUsedStore() {
               }`}
               onClick={(e) => {
                 e.stopPropagation();
-                setActiveCategory("face");
+                handleCategoryChange("face");
+                //setActiveCategory("face");
               }}
             >
               <img
@@ -316,7 +379,8 @@ export default function OfficialUsedStore() {
               }`}
               onClick={(e) => {
                 e.stopPropagation();
-                setActiveCategory("cloth");
+                handleCategoryChange("cloth");
+                //setActiveCategory("cloth");
               }}
             >
               <img
@@ -330,7 +394,8 @@ export default function OfficialUsedStore() {
               }`}
               onClick={(e) => {
                 e.stopPropagation();
-                setActiveCategory("background");
+                handleCategoryChange("background");
+                //setActiveCategory("background");
               }}
             >
               <img
@@ -359,23 +424,28 @@ export default function OfficialUsedStore() {
               alt="장바구니 버튼"
               onClick={(e) => {
                 e.stopPropagation();
+                handleAddToCartClick();
               }}
             />
             <img
               className={s.heartBtn}
-              src={selectedItem.id !== null && likedItems.has(selectedItem.id) ? redHeartBtn : heartBtn}
+              src={
+                selectedItem.id !== null && likedItems.has(selectedItem.id)
+                  ? redHeartBtn
+                  : heartBtn
+              }
               alt="좋아요 버튼"
               onClick={(e) => {
                 e.stopPropagation();
                 if (selectedItem.id !== null) {
-                  setLikedItems(prevLikedItems => {
-                      const newLikedItems = new Set(prevLikedItems);
-                      if (newLikedItems.has(selectedItem.id!)) {
-                          newLikedItems.delete(selectedItem.id!);
-                      } else {
-                          newLikedItems.add(selectedItem.id!);
-                      }
-                      return newLikedItems;
+                  setLikedItems((prevLikedItems) => {
+                    const newLikedItems = new Set(prevLikedItems);
+                    if (newLikedItems.has(selectedItem.id!)) {
+                      newLikedItems.delete(selectedItem.id!);
+                    } else {
+                      newLikedItems.add(selectedItem.id!);
+                    }
+                    return newLikedItems;
                   });
                 }
               }}
@@ -389,6 +459,8 @@ export default function OfficialUsedStore() {
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
         likedItems={likedItems}
+        isSearching={isSearching}
+        onSearchToggle={handleSearchToggle}
       />
     </div>
   );

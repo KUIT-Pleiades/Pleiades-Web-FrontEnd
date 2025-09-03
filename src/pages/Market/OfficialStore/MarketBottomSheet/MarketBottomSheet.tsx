@@ -15,8 +15,16 @@ interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
   isCollapsed: boolean;
-  onItemSelect: (id: number, name: string, description: string, type: string) => void;
+  onItemSelect: (
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    type: string
+  ) => void;
   likedItems: Set<number>;
+  isSearching?: boolean;
+  onSearchToggle?: () => void;
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -25,20 +33,19 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   isCollapsed,
   onItemSelect,
   likedItems,
+  isSearching = false,
+  onSearchToggle,
 }) => {
-  const [isSearching, setIsSearching] = useState(false);
+  //const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
   const [activeSubTab, setActiveSubTab] = useState("전체");
+  //const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
 
   // activeCategory prop이 변경될 때마다 실행됩니다.
   useEffect(() => {
     // 하위 탭 상태를 '전체'로 초기화합니다.
     setActiveSubTab("전체");
   }, [activeCategory]);
-
-  const handleSearchToggle = () => {
-    setIsSearching(!isSearching);
-  };
 
   const renderContent = () => {
     if (activeTab === "official") {
@@ -80,7 +87,13 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
                   }
                 >
                   <div className={s.item}>
@@ -144,7 +157,13 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
                   }
                 >
                   <div className={s.item}>
@@ -187,10 +206,16 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
                 <div
                   key={item.id}
                   onClick={() =>
-                    onItemSelect(item.id, item.name, item.description, item.type)
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
                   }
                 >
-                  <div className={s.item}>
+                  <div className={s.backgroundItem}>
                     <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
                     {likedItems.has(item.id) && (
                       <div className={s.heartIconContainer}>
@@ -215,7 +240,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
 
   return (
     <div
-      className={s.sheetContainer}
+      className={`${s.sheetContainer} ${isSearching ? s.fullscreen : ""}`}
       style={{ height: isCollapsed ? "2dvh" : "" }}
     >
       <div className={s.barContainer}>
@@ -225,7 +250,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
         <>
           <div style={{ flexShrink: 0 }}>
             <ThemeCategoryTabs
-              onSearchToggle={handleSearchToggle}
+              onSearchToggle={onSearchToggle ? onSearchToggle : () => {}}
               isSearching={isSearching}
               activeTheme={activeTheme}
               onThemeChange={setActiveTheme}
@@ -237,7 +262,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               onSubTabChange={setActiveSubTab}
             />
           </div>
-          <div className={s.content}>{renderContent()}</div>
+          {!isSearching && <div className={s.content}>{renderContent()}</div>}
         </>
       )}
     </div>
