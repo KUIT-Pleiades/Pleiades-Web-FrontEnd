@@ -56,9 +56,9 @@ export default function StationBottomSheetContent({
                                     stationBackgrounds[station.stationBackground] ||
                                     `${IMG_BASE_URL}station_dim_01.png`
                                 }
-                                isFavorite={station.isFavorite}
+                                favorite={station.favorite}
                                 onToggleFavorite={() =>
-                                    onToggleFavorite(station.stationId, station.isFavorite)
+                                    onToggleFavorite(station.stationId, station.favorite)
                                 }
                             />
                         </div>

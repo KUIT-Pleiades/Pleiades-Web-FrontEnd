@@ -56,7 +56,7 @@ const ShowStationList: React.FC = () => {
             stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
             createdAt: new Date(Date.now() - i * 10000000).toISOString(),
             lastActive: new Date(Date.now() - i * 5000000).toISOString(),
-            isFavorite: i % 3 === 0,
+            favorite: i % 3 === 0,
         }));
         setStations({ stations: mockStations });
         setCarouselStations(mockStations.slice(0, 5));
@@ -94,8 +94,8 @@ const ShowStationList: React.FC = () => {
     const sortedStations = useMemo(() => {
         const copied = [...stations.stations];
         return copied.sort((a, b) => {
-            if (a.isFavorite && !b.isFavorite) return -1;
-            if (!a.isFavorite && b.isFavorite) return 1;
+            if (a.favorite && !b.favorite) return -1;
+            if (!a.favorite && b.favorite) return 1;
 
             switch (sortCriteria) {
                 case '이름순':
