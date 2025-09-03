@@ -9,8 +9,6 @@ import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
 import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
-import coin from "../../../assets/market/coin.svg";
-import stone from "../../../assets/market/stone.svg";
 import { UserInfo } from "../../../interfaces/Interfaces";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
@@ -23,6 +21,7 @@ import backgroundIcon from "../../../assets/market/background.svg";
 import faceWhiteIcon from "../../../assets/market/face_white.svg";
 import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
 import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
+import AssetBox from "../../../components/Asset/AssetBox";
 
 export type CategoryType = "face" | "cloth" | "background";
 
@@ -196,9 +195,9 @@ export default function OfficialUsedStore() {
     // Add item to cart logic here
     console.log("Item added to cart:", selectedItem);
     setCartModalOpen(false);
-	};
-	
-	const handleCategoryChange = (category: CategoryType) => {
+  };
+
+  const handleCategoryChange = (category: CategoryType) => {
     setActiveCategory(category);
     setSelectedItem({
       // 미리보기(tryOnUserInfo)는 건드리지 않습니다.
@@ -209,7 +208,6 @@ export default function OfficialUsedStore() {
       type: "",
     });
   };
-
 
   return (
     <div className={s.container}>
@@ -260,12 +258,7 @@ export default function OfficialUsedStore() {
           </div>
 
           <div className={s.itemAssets}>
-            <div className={s.asset}>
-              <img src={coin} alt="코인" />
-              <span>5</span>
-              <img src={stone} alt="돌맹이" />
-              <span>312</span>
-            </div>
+            <AssetBox coinAmount={5} stoneAmount={312} />
           </div>
         </div>
         <div className={s.characterContainer} onClick={handleContentClick}>
@@ -349,8 +342,8 @@ export default function OfficialUsedStore() {
                 activeCategory === "face" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-								e.stopPropagation();
-								handleCategoryChange("face");
+                e.stopPropagation();
+                handleCategoryChange("face");
                 //setActiveCategory("face");
               }}
             >
@@ -364,8 +357,8 @@ export default function OfficialUsedStore() {
                 activeCategory === "cloth" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-								e.stopPropagation();
-								handleCategoryChange("cloth");
+                e.stopPropagation();
+                handleCategoryChange("cloth");
                 //setActiveCategory("cloth");
               }}
             >
@@ -379,8 +372,8 @@ export default function OfficialUsedStore() {
                 activeCategory === "background" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-								e.stopPropagation();
-								handleCategoryChange("background");
+                e.stopPropagation();
+                handleCategoryChange("background");
                 //setActiveCategory("background");
               }}
             >
@@ -444,9 +437,9 @@ export default function OfficialUsedStore() {
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
-				likedItems={likedItems}
-				isSearching={isSearching}
-				onSearchToggle={handleSearchToggle}
+        likedItems={likedItems}
+        isSearching={isSearching}
+        onSearchToggle={handleSearchToggle}
       />
     </div>
   );
