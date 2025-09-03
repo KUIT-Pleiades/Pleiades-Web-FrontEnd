@@ -22,6 +22,7 @@ import faceWhiteIcon from "../../../assets/market/face_white.svg";
 import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
 import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
 import AssetBox from "../../../components/Asset/AssetBox";
+import CompleteCartModal from "../../../modals/AddToCartModal/CompleteCartModal";
 
 export type CategoryType = "face" | "cloth" | "background";
 
@@ -30,7 +31,8 @@ export default function OfficialUsedStore() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [likedItems, setLikedItems] = useState(new Set<number>());
-  const [isCartModalOpen, setCartModalOpen] = useState(false);
+	const [isCartModalOpen, setCartModalOpen] = useState(false);
+	const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
   const { userInfo } = useCharacterStore();
@@ -192,9 +194,20 @@ export default function OfficialUsedStore() {
   };
 
   const handleConfirmAddToCart = () => {
-    // Add item to cart logic here
     console.log("Item added to cart:", selectedItem);
+
+    // Add item to cart logic here
     setCartModalOpen(false);
+    setCompleteCartModalOpen(true);
+  };
+	
+	const handleCompleteCart = () => {
+		// 구매 완료 후 처리 로직
+		setCompleteCartModalOpen(false);
+	}
+
+	const handleGoToCustom = () => {
+    navigate("/home/charactersetting");
   };
 
   const handleCategoryChange = (category: CategoryType) => {
@@ -215,6 +228,14 @@ export default function OfficialUsedStore() {
         <AddToCartModal
           item={selectedItem}
           onConfirm={handleConfirmAddToCart}
+          onCancel={() => setCartModalOpen(false)}
+        />
+      )}
+      {isCompleteCartModalOpen && (
+        <CompleteCartModal
+          item={selectedItem}
+          onConfirm={handleCompleteCart}
+          onCustom={handleGoToCustom}
           onCancel={() => setCartModalOpen(false)}
         />
       )}
