@@ -196,7 +196,20 @@ export default function OfficialUsedStore() {
     // Add item to cart logic here
     console.log("Item added to cart:", selectedItem);
     setCartModalOpen(false);
+	};
+	
+	const handleCategoryChange = (category: CategoryType) => {
+    setActiveCategory(category);
+    setSelectedItem({
+      // 미리보기(tryOnUserInfo)는 건드리지 않습니다.
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
   };
+
 
   return (
     <div className={s.container}>
@@ -336,8 +349,9 @@ export default function OfficialUsedStore() {
                 activeCategory === "face" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-                e.stopPropagation();
-                setActiveCategory("face");
+								e.stopPropagation();
+								handleCategoryChange("face");
+                //setActiveCategory("face");
               }}
             >
               <img
@@ -350,8 +364,9 @@ export default function OfficialUsedStore() {
                 activeCategory === "cloth" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-                e.stopPropagation();
-                setActiveCategory("cloth");
+								e.stopPropagation();
+								handleCategoryChange("cloth");
+                //setActiveCategory("cloth");
               }}
             >
               <img
@@ -364,8 +379,9 @@ export default function OfficialUsedStore() {
                 activeCategory === "background" ? s.activeCategory : ""
               }`}
               onClick={(e) => {
-                e.stopPropagation();
-                setActiveCategory("background");
+								e.stopPropagation();
+								handleCategoryChange("background");
+                //setActiveCategory("background");
               }}
             >
               <img
