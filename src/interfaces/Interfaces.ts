@@ -263,7 +263,7 @@ export interface Station {
   stationBackground: string;
   createdAt: string;
   lastActive: string;
-  isFavorite: boolean;
+  favorite: boolean;
 }
 
 export interface Stations {

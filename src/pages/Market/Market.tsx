@@ -1,13 +1,14 @@
-import { Outlet } from "react-router-dom";
-//import BottomBar from "../../pageLayout/BottomBar";
-import MarketBar from "./MarketBar/MarketBar";
+import { Outlet, useLocation } from "react-router-dom";
+import BottomBar from "../../pageLayout/BottomBar";
 
 export default function Market() {
-  return (
-    <div>
-      <MarketBar />
-      <Outlet />
-			{/* <BottomBar /> */}
-    </div>
-  );
+    const location = useLocation();
+    const isNoBottomBar = location.pathname.includes("official-store");
+
+    return (
+        <div>
+            <Outlet />
+            {!isNoBottomBar && <BottomBar />}
+        </div>
+    );
 }

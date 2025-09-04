@@ -1,0 +1,31 @@
+/* 재화 */
+.itemAssets {
+	padding: 9.7px 12.31px;
+    display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	border-radius: 100px;
+	background: #FFF;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.coinIcon, .stoneIcon {
+	margin-right: 4.26px;
+}
+.stoneIcon {
+	margin-left: 11.37px;
+}
+
+.coinAmount, .stoneAmount {
+	color: #000;
+	text-align: center;
+	font-family: "Pretendard";
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.26px;
+}
+

@@ -1,72 +1,272 @@
-import { useRef } from "react";
-import { useDrag } from "@use-gesture/react";
-import { motion, useMotionValue, animate } from "framer-motion";
-import styles from "./MarketBottomSheet.module.scss";
+import React, { useState, useEffect } from "react";
+import s from "./MarketBottomSheet.module.scss";
+import { CategoryType } from ".././OfficialUsedStore";
+import ThemeCategoryTabs from "./ThemeCategoryTabs";
+import SubCategoryTabs from "./SubCategoryTabs";
+import { mockFaceItems } from "./MockData/mockFaceItem";
+import { mockClothItems } from "./MockData/mockClothItem";
+import { mockBackgroundItems } from "./MockData/mockBackgroundItem";
+import stone from "../../../../assets/market/stone.svg";
+import heartBtn from "../../../../assets/Icon/redHeart.svg";
 
-// 스냅 포인트: [닫힘, 중간, 열림]
-const SNAP_POINTS = [window.innerHeight - 120, window.innerHeight / 2, 100];
-const DRAG_BUFFER = 30; // 상단 및 하단 경계에서 추가적인 드래그 여유 공간
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-export default function MarketBottomSheet() {
-  // y축의 위치를 추적하는 모션 값. 초기값은 '닫힘' 상태.
-  const y = useMotionValue(SNAP_POINTS[0]);
+interface MarketBottomSheetProps {
+  activeTab: string;
+  activeCategory: CategoryType;
+  isCollapsed: boolean;
+  onItemSelect: (
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    type: string
+  ) => void;
+  likedItems: Set<number>;
+  isSearching?: boolean;
+  onSearchToggle?: () => void;
+}
 
-  // ✅ useRef에 타입을 명시하여 타입스크립트 에러를 해결합니다.
-  const sheetRef = useRef<HTMLDivElement>(null);
+const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
+  activeTab,
+  activeCategory,
+  isCollapsed,
+  onItemSelect,
+  likedItems,
+  isSearching = false,
+  onSearchToggle,
+}) => {
+  //const [isSearching, setIsSearching] = useState(false);
+  const [activeTheme, setActiveTheme] = useState("추천");
+  const [activeSubTab, setActiveSubTab] = useState("전체");
+  //const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
 
-  const bind = useDrag(
-    ({ last, movement: [, my], velocity: [, vy] }) => {
-      const currentY = y.get();
+  // activeCategory prop이 변경될 때마다 실행됩니다.
+  useEffect(() => {
+    // 하위 탭 상태를 '전체'로 초기화합니다.
+    setActiveSubTab("전체");
+  }, [activeCategory]);
 
-      // 드래그 중일 때 y값을 업데이트
-      if (!last) {
-        y.set(currentY + my);
-        return;
+  const renderContent = () => {
+    if (activeTab === "official") {
+      switch (activeCategory) {
+        case "face":
+          return <div>공식몰 - 얼굴 아이템 목록</div>;
+        case "cloth":
+          return <div>공식몰 - 의상 아이템 목록</div>;
+        case "background":
+          return <div>공식몰 - 배경 아이템 목록</div>;
+        default:
+          return null;
       }
+    } else if (activeTab === "used") {
+      switch (activeCategory) {
+        case "face": {
+          const typeMap: { [key: string]: string } = {
+            머리: "HAIR",
+            눈: "EYES",
+            코: "NOSE",
+            입: "MOUTH",
+            점: "MOLE",
+          };
 
-      // 드래그를 놓았을 때의 로직
-      const projectedY = currentY + my + vy * 250; // 관성을 고려한 예상 위치
+          const filteredItems = mockFaceItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+            const typeMatch =
+              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+            return themeMatch && typeMatch;
+          });
 
-      // 가장 가까운 스냅 포인트를 찾음
-      const closest = SNAP_POINTS.reduce((prev, curr) =>
-        Math.abs(curr - projectedY) < Math.abs(prev - projectedY) ? curr : prev
-      );
+          return (
+            <div className={s.gridItems}>
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
+                  }
+                >
+                  <div className={s.item}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
+                  </div>
+                  <div className={s.itemPrice}>
+                    <img src={stone} />
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        case "cloth": {
+          const accessoryTypes = [
+            "EARS",
+            "EYESITEM",
+            "HEAD",
+            "NECK",
+            "LEFTWRIST",
+            "RIGHTWRIST",
+            "LEFTHAND",
+            "RIGHTHAND",
+          ];
+          const typeMap: { [key: string]: string } = {
+            상의: "TOP",
+            하의: "BOTTOM",
+            세트: "SET",
+            신발: "SHOES",
+          };
 
-      // 스프링 애니메이션으로 가장 가까운 스냅 포인트로 이동
-      animate(y, closest, {
-        type: "spring",
-        stiffness: 400,
-        damping: 40,
-      });
-    },
-    {
-      // 드래그 시작점 설정
-      from: () => [0, y.get()],
-      // 드래그 경계 설정
-      bounds: {
-        top: SNAP_POINTS[SNAP_POINTS.length - 1] - DRAG_BUFFER,
-        bottom: SNAP_POINTS[0] + DRAG_BUFFER,
-      },
-      // 수직축으로만 드래그 허용
-      axis: "y",
-      // 탭 동작이 드래그로 인식되지 않도록 필터링
-      filterTaps: true,
+          const filteredItems = mockClothItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+
+            let typeMatch = false;
+            if (activeSubTab === "전체") {
+              typeMatch = true;
+            } else if (activeSubTab === "악세서리") {
+              // activeSubTab이 '악세서리'이면, item.type이 accessoryTypes 배열에 포함되는지 확인합니다.
+              typeMatch = accessoryTypes.includes(item.type);
+            } else {
+              typeMatch = item.type === typeMap[activeSubTab];
+            }
+
+            return themeMatch && typeMatch;
+          });
+
+          return (
+            <div className={s.gridItems}>
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
+                  }
+                >
+                  <div className={s.item}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
+                  </div>
+                  <div className={s.itemPrice}>
+                    <img src={stone} />
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        case "background": {
+          const typeMap: { [key: string]: string } = {
+            별: "STARBACKGROUND",
+            우주정거장: "STATIONBACKGROUND",
+          };
+
+          const filteredItems = mockBackgroundItems.filter((item) => {
+            if (activeTheme === "좋아요") {
+              return likedItems.has(item.id);
+            }
+            const themeMatch =
+              activeTheme === "추천" || item.theme.includes(activeTheme);
+            const typeMatch =
+              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+            return themeMatch && typeMatch;
+          });
+
+          return (
+            <div className={s.gridItems}>
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() =>
+                    onItemSelect(
+                      item.id,
+                      item.name,
+                      item.description,
+                      item.price,
+                      item.type
+                    )
+                  }
+                >
+                  <div className={s.backgroundItem}>
+                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+                    {likedItems.has(item.id) && (
+                      <div className={s.heartIconContainer}>
+                        <img src={heartBtn} alt="liked" />
+                      </div>
+                    )}
+                  </div>
+                  <div className={s.itemPrice}>
+                    <img src={stone} />
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        }
+        default:
+          return null;
+      }
     }
-  );
+  };
 
   return (
-    <motion.div
-      ref={sheetRef}
-      className={styles.sheet}
-      style={{ y }} // y 모션 값을 직접 전달하여 transform을 제어
+    <div
+      className={`${s.sheetContainer} ${isSearching ? s.fullscreen : ""}`}
+      style={{ height: isCollapsed ? "2dvh" : "" }}
     >
-      <div className={styles.handle} {...bind()} />
-      <div className={styles.content}>
-        <p>이곳에 콘텐츠를 넣으세요.</p>
-        <p>스크롤 테스트를 위한 내용입니다.</p>
-        {/* 콘텐츠가 길어지면 자동으로 스크롤됩니다. */}
-        <div style={{ height: "1000px" }} />
+      <div className={s.barContainer}>
+        <div className={s.bar}></div>
       </div>
-    </motion.div>
+      {!isCollapsed && (
+        <>
+          <div style={{ flexShrink: 0 }}>
+            <ThemeCategoryTabs
+              onSearchToggle={onSearchToggle ? onSearchToggle : () => {}}
+              isSearching={isSearching}
+              activeTheme={activeTheme}
+              onThemeChange={setActiveTheme}
+            />
+            <SubCategoryTabs
+              activeCategory={activeCategory}
+              isSearching={isSearching}
+              activeSubTab={activeSubTab}
+              onSubTabChange={setActiveSubTab}
+            />
+          </div>
+          {!isSearching && <div className={s.content}>{renderContent()}</div>}
+        </>
+      )}
+    </div>
   );
-}
+};
+
+export default MarketBottomSheet;
