@@ -24,7 +24,9 @@ interface MarketBottomSheetProps {
   ) => void;
   likedItems: Set<number>;
   isSearching?: boolean;
-  onSearchToggle?: () => void;
+  reverseSearch: () => void;
+  isFocus: boolean; // isFocus prop 추가
+  setFocus: () => void; // setFocus prop 추가
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -34,7 +36,9 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   onItemSelect,
   likedItems,
   isSearching = false,
-  onSearchToggle,
+  reverseSearch,
+  isFocus,
+  setFocus,
 }) => {
   //const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
@@ -240,7 +244,8 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
 
   return (
     <div
-      className={`${s.sheetContainer} ${isSearching ? s.fullscreen : ""}`}
+      className={`${s.sheetContainer} ${isFocus ? s.fullscreen : ""}`}
+      //className={s.sheetContainer}
       style={{ height: isCollapsed ? "2dvh" : "" }}
     >
       <div className={s.barContainer}>
@@ -250,16 +255,20 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
         <>
           <div style={{ flexShrink: 0 }}>
             <ThemeCategoryTabs
-              onSearchToggle={onSearchToggle ? onSearchToggle : () => {}}
-              isSearching={isSearching}
+              reverseSearch={reverseSearch}
               activeTheme={activeTheme}
               onThemeChange={setActiveTheme}
+              isFocus={isFocus}
+              setFocus={setFocus}
             />
             <SubCategoryTabs
               activeCategory={activeCategory}
               isSearching={isSearching}
+              reverseSearch={reverseSearch}
               activeSubTab={activeSubTab}
               onSubTabChange={setActiveSubTab}
+              isFocus={isFocus}
+              setFocus={setFocus}
             />
           </div>
           {!isSearching && <div className={s.content}>{renderContent()}</div>}
