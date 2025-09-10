@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDrag } from "@use-gesture/react";
 import messageBtn from "../../../assets/btnImg/messageBtn.svg";
 import s from "./StationInside.module.scss";
@@ -25,6 +25,11 @@ const DraggableMember: React.FC<DraggableMemberProps> = ({
 }) => {
   const [localPosition, setLocalPosition] = useState(position);
   const [isDragging, setIsDragging] = useState(false);
+
+  // 부모로부터 전달되는 position이 바뀌면 로컬 상태를 동기화
+  useEffect(() => {
+    setLocalPosition(position);
+  }, [position.x, position.y]);
 
   const bind = useDrag(
     ({ down, movement: [mx, my], tap, event }) => {
@@ -76,10 +81,10 @@ const DraggableMember: React.FC<DraggableMemberProps> = ({
         {...bind()}
         src={member.character}
         alt=""
+        draggable={false}
         style={{
           width: "100%",
           userSelect: "none",
-          WebkitUserDrag: "none",
           pointerEvents: "auto",
         }}
       />
@@ -103,10 +108,10 @@ const DraggableMember: React.FC<DraggableMemberProps> = ({
           <img
             src={messageBtn}
             alt="리포트"
+            draggable={false}
             style={{
               height: "7dvw",
               userSelect: "none",
-              WebkitUserDrag: "none",
             }}
           />
         </div>
