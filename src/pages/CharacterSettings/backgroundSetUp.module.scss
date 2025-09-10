@@ -1,26 +1,26 @@
 button {
-  background: inherit;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  overflow: visible;
-  cursor: pointer
+	background: inherit;
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	overflow: visible;
+	cursor: pointer
 }
 
 p {
-  margin: 0;
+	margin: 0;
 }
 
 .background {
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .dim {
@@ -37,93 +37,139 @@ p {
 
 
 .showCharacter {
-  position: absolute;
-  width: 100%;
-  height: 55%;
-  font-family: "Pretendard", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	position: absolute;
+	width: 100%;
+	height: 55%;
+	font-family: "Pretendard", sans-serif;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 }
 
 .previousBtn {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  width: 62px;
-  height: 35px;
-  flex-shrink: 0;
-  border-radius: 19px;
-  background: #C0B9DB;
-  color: #ffffff;
-  z-index: 2;
-  font-family: "Pretendard";
-  font-size: 14px;
-  font-weight: bold;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 19px;
+	background: #C0B9DB;
+	color: #ffffff;
+	z-index: 2;
+	font-family: "Pretendard";
+	font-size: 14px;
+	font-weight: bold;
 }
+
 .pHeader {
-  position: absolute;
-  top: 7%;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: -0.32px;
-  z-index: 2;
-  color: #FFF;
-  text-align: center;
-  font-family: Pretendard;
+	position: absolute;
+	top: 7%;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.32px;
+	z-index: 2;
+	color: #FFF;
+	text-align: center;
+	font-family: Pretendard;
 }
 
 .nextBtn {
-  position: absolute;
-  top: 5.5%;
-  right: 5%;
-  width: 62px;
-  height: 35px;
-  flex-shrink: 0;
-  border-radius: 19px;
-  background: #402C44;
-  color: #ffffff;
-  z-index: 2;
-  font-family: "Pretendard";
-  font-size: 14px;
-  font-weight: bold;
+	position: absolute;
+	top: 5.5%;
+	right: 5%;
+	width: 62px;
+	height: 35px;
+	flex-shrink: 0;
+	border-radius: 19px;
+	background: #402C44;
+	color: #ffffff;
+	z-index: 2;
+	font-family: "Pretendard";
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .pDescription {
-  position: absolute;
-  top: 19%;
-  margin: 0;
-  z-index: 2;
-  white-space: nowrap;
-  color: #FFF;
+	position: absolute;
+	top: 19%;
+	margin: 0;
+	z-index: 2;
+	white-space: nowrap;
+	color: #FFF;
 
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: -0.32px;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.32px;
 }
 
 .characterContainer {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
 
-  img {
-    position: absolute;
-    height: 125%;
-    max-width: 100%;
-    top: 30%;
-  }
+	img {
+		position: absolute;
+		height: 125%;
+		max-width: 100%;
+		top: 30%;
+	}
 }
 
-// 레이어 순서: 액세서리>얼굴>상의>하의>신발>머리>피부
+// 일반: 피부 < 눈 < 코 < 입 < 점 < 머리 < 신발 < 하의 < 상의 < 아이템 
+
+//아이템: 눈< 머리 < 손목(왼/오) < 손(왼/오) < 목 < 귀
+.characterSkin {
+	z-index: 1;
+}
+
+.characterEyes {
+	z-index: 2;
+}
+
+.characterNose {
+	z-index: 3;
+}
+
+.characterMouth {
+	z-index: 4;
+}
+
+.characterMole {
+	z-index: 5;
+}
+
+.characterHair {
+	z-index: 6;
+}
+
+.characterShoes {
+	z-index: 7;
+}
+
+.characterBottom {
+	z-index: 8;
+}
+
+.characterTop {
+	z-index: 9;
+}
+
+.characterSet {
+	// 세트 의상은 상/하의보다 위에 오도록
+	z-index: 10;
+}
+
+
+
 /* 아이템들은 가장 위에 오도록 높은 z-index를 부여합니다. */
 .eyes_item {
 	z-index: 20;
@@ -152,38 +198,38 @@ p {
 }
 
 .backgroundList {
-  position: absolute;
-  background-color: #FFF;
-  width: 100%;
-  height: fit-content;
-  bottom: 0;
-  z-index: 100;
+	position: absolute;
+	background-color: #FFF;
+	width: 100%;
+	height: fit-content;
+	bottom: 0;
+	z-index: 100;
 }
 
 .bottomBar {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	bottom: -12px;
+	left: 50%;
+	transform: translateX(-50%);
 
-  .bar {
-    width: 20%;
-    height: 3px;
-    flex-shrink: 0;
-    border-radius: 100px;
-    background: #C9C6C9;
-  }
+	.bar {
+		width: 20%;
+		height: 3px;
+		flex-shrink: 0;
+		border-radius: 100px;
+		background: #C9C6C9;
+	}
 }
 
-.openBtn{
-  width: 45px;
-    height: 30px;
-    border-radius: 30px;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+.openBtn {
+	width: 45px;
+	height: 30px;
+	border-radius: 30px;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
 }
