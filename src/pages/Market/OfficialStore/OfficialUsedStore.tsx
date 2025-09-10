@@ -31,8 +31,8 @@ export default function OfficialUsedStore() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
   const [likedItems, setLikedItems] = useState(new Set<number>());
-	const [isCartModalOpen, setCartModalOpen] = useState(false);
-	const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
+  const [isCartModalOpen, setCartModalOpen] = useState(false);
+  const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
   const { userInfo } = useCharacterStore();
@@ -200,13 +200,13 @@ export default function OfficialUsedStore() {
     setCartModalOpen(false);
     setCompleteCartModalOpen(true);
   };
-	
-	const handleCompleteCart = () => {
-		// 구매 완료 후 처리 로직
-		setCompleteCartModalOpen(false);
-	}
 
-	const handleGoToCustom = () => {
+  const handleCompleteCart = () => {
+    // 구매 완료 후 처리 로직
+    setCompleteCartModalOpen(false);
+  };
+
+  const handleGoToCustom = () => {
     navigate("/home/charactersetting");
   };
 
@@ -236,7 +236,7 @@ export default function OfficialUsedStore() {
           item={selectedItem}
           onConfirm={handleCompleteCart}
           onCustom={handleGoToCustom}
-          onCancel={() => setCartModalOpen(false)}
+          onCancel={() => setCompleteCartModalOpen(false)}
         />
       )}
       <div className={s.header}>
