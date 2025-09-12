@@ -1,16 +1,17 @@
+// /src/pages/Market/OfficialStore/MarketBottomSheet/MarketBottomSheet.tsx (수정된 최종본)
+
 import React, { useState, useEffect } from "react";
 import s from "./MarketBottomSheet.module.scss";
 import { CategoryType } from ".././OfficialUsedStore";
 import ThemeCategoryTabs from "./ThemeCategoryTabs";
 import SubCategoryTabs from "./SubCategoryTabs";
-import { mockFaceItems } from "./MockData/mockFaceItem";
-import { mockClothItems } from "./MockData/mockClothItem";
-import { mockBackgroundItems } from "./MockData/mockBackgroundItem";
-import stone from "../../../../assets/market/stone.svg";
-import heartBtn from "../../../../assets/Icon/redHeart.svg";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+// 분리한 컴포넌트들을 import 합니다.
+import FaceItems from "./RenderItems/FaceItems";
+import ClothItems from "./RenderItems/ClothItems";
+import BackgroundItems from "./RenderItems/BackgroundItems";
 
+// MarketBottomSheet의 props 타입 정의는 그대로 유지합니다.
 interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
@@ -25,8 +26,8 @@ interface MarketBottomSheetProps {
   likedItems: Set<number>;
   isSearching?: boolean;
   reverseSearch: () => void;
-  isFocus: boolean; // isFocus prop 추가
-  setFocus: () => void; // setFocus prop 추가
+  isFocus: boolean;
+  setFocus: () => void;
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -40,19 +41,17 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   isFocus,
   setFocus,
 }) => {
-  //const [isSearching, setIsSearching] = useState(false);
   const [activeTheme, setActiveTheme] = useState("추천");
   const [activeSubTab, setActiveSubTab] = useState("전체");
-  //const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
 
-  // activeCategory prop이 변경될 때마다 실행됩니다.
   useEffect(() => {
-    // 하위 탭 상태를 '전체'로 초기화합니다.
     setActiveSubTab("전체");
   }, [activeCategory]);
 
+  // renderContent 함수가 매우 간결해졌습니다.
   const renderContent = () => {
     if (activeTab === "official") {
+      // 공식몰 로직은 아직 구현되지 않았으므로 그대로 둡니다.
       switch (activeCategory) {
         case "face":
           return <div>공식몰 - 얼굴 아이템 목록</div>;
@@ -64,188 +63,46 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           return null;
       }
     } else if (activeTab === "used") {
+      // activeCategory 값에 따라 적절한 컴포넌트를 렌더링합니다.
+      // 필요한 props를 자식 컴포넌트로 전달해줍니다.
       switch (activeCategory) {
-        case "face": {
-          const typeMap: { [key: string]: string } = {
-            머리: "HAIR",
-            눈: "EYES",
-            코: "NOSE",
-            입: "MOUTH",
-            점: "MOLE",
-          };
-
-          const filteredItems = mockFaceItems.filter((item) => {
-            if (activeTheme === "좋아요") {
-              return likedItems.has(item.id);
-            }
-            const themeMatch =
-              activeTheme === "추천" || item.theme.includes(activeTheme);
-            const typeMatch =
-              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
-            return themeMatch && typeMatch;
-          });
-
+        case "face":
           return (
-            <div className={s.gridItems}>
-              {filteredItems.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() =>
-                    onItemSelect(
-                      item.id,
-                      item.name,
-                      item.description,
-                      item.price,
-                      item.type
-                    )
-                  }
-                >
-                  <div className={s.item}>
-                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
-                    {likedItems.has(item.id) && (
-                      <div className={s.heartIconContainer}>
-                        <img src={heartBtn} alt="liked" />
-                      </div>
-                    )}
-                  </div>
-                  <div className={s.itemPrice}>
-                    <img src={stone} />
-                    {item.price}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <FaceItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+              likedItems={likedItems}
+              onItemSelect={onItemSelect}
+            />
           );
-        }
-        case "cloth": {
-          const accessoryTypes = [
-            "EARS",
-            "EYESITEM",
-            "HEAD",
-            "NECK",
-            "LEFTWRIST",
-            "RIGHTWRIST",
-            "LEFTHAND",
-            "RIGHTHAND",
-          ];
-          const typeMap: { [key: string]: string } = {
-            상의: "TOP",
-            하의: "BOTTOM",
-            세트: "SET",
-            신발: "SHOES",
-          };
-
-          const filteredItems = mockClothItems.filter((item) => {
-            if (activeTheme === "좋아요") {
-              return likedItems.has(item.id);
-            }
-            const themeMatch =
-              activeTheme === "추천" || item.theme.includes(activeTheme);
-
-            let typeMatch = false;
-            if (activeSubTab === "전체") {
-              typeMatch = true;
-            } else if (activeSubTab === "악세서리") {
-              // activeSubTab이 '악세서리'이면, item.type이 accessoryTypes 배열에 포함되는지 확인합니다.
-              typeMatch = accessoryTypes.includes(item.type);
-            } else {
-              typeMatch = item.type === typeMap[activeSubTab];
-            }
-
-            return themeMatch && typeMatch;
-          });
-
+        case "cloth":
           return (
-            <div className={s.gridItems}>
-              {filteredItems.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() =>
-                    onItemSelect(
-                      item.id,
-                      item.name,
-                      item.description,
-                      item.price,
-                      item.type
-                    )
-                  }
-                >
-                  <div className={s.item}>
-                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
-                    {likedItems.has(item.id) && (
-                      <div className={s.heartIconContainer}>
-                        <img src={heartBtn} alt="liked" />
-                      </div>
-                    )}
-                  </div>
-                  <div className={s.itemPrice}>
-                    <img src={stone} />
-                    {item.price}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ClothItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+              likedItems={likedItems}
+              onItemSelect={onItemSelect}
+            />
           );
-        }
-        case "background": {
-          const typeMap: { [key: string]: string } = {
-            별: "STARBACKGROUND",
-            우주정거장: "STATIONBACKGROUND",
-          };
-
-          const filteredItems = mockBackgroundItems.filter((item) => {
-            if (activeTheme === "좋아요") {
-              return likedItems.has(item.id);
-            }
-            const themeMatch =
-              activeTheme === "추천" || item.theme.includes(activeTheme);
-            const typeMatch =
-              activeSubTab === "전체" || item.type === typeMap[activeSubTab];
-            return themeMatch && typeMatch;
-          });
-
+        case "background":
           return (
-            <div className={s.gridItems}>
-              {filteredItems.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() =>
-                    onItemSelect(
-                      item.id,
-                      item.name,
-                      item.description,
-                      item.price,
-                      item.type
-                    )
-                  }
-                >
-                  <div className={s.backgroundItem}>
-                    <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
-                    {likedItems.has(item.id) && (
-                      <div className={s.heartIconContainer}>
-                        <img src={heartBtn} alt="liked" />
-                      </div>
-                    )}
-                  </div>
-                  <div className={s.itemPrice}>
-                    <img src={stone} />
-                    {item.price}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <BackgroundItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+              likedItems={likedItems}
+              onItemSelect={onItemSelect}
+            />
           );
-        }
         default:
           return null;
       }
     }
   };
 
+  // JSX 구조는 거의 동일합니다.
   return (
     <div
       className={`${s.sheetContainer} ${isFocus ? s.fullscreen : ""}`}
-      //className={s.sheetContainer}
       style={{ height: isCollapsed ? "2dvh" : "" }}
     >
       <div className={s.barContainer}>
