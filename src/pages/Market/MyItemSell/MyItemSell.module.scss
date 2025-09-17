@@ -1,0 +1,154 @@
+// MyItemSell.module.scss
+
+.container {
+    width: 100dvw;
+    height: 91dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+        180deg,
+        #F8F8FA 28.21%,
+        #E4D0E5 259.4%
+    );
+}
+
+.header {
+    width: 100dvw;
+    height: 78.55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+
+    background-color: #FFF;
+    position: relative;
+    
+    &Title {
+        padding-bottom: 20px;
+
+        color: #17151C;
+        text-align: center;
+        font-family: "Pretendard";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.32px;
+    }
+}
+
+.backArrow {
+    width: 7px;
+    height: 14px;
+    padding: 24px 16px;
+
+    position: absolute;
+    left: 0;
+}
+
+/* ===============================
+    상단 메인 탭 (얼굴/패션/배경)
+   =============================== */
+.mainTabs {
+    width: 94dvw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-bottom: 1px solid #EEE;
+}
+
+.mainTabBtn {
+    height: 50px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.mainTabBtn.active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: #17151C;
+    border-radius: 100px;
+}
+
+.mainTabText {
+    color: #5F5F5F;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.32px;
+
+    margin-top: 18px;
+}
+.mainTabText.active {
+    color: #17151C;
+    font-weight: 700;
+}
+
+/* ===============================
+   [NEW] 하위 서브 탭 (가로 스크롤)
+   =============================== */
+.subTabs {
+    width: 94dvw;
+    display: flex;
+    padding-top: 16px;
+    overflow-x: auto;
+
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+}
+
+.subTabBtn {
+    padding-right: 24px;
+    color: #5F5F5F;
+    font-family: "Pretendard";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.subTabBtn.active {
+    color: #444;
+    font-weight: 700;
+}
+
+/* ===============================
+   아이템 그리드 & 카드
+   =============================== */
+.grid {
+    width: 100dvw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 34px;
+    align-items: center;
+    justify-items: center;
+    gap: 18px 0px;
+}
+
+.card {
+    width: 18dvw;
+    aspect-ratio: 1 / 1;
+    background: #FFF;
+    border: 2px solid #FFF;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 5px rgba(41, 34, 41, 0.20));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.card.selected {
+    border-color: #C0B9DB;
+}
+
+.cardImg {
+    
+}
