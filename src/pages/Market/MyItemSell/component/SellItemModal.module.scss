@@ -1,0 +1,63 @@
+// SellItemModal.module.scss
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // 반투명 검정 배경
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal {
+    background: white; // 팝업 내부 배경을 흰색으로
+    border-radius: 1.875rem;
+    width: 78%;
+    height: 66%;
+    position: relative;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalClose {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.textArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.itemNameText {
+    color: var(--gray-22, #444);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.imageContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.itemImg {
+    width: 100%;
+    max-width: 21.2rem;
+}
