@@ -12,15 +12,15 @@ interface CompleteCartModalProps {
     price: number;
     type: string;
   };
-	onConfirm: () => void;
-	onCustom: () => void;
+  onConfirm: () => void;
+  onCustom: () => void;
   onCancel: () => void;
 }
 
 const CompleteCartModal: React.FC<CompleteCartModalProps> = ({
   item,
-	onConfirm,
-	onCustom,
+  onConfirm,
+  onCustom,
   onCancel,
 }) => {
   if (!item || item.id === null) {
@@ -30,10 +30,7 @@ const CompleteCartModal: React.FC<CompleteCartModalProps> = ({
   return (
     <div className={s.modalOverlay}>
       <div className={s.modal}>
-        <button
-          className={`${s.modalButton} ${s.cancelButton}`}
-          onClick={onCancel}
-        >
+        <button className={s.cancelButton} onClick={onCancel}>
           <img src={closeBtn} alt="닫기" />
         </button>
         <div className={s.header}>구매를 완료했어요!</div>
@@ -44,16 +41,10 @@ const CompleteCartModal: React.FC<CompleteCartModalProps> = ({
           className={s.itemImage}
         />
         <div className={s.modalButton}>
-          <button
-            className={s.confirmButton}
-            onClick={onConfirm}
-          >
+          <button className={s.confirmButton} onClick={onConfirm}>
             계속 구매하기
           </button>
-          <button
-						className={s.costomBtn}
-            onClick={onCustom}
-          >
+          <button className={s.costomBtn} onClick={onCustom}>
             커스텀하기
           </button>
         </div>
