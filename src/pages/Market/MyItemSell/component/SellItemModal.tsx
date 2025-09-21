@@ -3,6 +3,7 @@ import s from "./SellItemModal.module.scss";
 
 // image files
 import close from '../../../../assets/Signal/close.svg';
+import stone from "../../../../assets/market/stone.svg";
 
 interface SellItemModalProps {
     itemName: string;
@@ -25,16 +26,35 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                     <img src={close} alt="close" />
                 </button>
                 <div className={s.textArea}>
-                    {/* [CHANGED] 팀원 구조: description을 제목처럼 노출 */}
-                    <span className={s.itemNameText}>{itemName}</span> {/* [CHANGED] */}
+                    <span className={s.itemNameText}>{itemName}</span>
                 </div>
                 <div className={s.imageContainer}>
                     <img
-                        src={image} // [CHANGED] IMG_BASE_URL+name 형태로 상위에서 완성된 URL 전달
+                        src={image}
                         alt="item image"
                         className={s.itemImg}
                     />
                 </div>
+                <div className={s.priceArea}>
+                    <span className={s.priceText}>공식몰 가격</span>
+                    <img src={stone} alt="stone" className={s.stoneIcon} />
+                    <span className={s.priceValue}>15</span>
+                </div>
+                <div className={s.buttonArea}>
+                    <div
+                        className={s.checkMarketPriceBtn}
+                        onClick={() => {}}
+                    >
+                        <span className={s.btnText}>시세확인</span>
+                    </div>
+                    <div
+                        className={s.sellBtn}
+                        onClick={() => {}}
+                    >
+                        <span className={s.btnText}>판매하기</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
