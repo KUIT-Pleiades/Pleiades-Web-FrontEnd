@@ -1,8 +1,5 @@
-// src/App.tsx (수정 완료된 전체 코드)
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-// --- 기존 페이지 컴포넌트 ---
 //import Splash from "./pages/SplashScreen/Splash"; // 스플래시 페이지가 필요하다면 주석 해제
 import Home from "./pages/Home/Home";
 import Station from "./pages/Station/Station";
@@ -33,7 +30,7 @@ import MyProductManagement from "./pages/Market/MyProductManagement/MyProductMan
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
 
-// === 새로 추가할 페이지 import ===
+// AdSense 를 위한 랜딩페이지, 약관, 개인정보처리방침 페이지
 import LandingPage from './pages/LandingPage/LandingPage';
 import TermsPage from './pages/TermsPage/TermsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
