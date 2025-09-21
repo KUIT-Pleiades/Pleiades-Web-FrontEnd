@@ -145,10 +145,14 @@
     justify-content: center;
     overflow: hidden;
 }
-.card.selected {
-    border-color: #C0B9DB;
-}
 
-.cardImg {
-    
+
+.itemThumb {
+    display: block;               /* [ADD] 인라인 갭 제거 */
+    width: 100%;                  /* [ADD] 박스 너비 초과 금지 */
+    height: 100%;                 /* [ADD] 박스 높이 초과 금지 */
+    object-fit: contain;          /* [ADD] 원본 비율 유지 + 여백 생성 */
+    object-position: center;      /* [ADD] 중앙 정렬 */
+    pointer-events: none;         /* [ADD] 클릭 타깃은 카드 */
+    user-select: none;            /* [ADD] 드래그 방지(선택사항) */
 }

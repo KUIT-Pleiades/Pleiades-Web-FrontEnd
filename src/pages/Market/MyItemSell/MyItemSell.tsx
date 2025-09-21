@@ -5,9 +5,9 @@ import SellItemModal from './component/SellItemModal';
 
 import backArrow from '../../../assets/pleiadesBackArrow.svg';
 
-import { mockFaceItems } from '../OfficialStore/MarketBottomSheet/MockData/mockFaceItem'; // [ADD]
-import { mockClothItems } from '../OfficialStore/MarketBottomSheet/MockData/mockClothItem'; // [ADD]
-import { mockBackgroundItems } from '../OfficialStore/MarketBottomSheet/MockData/mockBackgroundItem'; // [ADD]
+import { mockFaceItems } from '../OfficialStore/MarketBottomSheet/MockData/mockFaceItem';
+import { mockClothItems } from '../OfficialStore/MarketBottomSheet/MockData/mockClothItem';
+import { mockBackgroundItems } from '../OfficialStore/MarketBottomSheet/MockData/mockBackgroundItem';
 
 type CategoryType = 'face' | 'cloth' | 'background';
 
@@ -189,27 +189,22 @@ const MyItemSell: React.FC = () => {
                 {filtered.map((item) => (
                     <div
                         key={item.id}
-                        className={`${s.card} ${selectedDomainItem?.id === item.id ? s.selected : ''}`}
+                        className={s.card}
                         onClick={() => {
                             setSelectedDomainItem(item);
                             setIsSellItemModalVisible(true);
                         }}
                     >
-                        <img src={item.image} alt={item.raw.name} className={s.itemThumb} /> {/* [ADD] */}
-                        <div className={s.cardMeta}>
-                            <div className={s.subLabel}>{item.sub}</div>
-                            <div className={s.desc}>{item.raw.description}</div>
-                        </div>
+                        <img src={item.image} alt={item.raw.name} className={s.itemThumb} />
                     </div>
                 ))}
             </div>
 
             {isSellItemModalVisible && selectedDomainItem && (
                 <SellItemModal
-                    // [CHANGED] 팀원 구조 우선: 설명을 이름처럼 노출(없다면 id)
-                    itemName={selectedDomainItem.raw.description || String(selectedDomainItem.id)} // [CHANGED]
+                    itemName={selectedDomainItem.raw.description || String(selectedDomainItem.id)}
                     handleCloseSendSignalPopup={handleCloseSellItemModal}
-                    image={selectedDomainItem.image} // [CHANGED] 완성 URL
+                    image={selectedDomainItem.image}
                 />
             )}
         </div>
