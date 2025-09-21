@@ -1,14 +1,18 @@
+// src/App.tsx (수정 완료된 전체 코드)
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Splash from "./pages/SplashScreen/Splash";
+
+// --- 기존 페이지 컴포넌트 ---
+//import Splash from "./pages/SplashScreen/Splash"; // 스플래시 페이지가 필요하다면 주석 해제
 import Home from "./pages/Home/Home";
 import Station from "./pages/Station/Station";
 import LogIn from "./pages/LogIn/LogIn";
 import NaverLogin from "./pages/LogIn/NaverLogin";
+import KakaoLogin from "./pages/LogIn/KakaoLogin";
 import FriendsTab from "./pages/FriendsTab/FriendsTab";
 import SearchUsers from "./pages/SearchUsers/SearchUsers";
 import ShowStationList from "./pages/Station/ShowStationsList/ShowStationList";
 import Error from "./pages/PageManagement/Error";
-import KakaoLogin from "./pages/LogIn/KakaoLogin";
 import AuthHandler from "./pages/PageManagement/AuthHandler";
 import CharacterSettings from "./pages/CharacterSettings/CharacterSettings";
 import Setting from "./pages/Setting/Setting";
@@ -29,14 +33,23 @@ import MyProductManagement from "./pages/Market/MyProductManagement/MyProductMan
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
 
+// === 새로 추가할 페이지 import ===
+import LandingPage from './pages/LandingPage/LandingPage';
+import TermsPage from './pages/TermsPage/TermsPage';
+import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
+
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Splash />} />
+        {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/login" element={<LogIn />}></Route>
-        <Route path="naverlogin" element={<NaverLogin />} />
-        <Route path="kakaologin" element={<KakaoLogin />} />
+        <Route path="/naverlogin" element={<NaverLogin />} />
+        <Route path="/kakaologin" element={<KakaoLogin />} />
         <Route
           path="/loginfail"
           element={
@@ -48,8 +61,12 @@ export default function App() {
             />
           }
         />
+        {/* Splash 스크린이 필요하다면 별도 경로로 유지할 수 있습니다. 예: <Route path="/splash" element={<Splash />} /> */}
+
+
+        {/* === 2. 로그인이 반드시 필요한 기존 앱 페이지들 === */}
         <Route element={<AuthHandler />}>
-          <Route path="onboarding" element={<CharacterSettings />}></Route>
+          <Route path="/onboarding" element={<CharacterSettings />}></Route>
           <Route path="/home" element={<Home />}>
             <Route index element={<MyStar />} />
             <Route
@@ -60,7 +77,7 @@ export default function App() {
           <Route path="/report" element={<Report />}></Route>
 
           {/* 상점 관련 루트 */}
-          <Route path="market" element={<Market />}>
+          <Route path="/market" element={<Market />}>
             <Route index element={<MarketHome />} />
             <Route path="official-store" element={<OfficialUsedStore />} />
             <Route path="my-item-sell" element={<MyItemSell />} />
@@ -69,13 +86,13 @@ export default function App() {
           </Route>
 
           {/* 세팅 관련 루트 */}
-          <Route path="setting" element={<Setting />}>
+          <Route path="/setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
             <Route path="profile" element={<ProfileSetting />} />
           </Route>
 
           {/* 정거장 관련 루트 */}
-          <Route path="station" element={<Station />}>
+          <Route path="/station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
             <Route path="stationinside" element={<StationInside />} />
@@ -83,19 +100,21 @@ export default function App() {
             <Route path="stationbackgroundsetting" element={<StationBackgroundSetting />} />
           </Route>
 
-          <Route path="friendtab" element={<FriendsTab />}></Route>
-          <Route path="searchusers" element={<SearchUsers />}></Route>
-          <Route path="friendstar" element={<FriendStar />}></Route>
-          <Route path="friendreport" element={<FriendReport />}></Route>
+          <Route path="/friendtab" element={<FriendsTab />}></Route>
+          <Route path="/searchusers" element={<SearchUsers />}></Route>
+          <Route path="/friendstar" element={<FriendStar />}></Route>
+          <Route path="/friendreport" element={<FriendReport />}></Route>
         </Route>
+        
+        {/* 일치하는 라우트가 없을 때 표시할 에러 페이지 */}
         <Route
           path="*"
           element={
             <Error
               title="경로를 다시 확인해주세요"
               subTitle="앗! 잘못된 접근이에요"
-              destination="/home"
-              buttonDescription="홈으로 돌아가기"
+              destination="/"
+              buttonDescription="랜딩 페이지로 돌아가기"
             />
           }
         />
