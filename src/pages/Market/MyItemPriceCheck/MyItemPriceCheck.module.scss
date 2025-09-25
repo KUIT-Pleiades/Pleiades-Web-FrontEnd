@@ -1,0 +1,116 @@
+/* 파일: src/pages/Market/MyItemPriceCheck/MyItemPriceCheck.module.scss */
+.container {
+    width: 100dvw;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    padding: 12px 16px 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6f2fa 100%);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+}
+
+.back {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0 6px;
+    color: #2b2b2b;
+}
+
+.itemTitle {
+    font-weight: 700;
+}
+
+.sectionSub {
+    color: #666;
+}
+
+.count {
+    color: #666;
+}
+
+.divider {
+    height: 2px;
+    background: #dccfee;
+    margin-bottom: 12px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.card {
+    position: relative;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    padding: 12px;
+}
+
+.badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 8px;
+    background: #ffefe9;
+    color: #ff6b6b;
+    border-radius: 999px;
+}
+
+.thumbWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    margin-bottom: 10px;
+}
+
+.thumb {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stoneIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.priceValue {
+    font-weight: 700;
+    font-size: 14px;
+}
