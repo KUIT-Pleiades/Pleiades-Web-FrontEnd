@@ -47,7 +47,6 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
     setActiveSubTab("전체");
   }, [activeCategory]);
 
-  // renderContent 함수가 매우 간결해졌습니다.
   const renderContent = () => {
     if (activeTab === "official") {
       switch (activeCategory) {
