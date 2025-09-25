@@ -5,6 +5,8 @@ import ThemeCategoryTabs from "./ThemeCategoryTabs";
 import SubCategoryTabs from "./SubCategoryTabs";
 
 import OfficialFaceItems from "./RenderItems/OfficialFaceItems";
+import OfficialClothItems from "./RenderItems/OfficialClothItems";
+import OfficialBackgroundItems from "./RenderItems/OfficialBackgroundItems";
 import FaceItems from "./RenderItems/FaceItems";
 import ClothItems from "./RenderItems/ClothItems";
 import BackgroundItems from "./RenderItems/BackgroundItems";
@@ -50,19 +52,29 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
     if (activeTab === "official") {
       switch (activeCategory) {
         case "face":
-          // 공식몰 얼굴 아이템 컴포넌트를 렌더링합니다.
           return (
             <OfficialFaceItems
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
+              onItemSelect={onItemSelect}
             />
           );
         case "cloth":
-          // TODO: 공식몰 의상 아이템 컴포넌트 추가
-          return <div>공식몰 - 의상 아이템 목록 (연결 필요)</div>;
+          return (
+            <OfficialClothItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+              onItemSelect={onItemSelect}
+            />
+          );
         case "background":
-          // TODO: 공식몰 배경 아이템 컴포넌트 추가
-          return <div>공식몰 - 배경 아이템 목록 (연결 필요)</div>;
+          return (
+            <OfficialBackgroundItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+              onItemSelect={onItemSelect}
+            />
+          );
         default:
           return null;
       }

@@ -1,6 +1,7 @@
 import React from "react";
 import ItemGrid from "./ItemGrid";
-import { useOfficialFaceItems } from "../../../../../hooks/queries/useOfficialFaceItems";
+import { useOfficialBackgroundItems } from "../../../../../hooks/queries/useOfficialBackgroundItems";
+import s from "../MarketBottomSheet.module.scss";
 
 interface ItemProps {
   activeTheme: string;
@@ -14,12 +15,12 @@ interface ItemProps {
   ) => void;
 }
 
-const OfficialFaceItems: React.FC<ItemProps> = ({
+const OfficialBackgroundItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
 }) => {
-  const { data, isLoading, isError, error } = useOfficialFaceItems();
+  const { data, isLoading, isError, error } = useOfficialBackgroundItems();
 
   if (isLoading) {
     return <div>공식몰 아이템을 불러오는 중입니다...</div>;
@@ -29,17 +30,13 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
     return <div>에러가 발생했습니다: {error.message}</div>;
   }
 
-  // data와 그 안의 items, wishlist 속성까지 모두 확인하여 안정성을 높입니다.
   if (!data || !data.items || !data.wishlist) {
     return <div>아이템 데이터를 받아오지 못했습니다.</div>;
   }
 
   const typeMap: { [key: string]: string } = {
-    머리: "HAIR",
-    눈: "EYES",
-    코: "NOSE",
-    입: "MOUTH",
-    점: "MOLE",
+    별: "STARBACKGROUND",
+    우주정거장: "STATIONBACKGROUND",
   };
 
   const wishlist = new Set(data.wishlist);
@@ -60,8 +57,9 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
       items={filteredItems}
       likedItems={wishlist}
       onItemSelect={onItemSelect}
+      itemClassName={s.backgroundItem} // 배경 아이템용 스타일 클래스 전달
     />
   );
 };
 
-export default OfficialFaceItems;
+export default OfficialBackgroundItems;

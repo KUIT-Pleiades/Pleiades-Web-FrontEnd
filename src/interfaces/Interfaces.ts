@@ -367,3 +367,15 @@ export interface OfficialFaceData {
   items: OfficialItem[];
   wishlist: number[];
 }
+
+// '/store/official/cloth' API가 응답하는 전체 데이터의 타입
+export interface OfficialClothData {
+  items: OfficialItem[];
+  wishlist: number[];
+}
+
+// '/store/official/background' API가 응답하는 전체 데이터의 타입
+export interface OfficialBackgroundData {
+  items: OfficialItem[];
+  wishlist: number[];
+}

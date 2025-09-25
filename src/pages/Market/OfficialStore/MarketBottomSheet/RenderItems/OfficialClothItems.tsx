@@ -1,6 +1,6 @@
 import React from "react";
 import ItemGrid from "./ItemGrid";
-import { useOfficialFaceItems } from "../../../../../hooks/queries/useOfficialFaceItems";
+import { useOfficialClothItems } from "../../../../../hooks/queries/useOfficialClothItems";
 
 interface ItemProps {
   activeTheme: string;
@@ -14,12 +14,12 @@ interface ItemProps {
   ) => void;
 }
 
-const OfficialFaceItems: React.FC<ItemProps> = ({
+const OfficialClothItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
 }) => {
-  const { data, isLoading, isError, error } = useOfficialFaceItems();
+  const { data, isLoading, isError, error } = useOfficialClothItems();
 
   if (isLoading) {
     return <div>공식몰 아이템을 불러오는 중입니다...</div>;
@@ -29,17 +29,25 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
     return <div>에러가 발생했습니다: {error.message}</div>;
   }
 
-  // data와 그 안의 items, wishlist 속성까지 모두 확인하여 안정성을 높입니다.
   if (!data || !data.items || !data.wishlist) {
     return <div>아이템 데이터를 받아오지 못했습니다.</div>;
   }
 
+  const accessoryTypes = [
+    "EARS",
+    "EYESITEM",
+    "HEAD",
+    "NECK",
+    "LEFTWRIST",
+    "RIGHTWRIST",
+    "LEFTHAND",
+    "RIGHTHAND",
+  ];
   const typeMap: { [key: string]: string } = {
-    머리: "HAIR",
-    눈: "EYES",
-    코: "NOSE",
-    입: "MOUTH",
-    점: "MOLE",
+    상의: "TOP",
+    하의: "BOTTOM",
+    세트: "SET",
+    신발: "SHOES",
   };
 
   const wishlist = new Set(data.wishlist);
@@ -50,8 +58,16 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
     }
     const themeMatch =
       activeTheme === "추천" || item.theme.includes(activeTheme);
-    const typeMatch =
-      activeSubTab === "전체" || item.type === typeMap[activeSubTab];
+
+    let typeMatch = false;
+    if (activeSubTab === "전체") {
+      typeMatch = true;
+    } else if (activeSubTab === "악세서리") {
+      typeMatch = accessoryTypes.includes(item.type);
+    } else {
+      typeMatch = item.type === typeMap[activeSubTab];
+    }
+
     return themeMatch && typeMatch;
   });
 
@@ -64,4 +80,4 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
   );
 };
 
-export default OfficialFaceItems;
+export default OfficialClothItems;
