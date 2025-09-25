@@ -1,10 +1,8 @@
 import React from "react";
-import { mockFaceItems } from "../MockData/mockFaceItem";
-import ItemGrid from "./ItemGrid"; // 1단계에서 만든 ItemGrid 컴포넌트 import
-//import { CategoryType } from "../../OfficialUsedStore";
+import { mockFaceItems } from "../MockData/mockFaceItem"; // Mock 데이터 다시 사용
+import ItemGrid from "./ItemGrid";
 
-// FaceItems 컴포넌트가 받을 props 타입을 정의합니다.
-interface ItemProps {
+interface FaceItemsProps {
   activeTheme: string;
   activeSubTab: string;
   likedItems: Set<number>;
@@ -17,13 +15,12 @@ interface ItemProps {
   ) => void;
 }
 
-const FaceItems: React.FC<ItemProps> = ({
+const FaceItems: React.FC<FaceItemsProps> = ({
   activeTheme,
   activeSubTab,
   likedItems,
   onItemSelect,
 }) => {
-  // 기존 MarketBottomSheet에 있던 'face' 카테고리 로직을 그대로 가져옵니다.
   const typeMap: { [key: string]: string } = {
     머리: "HAIR",
     눈: "EYES",
@@ -32,6 +29,7 @@ const FaceItems: React.FC<ItemProps> = ({
     점: "MOLE",
   };
 
+  // 기존 Mock 데이터를 사용한 필터링 로직
   const filteredItems = mockFaceItems.filter((item) => {
     if (activeTheme === "좋아요") {
       return likedItems.has(item.id);
@@ -43,7 +41,6 @@ const FaceItems: React.FC<ItemProps> = ({
     return themeMatch && typeMatch;
   });
 
-  // 필터링된 데이터를 ItemGrid에 넘겨 렌더링합니다.
   return (
     <ItemGrid
       items={filteredItems}

@@ -1,17 +1,14 @@
-// /src/pages/Market/OfficialStore/MarketBottomSheet/MarketBottomSheet.tsx (수정된 최종본)
-
 import React, { useState, useEffect } from "react";
 import s from "./MarketBottomSheet.module.scss";
 import { CategoryType } from ".././OfficialUsedStore";
 import ThemeCategoryTabs from "./ThemeCategoryTabs";
 import SubCategoryTabs from "./SubCategoryTabs";
 
-// 분리한 컴포넌트들을 import 합니다.
+import OfficialFaceItems from "./RenderItems/OfficialFaceItems";
 import FaceItems from "./RenderItems/FaceItems";
 import ClothItems from "./RenderItems/ClothItems";
 import BackgroundItems from "./RenderItems/BackgroundItems";
 
-// MarketBottomSheet의 props 타입 정의는 그대로 유지합니다.
 interface MarketBottomSheetProps {
   activeTab: string;
   activeCategory: CategoryType;
@@ -51,14 +48,21 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   // renderContent 함수가 매우 간결해졌습니다.
   const renderContent = () => {
     if (activeTab === "official") {
-      // 공식몰 로직은 아직 구현되지 않았으므로 그대로 둡니다.
       switch (activeCategory) {
         case "face":
-          return <div>공식몰 - 얼굴 아이템 목록</div>;
+          // 공식몰 얼굴 아이템 컴포넌트를 렌더링합니다.
+          return (
+            <OfficialFaceItems
+              activeTheme={activeTheme}
+              activeSubTab={activeSubTab}
+            />
+          );
         case "cloth":
-          return <div>공식몰 - 의상 아이템 목록</div>;
+          // TODO: 공식몰 의상 아이템 컴포넌트 추가
+          return <div>공식몰 - 의상 아이템 목록 (연결 필요)</div>;
         case "background":
-          return <div>공식몰 - 배경 아이템 목록</div>;
+          // TODO: 공식몰 배경 아이템 컴포넌트 추가
+          return <div>공식몰 - 배경 아이템 목록 (연결 필요)</div>;
         default:
           return null;
       }
