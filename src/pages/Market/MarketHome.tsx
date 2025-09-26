@@ -27,6 +27,7 @@ const MarketHome: React.FC = () => {
 
     return (
         <div className={s.container}>
+
             <div className={s.header}>
                 <span className={s.headerTitle}>플레이아데스 상점</span>
             </div>
@@ -68,9 +69,9 @@ const MarketHome: React.FC = () => {
                         />
                     ))}
                 </div>
+                
             </div>
-            {/* <img className={s.characterBackground} src={characterBackground} alt="캐릭터 배경" />
-            <img className={s.character} src={userCharacter} alt="캐릭터" /> */}
+
         </div>
     );
 };

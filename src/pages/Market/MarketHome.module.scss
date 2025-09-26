@@ -41,6 +41,7 @@
     align-items: center;
 
     position: relative;
+    min-height: 0;
 
     &::after { /* 변경됨: 하단 딤 추가 */
         content: "";
@@ -109,6 +110,7 @@
     position: relative;
     width: 100%;
     height: 57%;
+    overflow: hidden;
 }
 
 .character {

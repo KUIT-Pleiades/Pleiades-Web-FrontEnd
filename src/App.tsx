@@ -26,6 +26,7 @@ import FriendStar from "./pages/FriendStar/FriendStar";
 import FriendReport from "./pages/FriendStar/FriendReport/FriendReport";
 import MarketHome from "./pages/Market/MarketHome";
 import MyItemSell from "./pages/Market/MyItemSell/MyItemSell";
+import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
 import MyProductManagement from "./pages/Market/MyProductManagement/MyProductManagement";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
@@ -78,6 +79,7 @@ export default function App() {
             <Route index element={<MarketHome />} />
             <Route path="official-store" element={<OfficialUsedStore />} />
             <Route path="my-item-sell" element={<MyItemSell />} />
+            <Route path="my-item-price-check" element={<MyItemPriceCheck />} />
             <Route path="my-product-management" element={<MyProductManagement />} />
             <Route path="transaction-history" element={<TransactionHistory />} />
           </Route>
