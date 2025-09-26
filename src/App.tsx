@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
 //import Splash from "./pages/SplashScreen/Splash"; // 스플래시 페이지가 필요하다면 주석 해제
 import Home from "./pages/Home/Home";
@@ -40,6 +41,8 @@ import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
+
       <Routes>
         {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
         <Route path="/" element={<LandingPage />} />
