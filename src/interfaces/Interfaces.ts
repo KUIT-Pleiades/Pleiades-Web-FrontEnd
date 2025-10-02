@@ -368,14 +368,44 @@ export interface OfficialFaceData {
   wishlist: number[];
 }
 
-// '/store/official/cloth' API가 응답하는 전체 데이터의 타입
+// '/store/official/fashion' API가 응답하는 전체 데이터의 타입
 export interface OfficialClothData {
   items: OfficialItem[];
   wishlist: number[];
 }
 
-// '/store/official/background' API가 응답하는 전체 데이터의 타입
+// '/store/official/bg' API가 응답하는 전체 데이터의 타입
 export interface OfficialBackgroundData {
   items: OfficialItem[];
+  wishlist: number[];
+}
+
+// Interfaces For Used Market
+// 중고몰에서 판매하는 개별 아이템의 타입
+export interface UsedItem {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  price: number;
+  discounted_price: number;
+  status: string;
+  theme: string[];
+}
+
+// '/store/resale/face' API가 응답하는 전체 데이터의 타입
+export interface UsedFaceData {
+  items: UsedItem[];
+  wishlist: number[];
+}
+// '/store/resale/fashion' API가 응답하는 전체 데이터의 타입
+export interface UsedClothData {
+  items: UsedItem[];
+  wishlist: number[];
+}
+
+// '/store/resale/bg' API가 응답하는 전체 데이터의 타입
+export interface UsedBackgroundData {
+  items: UsedItem[];
   wishlist: number[];
 }

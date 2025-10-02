@@ -1,12 +1,10 @@
 import React from "react";
-import { mockBackgroundItems } from "../MockData/mockBackgroundItem";
 import ItemGrid from "./ItemGrid";
-import s from "../MarketBottomSheet.module.scss"; // backgroundItem 스타일을 위해 import
+import { useUsedBackgroundItems } from "../../../../../hooks/queries/useUsedBackgroundItems";
 
 interface ItemProps {
   activeTheme: string;
   activeSubTab: string;
-  likedItems: Set<number>;
   onItemSelect: (
     id: number,
     name: string,
@@ -14,23 +12,39 @@ interface ItemProps {
     price: number,
     type: string
   ) => void;
+  likedItems: Set<number>;
 }
 
-const BackgroundItems: React.FC<ItemProps> = ({
+const UsedBackgroundItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
-  likedItems,
   onItemSelect,
+  likedItems,
 }) => {
-  // 기존 MarketBottomSheet에 있던 'background' 카테고리 로직을 그대로 가져옵니다.
+  const { data, isLoading, isError, error } = useUsedBackgroundItems();
+
+  if (isLoading) {
+    return <div>중고몰 아이템을 불러오는 중입니다...</div>;
+  }
+
+  if (isError) {
+    return <div>에러가 발생했습니다: {error.message}</div>;
+  }
+
+  if (!data || !data.items) {
+    return <div>아이템 데이터를 받아오지 못했습니다.</div>;
+  }
+
   const typeMap: { [key: string]: string } = {
     별: "STARBACKGROUND",
     우주정거장: "STATIONBACKGROUND",
   };
 
-  const filteredItems = mockBackgroundItems.filter((item) => {
+  const wishlist = new Set(data.wishlist);
+
+  const filteredItems = data.items.filter((item) => {
     if (activeTheme === "좋아요") {
-      return likedItems.has(item.id);
+      return wishlist.has(item.id);
     }
     const themeMatch =
       activeTheme === "추천" || item.theme.includes(activeTheme);
@@ -44,10 +58,8 @@ const BackgroundItems: React.FC<ItemProps> = ({
       items={filteredItems}
       likedItems={likedItems}
       onItemSelect={onItemSelect}
-      // 배경 아이템은 다른 스타일을 사용하므로, itemClassName prop을 전달합니다.
-      itemClassName={s.backgroundItem}
     />
   );
 };
 
-export default BackgroundItems;
+export default UsedBackgroundItems;

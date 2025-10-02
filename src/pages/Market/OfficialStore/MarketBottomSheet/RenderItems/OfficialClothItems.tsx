@@ -12,12 +12,14 @@ interface ItemProps {
     price: number,
     type: string
   ) => void;
+  likedItems: Set<number>;
 }
 
 const OfficialClothItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
+  likedItems,
 }) => {
   const { data, isLoading, isError, error } = useOfficialClothItems();
 
@@ -29,7 +31,8 @@ const OfficialClothItems: React.FC<ItemProps> = ({
     return <div>에러가 발생했습니다: {error.message}</div>;
   }
 
-  if (!data || !data.items || !data.wishlist) {
+  //if (!data || !data.items || !data.wishlist) {
+  if (!data || !data.items) {
     return <div>아이템 데이터를 받아오지 못했습니다.</div>;
   }
 
@@ -74,7 +77,7 @@ const OfficialClothItems: React.FC<ItemProps> = ({
   return (
     <ItemGrid
       items={filteredItems}
-      likedItems={wishlist}
+      likedItems={likedItems}
       onItemSelect={onItemSelect}
     />
   );

@@ -13,12 +13,14 @@ interface ItemProps {
     price: number,
     type: string
   ) => void;
+  likedItems: Set<number>;
 }
 
 const OfficialBackgroundItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
+  likedItems,
 }) => {
   const { data, isLoading, isError, error } = useOfficialBackgroundItems();
 
@@ -55,7 +57,7 @@ const OfficialBackgroundItems: React.FC<ItemProps> = ({
   return (
     <ItemGrid
       items={filteredItems}
-      likedItems={wishlist}
+      likedItems={likedItems}
       onItemSelect={onItemSelect}
       itemClassName={s.backgroundItem} // 배경 아이템용 스타일 클래스 전달
     />

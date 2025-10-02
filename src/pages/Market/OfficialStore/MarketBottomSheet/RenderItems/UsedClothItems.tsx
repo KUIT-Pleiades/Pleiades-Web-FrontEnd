@@ -1,6 +1,6 @@
 import React from "react";
 import ItemGrid from "./ItemGrid";
-import { useOfficialFaceItems } from "../../../../../hooks/queries/useOfficialFaceItems";
+import { useUsedClothItems } from "../../../../../hooks/queries/useUsedClothItems";
 
 interface ItemProps {
   activeTheme: string;
@@ -15,34 +15,40 @@ interface ItemProps {
   likedItems: Set<number>;
 }
 
-const OfficialFaceItems: React.FC<ItemProps> = ({
+const UsedClothItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
   likedItems,
 }) => {
-  const { data, isLoading, isError, error } = useOfficialFaceItems();
+  const { data, isLoading, isError, error } = useUsedClothItems();
 
   if (isLoading) {
-    return <div>공식몰 아이템을 불러오는 중입니다...</div>;
+    return <div>중고몰 아이템을 불러오는 중입니다...</div>;
   }
 
   if (isError) {
     return <div>에러가 발생했습니다: {error.message}</div>;
   }
 
-  // data와 그 안의 items, wishlist 속성까지 모두 확인하여 안정성을 높입니다.
-  // if (!data || !data.items || !data.wishlist) {
   if (!data || !data.items) {
     return <div>아이템 데이터를 받아오지 못했습니다.</div>;
   }
 
   const typeMap: { [key: string]: string } = {
-    머리: "HAIR",
-    눈: "EYES",
-    코: "NOSE",
-    입: "MOUTH",
-    점: "MOLE",
+    상의: "TOP",
+    하의: "BOTTOM",
+    세트: "SET",
+    신발: "SHOES",
+    // 악세서리 타입 추가
+    머리: "HEAD",
+    눈: "EYESITEM",
+    귀: "EARS",
+    목: "NECK",
+    왼쪽손목: "LEFTWRIST",
+    오른쪽손목: "RIGHTWRIST",
+    왼손: "LEFTHAND",
+    오른손: "RIGHTHAND",
   };
 
   const wishlist = new Set(data.wishlist);
@@ -67,4 +73,4 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
   );
 };
 
-export default OfficialFaceItems;
+export default UsedClothItems;

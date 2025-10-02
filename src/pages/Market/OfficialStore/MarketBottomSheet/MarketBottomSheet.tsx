@@ -7,9 +7,9 @@ import SubCategoryTabs from "./SubCategoryTabs";
 import OfficialFaceItems from "./RenderItems/OfficialFaceItems";
 import OfficialClothItems from "./RenderItems/OfficialClothItems";
 import OfficialBackgroundItems from "./RenderItems/OfficialBackgroundItems";
-import FaceItems from "./RenderItems/FaceItems";
-import ClothItems from "./RenderItems/ClothItems";
-import BackgroundItems from "./RenderItems/BackgroundItems";
+import UsedFaceItems from "./RenderItems/UsedFaceItems";
+import UsedClothItems from "./RenderItems/UsedClothItems";
+import UsedBackgroundItems from "./RenderItems/UsedBackgroundItems";
 
 interface MarketBottomSheetProps {
   activeTab: string;
@@ -56,6 +56,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               onItemSelect={onItemSelect}
+              likedItems={likedItems}
             />
           );
         case "cloth":
@@ -64,6 +65,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               onItemSelect={onItemSelect}
+              likedItems={likedItems}
             />
           );
         case "background":
@@ -72,6 +74,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               onItemSelect={onItemSelect}
+              likedItems={likedItems}
             />
           );
         default:
@@ -83,7 +86,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
       switch (activeCategory) {
         case "face":
           return (
-            <FaceItems
+            <UsedFaceItems
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               likedItems={likedItems}
@@ -92,7 +95,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           );
         case "cloth":
           return (
-            <ClothItems
+            <UsedClothItems
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               likedItems={likedItems}
@@ -101,7 +104,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
           );
         case "background":
           return (
-            <BackgroundItems
+            <UsedBackgroundItems
               activeTheme={activeTheme}
               activeSubTab={activeSubTab}
               likedItems={likedItems}

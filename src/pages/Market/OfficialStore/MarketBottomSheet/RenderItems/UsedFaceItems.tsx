@@ -1,6 +1,6 @@
 import React from "react";
 import ItemGrid from "./ItemGrid";
-import { useOfficialFaceItems } from "../../../../../hooks/queries/useOfficialFaceItems";
+import { useUsedFaceItems } from "../../../../../hooks/queries/useUsedFaceItems";
 
 interface ItemProps {
   activeTheme: string;
@@ -12,27 +12,25 @@ interface ItemProps {
     price: number,
     type: string
   ) => void;
-  likedItems: Set<number>;
+  likedItems: Set<number>; // 중고몰에서는 likedItems가 필요할 수 있습니다.
 }
 
-const OfficialFaceItems: React.FC<ItemProps> = ({
+const UsedFaceItems: React.FC<ItemProps> = ({
   activeTheme,
   activeSubTab,
   onItemSelect,
   likedItems,
 }) => {
-  const { data, isLoading, isError, error } = useOfficialFaceItems();
+  const { data, isLoading, isError, error } = useUsedFaceItems();
 
   if (isLoading) {
-    return <div>공식몰 아이템을 불러오는 중입니다...</div>;
+    return <div>중고몰 아이템을 불러오는 중입니다...</div>;
   }
 
   if (isError) {
     return <div>에러가 발생했습니다: {error.message}</div>;
   }
 
-  // data와 그 안의 items, wishlist 속성까지 모두 확인하여 안정성을 높입니다.
-  // if (!data || !data.items || !data.wishlist) {
   if (!data || !data.items) {
     return <div>아이템 데이터를 받아오지 못했습니다.</div>;
   }
@@ -61,10 +59,10 @@ const OfficialFaceItems: React.FC<ItemProps> = ({
   return (
     <ItemGrid
       items={filteredItems}
-      likedItems={likedItems}
+      likedItems={likedItems} // `ItemGrid`에 likedItems를 전달합니다.
       onItemSelect={onItemSelect}
     />
   );
 };
 
-export default OfficialFaceItems;
+export default UsedFaceItems;
