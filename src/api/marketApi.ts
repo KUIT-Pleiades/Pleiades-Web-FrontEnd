@@ -24,7 +24,7 @@ export const getOfficialFaceItems = async (): Promise<OfficialFaceData> => {
  */
 export const getOfficialClothItems = async (): Promise<OfficialClothData> => {
   const response = await axiosRequest<OfficialClothData>(
-    "/store/official/cloth",
+    "/store/official/fashion",
     "GET",
     null
   );
