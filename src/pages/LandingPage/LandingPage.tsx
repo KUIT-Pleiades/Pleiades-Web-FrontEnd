@@ -1,85 +1,96 @@
-import styles from './LandingPage.module.scss';
+// src/pages/LandingPage/LandingPage.tsx
+
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import styles from './LandingPage.module.scss';
+import pleiadesLogo from '../../assets/pleiadesLogo.png';
+import featureImage1 from '../../assets/Character/face/character1face.png'; 
+import featureImage2 from '../../assets/Character/face/character2face.png';
+import featureImage3 from '../../assets/Character/face/character3face.png';
 
 const LandingPage = () => {
-    return (
-        <>
-            {/* Helmet 컴포넌트를 사용해 이 페이지에만 적용될 head 태그들을 정의합니다. */}
-            <Helmet>
-                <meta name="google-adsense-account" content="ca-pub-9063401338616510" />
-            </Helmet>
-            
-            <div className={styles.container}>
-                <header className={styles.hero}>
-                    <h1>또 다른 나를 찾아 떠나는 우주, Pleiades</h1>
-                    <p>
-                        스쳐 가는 관계에 지치셨나요? 플레이아데스는 소중한 사람들과 함께
-                        '나'와 '우리'를 기록하고 만들어가는 새로운 방식의 프라이빗
-                        커뮤니티입니다.
-                    </p>
-                    <Link to="/login" className={styles.ctaButton}>
-                        ✨ 플레이아데스로 출발! ✨
-                    </Link>
-                </header>
-                <main>
-                    <section>
-                        <h2>SNS 피로증후군, 더는 그만.</h2>
-                        <p>
-                            빠르게 소비되는 휘발성 콘텐츠와 의미 없는 소통은 우리에게 허무함과
-                            정서적 피로감을 줍니다. 플레이아데스는 이러한 문제 의식에서
-                            출발하여, 당신의 소중한 관계와 이야기가 오래도록 남을 수 있는 공간을
-                            만들었습니다. 이곳에서는 불필요한 경쟁이나 과시 없이, 진정한 연결의
-                            즐거움에만 집중할 수 있습니다.
-                        </p>
-                    </section>
-                    <section>
-                        <h2>플레이아데스만의 특별한 경험</h2>
-                        <ul>
-                            <li>
-                                <strong>우리만의 프라이빗 아지트, 우주정거장:</strong> 오직 아이디와
-                                입장 코드를 아는 친구들만 들어올 수 있습니다. 우리만의 공간을 함께
-                                꾸미고, 매일 같은 주제로 생각을 나누며 특별한 유대감을 형성해
-                                보세요.
-                            </li>
-                            <li>
-                                <strong>나를 표현하는 아바타와 '별':</strong> 수백, 수천 가지의
-                                아이템으로 세상에 하나뿐인 나만의 아바타를 만들 수 있습니다. 당신의
-                                개성이 담긴 아바타는 개인 공간인 '별'에서 다른 친구들을 맞이합니다.
-                            </li>
-                            <li>
-                                <strong>오래도록 남는 우리들의 이야기:</strong> '리포트' 시스템을
-                                통해 나눈 대화와 생각들은 사라지지 않고 차곡차곡 쌓입니다. 언제든
-                                우리의 추억이 담긴 서랍을 열어보며 관계의 깊이를 더할 수 있습니다.
-                            </li>
-                            <li>
-                                <strong>즐거움이 되는 경제 활동, 마켓:</strong> 커뮤니티 활동을 통해
-                                얻거나, 더 이상 사용하지 않는 아이템을 다른 유저와 자유롭게 거래해
-                                보세요. 공식 상점에서는 구할 수 없는 희귀 아이템을 발견하는 재미도
-                                놓치지 마세요.
-                            </li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h2>이런 당신을 기다립니다</h2>
-                        <p>
-                            플레이아데스는 복잡한 기능은 줄이고 소통의 즐거움은 더했습니다. 기존
-                            SNS에 피로감을 느끼는 분, 소수의 친구와 깊이 있는 관계를 맺고 싶은 분,
-                            아바타를 꾸미고 가상 세계에서 소통하는 것을 즐기는 분이라면 누구나
-                            환영합니다. 지금 바로 당신의 우주를 만들어보세요!
-                        </p>
-                    </section>
-                </main>
-                <footer className={styles.footer}>
-                    <p>&copy; 2024 Pleiades. All Rights Reserved.</p>
-                    <nav>
-                        <Link to="/terms">이용약관</Link> &nbsp;&nbsp;|&nbsp;&nbsp;
-                        <Link to="/privacy">개인정보처리방침</Link>
-                    </nav>
-                </footer>
+  return (
+    <div className={styles.landingContainer}>
+      {/* --- 공통 헤더 --- */}
+      <header className={styles.header}>
+        <Link to="/"><img src={pleiadesLogo} alt="Pleiades Logo" className={styles.logo} /></Link>
+        <nav className={styles.navigation}>
+          <Link to="/about">소개</Link>
+          <Link to="/blog">블로그</Link>
+          <Link to="/contact">문의하기</Link>
+          <Link to="/login" className={styles.loginButton}>로그인</Link>
+        </nav>
+      </header>
+
+      <main className={styles.mainContent}>
+        {/* --- Hero 섹션 --- */}
+        <section className={styles.heroSection}>
+          <div className={styles.heroText}>
+            <h1>당신만의 우주, 플레이아데스에서<br />새로운 나를 발견하세요.</h1>
+            <p>친구들과 함께 떠나는 환상적인 아바타 소셜 월드. 지금껏 경험하지 못한 메타버스 라이프가 펼쳐집니다.</p>
+            <Link to="/login" className={styles.ctaButton}>지금 바로 여정 시작하기</Link>
+          </div>
+        </section>
+
+        {/* --- 상세 기능 소개 섹션 --- */}
+        <section id="features" className={styles.featuresSection}>
+          <h2>상상하는 모든 것이 현실이 되는 곳</h2>
+          <div className={styles.featureItem}>
+            <img src={featureImage1} alt="캐릭터 커스터마이징" className={styles.featureImage}/>
+            <div className={styles.featureDescription}>
+              <h3>무한한 가능성의 캐릭터 커스터마이징</h3>
+              <p>수천가지의 패션 아이템과 헤어, 얼굴 파츠로 당신의 개성을 마음껏 표현하세요. 현실의 나, 상상 속의 나, 그 어떤 모습이든 플레이아데스에서는 가능합니다.</p>
             </div>
-        </>
-    );
+          </div>
+          <div className={`${styles.featureItem} ${styles.reversed}`}>
+            <img src={featureImage2} alt="나만의 정거장 꾸미기" className={styles.featureImage}/>
+            <div className={styles.featureDescription}>
+              <h3>친구들과 함께 만드는 우리만의 아지트, '정거장'</h3>
+              <p>테마별로 제공되는 가구와 소품으로 나만의 정거장을 꾸미고 친구들을 초대하세요. 서로의 정거장을 방문하고, 방명록을 남기며 즐거운 추억을 만들 수 있습니다.</p>
+            </div>
+          </div>
+           <div className={styles.featureItem}>
+            <img src={featureImage3} alt="실시간 소통 기능" className={styles.featureImage}/>
+            <div className={styles.featureDescription}>
+              <h3>'시그널'로 통하는 우리들의 교감</h3>
+              <p>플레이아데스만의 특별한 교감 시스템, '시그널'을 통해 친구들과 실시간으로 소통하고 관계를 더욱 돈독히 하세요. 익명이 보장된 공간에서 솔직한 내 마음을 나눌 수 있습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- 사용자 후기 섹션 --- */}
+        <section className={styles.testimonialsSection}>
+          <h2>플레이아데스 유저들의 리얼 보이스</h2>
+          <div className={styles.testimonialGrid}>
+            <div className={styles.testimonialCard}>
+              <p>"현실에서 벗어나 새로운 친구들을 사귈 수 있어서 너무 좋아요! 정거장 꾸미는 재미에 시간 가는 줄 몰라요."</p>
+              <span>- 별빛유저123</span>
+            </div>
+             <div className={styles.testimonialCard}>
+              <p>"캐릭터가 너무 귀여워서 매일 접속하게 돼요. 다른 사람들은 어떻게 꾸몄는지 구경하는 것도 꿀잼!"</p>
+              <span>- 우주먼지콜렉터</span>
+            </div>
+             <div className={styles.testimonialCard}>
+              <p>"소심한 성격이라 친구 사귀기 어려웠는데, 여기서는 '시그널' 덕분에 쉽게 마음을 터놓을 수 있었어요."</p>
+              <span>- 은하수여행자</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* --- 공통 푸터 --- */}
+      <footer className={styles.footer}>
+        <div className={styles.footerLinks}>
+          <Link to="/about">회사 소개</Link>
+          <Link to="/terms">이용약관</Link>
+          <Link to="/privacy">개인정보처리방침</Link>
+          <Link to="/contact">고객센터</Link>
+        </div>
+        <p>(주)플레이아데스 | 대표: 홍길동 | 사업자등록번호: 123-45-67890</p>
+        <p>주소: 서울특별시 강남구 테헤란로 123, 45층 | 통신판매업신고: 제2024-서울강남-0000호</p>
+        <p>&copy; 2024 Pleiades Corp. All rights reserved.</p>
+      </footer>
+    </div>
+  );
 };
 
 export default LandingPage;
