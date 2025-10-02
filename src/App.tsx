@@ -1,6 +1,8 @@
+// src/App.tsx
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-//import Splash from "./pages/SplashScreen/Splash"; // 스플래시 페이지가 필요하다면 주석 해제
+// 기존 페이지 import
 import Home from "./pages/Home/Home";
 import Station from "./pages/Station/Station";
 import LogIn from "./pages/LogIn/LogIn";
@@ -30,21 +32,33 @@ import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
 import MyProductManagement from "./pages/Market/MyProductManagement/MyProductManagement";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
-
-// AdSense 를 위한 랜딩페이지, 약관, 개인정보처리방침 페이지
-import LandingPage from './pages/LandingPage/LandingPage';
 import TermsPage from './pages/TermsPage/TermsPage';
 import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
 
+// === 애드센스 승인을 위해 대거 추가된 페이지들 ===
+import LandingPage from './pages/LandingPage/LandingPage';
+import AboutUs from './pages/AboutUs/AboutUs'; // 새로 추가
+import Contact from './pages/Contact/Contact'; // 새로 추가
+import Blog from './pages/Blog/Blog'; // 새로 추가
+import BlogPost1 from "./pages/Blog/BlogPost1"; // 새로 추가
+import BlogPost2 from "./pages/Blog/BlogPost2"; // 새로 추가
+import BlogPost3 from "./pages/Blog/BlogPost3"; // 새로 추가
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
+        {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 (콘텐츠 대폭 강화) === */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/post-1" element={<BlogPost1 />} />
+        <Route path="/blog/post-2" element={<BlogPost2 />} />
+        <Route path="/blog/post-3" element={<BlogPost3 />} />
+
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
@@ -59,8 +73,6 @@ export default function App() {
             />
           }
         />
-        {/* Splash 스크린이 필요하다면 별도 경로로 유지할 수 있습니다. 예: <Route path="/splash" element={<Splash />} /> */}
-
 
         {/* === 2. 로그인이 반드시 필요한 기존 앱 페이지들 === */}
         <Route element={<AuthHandler />}>
@@ -73,8 +85,6 @@ export default function App() {
             ></Route>
           </Route>
           <Route path="/report" element={<Report />}></Route>
-
-          {/* 상점 관련 루트 */}
           <Route path="/market" element={<Market />}>
             <Route index element={<MarketHome />} />
             <Route path="official-store" element={<OfficialUsedStore />} />
@@ -83,14 +93,10 @@ export default function App() {
             <Route path="my-product-management" element={<MyProductManagement />} />
             <Route path="transaction-history" element={<TransactionHistory />} />
           </Route>
-
-          {/* 세팅 관련 루트 */}
           <Route path="/setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
             <Route path="profile" element={<ProfileSetting />} />
           </Route>
-
-          {/* 정거장 관련 루트 */}
           <Route path="/station" element={<Station />}>
             <Route index element={<ShowStationList />} />
             <Route path="createstation" element={<CreateStation />} />
@@ -98,7 +104,6 @@ export default function App() {
             <Route path="stationsetting" element={<StationSetting />} />
             <Route path="stationbackgroundsetting" element={<StationBackgroundSetting />} />
           </Route>
-
           <Route path="/friendtab" element={<FriendsTab />}></Route>
           <Route path="/searchusers" element={<SearchUsers />}></Route>
           <Route path="/friendstar" element={<FriendStar />}></Route>
