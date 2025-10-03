@@ -25,14 +25,16 @@ const DraggableMember: React.FC<DraggableMemberProps> = ({
 }) => {
   const [localPosition, setLocalPosition] = useState(position);
   const [isDragging, setIsDragging] = useState(false);
+  const [dragStartPosition, setDragStartPosition] = useState(position);
 
   // 부모로부터 전달되는 position이 바뀌면 로컬 상태를 동기화
   useEffect(() => {
     setLocalPosition(position);
-  }, [position.x, position.y]);
+    setDragStartPosition(position);
+  }, [position]);
 
   const bind = useDrag(
-    ({ down, movement: [mx, my], tap, event }) => {
+    ({ down, movement: [mx, my], tap, event, first }) => {
       event?.preventDefault();
       
       if (tap && member.todayReport) {
@@ -40,21 +42,35 @@ const DraggableMember: React.FC<DraggableMemberProps> = ({
         return;
       }
 
+      if (first) {
+        // 드래그 시작 시 현재 위치를 저장
+        setDragStartPosition(localPosition);
+      }
+
       if (down) {
         setIsDragging(true);
         onDragStateChange(true);
         
-        const newX = position.x + (mx / window.innerWidth) * 100;
-        const newY = position.y + (my / window.innerHeight) * 100;
+        // 드래그 시작 위치를 기준으로 이동량 계산
+        const newX = dragStartPosition.x + (mx / window.innerWidth) * 100;
+        const newY = dragStartPosition.y + (my / window.innerHeight) * 100;
         
         const clampedX = Math.max(0, Math.min(70, newX));
         const clampedY = Math.max(10, Math.min(80, newY));
         
         setLocalPosition({ x: clampedX, y: clampedY });
       } else {
+        // 드래그 종료 시 최종 위치를 부모에게 전달
         setIsDragging(false);
         onDragStateChange(false);
-        onPositionChange(member.userId, localPosition.x, localPosition.y);
+        
+        const finalX = dragStartPosition.x + (mx / window.innerWidth) * 100;
+        const finalY = dragStartPosition.y + (my / window.innerHeight) * 100;
+        
+        const clampedX = Math.max(0, Math.min(70, finalX));
+        const clampedY = Math.max(10, Math.min(80, finalY));
+        
+        onPositionChange(member.userId, clampedX, clampedY);
       }
     },
     {
