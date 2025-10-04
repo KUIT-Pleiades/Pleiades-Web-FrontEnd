@@ -175,3 +175,27 @@
     }
   }
 }
+
+// ⭐ --- [추가] 최신 블로그 글 섹션 스타일 --- ⭐
+.latestBlogSection {
+  padding: 5rem 5%;
+  max-width: 1100px;
+  margin: 0 auto;
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  .moreLink {
+    margin-top: 2.5rem;
+    text-align: right;
+    a {
+      color: #6a1b9a;
+      font-weight: 500;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
