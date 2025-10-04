@@ -1,4 +1,4 @@
-// src/App.tsx
+// src/App.tsx (최종 수정본)
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -32,33 +32,37 @@ import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
 import MyProductManagement from "./pages/Market/MyProductManagement/MyProductManagement";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
-import TermsPage from './pages/TermsPage/TermsPage';
-import PrivacyPage from './pages/PrivacyPage/PrivacyPage';
-
-// === 애드센스 승인을 위해 대거 추가된 페이지들 ===
 import LandingPage from './pages/LandingPage/LandingPage';
-import AboutUs from './pages/AboutUs/AboutUs'; // 새로 추가
-import Contact from './pages/Contact/Contact'; // 새로 추가
-import Blog from './pages/Blog/Blog'; // 새로 추가
-import BlogPost1 from "./pages/Blog/BlogPost1"; // 새로 추가
-import BlogPost2 from "./pages/Blog/BlogPost2"; // 새로 추가
-import BlogPost3 from "./pages/Blog/BlogPost3"; // 새로 추가
+
+// === 블로그 개편으로 새로 추가/변경되는 페이지들 ===
+import BlogIndexPage from './blog/pages/BlogIndexPage';
+import BlogPostPage from './blog/pages/BlogPostPage';
+import PrivacyPolicy from "./policies/PrivacyPolicy";
+import TermsOfService from "./policies/TermsOfService";
+// ⭐ --- [추가] AboutUs, Contact 페이지 import --- ⭐
+import AboutUs from "./pages/AboutUs"; 
+import Contact from "./pages/Contact";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 (콘텐츠 대폭 강화) === */}
+        {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/terms" element={<TermsPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
+        
+        {/* ⭐ --- [추가] About, Contact 라우트 --- ⭐ */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/post-1" element={<BlogPost1 />} />
-        <Route path="/blog/post-2" element={<BlogPost2 />} />
-        <Route path="/blog/post-3" element={<BlogPost3 />} />
+        
+        {/* 정책 페이지 라우트 */}
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
 
+        {/* 새로운 블로그 라우트 */}
+        <Route path="/blog" element={<BlogIndexPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+
+        {/* 기존 로그인 관련 라우트 */}
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/kakaologin" element={<KakaoLogin />} />
