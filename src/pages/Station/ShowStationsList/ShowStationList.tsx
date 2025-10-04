@@ -19,11 +19,12 @@ import CurrentStationInfo from './CurrentStationInfo/CurrentStationInfo';
 
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
+// 서버에서 오는 'bg_station_X' 값을 실제 배경 이미지 파일명으로 매핑합니다.
 const stationBackgrounds: { [key: string]: string } = {
-    station_dim_01: `${IMG_BASE_URL}station_dim_01.png`,
-    station_dim_02: `${IMG_BASE_URL}station_dim_02.png`,
-    station_dim_03: `${IMG_BASE_URL}station_dim_03.png`,
-    station_dim_04: `${IMG_BASE_URL}station_dim_04.png`,
+    bg_station_1: `${IMG_BASE_URL}station_dim_01.png`,
+    bg_station_2: `${IMG_BASE_URL}station_dim_02.png`,
+    bg_station_3: `${IMG_BASE_URL}station_dim_03.png`,
+    bg_station_4: `${IMG_BASE_URL}station_dim_04.png`,
 };
 
 const ShowStationList: React.FC = () => {
@@ -48,39 +49,51 @@ const ShowStationList: React.FC = () => {
     const bottomSheetHeaderHeight = 57;
 
     useEffect(() => {
-        // 🔧 MOCK DATA 시작
-        const mockStations: Station[] = Array.from({ length: 20 }, (_, i) => ({
-            stationId: `MOCKID${i + 1}`,
-            name: `정거장${i + 1}`,
-            numOfUsers: Math.floor(Math.random() * 7),
-            stationBackground: `station_dim_0${(i % 4) + 1}` as Station['stationBackground'],
-            createdAt: new Date(Date.now() - i * 10000000).toISOString(),
-            lastActive: new Date(Date.now() - i * 5000000).toISOString(),
-            favorite: i % 3 === 0,
-        }));
-        setStations({ stations: mockStations });
-        setCarouselStations(mockStations.slice(0, 5));
-        // 🔧 MOCK DATA 끝
+        const fetchStations = async () => {
+            try {
+                // GET /stations API 호출
+                const response = await axiosRequest<Stations>('/stations', 'GET', null);
+                if (response && response.data && response.data.stations) {
+                    setStations({ stations: response.data.stations });
+                    // 캐러셀에는 최대 5개 또는 그 이하의 정거장을 표시합니다.
+                    setCarouselStations(response.data.stations.slice(0, 5));
+                } else {
+                    // 데이터가 없는 경우 빈 배열로 초기화
+                    setStations({ stations: [] });
+                    setCarouselStations([]);
+                }
+            } catch (error: unknown) {
+                 console.error('정거장 목록을 불러오는 중 오류가 발생했습니다:', error);
+                // 로그인 토큰 만료 등 인증 오류 처리
+                if (
+                    typeof error === 'object' &&
+                    error !== null &&
+                    'response' in error
+                ) {
+                    const axiosError = error as {
+                        response?: {
+                            status?: number;
+                        };
+                    };
+                    if (axiosError.response?.status === 401) {
+                        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+                        navigate('/login');
+                    }
+                }
+                 // 오류 발생 시 빈 배열로 상태 설정
+                setStations({ stations: [] });
+                setCarouselStations([]);
+            }
+        };
 
-        // 실제 서버 요청은 아래 주석 처리
-        // const fetchStations = async () => {
-        //     try {
-        //         const response = await axiosRequest<Stations>('/stations', 'GET', null);
-        //         if (response?.data?.stations) {
-        //             setStations({ stations: response.data.stations });
-        //             setCarouselStations(response.data.stations.slice(0, 5));
-        //         }
-        //     } catch (error) {
-        //         console.error('정거장 불러오기 실패:', error);
-        //     }
-        // };
-        // fetchStations();
-    }, []);
+        fetchStations();
+    }, [navigate]);
 
     useEffect(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
 
-        if (!isOpenBottomSheet) {
+        // 캐러셀에 정거장이 있고, 바텀시트가 닫혀있을 때만 인터벌 실행
+        if (carouselStations.length > 0 && !isOpenBottomSheet) {
             intervalRef.current = setInterval(() => {
                 setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
             }, 5000);
@@ -89,7 +102,7 @@ const ShowStationList: React.FC = () => {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
-    }, [carouselStations, isOpenBottomSheet]);
+    }, [carouselStations.length, isOpenBottomSheet]);
 
     const sortedStations = useMemo(() => {
         const copied = [...stations.stations];
@@ -198,24 +211,20 @@ const ShowStationList: React.FC = () => {
 
     const resetSliderInterval = () => {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        intervalRef.current = setInterval(() => {
-            setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
-        }, 5000);
+        if (carouselStations.length > 0) {
+            intervalRef.current = setInterval(() => {
+                setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
+            }, 5000);
+        }
     };
 
     const goToNextStation = () => {
-        setBackgroundIndex((prev) => {
-            const next = (prev + 1) % carouselStations.length;
-            return next;
-        });
+        setBackgroundIndex((prev) => (prev + 1) % carouselStations.length);
         resetSliderInterval();
     };
 
     const goToPrevStation = () => {
-        setBackgroundIndex((prev) => {
-            const next = (prev - 1 + carouselStations.length) % carouselStations.length;
-            return next;
-        });
+        setBackgroundIndex((prev) => (prev - 1 + carouselStations.length) % carouselStations.length);
         resetSliderInterval();
     };
 
@@ -227,18 +236,20 @@ const ShowStationList: React.FC = () => {
     const toggleFavorite = async (stationId: string, isFavorite: boolean) => {
         try {
             const method: Methods = isFavorite ? 'DELETE' : 'POST';
-            console.log(`즐겨찾기 ${isFavorite ? '제거' : '추가'}: ${stationId}`);
             const response = await axiosRequest(`/stations/${stationId}/favorite`, method, null);
 
             if (response.status === 200) {
-                console.log(`즐겨찾기 ${isFavorite ? '제거' : '추가'} 성공: ${stationId}`);
-                const updated = stations.stations.map(station =>
-                    station.stationId === stationId ? { ...station, isFavorite: !isFavorite } : station
-                );
-                setStations({ stations: updated });
+                setStations(prev => ({
+                    stations: prev.stations.map(station =>
+                        station.stationId === stationId ? { ...station, favorite: !isFavorite } : station
+                    )
+                }));
+                 setCarouselStations(prev => prev.map(station =>
+                    station.stationId === stationId ? { ...station, favorite: !isFavorite } : station
+                ));
             }
         } catch {
-            console.log('즐겨찾기 변경에 실패했습니다.');
+            alert('즐겨찾기 변경에 실패했습니다.');
         }
     };
 
@@ -259,10 +270,10 @@ const ShowStationList: React.FC = () => {
             </div>
 
             {
-                sortedStations.length == 0 ? (
+                sortedStations.length === 0 ? (
                     <>
                         <div className={s.separator}>
-                            <div className={s.totalNumOfStations}>전체 {sortedStations.length || 0}</div>
+                            <div className={s.totalNumOfStations}>전체 0</div>
                             <div className={s.sortCriteriaBoxContainer}>
                                 <SortCriteriaBoxForStation
                                     sortCriteria={sortCriteria}
@@ -287,7 +298,7 @@ const ShowStationList: React.FC = () => {
                         <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
                             <div
                                 className={s.backgroundImageStatic}
-                                style={{ backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground]})` }}
+                                style={{ backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground] || stationBackgrounds.bg_station_1})` }}
                             />
                             <div className={s.dimOverlay} />
                         </div>

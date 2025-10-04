@@ -1,4 +1,3 @@
-
 import s from "./StationBottomSheetContent.module.scss";
 import { SortOptionForStations, Station } from "../../../../interfaces/Interfaces";
 import StationDisplay from "../StationDisplay/StationDisplay";
@@ -6,11 +5,12 @@ import SortCriteriaBoxForStation from "../../../../components/SortCriteriaBox/So
 
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
-const stationBackgrounds: { [key: string]: string } = {
-  bg_station_1: `${IMG_BASE_URL}bg_station_1.png`,
-  bg_station_2: `${IMG_BASE_URL}bg_station_2.png`,
-  bg_station_3: `${IMG_BASE_URL}bg_station_3.png`,
-  bg_station_4: `${IMG_BASE_URL}bg_station_4.png`,
+// 정거장 목록 썸네일 이미지 매핑
+const stationThumbnails: { [key: string]: string } = {
+  bg_station_1: `${IMG_BASE_URL}rec_bg_station_1.png`,
+  bg_station_2: `${IMG_BASE_URL}rec_bg_station_2.png`,
+  bg_station_3: `${IMG_BASE_URL}rec_bg_station_3.png`,
+  bg_station_4: `${IMG_BASE_URL}rec_bg_station_4.png`,
 };
 
 interface StationBottomSheetContentProps {
@@ -53,8 +53,8 @@ export default function StationBottomSheetContent({
                                 name={station.name}
                                 numOfUsers={station.numOfUsers}
                                 background={
-                                    stationBackgrounds[station.stationBackground] ||
-                                    `${IMG_BASE_URL}station_dim_01.png`
+                                    stationThumbnails[station.stationBackground] || // 썸네일 맵 사용
+                                    `${IMG_BASE_URL}rec_bg_station_1.png` // 기본 썸네일
                                 }
                                 favorite={station.favorite}
                                 onToggleFavorite={() =>
