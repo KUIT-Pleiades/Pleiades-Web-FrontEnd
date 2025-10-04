@@ -8,6 +8,8 @@ import featureImage1 from '../../assets/Character/face/character1face.png';
 import featureImage2 from '../../assets/Character/face/character2face.png';
 import featureImage3 from '../../assets/Character/face/character3face.png';
 
+import BlogList from '../../blog/components/BlogList';
+
 const LandingPage = () => {
   return (
     <>
@@ -73,16 +75,26 @@ const LandingPage = () => {
                 <p>"현실에서 벗어나 새로운 친구들을 사귈 수 있어서 너무 좋아요! 정거장 꾸미는 재미에 시간 가는 줄 몰라요."</p>
                 <span>- 별빛유저123</span>
               </div>
-               <div className={styles.testimonialCard}>
+              <div className={styles.testimonialCard}>
                 <p>"캐릭터가 너무 귀여워서 매일 접속하게 돼요. 다른 사람들은 어떻게 꾸몄는지 구경하는 것도 꿀잼!"</p>
                 <span>- 우주먼지콜렉터</span>
               </div>
-               <div className={styles.testimonialCard}>
+              <div className={styles.testimonialCard}>
                 <p>"소심한 성격이라 친구 사귀기 어려웠는데, 여기서는 '시그널' 덕분에 쉽게 마음을 터놓을 수 있었어요."</p>
                 <span>- 은하수여행자</span>
               </div>
             </div>
           </section>
+
+          {/* ⭐ --- [추가] 최신 블로그 글 섹션 --- ⭐ */}
+          <section className={styles.latestBlogSection}>
+            <h2>최신 소식</h2>
+            <BlogList limit={3} />
+            <div className={styles.moreLink}>
+              <Link to="/blog">블로그 더 보기 →</Link>
+            </div>
+          </section>
+          
         </main>
 
         {/* --- 공통 푸터 --- */}
