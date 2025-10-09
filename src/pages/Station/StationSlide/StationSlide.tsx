@@ -99,8 +99,8 @@ const StationSlide: React.FC<StationSlideProps> = ({
       );
       console.log("친구 요청 보냄. to: ", friendId);
       if (response) {
-				console.log("응답 받기 성공. 응답 메시지: ", response.message);
-				showPopup();
+        console.log("응답 받기 성공. 응답 메시지: ", response.message);
+        showPopup();
         // 성공 메시지나 토스트 알림을 추가할 수 있습니다
       } else {
         console.error("친구 요청 실패");
@@ -118,7 +118,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
             <div
               className={s.background}
               style={{
-                backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground}.png)`,
+                backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground})`,
               }}
             ></div>
             <div className={s.planetIcon}>

@@ -47,22 +47,24 @@ const StationInside: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<StationMember | null>(
     null
   );
-  const [memberPositions, setMemberPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [memberPositions, setMemberPositions] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
   const [, setIsDragging] = useState(false);
   const { userInfo } = useCharacterStore();
 
   const handleSettingClick = () => {
     setShowSlide(true);
-	};
-	
-	const handleCustomClick = () => {
+  };
+
+  const handleCustomClick = () => {
     navigate("/station/stationbackgroundsetting");
   };
 
   const handlePositionChange = (userId: string, x: number, y: number) => {
-    setMemberPositions(prev => ({
+    setMemberPositions((prev) => ({
       ...prev,
-      [userId]: { x, y }
+      [userId]: { x, y },
     }));
   };
 
@@ -120,7 +122,7 @@ const StationInside: React.FC = () => {
           response.data.stationMembers.forEach((member) => {
             initialPositions[member.userId] = {
               x: member.positionX,
-              y: member.positionY
+              y: member.positionY,
             };
           });
           setMemberPositions(initialPositions);
@@ -135,7 +137,7 @@ const StationInside: React.FC = () => {
     getStationData();
   }, [stationId]);
 
-  if (isLoading) return <Pending/>;
+  if (isLoading) return <Pending />;
   if (error) return <div>에러가 발생했습니다</div>;
   if (!stationData) return null;
 
@@ -143,7 +145,7 @@ const StationInside: React.FC = () => {
     <div
       className={s.container}
       style={{
-        backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground}.png)`,
+        backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground})`,
       }}
     >
       {!stationData.reportWritten && (
@@ -175,7 +177,12 @@ const StationInside: React.FC = () => {
             <DraggableMember
               key={member.userId}
               member={member}
-              position={memberPositions[member.userId] || { x: member.positionX, y: member.positionY }}
+              position={
+                memberPositions[member.userId] || {
+                  x: member.positionX,
+                  y: member.positionY,
+                }
+              }
               onPositionChange={handlePositionChange}
               onMemberClick={() => handleMemberClick(member)}
               onDragStateChange={setIsDragging}
@@ -201,8 +208,8 @@ const StationInside: React.FC = () => {
             memberName={selectedMember.userName}
             onClose={() => setSelectedMember(null)}
             stationId={stationId}
-						userId={selectedMember.userId}
-						profile={selectedMember.profile}
+            userId={selectedMember.userId}
+            profile={selectedMember.profile}
           />
         ))}
     </div>
