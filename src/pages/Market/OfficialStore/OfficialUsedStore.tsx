@@ -158,8 +158,8 @@ export default function OfficialUsedStore() {
           break;
 
         // 배경 아이템
-        case "STARBACKGROUND":
-        case "STATIONBACKGROUND":
+        case "STAR_BG":
+        case "STATION_BG":
           newState.starBackground = name;
           break;
       }
