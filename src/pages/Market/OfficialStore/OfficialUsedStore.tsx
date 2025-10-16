@@ -39,12 +39,19 @@ export default function OfficialUsedStore() {
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-  const [initialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
+  const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
 
   // 미리보기 상태 (캐릭터 프리뷰용)
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
   );
+
+  // Store의 userInfo가 변경될 때 미리보기 캐릭터 정보와 초기값 정보를 동기화합니다.
+  useEffect(() => {
+    const clonedUserInfo = structuredClone(userInfo);
+    setInitialUserInfo(clonedUserInfo);
+    setTryOnUserInfo(clonedUserInfo);
+  }, [userInfo]);
 
   const isWearingSet = !!tryOnUserInfo.outfit.set;
 
@@ -294,50 +301,64 @@ export default function OfficialUsedStore() {
             src={characterBackground}
             alt="캐릭터후광"
           />
-          <img
-            className={s.characterSkin}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.face.skinColor}`}
-            alt="skin"
-          />
-          <img
-            className={s.characterEyes}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.face.eyes}`}
-            alt="eyes"
-          />
-          <img
-            className={s.characterNose}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.face.nose}`}
-            alt="nose"
-          />
-          <img
-            className={s.characterMouth}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.face.mouth}`}
-            alt="mouth"
-          />
-          {userInfo.face.mole && (
+          {tryOnUserInfo.face.skinColor && (
+            <img
+              className={s.characterSkin}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.skinColor}`}
+              alt="skin"
+            />
+          )}
+          {tryOnUserInfo.face.eyes && (
+            <img
+              className={s.characterEyes}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.eyes}`}
+              alt="eyes"
+            />
+          )}
+          {tryOnUserInfo.face.nose && (
+            <img
+              className={s.characterNose}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.nose}`}
+              alt="nose"
+            />
+          )}
+          {tryOnUserInfo.face.mouth && (
+            <img
+              className={s.characterMouth}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.mouth}`}
+              alt="mouth"
+            />
+          )}
+          {tryOnUserInfo.face.mole && (
             <img
               className={s.characterMole}
               src={`${IMG_BASE_URL}${tryOnUserInfo.face.mole}`}
               alt="mole"
             />
           )}
-          <img
-            className={s.characterHair}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.face.hair}`}
-            alt="hair"
-          />
+          {tryOnUserInfo.face.hair && (
+            <img
+              className={s.characterHair}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.face.hair}`}
+              alt="hair"
+            />
+          )}
           {!isWearingSet && (
             <>
-              <img
-                className={s.characterTop}
-                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.top}`}
-                alt="top"
-              />
-              <img
-                className={s.characterBottom}
-                src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.bottom}`}
-                alt="bottom"
-              />
+              {tryOnUserInfo.outfit.top && (
+                <img
+                  className={s.characterTop}
+                  src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.top}`}
+                  alt="top"
+                />
+              )}
+              {tryOnUserInfo.outfit.bottom && (
+                <img
+                  className={s.characterBottom}
+                  src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.bottom}`}
+                  alt="bottom"
+                />
+              )}
             </>
           )}
           {isWearingSet && (
@@ -347,11 +368,13 @@ export default function OfficialUsedStore() {
               alt="set"
             />
           )}
-          <img
-            className={s.characterShoes}
-            src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.shoes}`}
-            alt="shoes"
-          />
+          {tryOnUserInfo.outfit.shoes && (
+            <img
+              className={s.characterShoes}
+              src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.shoes}`}
+              alt="shoes"
+            />
+          )}
           {Object.entries(tryOnUserInfo.item).map(([part, src]) => {
             if (!src) return null;
             return (
