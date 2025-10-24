@@ -1,0 +1,237 @@
+.container {
+	width: 100dvw;
+	height: 91dvh;
+	display: flex;
+	flex-direction: column;
+	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
+	position: relative; // 플로팅 버튼 위치 기준
+}
+
+.header {
+	width: 100%;
+	height: 78.55px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: end;
+	background-color: #FFF;
+	position: relative;
+	flex-shrink: 0;
+
+	&Title {
+		padding-bottom: 20px;
+		color: #17151C;
+		text-align: center;
+		font-family: "Pretendard";
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.32px;
+	}
+}
+
+.backArrow {
+	width: 7px;
+	height: 14px;
+	padding: 24px 16px;
+	position: absolute;
+	left: 0;
+	cursor: pointer;
+}
+
+.content {
+	width: calc(100% - 28px);
+	margin: 20px 14px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	position: relative;
+	overflow-y: auto; // 스크롤 가능하게
+	min-height: 0; // flex 자식의 스크롤을 위해 필요
+}
+
+.contentHeader {
+
+	padding-bottom: 20px;
+	border-bottom: 1px solid #C0B9DB;
+	flex-shrink: 0; // 헤더 고정
+
+	span {
+		color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: -0.26px;
+	}
+}
+
+.itemsList {
+	flex: 1;
+	padding-bottom: 80px;
+}
+
+.grid {
+	width: 100%;
+	display: grid;
+	padding-top: 20px;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+.itemWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.cardWrapper {
+	position: relative;
+	width: 100%;
+}
+
+.discountBadge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	background: #F45B5B;
+	padding: 4px 8px;
+	border-radius: 40px;
+	z-index: 1;
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.2px;
+
+}
+
+.card {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	background: #FFF;
+	border-radius: 5px;
+	filter: drop-shadow(0 0 5px rgba(41, 34, 41, 0.20));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.itemName {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	span {
+		color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-top: 6px;
+	}
+}
+
+.itemPrice {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+
+	img {
+		width: 16px;
+		height: 16px;
+	}
+
+	span {
+		color: #000;
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		letter-spacing: -0.28px;
+	}
+}
+
+.descirption {
+	position: fixed;
+	bottom: calc(9dvh + 25px);
+	right: 60px;
+	height: 28px;
+	z-index: 100;
+}
+
+.floatingButton {
+	position: fixed;
+	bottom: calc(9dvh + 20px);
+	right: 20px;
+	width: 37px;
+	height: 37px;
+	border-radius: 50%;
+	border: none;
+	background: transparent; // 투명
+	padding: 0;
+	cursor: pointer;
+	z-index: 100;
+
+
+	img {
+		width: 100%; // 버튼 크기에 맞춤
+		height: 100%;
+		display: block;
+		border-radius: 50%;
+		filter: drop-shadow(0 0 5.5px rgba(0, 0, 0, 0.25));
+	}
+}
+
+.emptyState {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	height: 100%;
+	padding: 130px 20px;
+	text-align: center;
+}
+
+.emptyTitle {
+	color: #17151C;
+	font-family: Pretendard;
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 12px;
+	letter-spacing: -0.36px;
+}
+
+.emptyDescription {
+	color: #666;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+	margin-bottom: 32px;
+	letter-spacing: -0.28px;
+}
+
+.logo {
+	width: 150px;
+}

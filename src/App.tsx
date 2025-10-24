@@ -29,18 +29,18 @@ import FriendReport from "./pages/FriendStar/FriendReport/FriendReport";
 import MarketHome from "./pages/Market/MarketHome";
 import MyItemSell from "./pages/Market/MyItemSell/MyItemSell";
 import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
-import MyProductManagement from "./pages/Market/MyProductManagement/MyProductManagement";
+import MySellingItems from "./pages/Market/MySellingItems/MySellingItems";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
-import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 // === 블로그 개편으로 새로 추가/변경되는 페이지들 ===
-import BlogIndexPage from './blog/pages/BlogIndexPage';
-import BlogPostPage from './blog/pages/BlogPostPage';
+import BlogIndexPage from "./blog/pages/BlogIndexPage";
+import BlogPostPage from "./blog/pages/BlogPostPage";
 import PrivacyPolicy from "./policies/PrivacyPolicy";
 import TermsOfService from "./policies/TermsOfService";
 // ⭐ --- [추가] AboutUs, Contact 페이지 import --- ⭐
-import AboutUs from "./pages/AboutUs"; 
+import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 
 export default function App() {
@@ -49,11 +49,11 @@ export default function App() {
       <Routes>
         {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
         <Route path="/" element={<LandingPage />} />
-        
+
         {/* ⭐ --- [추가] About, Contact 라우트 --- ⭐ */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        
+
         {/* 정책 페이지 라우트 */}
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfService />} />
@@ -94,8 +94,11 @@ export default function App() {
             <Route path="official-store" element={<OfficialUsedStore />} />
             <Route path="my-item-sell" element={<MyItemSell />} />
             <Route path="my-item-price-check" element={<MyItemPriceCheck />} />
-            <Route path="my-product-management" element={<MyProductManagement />} />
-            <Route path="transaction-history" element={<TransactionHistory />} />
+            <Route path="my-item-selling" element={<MySellingItems />} />
+            <Route
+              path="transaction-history"
+              element={<TransactionHistory />}
+            />
           </Route>
           <Route path="/setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
@@ -106,14 +109,17 @@ export default function App() {
             <Route path="createstation" element={<CreateStation />} />
             <Route path="stationinside" element={<StationInside />} />
             <Route path="stationsetting" element={<StationSetting />} />
-            <Route path="stationbackgroundsetting" element={<StationBackgroundSetting />} />
+            <Route
+              path="stationbackgroundsetting"
+              element={<StationBackgroundSetting />}
+            />
           </Route>
           <Route path="/friendtab" element={<FriendsTab />}></Route>
           <Route path="/searchusers" element={<SearchUsers />}></Route>
           <Route path="/friendstar" element={<FriendStar />}></Route>
           <Route path="/friendreport" element={<FriendReport />}></Route>
         </Route>
-        
+
         {/* 일치하는 라우트가 없을 때 표시할 에러 페이지 */}
         <Route
           path="*"
