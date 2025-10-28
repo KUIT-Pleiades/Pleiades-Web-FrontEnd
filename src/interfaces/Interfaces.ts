@@ -410,3 +410,8 @@ export interface UsedBackgroundData {
   items: UsedItem[];
   wishlist: number[];
 }
+
+// /store/official/wishlist API가 응답하는 데이터의 타입
+export interface WishlistResponse {
+  message: string;
+}

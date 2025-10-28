@@ -3,6 +3,7 @@ import {
   UsedFaceData,
   UsedClothData,
   UsedBackgroundData,
+  WishlistResponse,
 } from "../interfaces/Interfaces";
 
 /**
@@ -40,6 +41,38 @@ export const getUsedBackgroundItems = async (): Promise<UsedBackgroundData> => {
     "/store/resale/bg",
     "GET",
     null
+  );
+  return response.data;
+};
+
+/**
+ * 중고몰 아이템을 찜 목록에 추가하는 API 함수
+ * @param itemId - 아이템 ID
+ * @returns Promise<any>
+ */
+export const postUsedWishlistItem = async (
+  itemId: number
+): Promise<WishlistResponse> => {
+  const response = await axiosRequest<WishlistResponse>(
+    "/store/resale/wishlist",
+    "POST",
+    { id: itemId }
+  );
+  return response.data;
+};
+
+/**
+ * 중고몰 아이템을 찜 목록에서 제거하는 API 함수
+ * @param itemId - 아이템 ID
+ * @returns Promise<any>
+ */
+export const deleteUsedWishlistItem = async (
+  itemId: number
+): Promise<WishlistResponse> => {
+  const response = await axiosRequest<WishlistResponse>(
+    "/store/resale/wishlist",
+    "DELETE",
+    { id: itemId }
   );
   return response.data;
 };

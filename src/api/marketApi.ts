@@ -3,6 +3,7 @@ import {
   OfficialFaceData,
   OfficialClothData,
   OfficialBackgroundData,
+  WishlistResponse,
 } from "../interfaces/Interfaces";
 
 /**
@@ -44,3 +45,40 @@ export const getOfficialBackgroundItems =
     );
     return response.data;
   };
+
+/**
+ * 공식몰 아이템을 찜 목록에 추가/제거하는 API 함수
+ * @param itemId - 아이템 ID
+ * @returns Promise<WishlistResponse>
+ */
+export const postWishlistItem = async (
+  itemId: number
+): Promise<WishlistResponse> => {
+  try {
+    const response = await axiosRequest<WishlistResponse>(
+      "/store/official/wishlist",
+      "POST",
+      { id: itemId }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("위시리스트 추가/제거 실패:", error);
+    throw error;
+  }
+};
+
+/**
+ * 공식몰 아이템을 찜 목록에서 제거하는 API 함수
+ * @param itemId - 아이템 ID
+ * @returns Promise<any>
+ */
+export const deleteWishlistItem = async (
+  itemId: number
+): Promise<WishlistResponse> => {
+  const response = await axiosRequest<WishlistResponse>(
+    "/store/official/wishlist",
+    "DELETE",
+    { id: itemId }
+  );
+  return response.data;
+};
