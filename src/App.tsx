@@ -53,7 +53,7 @@ export default function App() {
         {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* ⭐ --- [추가] About, Contact 라우트 --- ⭐ */}
+        {/* ⭐ --- About, Contact 라우트 --- ⭐ */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
 
@@ -81,7 +81,7 @@ export default function App() {
           }
         />
 
-        {/* === 2. 로그인이 반드시 필요한 기존 앱 페이지들 === */}
+        {/* === 로그인이 반드시 필요한 기존 앱 페이지들 === */}
         <Route element={<AuthHandler />}>
           <Route path="/onboarding" element={<CharacterSettings />}></Route>
           <Route path="/home" element={<Home />}>

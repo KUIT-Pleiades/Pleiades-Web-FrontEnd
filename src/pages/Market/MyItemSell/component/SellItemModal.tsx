@@ -10,6 +10,9 @@ interface SellItemModalProps {
     itemName: string;
     handleCloseSendSignalPopup: () => void;
     image: string;
+    // 임시 GET API 경로가 {item_id}를 사용하므로 선택적으로 전달
+    itemId?: number;
+    itemPrice: number;
 }
 
 type Mode = 'view' | 'form' | 'success';
@@ -17,7 +20,9 @@ type Mode = 'view' | 'form' | 'success';
 const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
     handleCloseSendSignalPopup,
-    image
+    image,
+    itemId,
+    itemPrice,
 }) => {
     const navigate = useNavigate();
     const [mode, setMode] = useState<Mode>('view');
@@ -25,10 +30,10 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [finalPrice, setFinalPrice] = useState<number | null>(null);
 
-    const officialPrice = 15; // todo 실제 값이 있다면 props로 받도록 변경 가능
-
-    const applyDiscount = (pct: number) => { 
-        const v = Math.max(1, Math.floor(officialPrice * (1 - pct)));
+    // [change] 할인 적용 시 officialPrice 사용
+    const applyDiscount = (pct: number) => {
+        if (itemPrice == null) return;
+        const v = Math.max(1, Math.floor(itemPrice * (1 - pct)));
         setInputPrice(String(v));
     };
 
@@ -38,7 +43,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     };
 
     const handleClickCheckMarket = () => {
-        navigate(`/market/my-item-price-check?name=${encodeURIComponent(itemName)}`);
+        navigate(`/market/my-item-price-check?name=${encodeURIComponent(itemName)}&id=${itemId ?? ''}`);
     };
 
     const handleSellClick = async () => {
@@ -71,10 +76,12 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                     <img src={close} alt="close" />
                 </button>
 
-                {/* ====== 공통 타이틀/이미지 ====== */}
                 <div className={s.textArea}>
                     {mode === 'success' ? (
-                        <span className={s.successTitle}>판매글을 등록했어요!</span>
+                        <>
+                            <span className={s.successTitle}>판매글을 등록했어요!</span>
+                            <span className={s.itemNameTextSuccess}>{itemName}</span>
+                        </>
                     ) : (
                         <span className={s.itemNameText}>{itemName}</span>
                     )}
@@ -88,13 +95,12 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                     />
                 </div>
 
-                {/* ====== 가격/본문 영역 (모드 분기) ====== */}
                 {mode !== 'success' ? (
                     <>
                         <div className={s.priceArea}>
                             <span className={s.priceText}>공식몰 가격</span>
                             <img src={stone} alt="stone" className={s.stoneIcon} />
-                            <span className={s.priceValue}>{officialPrice}</span>
+                            <span className={s.priceValue}>{itemPrice}</span>
                         </div>
 
                         {mode === 'form' && (
@@ -106,6 +112,9 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                                     value={inputPrice}
                                     onChange={onChangePrice}
                                 />
+
+                                <div className={s.divider}></div>
+
                                 <div className={s.helperRow}>
                                     <button type="button" className={s.helperBtn} onClick={() => applyDiscount(0.10)}>-10%</button>
                                     <button type="button" className={s.helperBtn} onClick={() => applyDiscount(0.20)}>-20%</button>
@@ -115,27 +124,29 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                         )}
 
                         <div className={s.buttonArea}>
-                            <div
-                                className={s.checkMarketPriceBtn}
-                                onClick={handleClickCheckMarket}
-                            >
-                                <span className={s.btnText}>시세확인</span>
-                            </div>
+                            {
+                                mode === 'view' ? (
+                                    <div
+                                        className={s.checkMarketPriceBtn}
+                                        onClick={handleClickCheckMarket}
+                                    >
+                                        <span className={s.btnText}>시세확인</span>
+                                    </div>
+                                ) : null
+                            }
 
                             <div
-                                className={`${s.sellBtn} ${sellButtonEnabled ? s.sellBtnPrimary : s.sellBtnDisabled}`} // [ADD]
-                                onClick={sellButtonEnabled ? handleSellClick : undefined} // [ADD]
-                                aria-disabled={!sellButtonEnabled} // [ADD]
+                                className={`${s.sellBtn} ${sellButtonEnabled ? s.sellBtnPrimary : s.sellBtnDisabled}`}
+                                onClick={sellButtonEnabled ? handleSellClick : undefined}
+                                aria-disabled={!sellButtonEnabled}
                             >
-                                <span className={s.btnText}>{mode === 'view' ? '판매하기' : (isSubmitting ? '등록 중...' : '판매하기')}</span> {/* [ADD] */}
+                                <span className={s.btnText}>{mode === 'view' ? '판매하기' : (isSubmitting ? '등록 중...' : '판매하기')}</span>
                             </div>
                         </div>
                     </>
                 ) : (
-                    // ====== 성공 모드 ======
                     <>
                         <div className={s.successInfoBox}>
-                            <div className={s.itemNameSuccess}>{itemName}</div>
                             <div className={s.successPriceRow}>
                                 <span className={s.successPriceLabel}>판매 가격</span>
                                 <img src={stone} alt="stone" className={s.stoneIcon} />
@@ -148,7 +159,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                                 className={s.checkMarketPriceBtn}
                                 onClick={() => {
                                     handleCloseSendSignalPopup();
-                                    navigate('/market/my-product-management');
+                                    navigate('/market/my-item-selling');
                                 }}
                             >
                                 <span className={s.btnText}>내 상품 관리</span>
@@ -172,7 +183,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 
 export default SellItemModal;
 
-// [ADD] 데모용 API (실 서버 연동 시 교체)
+// 데모용 POST API (실 서버 연동 시 교체)
 async function postSellItem({ name, price }: { name: string; price: number }) {
     if (!name || price <= 0) {
         return null;
@@ -180,71 +191,3 @@ async function postSellItem({ name, price }: { name: string; price: number }) {
     await new Promise((r) => setTimeout(r, 600));
     return { ok: true };
 }
-
-// import React from "react";
-// import s from "./SellItemModal.module.scss";
-// import { useNavigate } from "react-router-dom";
-
-// // image files
-// import close from '../../../../assets/Signal/close.svg';
-// import stone from "../../../../assets/market/stone.svg";
-
-// interface SellItemModalProps {
-//     itemName: string;
-//     handleCloseSendSignalPopup: () => void;
-//     image: string;
-// }
-
-// const SellItemModal: React.FC<SellItemModalProps> = ({
-//     itemName,
-//     handleCloseSendSignalPopup,
-//     image
-// }) => {
-//     const navigate = useNavigate();
-//     return (
-//         <div className={s.modalOverlay}>
-//             <div className={s.modal}>
-//                 <button
-//                     className={s.modalClose}
-//                     onClick={handleCloseSendSignalPopup}
-//                 >
-//                     <img src={close} alt="close" />
-//                 </button>
-//                 <div className={s.textArea}>
-//                     <span className={s.itemNameText}>{itemName}</span>
-//                 </div>
-//                 <div className={s.imageContainer}>
-//                     <img
-//                         src={image}
-//                         alt="item image"
-//                         className={s.itemImg}
-//                     />
-//                 </div>
-//                 <div className={s.priceArea}>
-//                     <span className={s.priceText}>공식몰 가격</span>
-//                     <img src={stone} alt="stone" className={s.stoneIcon} />
-//                     <span className={s.priceValue}>15</span>
-//                 </div>
-//                 <div className={s.buttonArea}>
-//                     <div
-//                         className={s.checkMarketPriceBtn}
-//                         onClick={() => {
-//                             navigate(`/market/my-item-price-check?name=${encodeURIComponent(itemName)}`);
-//                         }}
-//                     >
-//                         <span className={s.btnText}>시세확인</span>
-//                     </div>
-//                     <div
-//                         className={s.sellBtn}
-//                         onClick={() => {}}
-//                     >
-//                         <span className={s.btnText}>판매하기</span>
-//                     </div>
-//                 </div>
-
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default SellItemModal;

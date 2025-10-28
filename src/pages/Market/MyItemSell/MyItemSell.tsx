@@ -205,6 +205,8 @@ const MyItemSell: React.FC = () => {
                     itemName={selectedDomainItem.raw.description || String(selectedDomainItem.id)}
                     handleCloseSendSignalPopup={handleCloseSellItemModal}
                     image={selectedDomainItem.image}
+                    itemId={selectedDomainItem.id}
+                    itemPrice={selectedDomainItem.raw.price}
                 />
             )}
         </div>
