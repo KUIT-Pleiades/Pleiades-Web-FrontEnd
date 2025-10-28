@@ -14,18 +14,17 @@
 }
 
 .modal {
-    background: white; // 팝업 내부 배경을 흰색으로
+    background: #F8F8FA; // 팝업 내부 배경을 흰색으로
     border-radius: 12px;
     width: 72%;
     //height: 50%;
     padding-bottom: 21px;
     position: relative;
     text-align: center;
-    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    
     overflow: hidden;
 }
 
@@ -66,14 +65,26 @@
     font-weight: 600;
     line-height: normal;
 }
-
-.successTitle { // [ADD] 판매 성공 타이틀
-    color: #7C4CAC;
+.itemNameTextSuccess {
+    color: var(--gray-22, #444);
     text-align: center;
     font-family: Pretendard;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.3px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    margin-top: 19px;
+}
+
+.successTitle {
+    color: var(--color-8-id, #8B6193);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .imageContainer {
@@ -103,7 +114,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 23px;
+    margin-top: 17px;
 }
 .priceText {
     color: #5F5F5F;
@@ -133,47 +144,75 @@
 }
 
 /* ===== 판매 폼 영역 ===== */
-.formArea { /* [ADD] */
-    width: 88%;
-    margin-top: 16px;
+.formArea {
+    width: 80%;
+    margin-top: 18px;
     padding: 16px 14px;
     background: #FFFFFF;
     border-radius: 12px;
-    filter: drop-shadow(0px 2px 10px rgba(41,34,41,0.08));
-    border: 1px solid #EEE;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.inputBox { /* [ADD] */
+.inputBox {
     width: 100%;
-    height: 44px;
+    height: 38px;
     border-radius: 10px;
     border: none;
     outline: none;
-    background: #F7F5FB;
+    background: transparent;
     text-align: center;
+    color: var(--gray-11, #17151C);
+    font-family: "ElectricalSafety";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.4px;
+}
+.inputBox::placeholder {
+    color: var(--Color-14, #E1E1E1);
     font-family: Pretendard;
     font-size: 14px;
-    font-weight: 700;
-    color: #2b2b2b;
-    box-shadow: inset 0 -2px 0 #C9BADD;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.28px;
 }
-.inputBox::placeholder { color: #BBB; font-weight: 500; }
 
-.helperRow { /* [ADD] */
+.divider {
+    width: 80%;
+    height: 2px;
+    background-color: #C0B9DB;
+    border-radius: 2px;
+    margin: 0;
+}
+
+.helperRow {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 12px;
+    gap: 4px;
+    margin-top: 5px;
 }
-.helperBtn { /* [ADD] */
-    min-width: 64px;
-    height: 32px;
-    padding: 0 12px;
-    border-radius: 999px;
-    border: 1px solid #E1D9F2;
-    background: #F3EEFA;
-    color: #6F5A8F;
-    font-size: 13px;
-    font-weight: 700;
+.helperBtn {
+    min-width: 35px;
+    padding: 3px 7px;
+    border-radius: 18px;
+    border: 1.33px solid #E1E1E1;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    color: var(--Color-12, #858585);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.2px;
 }
 .helperBtn:active { transform: translateY(1px); } /* [ADD] */
 
@@ -183,7 +222,7 @@
     align-items: center;
     justify-content: center;
     gap: 13px;
-    margin-top: 24px;
+    margin-top: 16px;
 }
 
 .checkMarketPriceBtn, .sellBtn {

@@ -258,6 +258,7 @@ export interface Answer {
 
 export interface Station {
   stationId: string;
+  stationCode: string;
   name: string;
   numOfUsers: number;
   stationBackground: string;
