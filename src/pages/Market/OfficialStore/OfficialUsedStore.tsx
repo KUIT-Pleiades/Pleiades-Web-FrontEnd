@@ -11,6 +11,7 @@ import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
 import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem } from "../../../api/marketApi";
+import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
 // 일반 아이콘
@@ -52,16 +53,27 @@ export default function OfficialUsedStore() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const [faceResponse, clothResponse, backgroundResponse] = await Promise.all([
+        const [         officialFaceResponse,
+          officialClothResponse,
+          officialBackgroundResponse,
+          usedFaceResponse,
+          usedClothResponse,
+          usedBackgroundResponse, ] = await Promise.all([
           getOfficialFaceItems(),
           getOfficialClothItems(),
           getOfficialBackgroundItems(),
+          getUsedFaceItems(),
+          getUsedClothItems(),
+          getUsedBackgroundItems(),
         ]);
 
         const combinedWishlist = [
-          ...faceResponse.wishlist,
-          ...clothResponse.wishlist,
-          ...backgroundResponse.wishlist,
+          ...officialFaceResponse.wishlist,
+          ...officialClothResponse.wishlist,
+          ...officialBackgroundResponse.wishlist,
+          ...usedFaceResponse.wishlist,
+          ...usedClothResponse.wishlist,
+          ...usedBackgroundResponse.wishlist,
         ];
 
         setLikedItems(new Set(combinedWishlist));
@@ -496,11 +508,20 @@ export default function OfficialUsedStore() {
                 e.stopPropagation();
                 if (selectedItem.id !== null) {
                   const isLiked = likedItems.has(selectedItem.id);
-                  if (isLiked) {
-                    deleteWishlistItem(selectedItem.id);
-                  } else {
-                    postWishlistItem(selectedItem.id);
+                  if (activeTab === 'official') {
+                    if (isLiked) {
+                      deleteWishlistItem(selectedItem.id);
+                    } else {
+                      postWishlistItem(selectedItem.id);
+                    }
+                  } else if (activeTab === 'used') {
+                    if (isLiked) {
+                      deleteUsedWishlistItem(selectedItem.id);
+                    } else {
+                      postUsedWishlistItem(selectedItem.id);
+                    }
                   }
+
                   setLikedItems((prevLikedItems) => {
                     const newLikedItems = new Set(prevLikedItems);
                     if (newLikedItems.has(selectedItem.id!)) {
