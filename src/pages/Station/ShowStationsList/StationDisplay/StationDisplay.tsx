@@ -17,13 +17,16 @@ interface StationProps {
 function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'full'): string {
     const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT as string;
     if (!code) return `${IMG_BASE_URL}bg_station_1.png`;
-    const match = code.match(/(\d+)/);
+
+    const match = code.match(/bg_station_(\d+)/);
     if (!match) {
         if (/^https?:\/\//.test(code)) return code;
         return `${IMG_BASE_URL}${code}`;
     }
+
     const n = parseInt(match[1], 10);
     const two = String(n).padStart(2, '0');
+
     switch (variant) {
         case 'dim':
             return `${IMG_BASE_URL}station_dim_${two}.png`;

@@ -7,10 +7,11 @@ const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 // 정거장 목록 썸네일 이미지 매핑
 const stationThumbnails: { [key: string]: string } = {
-  bg_station_1: `${IMG_BASE_URL}rec_bg_station_1.png`,
-  bg_station_2: `${IMG_BASE_URL}rec_bg_station_2.png`,
-  bg_station_3: `${IMG_BASE_URL}rec_bg_station_3.png`,
-  bg_station_4: `${IMG_BASE_URL}rec_bg_station_4.png`,
+    // [change] 키에 .png 포함
+    'bg_station_1.png': `${IMG_BASE_URL}rec_bg_station_1.png`,
+    'bg_station_2.png': `${IMG_BASE_URL}rec_bg_station_2.png`,
+    'bg_station_3.png': `${IMG_BASE_URL}rec_bg_station_3.png`,
+    'bg_station_4.png': `${IMG_BASE_URL}rec_bg_station_4.png`,
 };
 
 interface StationBottomSheetContentProps {
