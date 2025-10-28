@@ -258,6 +258,7 @@ export interface Answer {
 
 export interface Station {
   stationId: string;
+  stationCode: string;
   name: string;
   numOfUsers: number;
   stationBackground: string;
@@ -408,4 +409,9 @@ export interface UsedClothData {
 export interface UsedBackgroundData {
   items: UsedItem[];
   wishlist: number[];
+}
+
+// /store/official/wishlist API가 응답하는 데이터의 타입
+export interface WishlistResponse {
+  message: string;
 }
