@@ -8,24 +8,44 @@ import SearchStationModal from '../../../components/SearchStationModal/SearchSta
 import { axiosRequest } from '../../../functions/axiosRequest';
 import axiosInstance from '../../../api/axiosInstance';
 import { Methods } from '../../../types/types';
+import { DraggableBottomSheet } from '../../../components/DraggableBottomSheet/DraggableBottomSheet';
+import StationBottomSheetContent from './StationBottomSheetContent/StationBottomSheetContent';
+import CurrentStationInfo from './CurrentStationInfo/CurrentStationInfo';
 
 // 이미지 파일
 import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
-import { DraggableBottomSheet } from '../../../components/DraggableBottomSheet/DraggableBottomSheet';
-import StationBottomSheetContent from './StationBottomSheetContent/StationBottomSheetContent';
-import CurrentStationInfo from './CurrentStationInfo/CurrentStationInfo';
 
 const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 // 서버에서 오는 'bg_station_X' 값을 실제 배경 이미지 파일명으로 매핑합니다.
-const stationBackgrounds: { [key: string]: string } = {
-    bg_station_1: `${IMG_BASE_URL}station_dim_01.png`,
-    bg_station_2: `${IMG_BASE_URL}station_dim_02.png`,
-    bg_station_3: `${IMG_BASE_URL}station_dim_03.png`,
-    bg_station_4: `${IMG_BASE_URL}station_dim_04.png`,
-};
+// const stationBackgrounds: { [key: string]: string } = {
+//     bg_station_1: `${IMG_BASE_URL}station_dim_01.png`,
+//     bg_station_2: `${IMG_BASE_URL}station_dim_02.png`,
+//     bg_station_3: `${IMG_BASE_URL}station_dim_03.png`,
+//     bg_station_4: `${IMG_BASE_URL}station_dim_04.png`,
+// };
+
+function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'dim'): string {
+    if (!code) return `${IMG_BASE_URL}station_dim_01.png`;
+    const match = code.match(/(\d+)/);
+    if (!match) {
+        if (/^https?:\/\//.test(code)) return code;
+        return `${IMG_BASE_URL}${code}`;
+    }
+    const n = parseInt(match[1], 10);
+    const two = String(n).padStart(2, '0');
+    switch (variant) {
+        case 'full':
+            return `${IMG_BASE_URL}bg_station_${n}.png`;
+        case 'rec':
+            return `${IMG_BASE_URL}rec_bg_station_${n}.png`;
+        case 'dim':
+        default:
+            return `${IMG_BASE_URL}station_dim_${two}.png`;
+    }
+}
 
 const ShowStationList: React.FC = () => {
     const { userInfo } = useCharacterStore();
@@ -129,11 +149,11 @@ const ShowStationList: React.FC = () => {
         setTimeout(() => setIsNoExistStationPopupVisible(false), 1500);
     };
 
-    const fetchSearchedStation = async (stationId: string) => {
+    const fetchSearchedStation = async (stationCode: string) => {
         try {
-            const response = await axiosRequest(`/stations/${stationId}`, 'PATCH', null);
+            const response = await axiosRequest(`/stations/${stationCode}`, 'PATCH', null);
 
-            if (response.status === 200 || response.status === 202) return enterStation(stationId);
+            if (response.status === 200 || response.status === 202) return enterStation(stationCode);
             if (response.status === 404) return handlePopupNoExistStation();
             if (response?.message === 'Invalid or expired token') return navigate('/login');
         } catch (error: unknown) {
@@ -155,7 +175,7 @@ const ShowStationList: React.FC = () => {
                 if (status === 401) navigate('/login');
                 else if (status === 404) handlePopupNoExistStation();
                 else if (status === 409) {
-                    if (message?.includes('User already')) enterStation(stationId);
+                    if (message?.includes('User already')) enterStation(stationCode);
                 }
             } else console.error('서버에 연결할 수 없습니다.');
         }
@@ -163,6 +183,7 @@ const ShowStationList: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log('입력된 정거장 코드:', searchValue);
         if (searchValue.trim()) await fetchSearchedStation(searchValue);
     };
 
@@ -199,8 +220,8 @@ const ShowStationList: React.FC = () => {
         }
     };
 
-    const enterStation = (stationId: string) => {
-        sessionStorage.setItem('stationId', stationId);
+    const enterStation = (stationCode: string) => {
+        sessionStorage.setItem('stationCode', stationCode);
         navigate('/station/stationinside');
     };
 
@@ -298,7 +319,7 @@ const ShowStationList: React.FC = () => {
                         <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
                             <div
                                 className={s.backgroundImageStatic}
-                                style={{ backgroundImage: `url(${stationBackgrounds[currentStation?.stationBackground] || stationBackgrounds.bg_station_1})` }}
+                                style={{ backgroundImage: `url(${getStationBackgroundUrl(currentStation?.stationBackground, 'dim')})` }}
                             />
                             <div className={s.dimOverlay} />
                         </div>
