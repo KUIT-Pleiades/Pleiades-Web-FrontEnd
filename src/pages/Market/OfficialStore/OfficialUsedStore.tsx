@@ -10,6 +10,7 @@ import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
+import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem } from "../../../api/marketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
 // 일반 아이콘
@@ -39,12 +40,38 @@ export default function OfficialUsedStore() {
   const { userInfo } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-  const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() => structuredClone(userInfo)); // 초기 상태값을 복사하여 사용
+  const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
+    structuredClone(userInfo)
+  ); // 초기 상태값을 복사하여 사용
 
   // 미리보기 상태 (캐릭터 프리뷰용)
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
   );
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const [faceResponse, clothResponse, backgroundResponse] = await Promise.all([
+          getOfficialFaceItems(),
+          getOfficialClothItems(),
+          getOfficialBackgroundItems(),
+        ]);
+
+        const combinedWishlist = [
+          ...faceResponse.wishlist,
+          ...clothResponse.wishlist,
+          ...backgroundResponse.wishlist,
+        ];
+
+        setLikedItems(new Set(combinedWishlist));
+      } catch (error) {
+        console.error("Failed to fetch wishlist", error);
+      }
+    };
+
+    fetchWishlist();
+  }, []);
 
   // Store의 userInfo가 변경될 때 미리보기 캐릭터 정보와 초기값 정보를 동기화합니다.
   useEffect(() => {
@@ -77,6 +104,7 @@ export default function OfficialUsedStore() {
   const focusSearchInput = () => {
     setFocusSearch(true);
   };
+
 
   const handleItemSelect = (
     id: number,
@@ -467,6 +495,12 @@ export default function OfficialUsedStore() {
               onClick={(e) => {
                 e.stopPropagation();
                 if (selectedItem.id !== null) {
+                  const isLiked = likedItems.has(selectedItem.id);
+                  if (isLiked) {
+                    deleteWishlistItem(selectedItem.id);
+                  } else {
+                    postWishlistItem(selectedItem.id);
+                  }
                   setLikedItems((prevLikedItems) => {
                     const newLikedItems = new Set(prevLikedItems);
                     if (newLikedItems.has(selectedItem.id!)) {
