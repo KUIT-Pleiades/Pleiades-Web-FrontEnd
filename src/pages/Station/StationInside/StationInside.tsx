@@ -70,10 +70,10 @@ const StationInside: React.FC = () => {
 
   // 스테이션 데이터를 새로고침하는 함수
   const refreshStationData = async () => {
-    if (!stationId) return;
+    if (!stationCode) return;
     try {
       const response = await axiosRequest<StationResponse>(
-        `/stations/${stationId}`,
+        `/stations/${stationCode}`,
         "GET",
         null
       );
@@ -92,27 +92,27 @@ const StationInside: React.FC = () => {
     setSelectedMember(member);
   };
 
-  const stationId = sessionStorage.getItem("stationId") as string;
+  const stationCode = sessionStorage.getItem("stationCode") as string;
   const handleLeaveStation = () => {
-    sessionStorage.removeItem("stationId");
+    sessionStorage.removeItem("stationCode");
     navigate("/station");
   };
 
   useEffect(() => {
-    if (!stationId) {
+    if (!stationCode) {
       navigate("/station");
       return;
     }
-  }, [stationId, navigate]);
+  }, [stationCode, navigate]);
 
   useEffect(() => {
     const getStationData = async () => {
-      if (!stationId) return;
+      if (!stationCode) return;
 
       try {
         setIsLoading(true);
         const response = await axiosRequest<StationResponse>(
-          `/stations/${stationId}`,
+          `/stations/${stationCode}`,
           "GET",
           null
         );
@@ -135,7 +135,7 @@ const StationInside: React.FC = () => {
     };
 
     getStationData();
-  }, [stationId]);
+  }, [stationCode]);
 
   if (isLoading) return <Pending />;
   if (error) return <div>에러가 발생했습니다</div>;
@@ -150,7 +150,7 @@ const StationInside: React.FC = () => {
     >
       {!stationData.reportWritten && (
         <StationReport
-          stationId={stationId}
+          stationId={stationCode}
           onReportSubmitted={refreshStationData}
         />
       )}
@@ -200,14 +200,14 @@ const StationInside: React.FC = () => {
         (selectedMember.userId === currentUserId ? (
           <MyReport
             onClose={() => setSelectedMember(null)}
-            stationId={stationId}
+            stationId={stationCode}
             userId={selectedMember.userId}
           />
         ) : (
           <CharacterReport
             memberName={selectedMember.userName}
             onClose={() => setSelectedMember(null)}
-            stationId={stationId}
+            stationId={stationCode}
             userId={selectedMember.userId}
             profile={selectedMember.profile}
           />
