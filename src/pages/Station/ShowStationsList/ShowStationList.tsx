@@ -29,13 +29,16 @@ const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
 
 function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'dim'): string {
     if (!code) return `${IMG_BASE_URL}station_dim_01.png`;
-    const match = code.match(/(\d+)/);
+
+    const match = code.match(/bg_station_(\d+)/);
     if (!match) {
         if (/^https?:\/\//.test(code)) return code;
         return `${IMG_BASE_URL}${code}`;
     }
+
     const n = parseInt(match[1], 10);
     const two = String(n).padStart(2, '0');
+
     switch (variant) {
         case 'full':
             return `${IMG_BASE_URL}bg_station_${n}.png`;
@@ -45,6 +48,46 @@ function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'ful
         default:
             return `${IMG_BASE_URL}station_dim_${two}.png`;
     }
+}
+
+function getMockStations(): Stations {
+    const now = new Date();
+    const iso = (d: Date) => d.toISOString();
+
+    const mock: Station[] = [
+        {
+            stationId: 'ST001',
+            stationCode: 'A1B2C3',
+            name: '오로라 정거장',
+            numOfUsers: 3,
+            stationBackground: 'bg_station_1.png',
+            createdAt: iso(new Date(now.getTime() - 1000 * 60 * 60 * 24 * 7)),
+            lastActive: iso(new Date(now.getTime() - 1000 * 60 * 3)),
+            favorite: true,
+        },
+        {
+            stationId: 'ST002',
+            stationCode: 'D4E5F6',
+            name: '은하수 라운지',
+            numOfUsers: 5,
+            stationBackground: 'bg_station_2.png',
+            createdAt: iso(new Date(now.getTime() - 1000 * 60 * 60 * 24 * 14)),
+            lastActive: iso(new Date(now.getTime() - 1000 * 60 * 30)),
+            favorite: false,
+        },
+        {
+            stationId: 'ST003',
+            stationCode: 'G7H8I9',
+            name: '성운 카페',
+            numOfUsers: 2,
+            stationBackground: 'bg_station_3.png',
+            createdAt: iso(new Date(now.getTime() - 1000 * 60 * 60 * 24 * 30)),
+            lastActive: iso(new Date(now.getTime() - 1000 * 60 * 120)),
+            favorite: false,
+        },
+    ];
+
+    return { stations: mock };
 }
 
 const ShowStationList: React.FC = () => {
@@ -68,8 +111,17 @@ const ShowStationList: React.FC = () => {
     const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
     const bottomSheetHeaderHeight = 57;
 
+    const USE_MOCK = false; // <============== 모의 데이터를 사용할지 여부. 나중에 false로 수정 필요!!!
+
     useEffect(() => {
         const fetchStations = async () => {
+            if (USE_MOCK) {
+                const mock = getMockStations();
+                setStations(mock);
+                setCarouselStations(mock.stations.slice(0, 5));
+                return;
+            }
+
             try {
                 // GET /stations API 호출
                 const response = await axiosRequest<Stations>('/stations', 'GET', null);
@@ -319,7 +371,7 @@ const ShowStationList: React.FC = () => {
                         <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
                             <div
                                 className={s.backgroundImageStatic}
-                                style={{ backgroundImage: `url(${getStationBackgroundUrl(currentStation?.stationBackground, 'dim')})` }}
+                                style={{ backgroundImage: `url(${getStationBackgroundUrl(currentStation?.stationBackground, 'full')})` }}
                             />
                             <div className={s.dimOverlay} />
                         </div>
