@@ -7,11 +7,32 @@ import favoriteFilled from '../../../../assets/StationList/favoriteFilled.svg';
 import favoriteOutline from '../../../../assets/StationList/favoriteOutline.svg';
 
 interface StationProps {
-  name: string;
-  numOfUsers: number;
-  background: string;
-  favorite: boolean;
-  onToggleFavorite: () => void;
+    name: string;
+    numOfUsers: number;
+    background: string;
+    favorite: boolean;
+    onToggleFavorite: () => void;
+}
+
+function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'full'): string {
+    const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT as string;
+    if (!code) return `${IMG_BASE_URL}bg_station_1.png`;
+    const match = code.match(/(\d+)/);
+    if (!match) {
+        if (/^https?:\/\//.test(code)) return code;
+        return `${IMG_BASE_URL}${code}`;
+    }
+    const n = parseInt(match[1], 10);
+    const two = String(n).padStart(2, '0');
+    switch (variant) {
+        case 'dim':
+            return `${IMG_BASE_URL}station_dim_${two}.png`;
+        case 'rec':
+            return `${IMG_BASE_URL}rec_bg_station_${n}.png`;
+        case 'full':
+        default:
+            return `${IMG_BASE_URL}bg_station_${n}.png`;
+    }
 }
 
 const StationDisplay: React.FC<StationProps> = ({
@@ -23,7 +44,7 @@ const StationDisplay: React.FC<StationProps> = ({
 }) => {
   return (
     <div className={s.stationBox}>
-      <div className={s.stationBackground} style={{ backgroundImage: `url(${background})` }} />
+      <div className={s.stationBackground} style={{ backgroundImage: `url(${getStationBackgroundUrl(background, 'full')})` }} />
       <div className={s.stationInfo}>
         <div className={s.stationDetail}>
           <img
