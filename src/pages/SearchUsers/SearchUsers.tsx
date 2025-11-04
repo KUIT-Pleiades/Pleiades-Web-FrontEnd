@@ -11,6 +11,8 @@ import Pending from '../PageManagement/Pending';
 import { useSearchUsers } from './hooks/useSearchUsers';
 import { useRecentSearches } from './hooks/useRecentSearches';
 
+import { useToast } from '../../components/Toast/useToast';
+
 const SearchUsers: React.FC = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
@@ -46,6 +48,9 @@ const SearchUsers: React.FC = () => {
     if (!recentSearches) return;
     removeAllRecent();
   };
+
+  // 토스트 메시지 훅
+  const { showToast, ToastContainer } = useToast();
 
   return (
     <div className={s.container}>
@@ -87,6 +92,7 @@ const SearchUsers: React.FC = () => {
             filteredUsers={searchResults}
             refreshSearch={refetchSearchResults}
             refetchRecentSearches={refetchRecentSearches}
+            showToast={showToast}
           />
         </div>
       ) : (
@@ -95,6 +101,7 @@ const SearchUsers: React.FC = () => {
           <span className={s.noResultModalSecondText}>ID를 다시 확인해주세요</span>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

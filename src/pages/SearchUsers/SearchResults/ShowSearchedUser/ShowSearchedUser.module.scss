@@ -1,3 +1,4 @@
+// File: src/pages/SearchUsers/SearchResults/ShowSearchedUser/ShowSearchedUser.module.scss
 .userContainer {
     width: 100%;
     padding-top: 1.19rem;
@@ -30,7 +31,6 @@
     object-fit: cover;
 }
 
-
 .userInfo {
     flex: 1;
     height: 2.19rem;
@@ -39,6 +39,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
 .userName {
     color: var(--gray-22, #444);
     font-family: Pretendard;
@@ -47,6 +48,7 @@
     font-weight: 700;
     line-height: normal;
 }
+
 .userId {
     color: var(--gray-22, #444);
     font-family: Pretendard;
@@ -62,13 +64,13 @@
     flex-direction: row;
     align-items: center;
 }
+
 .showDeleteFriendModalButton {
     width: 4.875rem;
     height: 1.75rem;
     border-radius: 0.75rem;
     background-color: #FFF;
     box-shadow: 0px 0px 5px 0px rgba(41, 34, 41, 0.20);
-
     color: var(--gray-22, #444);
     font-family: Pretendard;
     font-size: 0.8125rem;
@@ -77,6 +79,7 @@
     line-height: normal;
     letter-spacing: -0.01875rem;
 }
+
 .deleteFriendsButton {
     margin: 0;
     padding: 0;
@@ -85,12 +88,12 @@
     padding-left: 0.49rem;
     margin-left: 0.2rem;
 }
-.withdrawRequestButton{
+
+.withdrawRequestButton {
     width: 6rem;
     height: 2.19rem;
     background-color: var(--color-5-main, #C0B9DB);
     border-radius: 1.88rem;
-
     color: #FFF;
     text-align: center;
     font-family: Pretendard;
@@ -101,12 +104,12 @@
     letter-spacing: -0.01456rem;
     margin-right: 0.5rem;
 }
+
 .sendRequestButton {
     width: 6rem;
     height: 2.19rem;
-    background-color:#402C44;
+    background-color: #402C44;
     border-radius: 1.88rem;
-
     color: #FFF;
     text-align: center;
     font-family: Pretendard;
@@ -117,12 +120,12 @@
     letter-spacing: -0.01456rem;
     margin-right: 0.5rem;
 }
+
 .acceptRequestButton {
     width: 3rem;
     height: 2.19rem;
     background-color: #402C44;
     border-radius: 1.88rem;
-
     color: #FFF;
     text-align: center;
     font-family: Pretendard;
@@ -133,12 +136,12 @@
     letter-spacing: -0.01456rem;
     margin-right: 0.25rem;
 }
+
 .refuseRequestButton {
     width: 3rem;
     height: 2.19rem;
     background-color: var(--color-5-main, #C0B9DB);
     border-radius: 1.88rem;
-
     color: #FFF;
     text-align: center;
     font-family: Pretendard;
@@ -148,68 +151,4 @@
     line-height: normal;
     letter-spacing: -0.01456rem;
     margin-right: 0.5rem;
-}
-
-.popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    background-color: #EDEFFF;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    box-shadow: 0px 0px 10px rgba(23, 21, 28, 0.3);
-    text-align: center;
-    opacity: 1;
-    z-index: 1000;
-    transition: opacity 0.5s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    opacity: 0;
-    transform: translate(-50%, -40%);
-    animation: fadeIn 0.3s ease-out forwards, fadeOut 0.5s ease-in 1s forwards; // ✅ 두 단계로 나눔
-    
-    &Title {
-        color: #17151C;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 0.9375rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-    }
-    
-    &Text {
-        color: #444;
-        text-align: center;
-        font-family: "ElectricalSafety";
-        font-size: 0.6875rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        letter-spacing: -0.01375rem;
-        margin-top: 0.44rem;
-    }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -60%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-50%, -40%);
-  }
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import s from './ShowMyRequestsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
+import { useToast } from '../../../components/Toast/useToast';
 
 interface ShowMyRequestsListProps {
     otherUser: OtherUser;
@@ -8,13 +9,11 @@ interface ShowMyRequestsListProps {
 }
 
 const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, handleDeleteRequest }) => {
-  const [isCancelRequestPopupVisible, setisCancelRequestPopupVisible] = useState(false);
+  //const [isCancelRequestPopupVisible, setisCancelRequestPopupVisible] = useState(false);
+  const { showToast, ToastContainer } = useToast();
 
   const showCancelRequestPopup = () => {
-    setisCancelRequestPopupVisible(true);
-    setTimeout(() => {
-      setisCancelRequestPopupVisible(false);
-    }, 1500);
+    showToast(`${otherUser.userName} 님 요청을 취소했어요`);
     setTimeout(() => {
       handleDeleteRequest(otherUser.userId);
     }, 1000);
@@ -44,11 +43,12 @@ const ShowMyRequestsList: React.FC<ShowMyRequestsListProps> = ({ otherUser, hand
           }}
         >취소</button>
       </div>
-      {isCancelRequestPopupVisible && (
+      {/* {isCancelRequestPopupVisible && (
         <div className={s.cancelRequestPopup}>
           {`${otherUser.userName} 님 요청을 취소했어요`}
         </div>
-      )}
+      )} */}
+      <ToastContainer />
     </div>
   )
 }
