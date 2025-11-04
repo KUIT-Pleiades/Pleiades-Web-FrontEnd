@@ -7,6 +7,9 @@ import ShowMyFriendsList from "../ShowMyFriendsList/ShowMyFriendsList";
 import ShowMyRequestsList from "../ShowMyRequestsList/ShowMyRequestsList";
 import SortCriteriaBox from "../../../components/SortCriteriaBox/SortCriteriaBox";
 
+// 토스트 메시지 테스트용
+// import { useToast } from '../../../components/Toast/useToast';
+
 // image files
 import hideUpArrow from "../../../assets/FriendsTab/hideUpArrow.svg";
 import showDownArrow from "../../../assets/FriendsTab/showDownArrow.svg";
@@ -31,6 +34,9 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
   handleDeleteRequest,
   handleSendSignal,
 }) => {
+  // 토스트 메시지 테스트용
+  // const { showToast, ToastContainer } = useToast();
+
   const [isShowFriendRequests, setIsShowFriendRequests] = useState<boolean>(true);
   const [isShowMyFriends, setIsShowMyFriends] = useState<boolean>(true);
   const [isShowMyRequests, setIsShowMyRequests] = useState<boolean>(true);
@@ -188,6 +194,16 @@ const ShowTotalFriendsList: React.FC<ShowTotalFriendsListProps> = ({
           </div>
         )}
       </div>
+      {/* // [add] 테스트용 버튼 영역: 기본 토스트 / 아이콘 토스트 트리거 */}
+      {/* <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
+          <button onClick={() => showToast('토스트 테스트(기본)')}>
+              토스트 테스트(기본)
+          </button>
+          <button onClick={() => showToast('토스트 테스트(아이콘)', true)}>
+              토스트 테스트(아이콘)
+          </button>
+      </div>
+      <ToastContainer /> */}
     </div>
   );
 };
