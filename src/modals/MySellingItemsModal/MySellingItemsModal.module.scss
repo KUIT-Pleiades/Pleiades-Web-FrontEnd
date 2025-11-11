@@ -1,0 +1,422 @@
+// SellItemModal.module.scss
+
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); // 반투명 검정 배경
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10000;
+}
+
+.modal {
+	background: #F8F8FA; // 팝업 내부 배경을 흰색으로
+	border-radius: 12px;
+	width: 72%;
+	//height: 50%;
+	padding-bottom: 21px;
+	position: relative;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	overflow: hidden;
+}
+
+/* [ADD] 판매 폼 단계에서 이미지/가격 영역 축소 */
+.modal.isForm .imageContainer {
+	width: 44%;
+	//height: 160px;
+}
+
+.modal.isForm .priceArea {
+	margin-top: 17px;
+}
+
+.modal.isForm .priceText {
+	font-size: 11px;
+}
+
+.modal.isForm .stoneIcon {
+	width: 11.647px;
+	height: 9px;
+}
+
+.modal.isForm .priceValue {
+	font-size: 11px;
+}
+
+/* [ADD] 성공 모드 보정 */
+.modal.isSuccess .textArea {
+	margin-top: 40px;
+}
+
+.modalClose {
+	position: absolute;
+	top: 18px;
+	right: 19.38px;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.textArea {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 53px;
+	width: 70%;
+	position: relative;
+}
+
+.titleRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	position: relative;
+}
+
+.itemNameText {
+	color: #444;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+.menuBtnWrapper {
+	position: absolute;
+	right: 0;
+	display: flex;
+	align-items: center;
+}
+
+.menuBtn {
+	width: 2px;
+	height: 14px;
+	cursor: pointer;
+}
+
+.deleteBtn {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: -0.3px;
+	padding: 4px 12px;
+
+	border: none;
+
+	font-family: Pretendard;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	white-space: nowrap;
+	z-index: 10;
+	width: 65px;
+	height: 28px;
+	flex-shrink: 0;
+	border-radius: 12px;
+	background: #FFF;
+	box-shadow: 0 0 5px 0 rgba(41, 34, 41, 0.20);
+
+	display: flex;
+	align-items: center;
+	gap: 7px;
+
+	span {
+		color: #FF2C2C;
+	}
+}
+
+.itemNameTextSuccess {
+	color: var(--gray-22, #444);
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+
+	margin-top: 19px;
+}
+
+.successTitle {
+	color: var(--color-8-id, #8B6193);
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.imageContainer {
+	width: 70%;
+	margin-top: 21px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	position: relative;
+
+	aspect-ratio: 1 / 1;
+	background: #FFF;
+	border-radius: 6px;
+	filter: drop-shadow(0 0 6px rgba(41, 34, 41, 0.20));
+	//height: 220px; /* [ADD] 이미지 컨테이너 높이 고정 */
+}
+
+.discountBadge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	background: #F45B5B;
+	padding: 4px 8px;
+	border-radius: 40px;
+	z-index: 1;
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.2px;
+}
+
+.itemImg {
+	max-width: 100%;
+	/* [ADD] 모달 너비 초과 금지 */
+	max-height: 100%;
+	/* [ADD] 모달 높이 초과 금지 */
+	object-fit: contain;
+	/* [ADD] 비율 유지 */
+	object-position: center;
+	/* [ADD] 중앙 정렬 */
+	display: block;
+}
+
+.priceArea {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 17px;
+}
+
+.priceText {
+	color: #5F5F5F;
+	font-family: "Pretendard";
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.28px;
+}
+
+.stoneIcon {
+	width: 13.705px;
+	height: 10.591px;
+	flex-shrink: 0;
+	margin-left: 15px;
+}
+
+.priceValue {
+	color: #000;
+	text-align: center;
+	font-family: "Pretendard";
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: -0.28px;
+	margin-left: 8px;
+}
+
+/* ===== 판매 폼 영역 ===== */
+.formArea {
+	width: 80%;
+	margin-top: 18px;
+	padding: 16px 14px;
+	background: #FFFFFF;
+	border-radius: 12px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.inputBox {
+	width: 100%;
+	height: 38px;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+	background: transparent;
+	text-align: center;
+	color: var(--gray-11, #17151C);
+	font-family: "ElectricalSafety";
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.4px;
+}
+
+.inputBox::placeholder {
+	color: var(--Color-14, #E1E1E1);
+	font-family: Pretendard;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.28px;
+}
+
+.divider {
+	width: 80%;
+	height: 2px;
+	background-color: #C0B9DB;
+	border-radius: 2px;
+	margin: 0;
+}
+
+.helperRow {
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+	margin-top: 5px;
+}
+
+.helperBtn {
+	min-width: 35px;
+	padding: 3px 7px;
+	border-radius: 18px;
+	border: 1.33px solid #E1E1E1;
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	color: var(--Color-12, #858585);
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	letter-spacing: -0.2px;
+}
+
+.helperBtn:active {
+	transform: translateY(1px);
+}
+
+/* [ADD] */
+
+.buttonArea {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 13px;
+	margin-top: 16px;
+}
+
+.checkMarketPriceBtn,
+.sellBtn {
+	width: 96px;
+	height: 35px;
+	border-radius: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.checkMarketPriceBtn {
+	background: #C0B9DB;
+}
+
+.sellBtn {
+	background: #402C44;
+}
+
+
+/* [ADD] 활성/비활성 색상 분리 */
+.sellBtnDisabled {
+	background: #D2CFD9 !important;
+	cursor: not-allowed;
+}
+
+.sellBtnPrimary {
+	background: #402C44 !important;
+}
+
+.btnText {
+	color: #FFF;
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.233px;
+}
+
+
+/* ===== 성공 모드 전용 ===== */
+.successInfoBox {
+	/* [ADD] */
+	margin-top: 14px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.itemNameSuccess {
+	/* [ADD] */
+	color: #444;
+	font-family: Pretendard;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.successPriceRow {
+	/* [ADD] */
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.successPriceLabel {
+	/* [ADD] */
+	color: #666;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.successPriceValue {
+	/* [ADD] */
+	color: #2b2b2b;
+	font-size: 16px;
+	font-weight: 800;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+	/* 터치 시 파란 하이라이트 제거 */
+}
