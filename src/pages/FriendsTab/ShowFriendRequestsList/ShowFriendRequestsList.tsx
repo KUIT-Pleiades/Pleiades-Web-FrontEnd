@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import s from './ShowFriendRequestsList.module.scss';
 import { OtherUser } from '../../../interfaces/Interfaces';
+import { useToast } from '../../../components/Toast/useToast';
 
 //image files
-import acceptFriendPopupSpacecraft from '../../../assets/FriendsTab/acceptFriendPopupSpacecraft.svg';
+// import acceptFriendPopupSpacecraft from '../../../assets/FriendsTab/acceptFriendPopupSpacecraft.svg';
 
 interface ShowFriendRequestsListProps {
   otherUser: OtherUser;
@@ -16,23 +17,19 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
   handleAcceptRequest,
   handleRejectRequest
 }) => {
-  const [isAcceptFriendPopupVisible, setIsAcceptFriendPopupVisible] = useState(false);
-  const [isRefuseFriendPopupVisible, setIsRefuseFriendPopupVisible] = useState(false);
+  // const [isAcceptFriendPopupVisible, setIsAcceptFriendPopupVisible] = useState(false);
+  // const [isRefuseFriendPopupVisible, setIsRefuseFriendPopupVisible] = useState(false);
+  const { showToast, ToastContainer } = useToast();
 
   const showAcceptFriendPopup = () => {
-    setIsAcceptFriendPopupVisible(true);
-    setTimeout(() => {
-      setIsAcceptFriendPopupVisible(false);
-    }, 1500);
+    showToast(`${otherUser.userName}님과 친구가 되었어요!`, true);
     setTimeout(() => {
       handleAcceptRequest(otherUser.userId);
     }, 1000);
   };
+  
   const showRefuseFriendPopup = () => {
-    setIsRefuseFriendPopupVisible(true);
-    setTimeout(() => {
-      setIsRefuseFriendPopupVisible(false);
-    }, 1500);
+    showToast(`${otherUser.userName}님 요청을 거절했어요`);
     setTimeout(() => {
       handleRejectRequest(otherUser.userId);
     }, 1000);
@@ -70,7 +67,7 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
           }}
         >거절</button>
       </div>
-      {isAcceptFriendPopupVisible && (
+      {/* {isAcceptFriendPopupVisible && (
           <div className={s.acceptFriendPopup}>
             <img src={acceptFriendPopupSpacecraft} alt='acceptFriendPopupSpacecraft' className={s.acceptFriendPopupSpacecraftUp} />
             {`${otherUser.userName}님과 친구가 되었어요!`}
@@ -81,7 +78,8 @@ const ShowFriendRequestsList: React.FC<ShowFriendRequestsListProps> = ({
         <div className={s.refuseFriendPopup}>
           {`${otherUser.userName}님 요청을 거절했어요`}
         </div>
-      )}
+      )} */}
+      <ToastContainer />
     </div>
   )
 }

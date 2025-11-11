@@ -18,6 +18,7 @@ interface SearchedUserProps {
     handleSendSignal: (friendId: string, friendName: string) => void;
     handleAcceptRequest: (friendId: string) => void;
     handleAddSearchHistory: (searchedId: string) => void;
+    showToast: (msg: string, withIcon?: boolean) => void;
 }
 
 const ShowSearchedUser: React.FC<SearchedUserProps> = ({
@@ -28,32 +29,37 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
     handleAcceptRequest,
     handleSendSignal,
     handleAddSearchHistory,
+    showToast,
 }) => {
     const navigate = useNavigate();
     const [showDeleteFriendButton, setShowDeleteFriendButton] = useState(false);
     const [isDeleteFriendModalOpen, setIsDeleteFriendModalOpen] = useState(false);
     
     // ✅ 팝업 상태 (이제 개별 유저마다 관리됨)
-    const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | "DELETE" | null>(null);
+    //const [popupType, setPopupType] = useState<"ACCEPT" | "REFUSE" | "WITHDRAW" | "SEND" | "DELETE" | null>(null);
+    const toastAndAction = (msg: string, action: () => void, withIcon: boolean = false) => {
+        showToast(msg, withIcon);
+        setTimeout(() => action(), 1000);
+    };
 
     // ✅ 팝업 표시 함수
-    const showPopup = (type: "REFUSE" | "WITHDRAW" | "SEND" | "DELETE") => {
-        setPopupType(type);
-        setTimeout(() => {
-            setPopupType(null);
-        }, 1500);
-        setTimeout(() => {
-            if(type === "DELETE"){
-                handleDeleteRequest(user.userId, "FRIEND");
-            } else if(type === "WITHDRAW"){
-                handleDeleteRequest(user.userId, "REQUEST");
-            } else if(type === "REFUSE"){
-                handleRejectRequest(user.userId);
-            } else if(type === "SEND"){
-                handleSendRequestFriend(user.userId);
-            }
-        }, 1000);
-    };
+    // const showPopup = (type: "REFUSE" | "WITHDRAW" | "SEND" | "DELETE") => {
+    //     setPopupType(type);
+    //     setTimeout(() => {
+    //         setPopupType(null);
+    //     }, 1500);
+    //     setTimeout(() => {
+    //         if(type === "DELETE"){
+    //             handleDeleteRequest(user.userId, "FRIEND");
+    //         } else if(type === "WITHDRAW"){
+    //             handleDeleteRequest(user.userId, "REQUEST");
+    //         } else if(type === "REFUSE"){
+    //             handleRejectRequest(user.userId);
+    //         } else if(type === "SEND"){
+    //             handleSendRequestFriend(user.userId);
+    //         }
+    //     }, 1000);
+    // };
 
     // 버튼 렌더링 함수
     const renderButton = () => {
@@ -92,7 +98,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.withdrawRequestButton}
                         onClick={() => {
-                            showPopup("WITHDRAW");
+                            toastAndAction("친구 요청을 취소했어요", () => handleDeleteRequest(user.userId, "REQUEST"));
                             handleAddSearchHistory(user.userId);
                         }}
                     >
@@ -105,7 +111,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         <button
                             className={s.acceptRequestButton}
                             onClick={() => {
-                                handleAcceptRequest(user.userId);
+                                toastAndAction(`${user.userName}님과 친구가 되었어요!`, () => handleAcceptRequest(user.userId), true);
                                 handleAddSearchHistory(user.userId);
                             }}
                         >
@@ -114,7 +120,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                         <button
                             className={s.refuseRequestButton}
                             onClick={() => {
-                                showPopup("REFUSE");
+                                toastAndAction("친구 요청을 거절했어요", () => handleRejectRequest(user.userId));
                                 handleAddSearchHistory(user.userId);
                             }}
                         >
@@ -128,7 +134,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     <button
                         className={s.sendRequestButton}
                         onClick={() => {
-                            showPopup("SEND");
+                            toastAndAction("친구 요청을 완료했어요!", () => handleSendRequestFriend(user.userId));
                             handleAddSearchHistory(user.userId);
                         }}
                     >
@@ -165,7 +171,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
             {renderButton()}
 
             {/* ✅ 팝업 (개별 유저마다 표시) */}
-            {popupType && (
+            {/* {popupType && (
                 <div className={`${s.popup} ${popupType ? s[`popup${popupType}`] : ""}`}>
                     <span className={s.popupTitle}>
                         {popupType === "REFUSE" && "친구 요청을 거절했어요"}
@@ -175,7 +181,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     </span>
                     {popupType === "SEND" && <span className={s.popupText}>요청 중인 친구에서 확인할 수 있어요</span>}
                 </div>
-            )}
+            )} */}
 
             {/* 친구 삭제 모달 */}
             {isDeleteFriendModalOpen && (
@@ -188,7 +194,7 @@ const ShowSearchedUser: React.FC<SearchedUserProps> = ({
                     }}
                     onDelete={() => {
                         setIsDeleteFriendModalOpen(false);
-                        showPopup("DELETE");
+                        toastAndAction("삭제되었습니다", () => handleDeleteRequest(user.userId, "FRIEND"));
                     }}
                 />
             )}

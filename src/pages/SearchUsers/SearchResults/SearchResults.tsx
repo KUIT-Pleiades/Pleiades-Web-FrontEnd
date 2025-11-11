@@ -11,9 +11,10 @@ interface SearchResultsProps {
     filteredUsers: SearchedUser[];
     refreshSearch: () => void;
     refetchRecentSearches: () => void;
+    showToast: (msg: string, withIcon?: boolean) => void;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch, refetchRecentSearches }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSearch, refetchRecentSearches, showToast }) => {
 
     const {
         signalTo,
@@ -107,6 +108,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ filteredUsers, refreshSea
                         handleAcceptRequest={handleAcceptRequest}
                         handleSendSignal={sendSignal}
                         handleAddSearchHistory={handleAddSearchHistory}
+                        showToast={showToast}
                     />
                 </div>
             ))}

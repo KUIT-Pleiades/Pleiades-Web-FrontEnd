@@ -368,7 +368,7 @@ const ShowStationList: React.FC = () => {
                     </>
                 ) : (
                     <div className={s.bodyWrapper}>
-                        <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
+                        <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationCode)}>
                             <div
                                 className={s.backgroundImageStatic}
                                 style={{ backgroundImage: `url(${getStationBackgroundUrl(currentStation?.stationBackground, 'full')})` }}
