@@ -1,0 +1,124 @@
+/* 삭제 확인 모달 */
+.deleteModalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10001;
+}
+
+.deleteModalWrapper {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.deleteIconWrapper {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--Linear, linear-gradient(144deg, #5B6ABD 14.93%, #C89FEB 77.56%));
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	margin-bottom: -24px; // 모달과 겹치도록
+	box-shadow: 0 4px 12px rgba(155, 138, 245, 0.3);
+}
+
+.deleteModal {
+	background: #fff;
+	border-radius: 24px;
+	padding: 36px 41px 12px; // 상단 패딩 증가 
+	width: 100%;
+	max-width: 90vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+	position: relative;
+	z-index: 1;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.deleteModalContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5px;
+	width: 100%;
+}
+
+.deleteModalTitle {
+	color: #1a1a1a;
+	font-family: "ElectricalSafety";
+	font-size: 16px;
+	font-weight: 700;
+	text-align: center;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.deleteModalDescription {
+	color: #999999;
+	font-family: "ElectricalSafety";
+	font-size: 11px;
+	font-weight: 500;
+	text-align: center;
+	line-height: 1.5;
+	margin: 0;
+}
+
+.deleteModalButtons {
+	display: flex;
+	gap: 13px;
+}
+
+.deleteBtn,
+.cancelBtn {
+	flex: 1;
+	width: 96px;
+	height: 35px;
+	border-radius: 30px;
+	border: none;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.deleteBtn {
+	background: var(--Color-2, #402C44);
+	color: #fff;
+
+	&:hover {
+		background: #3a3448;
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
+
+.cancelBtn {
+	background: var(--Color-6, #C0B9DB);
+	color: #fff;
+
+	&:hover {
+		background: #ddd4eb;
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
