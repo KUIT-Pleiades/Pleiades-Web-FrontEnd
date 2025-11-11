@@ -70,20 +70,20 @@ const StationInside: React.FC = () => {
 
   // 스테이션 데이터를 새로고침하는 함수
   const refreshStationData = async () => {
-    if (!stationCode) return;
+    if (!stationId) return;
     try {
-      const response = await axiosRequest<StationResponse>(
-        `/stations/${stationCode}`,
-        "GET",
-        null
-      );
-      if (response) {
-        setStationData(response.data);
-      }
+        const response = await axiosRequest<StationResponse>(
+            `/stations/${stationId}`,
+            "GET",
+            null
+        );
+        if (response) {
+            setStationData(response.data);
+        }
     } catch (err) {
-      setError(err as Error);
+        setError(err as Error);
     }
-  };
+};
 
   const currentUserId = userInfo.userId;
 
@@ -92,27 +92,29 @@ const StationInside: React.FC = () => {
     setSelectedMember(member);
   };
 
-  const stationCode = sessionStorage.getItem("stationCode") as string;
+  // const stationCode = sessionStorage.getItem("stationCode") as string;
   const handleLeaveStation = () => {
-    sessionStorage.removeItem("stationCode");
+    sessionStorage.removeItem("stationId");
     navigate("/station");
   };
 
+  const stationId = sessionStorage.getItem("stationId") as string;
+
   useEffect(() => {
-    if (!stationCode) {
-      navigate("/station");
-      return;
-    }
-  }, [stationCode, navigate]);
+      if (!stationId) {
+          navigate("/station");
+          return;
+      }
+  }, [stationId, navigate]);
 
   useEffect(() => {
     const getStationData = async () => {
-      if (!stationCode) return;
+      if (!stationId) return;
 
       try {
         setIsLoading(true);
         const response = await axiosRequest<StationResponse>(
-          `/stations/${stationCode}`,
+          `/stations/${stationId}`,
           "GET",
           null
         );
@@ -135,7 +137,7 @@ const StationInside: React.FC = () => {
     };
 
     getStationData();
-  }, [stationCode]);
+  }, [stationId]);
 
   if (isLoading) return <Pending />;
   if (error) return <div>에러가 발생했습니다</div>;
@@ -150,7 +152,7 @@ const StationInside: React.FC = () => {
     >
       {!stationData.reportWritten && (
         <StationReport
-          stationId={stationCode}
+          stationId={stationId}
           onReportSubmitted={refreshStationData}
         />
       )}
@@ -200,14 +202,14 @@ const StationInside: React.FC = () => {
         (selectedMember.userId === currentUserId ? (
           <MyReport
             onClose={() => setSelectedMember(null)}
-            stationId={stationCode}
+            stationId={stationId}
             userId={selectedMember.userId}
           />
         ) : (
           <CharacterReport
             memberName={selectedMember.userName}
             onClose={() => setSelectedMember(null)}
-            stationId={stationCode}
+            stationId={stationId}
             userId={selectedMember.userId}
             profile={selectedMember.profile}
           />
