@@ -22,7 +22,8 @@ type SaleItem = {
 interface MySellingItemsModalProps {
   item: SaleItem;
   onClose: () => void;
-  showToast: (message: string, withIcon?: boolean) => void;
+  showToast: (message: string, withIcon?: boolean, width?: string) => void;
+  onPriceChange: (itemId: number, newPrice: number) => void;
 }
 
 type Mode = "view" | "form" | "success";
@@ -31,6 +32,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   item,
   onClose,
   showToast,
+  onPriceChange,
 }) => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("view");
@@ -42,10 +44,23 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
 
   // 모달 내부에서 필요한 값들 계산
   const imageUrl = useMemo(() => `${IMG_BASE_URL}${item.name}`, [item.name]);
+
+  // 할인율 계산: form 모드일 때는 inputPrice 기준, view 모드일 때는 finalPrice 또는 기존 가격 기준
   const discountRate = useMemo(() => {
-    const rate = ((item.price - item.discounted_price) / item.price) * 100;
+    const basePrice = item.price;
+    let currentPrice: number;
+
+    if (mode === "form" && inputPrice) {
+      currentPrice = Number(inputPrice);
+    } else {
+      currentPrice = finalPrice !== null ? finalPrice : item.discounted_price;
+    }
+
+    if (currentPrice <= 0 || basePrice <= 0) return 0;
+
+    const rate = ((basePrice - currentPrice) / basePrice) * 100;
     return Math.floor(rate);
-  }, [item.price, item.discounted_price]);
+  }, [item.price, item.discounted_price, mode, inputPrice, finalPrice]);
 
   // [change] 할인 적용 시 현재 판매가격 사용
   const applyDiscount = (pct: number) => {
@@ -79,8 +94,11 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
         price: Number(inputPrice),
       });
       if (res?.ok) {
-        setFinalPrice(Number(inputPrice));
-        setMode("success");
+        const newPrice = Number(inputPrice);
+        setFinalPrice(newPrice);
+        onPriceChange(item.id, newPrice); // 부모 컴포넌트에 알림
+        setMode("view"); // View 모드로 복귀
+        showToast("금액 변경을 완료했어요!", false, "200px");
       }
     } finally {
       setIsSubmitting(false);
@@ -105,49 +123,38 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
     <>
       <div className={s.modalOverlay}>
         <div
-          className={`${s.modal} ${mode === "form" ? s.isForm : ""} ${
-            mode === "success" ? s.isSuccess : ""
-          }`}
+          className={`${s.modal} ${mode === "form" ? s.isForm : ""}`}
         >
           <button className={s.modalClose} onClick={onClose}>
             <img src={close} alt="close" />
           </button>
 
           <div className={s.textArea}>
-            {mode === "success" ? (
-              <>
-                <span className={s.successTitle}>금액 변경을 완료했어요!</span>
-                <span className={s.itemNameTextSuccess}>
-                  {item.description}
-                </span>
-              </>
-            ) : (
-              <div className={s.titleRow}>
-                <span className={s.itemNameText}>{item.description}</span>
-                {mode === "view" && (
-                  <div className={s.menuBtnWrapper}>
-                    <img
-                      src={menuBtn}
-                      alt="menu"
-                      className={s.menuBtn}
-                      onClick={() => setShowDeleteBtn(!showDeleteBtn)}
-                    />
-                    {showDeleteBtn && (
-                      <button
-                        className={s.deleteBtn}
-                        onClick={() => {
-                          setShowDeleteModal(true);
-                          setShowDeleteBtn(false);
-                        }}
-                      >
-                        <img src={deleteBtn} alt="" />
-                        <span>삭제</span>
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
+            <div className={s.titleRow}>
+              <span className={s.itemNameText}>{item.description}</span>
+              {mode === "view" && (
+                <div className={s.menuBtnWrapper}>
+                  <img
+                    src={menuBtn}
+                    alt="menu"
+                    className={s.menuBtn}
+                    onClick={() => setShowDeleteBtn(!showDeleteBtn)}
+                  />
+                  {showDeleteBtn && (
+                    <button
+                      className={s.deleteBtn}
+                      onClick={() => {
+                        setShowDeleteModal(true);
+                        setShowDeleteBtn(false);
+                      }}
+                    >
+                      <img src={deleteBtn} alt="" />
+                      <span>삭제</span>
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className={s.imageContainer}>
@@ -157,111 +164,78 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
             <img src={imageUrl} alt="item image" className={s.itemImg} />
           </div>
 
-          {mode !== "success" ? (
-            <>
-              <div className={s.priceArea}>
-                <span className={s.priceText}>현재 판매 가격</span>
-                <img src={stone} alt="stone" className={s.stoneIcon} />
-                <span className={s.priceValue}>{item.discounted_price}</span>
-              </div>
+          <div className={s.priceArea}>
+            <span className={s.priceText}>현재 판매 가격</span>
+            <img src={stone} alt="stone" className={s.stoneIcon} />
+            <span className={s.priceValue}>
+              {finalPrice !== null ? finalPrice : item.discounted_price}
+            </span>
+          </div>
 
-              {mode === "form" && (
-                <div className={s.formArea}>
-                  <input
-                    className={s.inputBox}
-                    placeholder="판매할 가격을 입력하세요"
-                    inputMode="numeric"
-                    value={inputPrice}
-                    onChange={onChangePrice}
-                  />
+          {mode === "form" && (
+            <div className={s.formArea}>
+              <input
+                className={s.inputBox}
+                placeholder="판매할 가격을 입력하세요"
+                inputMode="numeric"
+                value={inputPrice}
+                onChange={onChangePrice}
+              />
 
-                  <div className={s.divider}></div>
+              <div className={s.divider}></div>
 
-                  <div className={s.helperRow}>
-                    <button
-                      type="button"
-                      className={s.helperBtn}
-                      onClick={() => applyDiscount(0.1)}
-                    >
-                      -10%
-                    </button>
-                    <button
-                      type="button"
-                      className={s.helperBtn}
-                      onClick={() => applyDiscount(0.2)}
-                    >
-                      -20%
-                    </button>
-                    <button
-                      type="button"
-                      className={s.helperBtn}
-                      onClick={() => applyDiscount(0.3)}
-                    >
-                      -30%
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <div className={s.buttonArea}>
-                {mode === "view" ? (
-                  <div
-                    className={s.checkMarketPriceBtn}
-                    onClick={handleClickCheckMarket}
-                  >
-                    <span className={s.btnText}>시세확인</span>
-                  </div>
-                ) : null}
-
-                <div
-                  className={`${s.sellBtn} ${
-                    sellButtonEnabled ? s.sellBtnPrimary : s.sellBtnDisabled
-                  }`}
-                  onClick={sellButtonEnabled ? handleSellClick : undefined}
-                  aria-disabled={!sellButtonEnabled}
+              <div className={s.helperRow}>
+                <button
+                  type="button"
+                  className={s.helperBtn}
+                  onClick={() => applyDiscount(0.1)}
                 >
-                  <span className={s.btnText}>
-                    {mode === "view"
-                      ? "금액 변경"
-                      : isSubmitting
-                      ? "등록 중..."
-                      : "판매하기"}
-                  </span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={s.successInfoBox}>
-                <div className={s.successPriceRow}>
-                  <span className={s.successPriceLabel}>판매 가격</span>
-                  <img src={stone} alt="stone" className={s.stoneIcon} />
-                  <span className={s.successPriceValue}>{finalPrice}</span>
-                </div>
-              </div>
-
-              <div className={s.buttonArea}>
-                <div
-                  className={s.checkMarketPriceBtn}
-                  onClick={() => {
-                    onClose();
-                    navigate("/market/my-item-selling");
-                  }}
+                  -10%
+                </button>
+                <button
+                  type="button"
+                  className={s.helperBtn}
+                  onClick={() => applyDiscount(0.2)}
                 >
-                  <span className={s.btnText}>내 상품 관리</span>
-                </div>
-                <div
-                  className={`${s.sellBtn} ${s.sellBtnPrimary}`}
-                  onClick={() => {
-                    onClose();
-                    navigate("/market/my-item-sell");
-                  }}
+                  -20%
+                </button>
+                <button
+                  type="button"
+                  className={s.helperBtn}
+                  onClick={() => applyDiscount(0.3)}
                 >
-                  <span className={s.btnText}>계속 판매하기</span>
-                </div>
+                  -30%
+                </button>
               </div>
-            </>
+            </div>
           )}
+
+          <div className={s.buttonArea}>
+            {mode === "view" ? (
+              <div
+                className={s.checkMarketPriceBtn}
+                onClick={handleClickCheckMarket}
+              >
+                <span className={s.btnText}>시세확인</span>
+              </div>
+            ) : null}
+
+            <div
+              className={`${s.sellBtn} ${
+                sellButtonEnabled ? s.sellBtnPrimary : s.sellBtnDisabled
+              }`}
+              onClick={sellButtonEnabled ? handleSellClick : undefined}
+              aria-disabled={!sellButtonEnabled}
+            >
+              <span className={s.btnText}>
+                {mode === "view"
+                  ? "금액 변경"
+                  : isSubmitting
+                  ? "변경 중..."
+                  : "변경하기"}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 

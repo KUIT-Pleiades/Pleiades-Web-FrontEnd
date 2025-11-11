@@ -8,12 +8,14 @@ export function useToast(durationMs: number = 1500) {
     const [message, setMessage] = useState<string>('');
     const [visible, setVisible] = useState<boolean>(false);
     const [showIcon, setShowIcon] = useState<boolean>(false);
+    const [width, setWidth] = useState<string>('72%');
     const timerRef = useRef<number | null>(null);
 
-    // [change] 메시지 + 아이콘 여부를 함께 설정
-    const showToast = useCallback((msg: string, withIcon: boolean = false) => {
+    // [change] 메시지 + 아이콘 여부 + width를 함께 설정
+    const showToast = useCallback((msg: string, withIcon: boolean = false, toastWidth: string = '72%') => {
         setMessage(msg);
         setShowIcon(withIcon);
+        setWidth(toastWidth);
         setVisible(true);
 
         if (timerRef.current) {
@@ -29,10 +31,10 @@ export function useToast(durationMs: number = 1500) {
     const ToastContainer = useCallback((): JSX.Element | null => {
         if (!visible) return null;
         return createPortal(
-            <Toast message={message} showIcon={showIcon} />,
+            <Toast message={message} showIcon={showIcon} width={width} />,
             document.body
         );
-    }, [message, visible, showIcon]);
+    }, [message, visible, showIcon, width]);
 
     return { showToast, ToastContainer };
 }

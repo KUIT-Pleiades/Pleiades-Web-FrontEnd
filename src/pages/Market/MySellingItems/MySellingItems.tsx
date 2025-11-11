@@ -29,7 +29,7 @@ const MySellingItems: React.FC = () => {
     setIsModalVisible(false);
   };
 
-  const saleItems = [
+  const [saleItems, setSaleItems] = useState<SaleItem[]>([
     {
       id: 1234,
       name: "fashion_bottom_1.png",
@@ -114,7 +114,21 @@ const MySellingItems: React.FC = () => {
       price: 150,
       discounted_price: 2,
     },
-  ];
+  ]);
+
+  const updateItemPrice = (itemId: number, newPrice: number) => {
+    setSaleItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId
+          ? { ...item, discounted_price: newPrice }
+          : item
+      )
+    );
+    // 선택된 아이템도 업데이트
+    if (selectedItem && selectedItem.id === itemId) {
+      setSelectedItem({ ...selectedItem, discounted_price: newPrice });
+    }
+  };
 
   const calculateDiscountRate = (price: number, discountedPrice: number) => {
     const rate = ((price - discountedPrice) / price) * 100;
@@ -195,7 +209,12 @@ const MySellingItems: React.FC = () => {
 
       {/* 모달 */}
       {isModalVisible && selectedItem && (
-        <MySellingItemsModal item={selectedItem} onClose={handleCloseModal} showToast={showToast} />
+        <MySellingItemsModal
+          item={selectedItem}
+          onClose={handleCloseModal}
+          showToast={showToast}
+          onPriceChange={updateItemPrice}
+        />
       )}
 
       {/* 토스트 메시지 */}
