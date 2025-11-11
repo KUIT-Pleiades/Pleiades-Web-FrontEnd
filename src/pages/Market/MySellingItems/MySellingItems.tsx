@@ -203,7 +203,10 @@ const MySellingItems: React.FC = () => {
 
       {/* 플로팅 버튼 추가 */}
       <img className={s.descirption} src={itemSellDiscription} alt="itemSell" />
-      <button className={s.floatingButton}>
+      <button
+        className={s.floatingButton}
+        onClick={() => navigate("/market/my-item-sell")}
+      >
         <img className={s.btnImg} src={addItemBtn} alt="add" />
       </button>
 
