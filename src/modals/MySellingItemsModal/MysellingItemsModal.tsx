@@ -22,6 +22,7 @@ type SaleItem = {
 interface MySellingItemsModalProps {
   item: SaleItem;
   onClose: () => void;
+  showToast: (message: string, withIcon?: boolean) => void;
 }
 
 type Mode = "view" | "form" | "success";
@@ -29,6 +30,7 @@ type Mode = "view" | "form" | "success";
 const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   item,
   onClose,
+  showToast,
 }) => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("view");
@@ -91,7 +93,12 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
     // 실제 삭제 API 호출
     console.log("삭제 요청:", item.id);
     setShowDeleteModal(false);
+
+    // 모달을 먼저 닫고 토스트 표시
     onClose();
+    setTimeout(() => {
+      showToast("판매글을 삭제했어요");
+    }, 100);
   };
 
   return (

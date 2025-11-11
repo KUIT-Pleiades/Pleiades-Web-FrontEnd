@@ -7,6 +7,7 @@ import addItemBtn from "../../../assets/btnImg/addItemBtn.png";
 import itemSellDiscription from "../../../assets/btnImg/itemSellDiscription.png";
 import plaedaesLogoPurple from "../../../assets/pleiadesLogoPurple.png";
 import MySellingItemsModal from "../../../modals/MySellingItemsModal/MysellingItemsModal";
+import { useToast } from "../../../components/Toast/useToast";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -20,6 +21,7 @@ type SaleItem = {
 
 const MySellingItems: React.FC = () => {
   const navigate = useNavigate();
+  const { showToast, ToastContainer } = useToast();
   const [selectedItem, setSelectedItem] = useState<SaleItem | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -193,8 +195,11 @@ const MySellingItems: React.FC = () => {
 
       {/* 모달 */}
       {isModalVisible && selectedItem && (
-        <MySellingItemsModal item={selectedItem} onClose={handleCloseModal} />
+        <MySellingItemsModal item={selectedItem} onClose={handleCloseModal} showToast={showToast} />
       )}
+
+      {/* 토스트 메시지 */}
+      <ToastContainer />
     </div>
   );
 };
