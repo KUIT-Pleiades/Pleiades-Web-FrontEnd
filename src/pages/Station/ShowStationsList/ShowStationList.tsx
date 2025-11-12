@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import s from './ShowStationList.module.scss';
 import { useCharacterStore } from '../../../store/useCharacterStore';
-import { Message, Stations, Station, SortOptionForStations } from '../../../interfaces/Interfaces';
+import { Message, Stations, Station, SortOptionForStations, JoinStationResponse } from '../../../interfaces/Interfaces';
 import SortCriteriaBoxForStation from '../../../components/SortCriteriaBox/SortCriteriaBoxForStation';
 import SearchStationModal from '../../../components/SearchStationModal/SearchStationModal';
 import { axiosRequest } from '../../../functions/axiosRequest';
@@ -111,7 +111,7 @@ const ShowStationList: React.FC = () => {
     const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
     const bottomSheetHeaderHeight = 57;
 
-    const USE_MOCK = false; // <============== 모의 데이터를 사용할지 여부. 나중에 false로 수정 필요!!!
+    const USE_MOCK = false; // todo <============== 모의 데이터를 사용할지 여부. 나중에 false로 수정 필요!!!
 
     useEffect(() => {
         const fetchStations = async () => {
@@ -203,9 +203,9 @@ const ShowStationList: React.FC = () => {
 
     const fetchSearchedStation = async (stationCode: string) => {
         try {
-            const response = await axiosRequest(`/stations/${stationCode}`, 'PATCH', null);
+            const response = await axiosRequest<JoinStationResponse>(`/stations/${stationCode}`, 'PATCH', null);
 
-            if (response.status === 200 || response.status === 202) return enterStation(stationCode);
+            if (response.status === 200 || response.status === 202) return enterStation(response.data.stationId);
             if (response.status === 404) return handlePopupNoExistStation();
             if (response?.message === 'Invalid or expired token') return navigate('/login');
         } catch (error: unknown) {
@@ -227,7 +227,11 @@ const ShowStationList: React.FC = () => {
                 if (status === 401) navigate('/login');
                 else if (status === 404) handlePopupNoExistStation();
                 else if (status === 409) {
-                    if (message?.includes('User already')) enterStation(stationCode);
+                    if (message?.includes('User already')) {
+                        const joined = stations.stations.find(st => st.stationCode === stationCode);
+                        if (joined?.stationId) enterStation(joined.stationId);
+                        else handlePopupNoExistStation();
+                    }
                 }
             } else console.error('서버에 연결할 수 없습니다.');
         }
@@ -242,7 +246,6 @@ const ShowStationList: React.FC = () => {
     const handleEnterStation = async (stationId: string) => {
         try {
             const response = await axiosInstance.get<Message>(`/stations/${stationId}`);
-
             if ([200, 202, 409].includes(response.status)) {
                 return enterStation(stationId);
             }
@@ -272,8 +275,8 @@ const ShowStationList: React.FC = () => {
         }
     };
 
-    const enterStation = (stationCode: string) => {
-        sessionStorage.setItem('stationCode', stationCode);
+    const enterStation = (stationId: string) => {
+        sessionStorage.setItem('stationId', stationId);
         navigate('/station/stationinside');
     };
 
@@ -368,7 +371,7 @@ const ShowStationList: React.FC = () => {
                     </>
                 ) : (
                     <div className={s.bodyWrapper}>
-                        <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationCode)}>
+                        <div className={s.backgroundSlider} onClick={() => handleEnterStation(currentStation.stationId)}>
                             <div
                                 className={s.backgroundImageStatic}
                                 style={{ backgroundImage: `url(${getStationBackgroundUrl(currentStation?.stationBackground, 'full')})` }}

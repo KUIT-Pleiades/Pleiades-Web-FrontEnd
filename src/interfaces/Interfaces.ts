@@ -271,6 +271,10 @@ export interface Stations {
   stations: Station[];
 }
 
+export interface JoinStationResponse {
+    stationId: string;
+}
+
 export type SortOptionForStations =
   | "새로운 활동순"
   | "최근 가입순"
