@@ -201,7 +201,7 @@ const ShowStationList: React.FC = () => {
         setTimeout(() => setIsNoExistStationPopupVisible(false), 1500);
     };
 
-    const fetchSearchedStation = async (stationCode: string) => {
+    const joinStationByCode = async (stationCode: string) => {
         try {
             const response = await axiosRequest<JoinStationResponse>(`/stations/${stationCode}`, 'PATCH', null);
 
@@ -240,7 +240,7 @@ const ShowStationList: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('입력된 정거장 코드:', searchValue);
-        if (searchValue.trim()) await fetchSearchedStation(searchValue);
+        if (searchValue.trim()) await joinStationByCode(searchValue);
     };
 
     const handleEnterStation = async (stationId: string) => {

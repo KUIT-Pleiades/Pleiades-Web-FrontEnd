@@ -48,7 +48,7 @@ export default function StationBottomSheetContent({
                         <div
                             key={station.stationId}
                             className={s.stationDisplayWrapper}
-                            onClick={() => handleEnterStation(station.stationCode)}
+                            onClick={() => handleEnterStation(station.stationId)}
                         >
                             <StationDisplay
                                 name={station.name}
