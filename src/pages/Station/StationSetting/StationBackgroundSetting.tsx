@@ -34,10 +34,10 @@ const StationBackgroundSetting: React.FC = () => {
   const handleBackgroundComplete = async () => {
     // 이미지 파일명 추출 함수
     const getFileName = (path: string) => {
-      const fileName = path.split("/").pop(); // 경로에서 파일명 추출
-      if (!fileName) return "bg_station_1";
-      const match = fileName.match(/bg_station_\d+/);
-      return match ? match[0] : "bg_station_1";
+      const fileName = path.split("/").pop();
+      if (!fileName) return "bg_station_1.png";
+      const match = fileName.match(/bg_station_\d+\.png/);
+      return match ? match[0] : "bg_station_1.png";
     };
 
     const stationId = sessionStorage.getItem("stationId");
