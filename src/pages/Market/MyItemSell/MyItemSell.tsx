@@ -23,6 +23,11 @@ interface OwnershipDto {
     item: ItemDetailDto; // 아이템 상세 정보
 }
 
+// API 응답 타입 정의
+// interface MyItemsResponseDto {
+//     ownerships: OwnershipDto[];
+// }
+
 // 목업 데이터 (Ownership 구조 적용)
 const mockMyItems: OwnershipDto[] = [
     // -------------------------------------------------------------------------
@@ -132,19 +137,43 @@ const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT || '';
 // 	]
 // }
 
-
 const MyItemSell: React.FC = () => {
     const navigate = useNavigate();
 
     const [mainTab, setMainTab] = useState<ItemCategory>('face');
     const [subTab, setSubTab] = useState<string>('전체');
 
+    // const [myItems, setMyItems] = useState<OwnershipDto[]>([]); // 서버 데이터 상태
+
     const [selectedOwnership, setSelectedOwnership] = useState<OwnershipDto | null>(null);
 
     const [isSellItemModalVisible, setIsSellItemModalVisible] = useState(false);
 
+    // // 내 아이템 목록 불러오기
+    // const fetchMyItems = async () => {
+    //     try {
+    //         const response = await axiosRequest<MyItemsResponseDto>('/api/v1/store/my-items', 'GET', null);
+    //         if (response.status === 200) {
+    //             setMyItems(response.data.ownerships);
+    //         } else {
+    //             console.error('아이템 목록 불러오기 실패:', response.message);
+    //         }
+    //     } catch (error) {
+    //         console.error('API 요청 중 오류 발생:', error);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     fetchMyItems();
+    // }, []);
+
     const handleCloseSellItemModal = () => {
         setIsSellItemModalVisible(false);
+    };
+
+    // 판매 성공 시 호출될 함수 (목록 갱신)
+    const handleSellSuccess = () => {
+        // fetchMyItems(); 
     };
 
     // 필터링 로직
@@ -235,6 +264,7 @@ const MyItemSell: React.FC = () => {
                     ownershipId={selectedOwnership.id}
                     itemId={selectedOwnership.item.id}
                     itemPrice={selectedOwnership.item.price}
+                    onSellSuccess={handleSellSuccess}
                 />
             )}
         </div>
