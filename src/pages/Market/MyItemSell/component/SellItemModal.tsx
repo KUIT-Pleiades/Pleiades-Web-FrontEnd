@@ -10,8 +10,8 @@ interface SellItemModalProps {
     itemName: string;
     handleCloseSendSignalPopup: () => void;
     image: string;
-    // 임시 GET API 경로가 {item_id}를 사용하므로 선택적으로 전달
-    itemId?: number;
+    ownershipId: number;
+    itemId: number;
     itemPrice: number;
 }
 
@@ -21,6 +21,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
     handleCloseSendSignalPopup,
     image,
+    ownershipId,
     itemId,
     itemPrice,
 }) => {
@@ -54,7 +55,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
         if (!inputPrice || isSubmitting) return;
         setIsSubmitting(true);
         try {
-            const res = await postSellItem({ name: itemName, price: Number(inputPrice) });
+            const res = await postSellItem({ ownershipId: ownershipId, price: Number(inputPrice) });
             if (res?.ok) {
                 setFinalPrice(Number(inputPrice));
                 setMode('success');
@@ -184,8 +185,8 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 export default SellItemModal;
 
 // 데모용 POST API (실 서버 연동 시 교체)
-async function postSellItem({ name, price }: { name: string; price: number }) {
-    if (!name || price <= 0) {
+async function postSellItem({ ownershipId, price }: { ownershipId: number; price: number }) {
+    if (!ownershipId || price <= 0) {
         return null;
     }
     await new Promise((r) => setTimeout(r, 600));
