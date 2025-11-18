@@ -201,35 +201,32 @@ p {
 	position: absolute;
 	background-color: #FFF;
 	width: 100%;
-	height: fit-content;
+	height: auto;
 	bottom: 0;
 	z-index: 100;
 }
 
 .bottomBar {
-	position: absolute;
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	bottom: -12px;
-	left: 50%;
-	transform: translateX(-50%);
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 12px 0 16px 0;
+	background: transparent;
+	cursor: pointer;
+	z-index: 101;
 
 	.bar {
-		width: 20%;
-		height: 3px;
+		width: 36px;
+		height: 2px;
 		flex-shrink: 0;
 		border-radius: 100px;
-		background: #C9C6C9;
+		background: #C0B9DB;
+		//transition: background 0.2s ease;
 	}
-}
 
-.openBtn {
-	width: 45px;
-	height: 30px;
-	border-radius: 30px;
-	background: white;
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
+
 }
