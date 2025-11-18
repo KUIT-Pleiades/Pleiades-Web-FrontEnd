@@ -4,6 +4,7 @@ import resetBtn from "../../assets/btnImg/resetBtn.svg";
 import { useState } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import Pending from "../PageManagement/Pending";
+import { useNavigate } from "react-router-dom";
 
 // --- [추가] 새로운 탭과 관련된 파일들을 가져옵니다. ---
 import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
@@ -17,6 +18,7 @@ interface CharacterSetUpProps {
 }
 
 const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("face");
   const [load, setLoad] = useState(false);
   const { userInfo, resetUserInfo } = useCharacterStore();
@@ -24,6 +26,11 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const increaseLoadCount = () => {
     setLoad(true);
   };
+
+  const handlePrev = () => {
+    navigate(-1);
+  };
+
   // --- [추가] 세트 의상 착용 여부를 확인하는 변수입니다. ---
   const isWearingSet = !!userInfo.outfit.set;
 
@@ -33,6 +40,9 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
     <div className={s.characterSetUpContainer}>
       {!load && <Pending />}
       <div className={s.showCharacter}>
+        <button className={s.previousBtn} onClick={handlePrev}>
+          최소
+        </button>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>
           다음
