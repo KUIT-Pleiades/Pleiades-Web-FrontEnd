@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import s from './CreateStationBackground.module.scss';
 
-// image files
-import slideBoxShowUpArrow from '../../../../assets/StationCreate/slideBoxShowupArrow.svg';
-
 interface CreateStationBackgroundProps {
 	backgrounds: string[];
     backgroundPrevs: string[];
@@ -63,7 +60,17 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
 			<span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
 
             {/* 슬라이드 박스 */}
-            <div className={`${s.slideBox} ${isOpen ? s.open : ''}`} ref={containerRef}>
+            <div
+                className={s.slideBox}
+                ref={containerRef}
+                style={{
+                    transition: "transform 0.3s ease-in-out",
+                    transform: isOpen ? "translateY(0)" : "translateY(85%)",
+                }}
+            >
+                <div className={s.bottomBar} onClick={toggleOpen}>
+                    <div className={s.bar} />
+                </div>
                 <div className={s.backgroundList}>
                 {backgroundPrevs.map((prevSrc, index) => (
                     <div
@@ -76,14 +83,6 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                 ))}
                 </div>
             </div>
-
-            {/* 화살표 버튼 */}
-            {!isOpen && (
-                <button className={s.arrowButton} onClick={toggleOpen}>
-                    <img src={slideBoxShowUpArrow} alt='arrow' />
-                </button>
-            )}
-			<div className={s.bottomWhiteSpace}></div>
         </div>
     );
 };

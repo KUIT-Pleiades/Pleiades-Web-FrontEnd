@@ -38,6 +38,22 @@ p {
   z-index: 2;
 }
 
+.previousBtn {
+  position: absolute;
+  top: 5.5%;
+  left: 5%;
+  width: 62px;
+  height: 35px;
+  flex-shrink: 0;
+  border-radius: 19px;
+  background: #C0B9DB;
+  color: #ffffff;
+  z-index: 2;
+  font-family: "Pretendard";
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .nextBtn {
   position: absolute;
   top: 5.5%;

@@ -1,7 +1,6 @@
 // src/pages/CharacterSettings/BackgroundSetUp.tsx
 import s from "./backgroundSetUp.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import openBtn from "../../assets/btnImg/openBtn.png";
 
 import { useState } from "react";
 import BackgroundTab from "./BackgroundTab";
@@ -158,22 +157,15 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         className={s.backgroundList}
         style={{
           transition: "transform 0.3s ease-in-out",
-          transform: showList ? "translateY(0)" : "translateY(100%)",
+          transform: showList ? "translateY(0)" : "translateY(85%)",
         }}
       >
-        {showList && <BackgroundTab increaseLoadCount={handleLoadingState} />}
-      </div>
-      {!showList && (
-        <div className={s.bottomBar}>
-          <div className={s.openBtn} onClick={() => setShowList(true)}>
-            <img
-              src={openBtn}
-              alt=""
-              style={{ width: "14px", marginTop: "9px" }}
-            />
-          </div>
+        <div className={s.bottomBar} onClick={() => setShowList(true)}>
+          <div className={s.bar} />
         </div>
-      )}
+
+        <BackgroundTab increaseLoadCount={handleLoadingState} />
+      </div>
     </div>
   );
 };
