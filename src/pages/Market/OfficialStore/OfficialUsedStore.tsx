@@ -23,7 +23,7 @@ import backgroundIcon from "../../../assets/market/background.svg";
 import faceWhiteIcon from "../../../assets/market/face_white.svg";
 import clothWhiteIcon from "../../../assets/market/cloth_white.svg";
 import backgroundWhiteIcon from "../../../assets/market/background_white.svg";
-import AssetBox from "../../../components/Asset/AssetBox";
+import StoneBox from "../../../components/Stone/StoneBox";
 import CompleteCartModal from "../../../modals/AddToCartModal/CompleteCartModal";
 
 export type CategoryType = "face" | "cloth" | "background";
@@ -38,7 +38,7 @@ export default function OfficialUsedStore() {
   const [isSearching, setIsSearching] = useState(false);
   const [focusSearch, setFocusSearch] = useState(false); // 검색창 포커스 상태
 
-  const { userInfo } = useCharacterStore();
+  const { userInfo, fetchUserStone } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
   const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
@@ -49,6 +49,10 @@ export default function OfficialUsedStore() {
   const [tryOnUserInfo, setTryOnUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
   );
+
+  useEffect(() => {
+    fetchUserStone();
+  }, []);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -90,6 +94,7 @@ export default function OfficialUsedStore() {
     const clonedUserInfo = structuredClone(userInfo);
     setInitialUserInfo(clonedUserInfo);
     setTryOnUserInfo(clonedUserInfo);
+    fetchUserStone();
   }, [userInfo]);
 
   const isWearingSet = !!tryOnUserInfo.outfit.set;
@@ -332,7 +337,7 @@ export default function OfficialUsedStore() {
           </div>
 
           <div className={s.itemAssets}>
-            <AssetBox coinAmount={5} stoneAmount={312} />
+            <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
         </div>
         <div className={s.characterContainer} onClick={handleContentClick}>
