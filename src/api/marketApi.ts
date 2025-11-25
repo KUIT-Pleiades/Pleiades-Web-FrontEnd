@@ -4,6 +4,7 @@ import {
   OfficialClothData,
   OfficialBackgroundData,
   WishlistResponse,
+  ThemeData,
 } from "../interfaces/Interfaces";
 
 /**
@@ -79,6 +80,19 @@ export const deleteWishlistItem = async (
     "/store/official/wishlist",
     "DELETE",
     { id: itemId }
+  );
+  return response.data;
+};
+
+/**
+ * 스토어 테마 목록을 가져오는 API 함수
+ * @returns Promise<ThemeData>
+ */
+export const getThemes = async (): Promise<ThemeData> => {
+  const response = await axiosRequest<ThemeData>(
+    "/store/theme",
+    "GET",
+    null
   );
   return response.data;
 };
