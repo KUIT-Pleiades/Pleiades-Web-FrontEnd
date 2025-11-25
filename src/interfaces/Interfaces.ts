@@ -349,6 +349,13 @@ export interface OfficialBackgroundData {
   wishlist: number[];
 }
 
+// '/store/theme' API가 응답하는 테마 데이터 타입
+export interface ThemeData {
+  face: string[];
+  fashion: string[];
+  background: string[];
+}
+
 // Interfaces For Used Market
 // 중고몰에서 판매하는 개별 아이템의 타입
 export interface UsedItem {
