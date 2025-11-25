@@ -10,9 +10,10 @@ interface SellItemModalProps {
     itemName: string;
     handleCloseSendSignalPopup: () => void;
     image: string;
-    // 임시 GET API 경로가 {item_id}를 사용하므로 선택적으로 전달
-    itemId?: number;
+    ownershipId: number;
+    itemId: number;
     itemPrice: number;
+    onSellSuccess: () => void;
 }
 
 type Mode = 'view' | 'form' | 'success';
@@ -21,8 +22,10 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
     handleCloseSendSignalPopup,
     image,
+    ownershipId,
     itemId,
     itemPrice,
+    onSellSuccess,
 }) => {
     const navigate = useNavigate();
     const [mode, setMode] = useState<Mode>('view');
@@ -52,13 +55,32 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
             return;
         }
         if (!inputPrice || isSubmitting) return;
+
         setIsSubmitting(true);
+
         try {
-            const res = await postSellItem({ name: itemName, price: Number(inputPrice) });
+            const res = await postSellItem({ ownershipId: ownershipId, price: Number(inputPrice) });
             if (res?.ok) {
                 setFinalPrice(Number(inputPrice));
                 setMode('success');
+                onSellSuccess();
             }
+
+            // // 실제 API 호출
+            // const res = await axiosRequest('/api/v1/trade/resale', 'POST', { 
+            //     ownershipId: ownershipId, 
+            //     price: Number(inputPrice) 
+            // });
+
+            // if (res.status === 200) {
+            //     setFinalPrice(Number(inputPrice));
+            //     setMode('success');
+            //     onSellSuccess(); // [New] 부모 컴포넌트에 갱신 요청
+            // } else {
+            //     alert('판매 등록에 실패했습니다. 다시 시도해주세요.');
+            // }
+        } catch (error) {
+            console.error('판매 등록 중 오류 발생:', error);
         } finally {
             setIsSubmitting(false);
         }
@@ -168,7 +190,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
                                 className={`${s.sellBtn} ${s.sellBtnPrimary}`}
                                 onClick={() => {
                                     handleCloseSendSignalPopup();
-                                    navigate('/market/my-item-sell');
+                                    //navigate('/market/my-item-sell');
                                 }}
                             >
                                 <span className={s.btnText}>계속 판매하기</span>
@@ -184,8 +206,8 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 export default SellItemModal;
 
 // 데모용 POST API (실 서버 연동 시 교체)
-async function postSellItem({ name, price }: { name: string; price: number }) {
-    if (!name || price <= 0) {
+async function postSellItem({ ownershipId, price }: { ownershipId: number; price: number }) {
+    if (!ownershipId || price <= 0) {
         return null;
     }
     await new Promise((r) => setTimeout(r, 600));
