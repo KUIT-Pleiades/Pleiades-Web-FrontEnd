@@ -70,13 +70,13 @@ const mockMyItems: OwnershipDto[] = [
 
 const MAIN_TABS: { key: ItemCategory; label: string }[] = [
     { key: 'face', label: '얼굴' },
-    { key: 'fashion', label: '의상' }, // [Change] cloth -> fashion
+    { key: 'fashion', label: '의상' },
     { key: 'background', label: '배경' },
 ];
 
 const SUB_TABS: Record<ItemCategory, string[]> = {
     face: ['전체', '머리', '눈', '코', '입', '점'],
-    fashion: ['전체', '상의', '하의', '세트', '신발', '악세서리'], // [Change] cloth -> fashion
+    fashion: ['전체', '상의', '하의', '세트', '신발', '악세서리'],
     background: ['전체', '별', '우주정거장'],
 };
 
@@ -90,7 +90,7 @@ const SUBLABEL_TO_TYPES: Record<ItemCategory, Record<string, string[]>> = {
         입: ['MOUTH'],
         점: ['MOLE'],
     },
-    fashion: { // [Change] cloth -> fashion
+    fashion: {
         전체: ['TOP', 'BOTTOM', 'SET', 'SHOES', 'EARS', 'EYESITEM', 'HEAD', 'NECK', 'LEFTWRIST', 'RIGHTWRIST', 'LEFTHAND', 'RIGHTHAND'],
         상의: ['TOP'],
         하의: ['BOTTOM'],
@@ -173,7 +173,8 @@ const MyItemSell: React.FC = () => {
 
     // 판매 성공 시 호출될 함수 (목록 갱신)
     const handleSellSuccess = () => {
-        // fetchMyItems(); 
+        // fetchMyItems();
+        console.log('[내 아이템 판매] 내 아이템 판매 성공 - 아이템 목록 갱신 요청');
     };
 
     // 필터링 로직

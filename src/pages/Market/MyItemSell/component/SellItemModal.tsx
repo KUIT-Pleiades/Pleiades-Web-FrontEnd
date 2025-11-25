@@ -33,7 +33,6 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [finalPrice, setFinalPrice] = useState<number | null>(null);
 
-    // [change] 할인 적용 시 officialPrice 사용
     const applyDiscount = (pct: number) => {
         if (itemPrice == null) return;
         const v = Math.max(1, Math.floor(itemPrice * (1 - pct)));
