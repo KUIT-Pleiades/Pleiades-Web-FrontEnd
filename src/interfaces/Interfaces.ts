@@ -90,6 +90,7 @@ export interface UserInfo {
   starBackground: string;
   character: string;
   profile: string;
+  stone: number;
 
   face: {
     skinColor: string; // 피부색
@@ -173,43 +174,6 @@ export interface AvailableItems {
       imgurl: string;
     }
   ];
-}
-
-/** 리팩토링을 위한 새로운 UserInfo 인터페이스 */
-export interface NewUserInfo {
-  userId: string;
-  userName: string;
-  birthDate: string;
-  starBackground: string;
-  character: string;
-  profile: string;
-
-  face: {
-    skinColor: string;
-    hair: string;
-    eyes: string;
-    nose: string;
-    mouth: string;
-    mole: string;
-  };
-
-  outfit: {
-    top: string;
-    bottom: string;
-    set: string;
-    shoes: string;
-  };
-
-  item: {
-    head: string;
-    eyes_item: string;
-    ears: string;
-    neck: string;
-    leftWrist: string;
-    rightWrist: string;
-    leftHand: string;
-    rightHand: string;
-  };
 }
 
 export interface AvailableStationBackground {
