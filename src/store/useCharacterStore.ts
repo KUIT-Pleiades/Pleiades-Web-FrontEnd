@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { UserInfo } from "../interfaces/Interfaces";
-// import { axiosRequest } from "../api/axiosInstance"; // <- 이거 나중에 재화 API 통신할 때 사용
+import { axiosRequest } from "../functions/axiosRequest";
 
 interface CharacterStore {
   userInfo: UserInfo; // 캐릭터 상태
@@ -56,30 +56,21 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
     set((state) => ({
       userInfo: { ...state.userInfo, ...updates },
     })),
-  
+
   resetUserInfo: () => set({ userInfo: initialUserInfo }),
 
   // 내 스톤 정보 가져오기 (GET)
   fetchUserStone: async () => {
     try {
       console.log("재화 정보 동기화 중...");
-      
-      // --- [서버 통신 예시 코드] ---
-      // const response = await axiosRequest('/api/user/stone', 'GET', null);
-      // if (response.status === 200) {
-      //    const serverStone = response.data.stone;
-      //    set((state) => ({
-      //      userInfo: { ...state.userInfo, stone: serverStone }
-      //    }));
-      // }
-      // -------------------------
 
-      // [임시 Mock] 1초 뒤에 500 스톤을 가지고 있다고 가정
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      set((state) => ({
-        userInfo: { ...state.userInfo, stone: 500 },
-      }));
-      console.log("재화 정보 동기화 완료: 500 Stone");
+      const response = await axiosRequest<{ stone: number }>("/users/stone", "GET", null);
+      if (response.status === 200 && response.data) {
+        set((state) => ({
+          userInfo: { ...state.userInfo, stone: response.data.stone }
+        }));
+        console.log("재화 정보 동기화 완료: " + response.data.stone + " Stone");
+      }
 
     } catch (error) {
       console.error("스톤 정보를 가져오는데 실패했습니다.", error);
@@ -90,31 +81,20 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   chargeStone: async (addAmount: number) => {
     // 1. 음수 값 방어 로직
     if (addAmount < 0) {
-        console.warn("충전할 스톤 양(addAmount)은 0보다 커야 합니다.");
-        return;
+      console.warn("충전할 스톤 양(addAmount)은 0보다 커야 합니다.");
+      return;
     }
 
     try {
       const currentStone = get().userInfo.stone;
       console.log(`스톤 변경 요청: ${addAmount} (현재: ${currentStone})`);
 
-      // --- [서버 통신 예시 코드] ---
       // 요청 바디 키 이름을 addAmount로 설정
-      // const response = await axiosRequest('/api/v1/user/stone', 'POST', { addAmount });
-      // if (response.status === 200) {
-      //    const newBalance = response.data.stone;
-      //    set((state) => ({
-      //      userInfo: { ...state.userInfo, stone: newBalance }
-      //    }));
-      // }
-      // -------------------------
-
-      // [임시 Mock] 즉시 상태 반영
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      set((state) => ({
-        userInfo: { ...state.userInfo, stone: state.userInfo.stone + addAmount },
-      }));
-      console.log(`스톤 충전 완료: ${get().userInfo.stone}`);
+      const response = await axiosRequest<{ message: string }>('/users/stone', 'POST', { addAmount });
+      if (response.status === 200) {
+        console.log(response.data.message);
+        await get().fetchUserStone();
+      }
 
     } catch (error) {
       console.error("스톤 충전 실패", error);
