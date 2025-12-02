@@ -136,6 +136,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               isFocus={isFocus}
               setFocus={setFocus}
               activeCategory={activeCategory}
+              activeTab={activeTab}
             />
             <SubCategoryTabs
               activeCategory={activeCategory}

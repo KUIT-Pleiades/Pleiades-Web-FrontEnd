@@ -13,6 +13,7 @@ interface ThemeCategoryTabsProps {
   isFocus: boolean; // isFocus prop 추가
   setFocus: () => void; // setFocus prop 추가
   activeCategory: CategoryType; // 카테고리 추가
+  activeTab: string; // 공식몰/중고몰 구분 추가
 }
 
 export default function ThemeCategoryTabs({
@@ -21,6 +22,7 @@ export default function ThemeCategoryTabs({
   onThemeChange,
   isFocus,
   activeCategory,
+  activeTab,
 }: ThemeCategoryTabsProps) {
   const { data: themeData, isLoading } = useThemes();
 
@@ -28,13 +30,18 @@ export default function ThemeCategoryTabs({
   const getThemesForCategory = (): string[] => {
     if (!themeData) return [];
 
+    // 공식몰/중고몰에 따라 테마 데이터 선택
+    const storeThemes = activeTab === "official"
+      ? themeData.officialThemes
+      : themeData.resaleThemes;
+
     switch (activeCategory) {
       case "face":
-        return themeData.face || [];
+        return storeThemes.face || [];
       case "cloth":
-        return themeData.fashion || [];
+        return storeThemes.fashion || [];
       case "background":
-        return themeData.background || [];
+        return storeThemes.background || [];
       default:
         return [];
     }
