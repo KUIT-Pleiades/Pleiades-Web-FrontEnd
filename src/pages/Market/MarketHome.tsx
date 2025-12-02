@@ -83,7 +83,10 @@ const MarketHome: React.FC = () => {
             <span className={s.userNameText}>{userName}님의 상점</span>
           </div>
 
-          <div className={s.stone} onClick={handleWatchAd}> {/*임시로 돈 무한 복사 버그판*/}
+          <div 
+            className={s.stone} 
+            // onClick={handleWatchAd}
+          > {/*임시로 돈 무한 복사 버그판*/}
             <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
         </div>
