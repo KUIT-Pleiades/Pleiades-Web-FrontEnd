@@ -1,0 +1,253 @@
+.container {
+	width: 100dvw;
+	height: 91dvh;
+	display: flex;
+	flex-direction: column;
+	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
+	position: relative;
+}
+
+.header {
+	width: 100%;
+	height: 78.55px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: end;
+	background-color: #FFF;
+	position: relative;
+	flex-shrink: 0;
+
+	&Title {
+		padding-bottom: 20px;
+		color: #17151C;
+		text-align: center;
+		font-family: "Pretendard";
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: normal;
+		letter-spacing: -0.32px;
+	}
+}
+
+.backArrow {
+	width: 7px;
+	height: 14px;
+	padding: 24px 16px;
+	position: absolute;
+	left: 0;
+	cursor: pointer;
+}
+
+.content {
+	width: calc(100% - 28px);
+	margin: 5px 14px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	position: relative;
+	overflow-y: auto;
+	min-height: 0;
+}
+
+.tabContainer {
+	display: flex;
+	gap: 0;
+	padding-bottom: 0;
+	border-bottom: 1px solid #E1E1E1;
+	flex-shrink: 0;
+}
+
+.tab {
+	flex: 1;
+	padding: 16px 0;
+	border: none;
+	border-bottom: 3px solid transparent;
+	background: transparent;
+	color: #999;
+	font-family: Pretendard;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	letter-spacing: -0.3px;
+	cursor: pointer;
+	transition: all 0.2s;
+	border-radius: 0;
+
+	&.active {
+		background: transparent;
+		border-bottom: 3px solid #17151C;
+		color: #17151C;
+		font-weight: 700;
+	}
+}
+
+.countContainer {
+	padding: 16px 0 8px 0;
+}
+
+.countText {
+	color: #17151C;
+	font-family: Pretendard;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.28px;
+}
+
+.itemsList {
+	flex: 1;
+	padding-bottom: 80px;
+}
+
+.dateGroup {
+	margin-bottom: 24px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.dateHeader {
+	color: #444;
+	font-family: Pretendard;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: normal;
+	letter-spacing: -0.28px;
+	padding: 8px 0;
+	border-bottom: 1px solid #C0B9DB;
+	margin-bottom: 12px;
+}
+
+.grid {
+	width: 100%;
+	display: grid;
+	padding-top: 12px;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px 12px;
+}
+
+.itemWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.cardWrapper {
+	position: relative;
+	width: 100%;
+}
+
+.discountBadge {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	background: #F45B5B;
+	padding: 4px 8px;
+	border-radius: 40px;
+	z-index: 1;
+	color: #FFF;
+
+	text-align: center;
+	font-family: Pretendard;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: -0.2px;
+}
+
+.card {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	background: #FFF;
+	border-radius: 5px;
+	filter: drop-shadow(0 0 5px rgba(41, 34, 41, 0.20));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.itemName {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	span {
+		color: var(--gray-22, #444);
+		font-family: Pretendard;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.itemPrice {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 5px;
+
+	img {
+		width: 16px;
+		height: 16px;
+	}
+
+	span {
+		color: #000;
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		letter-spacing: -0.28px;
+	}
+}
+
+
+.emptyState {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	padding: 130px 20px;
+	text-align: center;
+}
+
+.emptyTitle {
+	color: #17151C;
+	font-family: ElectricalSafety;
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 12px;
+	letter-spacing: -0.36px;
+}
+
+.emptyDescription {
+	color: #666;
+	font-family: ElectricalSafety;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.5;
+	margin-bottom: 32px;
+	letter-spacing: -0.28px;
+}
+
+.logo {
+	width: 150px;
+}
