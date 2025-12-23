@@ -22,22 +22,22 @@ const MarketHome: React.FC = () => {
     fetchUserStone();
   }, []);
 
-  const handleWatchAd = async () => {
-    try {
-      // --- [광고 SDK 연동 구간] ---
-      // 예: await AdMob.showRewardVideo();
-      // console.log("광고 시청 중...");
-      // -------------------------
+  // const handleWatchAd = async () => {
+  //   try {
+  //     // --- [광고 SDK 연동 구간] ---
+  //     // 예: await AdMob.showRewardVideo();
+  //     // console.log("광고 시청 중...");
+  //     // -------------------------
 
-      // [테스트] 광고를 다 봤다고 가정하고 30 스톤 지급
-      const rewardAmount = 30;
-      await chargeStone(rewardAmount);
+  //     // [테스트] 광고를 다 봤다고 가정하고 30 스톤 지급
+  //     const rewardAmount = 30;
+  //     await chargeStone(rewardAmount);
       
-      // alert(`광고 시청 완료! ${rewardAmount} 스톤을 받았습니다.`);
-    } catch (error) {
-      console.error("광고 시청 중 오류 발생 또는 취소됨", error);
-    }
-  };
+  //     // alert(`광고 시청 완료! ${rewardAmount} 스톤을 받았습니다.`);
+  //   } catch (error) {
+  //     console.error("광고 시청 중 오류 발생 또는 취소됨", error);
+  //   }
+  // };
 
   const buttons = [
     {
