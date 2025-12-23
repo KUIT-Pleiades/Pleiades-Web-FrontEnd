@@ -4,6 +4,7 @@ import {
   UsedClothData,
   UsedBackgroundData,
   WishlistResponse,
+  SellItemResponse,
 } from "../interfaces/Interfaces";
 
 /**
@@ -75,4 +76,32 @@ export const deleteUsedWishlistItem = async (
     { id: itemId }
   );
   return response.data;
+};
+
+/**
+ * 내 아이템을 중고장터에 판매 등록하는 API 함수
+ * POST /store/resale/listings
+ * @param ownershipId - 소유권 ID
+ * @param price - 판매 가격
+ * @returns Promise<SellItemResponse | null>
+ */
+export const postSellItem = async (
+  ownershipId: number,
+  price: number
+): Promise<SellItemResponse | null> => {
+  try {
+    const response = await axiosRequest<SellItemResponse>(
+      "/store/resale/listings",
+      "POST",
+      { ownershipId, price }
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.error("아이템 판매 등록 실패:", error);
+    throw error;
+  }
 };
