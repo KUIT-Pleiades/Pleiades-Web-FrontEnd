@@ -181,7 +181,7 @@
 .itemName {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
 
 	span {
 		color: var(--gray-22, #444);
@@ -194,12 +194,17 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	.usedBadge {
+		color: var(--Color-12, #858585);
+		padding-right: 3px;
+	}
 }
 
 .itemPrice {
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: center;
 	gap: 5px;
 
 	img {

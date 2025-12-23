@@ -141,10 +141,10 @@ const TransactionHistory: React.FC = () => {
                             />
                           </div>
                         </div>
-                        {!item.isOfficial && (
-                          <span className={s.usedBadge}>중고</span>
-                        )}
                         <div className={s.itemName}>
+                          {!item.isOfficial && (
+                            <span className={s.usedBadge}>[중고] </span>
+                          )}
                           <span>{item.description}</span>
                         </div>
                         <div className={s.itemPrice}>
