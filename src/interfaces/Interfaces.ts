@@ -390,3 +390,8 @@ export interface UsedBackgroundData {
 export interface WishlistResponse {
   message: string;
 }
+
+// /store/resale/listings API가 응답하는 데이터의 타입 
+export interface SellItemResponse {
+  listingId: number;
+}
