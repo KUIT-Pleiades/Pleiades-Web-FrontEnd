@@ -236,7 +236,7 @@ export interface Stations {
 }
 
 export interface JoinStationResponse {
-    stationId: string;
+  stationId: string;
 }
 
 export type SortOptionForStations =
@@ -351,9 +351,16 @@ export interface OfficialBackgroundData {
 
 // '/store/theme' API가 응답하는 테마 데이터 타입
 export interface ThemeData {
-  face: string[];
-  fashion: string[];
-  background: string[];
+  officialThemes: {
+    face: string[];
+    fashion: string[];
+    background: string[];
+  };
+  resaleThemes: {
+    face: string[];
+    fashion: string[];
+    background: string[];
+  };
 }
 
 // Interfaces For Used Market
@@ -389,6 +396,94 @@ export interface UsedBackgroundData {
 // /store/official/wishlist API가 응답하는 데이터의 타입
 export interface WishlistResponse {
   message: string;
+}
+
+// Interfaces For Transaction History
+// 거래 내역의 개별 아이템 타입
+export interface PurchaseItem {
+  transactionId: number; // 거래 ID
+  id: number; // 아이템 이미지 ID
+  name: string; // 아이템 이미지 ex) fashion_bottom_9.png
+  description: string; // 아이템 이름 ex) 연청 스키니진
+  originalPrice: number; // 원래 가격
+  price: number; // 구매 가격
+  isOfficial: boolean; // 공식/중고 구분
+}
+
+export interface SaleItem {
+  transactionId: number;
+  id: number;
+  name: string;
+  description: string;
+  originalPrice: number;
+  price: number;
+  isOfficial: boolean;
+}
+
+// 날짜별 그룹
+export interface PurchaseGroup {
+  date: string; // "2025.01.01"
+  items: PurchaseItem[];
+}
+
+export interface SaleGroup {
+  date: string;
+  items: SaleItem[];
+}
+
+// 거래 내역 응답
+export interface PurchaseHistoryResponse {
+  totalCount: number;
+  purchases: PurchaseGroup[];
+}
+
+export interface SaleHistoryResponse {
+  totalCount: number;
+  sales: SaleGroup[];
+}
+
+// Interfaces For Transaction History
+// 거래 내역의 개별 아이템 타입
+export interface PurchaseItem {
+  transactionId: number; // 거래 ID
+  id: number; // 아이템 이미지 ID
+  name: string; // 아이템 이미지 ex) fashion_bottom_9.png
+  description: string; // 아이템 이름 ex) 연청 스키니진
+  originalPrice: number; // 원래 가격
+  price: number; // 구매 가격
+  isOfficial: boolean; // 공식/중고 구분
+}
+
+export interface SaleItem {
+  transactionId: number;
+  id: number;
+  name: string;
+  description: string;
+  originalPrice: number;
+  price: number;
+  isOfficial: boolean;
+}
+
+// 날짜별 그룹
+export interface PurchaseGroup {
+  date: string; // "2025.01.01"
+  items: PurchaseItem[];
+}
+
+export interface SaleGroup {
+  date: string;
+  items: SaleItem[];
+}
+
+// 거래 내역 응답
+export interface PurchaseHistoryResponse {
+  totalCount: number;
+  purchases: PurchaseGroup[];
+}
+
+export interface SaleHistoryResponse {
+  totalCount: number;
+  sales: SaleGroup[];
 }
 
 // /store/resale/listings API가 응답하는 데이터의 타입 
