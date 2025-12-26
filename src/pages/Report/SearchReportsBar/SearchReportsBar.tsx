@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./SearchReportsBar.module.scss";
 import searchIcon from "../../../assets/btnImg/searchBtn.svg";
+import closeIcon from "../../../assets/Signal/close.svg";
 
 interface SearchReportsBarProps {
   value: string;
@@ -8,6 +9,8 @@ interface SearchReportsBarProps {
   onFocus: () => void;
   onBlur: () => void;
   onSubmit: (query: string) => void;
+  onClear?: () => void;
+  showClearButton?: boolean;
   placeholder?: string;
 }
 
@@ -17,6 +20,8 @@ const SearchReportsBar: React.FC<SearchReportsBarProps> = ({
   onFocus,
   onBlur,
   onSubmit,
+  onClear,
+  showClearButton = false,
   placeholder = "찾는 리포트를 검색해보세요",
 }) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -49,6 +54,11 @@ const SearchReportsBar: React.FC<SearchReportsBarProps> = ({
           onKeyDown={handleKeyPress}
           placeholder={placeholder}
         />
+        {showClearButton && (
+          <button className={s.clearButton} type="button" onClick={onClear}>
+            <img src={closeIcon} alt="clear" />
+          </button>
+        )}
       </div>
     </div>
   );
