@@ -1,9 +1,9 @@
 import s from "./MarketHome.module.scss";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MarketButton from "./HomeComponent/MarketButton";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import AssetBox from "../../components/Asset/AssetBox";
+import StoneBox from "../../components/Stone/StoneBox";
 
 import marketSmallIcon from "../../assets/market/home/marketSmallIcon.svg";
 import characterBackground from "../../assets/market/home/characterBackground.svg";
@@ -14,9 +14,34 @@ import transactionDetailsIcon from "../../assets/market/home/transactionDetailsI
 
 const MarketHome: React.FC = () => {
   const navigate = useNavigate();
-  const { userInfo } = useCharacterStore();
+  const { 
+    userInfo, 
+    fetchUserStone, 
+    // chargeStone 
+  } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
+
+  useEffect(() => {
+    fetchUserStone();
+  }, []);
+
+  // const handleWatchAd = async () => {
+  //   try {
+  //     // --- [광고 SDK 연동 구간] ---
+  //     // 예: await AdMob.showRewardVideo();
+  //     // console.log("광고 시청 중...");
+  //     // -------------------------
+
+  //     // [테스트] 광고를 다 봤다고 가정하고 30 스톤 지급
+  //     const rewardAmount = 30;
+  //     await chargeStone(rewardAmount);
+      
+  //     // alert(`광고 시청 완료! ${rewardAmount} 스톤을 받았습니다.`);
+  //   } catch (error) {
+  //     console.error("광고 시청 중 오류 발생 또는 취소됨", error);
+  //   }
+  // };
 
   const buttons = [
     {
@@ -62,8 +87,11 @@ const MarketHome: React.FC = () => {
             <span className={s.userNameText}>{userName}님의 상점</span>
           </div>
 
-          <div className={s.coinAndStone}>
-            <AssetBox coinAmount={5} stoneAmount={312} />
+          <div 
+            className={s.stone} 
+            // onClick={handleWatchAd}
+          > {/*임시로 돈 무한 복사 버그판*/}
+            <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
         </div>
 

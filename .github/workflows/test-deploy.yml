@@ -28,7 +28,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
-          echo "VITE_CLIENT_URL=${{ secrets.VITE_CLIENT_URL }}" >> .env
+          echo "VITE_CLIENT_URL=${{ secrets.TEST_VITE_CLIENT_URL }}" >> .env
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
           echo "VITE_PINATA_ENDPOINT=${{ secrets.VITE_PINATA_ENDPOINT }}" >> .env
           echo "VITE_IMG_MAKER=${{ secrets.VITE_IMG_MAKER }}" >> .env
@@ -51,3 +51,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "ap-northeast-2"
+

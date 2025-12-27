@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import s from "./SellItemModal.module.scss";
 import { useNavigate } from "react-router-dom";
+import { postSellItem } from "../../../../api/usedMarketApi";
 
 // image files
 import close from '../../../../assets/Signal/close.svg';
@@ -33,7 +34,6 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [finalPrice, setFinalPrice] = useState<number | null>(null);
 
-    // [change] 할인 적용 시 officialPrice 사용
     const applyDiscount = (pct: number) => {
         if (itemPrice == null) return;
         const v = Math.max(1, Math.floor(itemPrice * (1 - pct)));
@@ -59,26 +59,16 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
         setIsSubmitting(true);
 
         try {
-            const res = await postSellItem({ ownershipId: ownershipId, price: Number(inputPrice) });
-            if (res?.ok) {
+            const result = await postSellItem(ownershipId, Number(inputPrice));
+            
+            if (result) {
+                console.log("판매 등록 성공, Listing ID:", result.listingId);
                 setFinalPrice(Number(inputPrice));
                 setMode('success');
                 onSellSuccess();
+            } else {
+                alert("판매 등록에 실패했습니다.");
             }
-
-            // // 실제 API 호출
-            // const res = await axiosRequest('/api/v1/trade/resale', 'POST', { 
-            //     ownershipId: ownershipId, 
-            //     price: Number(inputPrice) 
-            // });
-
-            // if (res.status === 200) {
-            //     setFinalPrice(Number(inputPrice));
-            //     setMode('success');
-            //     onSellSuccess(); // [New] 부모 컴포넌트에 갱신 요청
-            // } else {
-            //     alert('판매 등록에 실패했습니다. 다시 시도해주세요.');
-            // }
         } catch (error) {
             console.error('판매 등록 중 오류 발생:', error);
         } finally {
@@ -204,12 +194,3 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 };
 
 export default SellItemModal;
-
-// 데모용 POST API (실 서버 연동 시 교체)
-async function postSellItem({ ownershipId, price }: { ownershipId: number; price: number }) {
-    if (!ownershipId || price <= 0) {
-        return null;
-    }
-    await new Promise((r) => setTimeout(r, 600));
-    return { ok: true };
-}
