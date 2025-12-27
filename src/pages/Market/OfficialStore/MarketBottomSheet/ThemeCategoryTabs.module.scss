@@ -2,7 +2,9 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid var(--gray-7, #E1E1E1);
+	margin: 10px;
 }
 
 .themeContainer {
