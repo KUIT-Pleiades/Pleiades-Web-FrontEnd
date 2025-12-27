@@ -94,7 +94,6 @@ export default function OfficialUsedStore() {
     const clonedUserInfo = structuredClone(userInfo);
     setInitialUserInfo(clonedUserInfo);
     setTryOnUserInfo(clonedUserInfo);
-    fetchUserStone();
   }, [userInfo]);
 
   const isWearingSet = !!tryOnUserInfo.outfit.set;
