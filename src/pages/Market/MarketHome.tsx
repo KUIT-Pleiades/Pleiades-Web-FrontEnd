@@ -14,7 +14,11 @@ import transactionDetailsIcon from "../../assets/market/home/transactionDetailsI
 
 const MarketHome: React.FC = () => {
   const navigate = useNavigate();
-  const { userInfo, fetchUserStone, chargeStone } = useCharacterStore();
+  const { 
+    userInfo, 
+    fetchUserStone, 
+    // chargeStone 
+  } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
 
