@@ -145,6 +145,12 @@ const Report = () => {
     setShowSearchHistory(true);
   };
 
+  const handleClearSearch = () => {
+    setSearchValue("");
+    setIsSearchResult(false);
+    setFilteredReports(reports);
+  };
+
   const handleUpdateReport = async (reportId: number, newAnswer: string) => {
     try {
       await axiosRequest<void>(`/reports/${reportId}`, "PATCH", {
@@ -245,6 +251,8 @@ const Report = () => {
           onSubmit={handleSearchSubmit}
           onFocus={handleSearchFocus}
           onBlur={handleSearchBlur}
+          onClear={handleClearSearch}
+          showClearButton={isSearchResult}
         />
       </div>
 
