@@ -96,3 +96,18 @@ export const getThemes = async (): Promise<ThemeData> => {
   );
   return response.data;
 };
+
+export interface PurchaseResponse {
+  ownershipId?: number;
+  message: string;
+}
+
+/**
+ * 공식몰 아이템 구매 API 함수
+ * @param itemId - 구매할 아이템 ID
+ * @returns Promise<PurchaseResponse>
+ */
+export const purchaseOfficialItem = async (itemId: number): Promise<PurchaseResponse> => {
+  const response = await axiosRequest<PurchaseResponse>("/store/official/trades", "POST", { itemId });
+  return response.data;
+};
