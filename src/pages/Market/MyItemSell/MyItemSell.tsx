@@ -1,9 +1,13 @@
 import s from './MyItemSell.module.scss';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SellItemModal from './component/SellItemModal';
-
 import backArrow from '../../../assets/pleiadesBackArrow.svg';
+import { axiosRequest } from '../../../functions/axiosRequest';
+
+// ============= 배포 시 false로 변경 =============
+const USE_MOCK = true;
+// =============================================
 
 type ItemCategory = 'face' | 'fashion' | 'background';
 
@@ -17,18 +21,18 @@ interface ItemDetailDto {
     type: string;        // HAIR, TOP, STARBACKGROUND ...
 }
 
-// [New] 소유권(Ownership) DTO
+// 소유권(Ownership) DTO
 interface OwnershipDto {
     id: number;          // 소유권 ID (판매 시 사용)
     item: ItemDetailDto; // 아이템 상세 정보
 }
 
 // API 응답 타입 정의
-// interface MyItemsResponseDto {
-//     ownerships: OwnershipDto[];
-// }
+interface MyItemsResponseDto {
+    ownerships: OwnershipDto[];
+}
 
-// 목업 데이터 (Ownership 구조 적용)
+// 목업 데이터
 const mockMyItems: OwnershipDto[] = [
     // -------------------------------------------------------------------------
     // [Face Items]
@@ -107,35 +111,6 @@ const SUBLABEL_TO_TYPES: Record<ItemCategory, Record<string, string[]>> = {
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT || '';
 
-// 이제 적용할 내 아이템 DTO 구성
-//   {
-//     id: 5236,
-//     name: "face_hair_3.png",
-//     description: "곱슬머리",
-//     price: 220,
-//     category: 'face',
-//     // 'face' | 'cloth' | 'background',
-//     type: 'HAIR'
-//     // facd -> 'HAIR', 'EYES', 'NOSE', 'MOUTH', 'MOLE'
-//     // cloth -> 'TOP', 'BOTTOM', 'SET', 'SHOES', 'EARS', 'EYESITEM', 'HEAD', 'NECK', 'LEFTWRIST', 'RIGHTWRIST', 'LEFTHAND', 'RIGHTHAND'
-//     // background -> 'STARBACKGROUND', 'STATIONBACKGROUND'
-//   }
-
-// {
-// 	ownerships: [
-//         {
-//             id: 1234,
-//             item: {
-//                     id: 5236,
-//                     name: "face_hair_3.png",
-//                     description: "곱슬머리",
-//                     price: 220,
-//                     category: 'face' | 'fashion' | 'background',
-//                     type: 'HAIR'
-//             }
-//         },
-// 	]
-// }
 
 const MyItemSell: React.FC = () => {
     const navigate = useNavigate();
@@ -143,37 +118,41 @@ const MyItemSell: React.FC = () => {
     const [mainTab, setMainTab] = useState<ItemCategory>('face');
     const [subTab, setSubTab] = useState<string>('전체');
 
-    // const [myItems, setMyItems] = useState<OwnershipDto[]>([]); // 서버 데이터 상태
-
+    const [myItems, setMyItems] = useState<OwnershipDto[]>([]); 
     const [selectedOwnership, setSelectedOwnership] = useState<OwnershipDto | null>(null);
-
     const [isSellItemModalVisible, setIsSellItemModalVisible] = useState(false);
 
     // // 내 아이템 목록 불러오기
-    // const fetchMyItems = async () => {
-    //     try {
-    //         const response = await axiosRequest<MyItemsResponseDto>('/api/v1/store/my-items', 'GET', null);
-    //         if (response.status === 200) {
-    //             setMyItems(response.data.ownerships);
-    //         } else {
-    //             console.error('아이템 목록 불러오기 실패:', response.message);
-    //         }
-    //     } catch (error) {
-    //         console.error('API 요청 중 오류 발생:', error);
-    //     }
-    // };
+    const fetchMyItems = async () => {
+        if (USE_MOCK) {
+            setMyItems(mockMyItems);
+            return;
+        }
 
-    // useEffect(() => {
-    //     fetchMyItems();
-    // }, []);
+        try {
+            const response = await axiosRequest<MyItemsResponseDto>('/store/purchases', 'GET', null);
+            if (response.status === 200) {
+                setMyItems(response.data.ownerships);
+            } else {
+                console.error('아이템 목록 불러오기 실패:', response.message);
+            }
+        } catch (error) {
+            console.error('API 요청 중 오류 발생:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMyItems();
+    }, []);
 
     const handleCloseSellItemModal = () => {
+        fetchMyItems();
         setIsSellItemModalVisible(false);
     };
 
     // 판매 성공 시 호출될 함수 (목록 갱신)
     const handleSellSuccess = () => {
-        // fetchMyItems();
+        fetchMyItems();
         console.log('[내 아이템 판매] 내 아이템 판매 성공 - 아이템 목록 갱신 요청');
     };
 
@@ -181,7 +160,7 @@ const MyItemSell: React.FC = () => {
     const filtered = useMemo(() => {
         const allowedTypes = SUBLABEL_TO_TYPES[mainTab][subTab] ?? [];
         
-        return mockMyItems.filter((ownership) => {
+        return myItems.filter((ownership) => {
             const item = ownership.item;
             
             // 1. 메인 카테고리 체크
@@ -193,7 +172,7 @@ const MyItemSell: React.FC = () => {
             // 3. 선택된 서브 탭에 해당하는 타입인지 체크
             return allowedTypes.includes(item.type);
         });
-    }, [mainTab, subTab]);
+    }, [mainTab, subTab, myItems]);
 
     return (
         <div className={s.container}>
@@ -244,11 +223,12 @@ const MyItemSell: React.FC = () => {
                         onClick={() => {
                             setSelectedOwnership(ownership);
                             setIsSellItemModalVisible(true);
+                            console.log('item.name : ', ownership.item.name);
                         }}
                     >
                         {/* 이미지 경로 조합: ownership.item.name 사용 */}
                         <img 
-                            src={`${IMG_BASE_URL}${ownership.item.name}`} 
+                            src={`${IMG_BASE_URL}${ownership.item.name}`}
                             alt={ownership.item.description} 
                             className={s.itemThumb} 
                         />
@@ -261,7 +241,7 @@ const MyItemSell: React.FC = () => {
                 <SellItemModal
                     itemName={selectedOwnership.item.description}
                     handleCloseSendSignalPopup={handleCloseSellItemModal}
-                    image={`${IMG_BASE_URL}${selectedOwnership.item.name}`}
+                    image={selectedOwnership.item.name}
                     ownershipId={selectedOwnership.id}
                     itemId={selectedOwnership.item.id}
                     itemPrice={selectedOwnership.item.price}

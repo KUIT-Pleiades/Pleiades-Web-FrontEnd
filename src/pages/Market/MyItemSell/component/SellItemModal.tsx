@@ -19,6 +19,8 @@ interface SellItemModalProps {
 
 type Mode = 'view' | 'form' | 'success';
 
+const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT || '';
+
 const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
     handleCloseSendSignalPopup,
@@ -46,7 +48,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     };
 
     const handleClickCheckMarket = () => {
-        navigate(`/market/my-item-price-check?name=${encodeURIComponent(itemName)}&id=${itemId ?? ''}`);
+        navigate(`/market/my-item-price-check?name=${encodeURIComponent(itemName)}&id=${itemId ?? ''}&img=${image}`);
     };
 
     const handleSellClick = async () => {
@@ -101,7 +103,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 
                 <div className={s.imageContainer}>
                     <img
-                        src={image}
+                        src={`${IMG_BASE_URL}${image}`}
                         alt="item image"
                         className={s.itemImg}
                     />
