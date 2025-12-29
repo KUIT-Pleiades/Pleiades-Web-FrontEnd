@@ -33,7 +33,7 @@ import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
 import MySellingItems from "./pages/Market/MySellingItems/MySellingItems";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
-import LandingPage from "./pages/LandingPage/LandingPage";
+// import LandingPage from "./pages/LandingPage/LandingPage";
 
 // === 블로그 개편으로 새로 추가/변경되는 페이지들 ===
 import BlogIndexPage from "./blog/pages/BlogIndexPage";
@@ -51,7 +51,7 @@ export default function App() {
 
       <Routes>
         {/* === 1. 로그인 없이 접근 가능한 공개 페이지들 === */}
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LogIn />} />
 
         {/* ⭐ --- About, Contact 라우트 --- ⭐ */}
         <Route path="/about" element={<AboutUs />} />
