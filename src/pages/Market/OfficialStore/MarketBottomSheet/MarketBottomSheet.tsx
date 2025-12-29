@@ -44,6 +44,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   const [activeSubTab, setActiveSubTab] = useState("전체");
 
   useEffect(() => {
+    setActiveTheme("추천");
     setActiveSubTab("전체");
   }, [activeCategory]);
 

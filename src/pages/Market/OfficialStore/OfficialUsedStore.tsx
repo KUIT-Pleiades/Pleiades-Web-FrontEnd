@@ -10,7 +10,7 @@ import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
-import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem } from "../../../api/marketApi";
+import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem, purchaseOfficialItem } from "../../../api/marketApi";
 import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
@@ -250,12 +250,28 @@ export default function OfficialUsedStore() {
     }
   };
 
-  const handleConfirmAddToCart = () => {
-    console.log("Item added to cart:", selectedItem);
+  const handleConfirmAddToCart = async () => {
+    if (selectedItem.id === null) return;
 
-    // Add item to cart logic here
-    setCartModalOpen(false);
-    setCompleteCartModalOpen(true);
+    try {
+      if (activeTab === "official") {
+        const response = await purchaseOfficialItem(selectedItem.id);
+        if (response.ownershipId) {
+          setCartModalOpen(false);
+          setCompleteCartModalOpen(true);
+          fetchUserStone();
+        } else {
+          alert(response.message);
+          setCartModalOpen(false);
+        }
+      } else {
+        // TODO: 중고몰 구매 API 연결
+        setCartModalOpen(false);
+      }
+    } catch (error) {
+      console.error("구매 실패:", error);
+      setCartModalOpen(false);
+    }
   };
 
   const handleCompleteCart = () => {
