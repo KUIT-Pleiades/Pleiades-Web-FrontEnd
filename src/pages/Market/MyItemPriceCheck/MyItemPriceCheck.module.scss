@@ -10,9 +10,11 @@
         #F8F8FA 28.21%,
         #E4D0E5 259.4%
     );
+    overflow: hidden;
 }
 
 .header {
+    flex-shrink: 0;
     width: 100dvw;
     height: 78.55px;
     display: flex;
@@ -47,9 +49,10 @@
 }
 
 .sectionTitle {
+    flex-shrink: 0;
     width: 93%;
     margin-top: 20.5px;
-    margin-bottom: 20px;
+    margin-bottom: 2px;
     padding-bottom: 9.5px;
     display: flex;
     align-items: center;
@@ -87,11 +90,29 @@
     letter-spacing: -0.26px;
 }
 
+.scrollArea {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 18px;
+    padding-bottom: 40px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .grid {
     width: 93%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px 22px;
+    align-items: start;
 }
 
 .itemSection{
@@ -109,7 +130,8 @@
     filter: drop-shadow(0 0 5px rgba(41, 34, 41, 0.20));
     margin-bottom: 11px;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
 
     &Badge {
         position: absolute;
@@ -125,6 +147,7 @@
         letter-spacing: -0.2px;
         padding: 4px 8px;
         border-radius: 999px;
+        z-index: 10;
     }
 
     &ThumbWrap {
@@ -133,12 +156,15 @@
         justify-content: center;
         width: 100%;
         height: 100%;
+        box-sizing: border-box;
+        padding: 0;
     }
 
     &Thumb {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
+        display: block;
     }
 }
 
@@ -172,4 +198,45 @@
     font-weight: 600;
     line-height: normal;
     letter-spacing: -0.28px;
+}
+
+.noItem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &Title {
+    color: var(--gray-11, #17151C);
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.32px;
+
+    margin-bottom: 18px;
+  }
+
+  &Text {
+    color: var(--gray-22, #444);
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.26px;
+
+    margin-bottom: 55px;
+  }
+
+  &Logo {
+    width: 10.97269rem;
+  }
 }

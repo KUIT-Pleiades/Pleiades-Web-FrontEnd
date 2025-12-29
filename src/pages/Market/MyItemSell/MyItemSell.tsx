@@ -223,11 +223,12 @@ const MyItemSell: React.FC = () => {
                         onClick={() => {
                             setSelectedOwnership(ownership);
                             setIsSellItemModalVisible(true);
+                            console.log('item.name : ', ownership.item.name);
                         }}
                     >
                         {/* 이미지 경로 조합: ownership.item.name 사용 */}
                         <img 
-                            src={`${IMG_BASE_URL}${ownership.item.name}`} 
+                            src={`${IMG_BASE_URL}${ownership.item.name}`}
                             alt={ownership.item.description} 
                             className={s.itemThumb} 
                         />
@@ -240,7 +241,7 @@ const MyItemSell: React.FC = () => {
                 <SellItemModal
                     itemName={selectedOwnership.item.description}
                     handleCloseSendSignalPopup={handleCloseSellItemModal}
-                    image={`${IMG_BASE_URL}${selectedOwnership.item.name}`}
+                    image={selectedOwnership.item.name}
                     ownershipId={selectedOwnership.id}
                     itemId={selectedOwnership.item.id}
                     itemPrice={selectedOwnership.item.price}
