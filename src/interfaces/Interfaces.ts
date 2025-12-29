@@ -486,7 +486,28 @@ export interface SaleHistoryResponse {
   sales: SaleGroup[];
 }
 
-// /store/resale/listings API가 응답하는 데이터의 타입 
+// /store/resale/listings API가 응답하는 데이터의 타입
 export interface SellItemResponse {
   listingId: number;
+}
+
+// 판매 중인 아이템 개별 타입
+export interface ListingItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category: "FACE" | "FASHION" | "BACKGROUND";
+  type: string;
+}
+
+export interface MyListing {
+  listingId: number;
+  listingPrice: number;
+  listingItem: ListingItem;
+}
+
+// GET /store/resale/listings API 응답 타입
+export interface MyListingsData {
+  listings: MyListing[];
 }
