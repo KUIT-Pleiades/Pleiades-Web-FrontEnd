@@ -36,44 +36,45 @@ const MyItemPriceCheck: React.FC = () => {
     return (
         <div className={s.container}>
             {/* 상단 헤더 */}
-            <header className={s.header}>
+            <div className={s.header}>
                 <img
                     src={backArrow}
-                    alt="back"
-                    className={s.back}
+                    alt="back arrow"
+                    className={s.backArrow}
                     onClick={() => navigate(-1)}
                 />
-                <h1 className={s.title}>내 아이템 판매시세</h1>
-            </header>
+                <span className={s.headerTitle}>내 아이템 판매시세</span>
+            </div>
 
             {/* 섹션 타이틀 */}
-            <section className={s.sectionTitle}>
+            <div className={s.sectionTitle}>
                 <span className={s.itemTitle}>[{nameFromQuery}]</span>
                 <span className={s.sectionSub}>판매 중인 상품</span>
                 <span className={s.count}>({listings.length})</span>
-            </section>
-
-            {/* 구분선 */}
-            <div className={s.divider} />
+            </div>
 
             {/* 카드 그리드 */}
-            <section className={s.grid} aria-label="판매 중인 동일 상품 목록">
+            <div className={s.grid} aria-label="판매 중인 동일 상품 목록">
                 {listings.map((it) => (
-                    <article key={it.id} className={s.card}>
-                        {it.discountPct ? (
-                            <div className={s.badge}>{it.discountPct}%</div>
-                        ) : null}
-                        <div className={s.thumbWrap}>
-                            <img src={it.image} alt={it.name} className={s.thumb} />
+                    <div key={it.id} className={s.itemSection}>
+                        <div className={s.card}>
+                            {it.discountPct ? (
+                                <div className={s.cardBadge}>{it.discountPct}%</div>
+                            ) : null}
+                            <div className={s.cardThumbWrap}>
+                                <img src={it.image} alt={it.name} className={s.cardThumb} />
+                            </div>
                         </div>
+
                         <div className={s.name}>{it.name}</div>
+
                         <div className={s.price}>
                             <img src={stone} alt="stone" className={s.stoneIcon} />
                             <span className={s.priceValue}>{it.price}</span>
                         </div>
-                    </article>
+                    </div>
                 ))}
-            </section>
+            </div>
 
             {/* TODO:
                 - API 연동: 동일 상품 리스트(중고/공식몰) 조회
