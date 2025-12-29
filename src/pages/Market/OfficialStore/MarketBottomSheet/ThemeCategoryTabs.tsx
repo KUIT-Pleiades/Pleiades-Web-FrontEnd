@@ -35,6 +35,8 @@ export default function ThemeCategoryTabs({
       ? themeData.officialThemes
       : themeData.resaleThemes;
 
+    if (!storeThemes) return [];
+
     switch (activeCategory) {
       case "face":
         return storeThemes.face || [];

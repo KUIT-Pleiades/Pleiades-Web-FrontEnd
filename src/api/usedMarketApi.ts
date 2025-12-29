@@ -5,6 +5,7 @@ import {
   UsedBackgroundData,
   WishlistResponse,
   SellItemResponse,
+  MyListingsData,
 } from "../interfaces/Interfaces";
 
 /**
@@ -104,4 +105,31 @@ export const postSellItem = async (
     console.error("아이템 판매 등록 실패:", error);
     throw error;
   }
+};
+
+/**
+ * 내가 판매 중인 아이템 목록을 가져오는 API 함수
+ * GET /store/resale/listings
+ * @returns Promise<MyListingsData>
+ */
+export const getMyListings = async (): Promise<MyListingsData> => {
+  const response = await axiosRequest<MyListingsData>(
+    "/store/resale/listings",
+    "GET",
+    null
+  );
+  return response.data;
+};
+
+/**
+ * 판매 중인 아이템을 삭제하는 API 함수
+ * DELETE /store/resale/listings/{listingId}
+ * @param listingId - 판매 등록 ID
+ */
+export const deleteListing = async (listingId: number): Promise<void> => {
+  await axiosRequest<void>(
+    `/store/resale/listings/${listingId}`,
+    "DELETE",
+    null
+  );
 };
