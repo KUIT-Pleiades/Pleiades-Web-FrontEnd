@@ -2,6 +2,8 @@ import React, { useState, useMemo } from "react";
 import s from "./MySellingItemsModal.module.scss";
 import { useNavigate } from "react-router-dom";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
+import { MyListing } from "../../interfaces/Interfaces";
+import { deleteListing } from "../../api/usedMarketApi";
 
 // image files
 import close from "../../assets/Signal/close.svg";
@@ -11,19 +13,12 @@ import deleteBtn from "../../assets/btnImg/deleteBtn.svg";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
-type SaleItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  discounted_price: number;
-};
-
 interface MySellingItemsModalProps {
-  item: SaleItem;
+  item: MyListing;
   onClose: () => void;
   showToast: (message: string, withIcon?: boolean, width?: string) => void;
-  onPriceChange: (itemId: number, newPrice: number) => void;
+  onPriceChange: (listingId: number, newPrice: number) => void;
+  onDelete: (listingId: number) => void;
 }
 
 type Mode = "view" | "form" | "success";
@@ -33,6 +28,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   onClose,
   showToast,
   onPriceChange,
+  onDelete,
 }) => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("view");
@@ -43,28 +39,28 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // 모달 내부에서 필요한 값들 계산
-  const imageUrl = useMemo(() => `${IMG_BASE_URL}${item.name}`, [item.name]);
+  const imageUrl = useMemo(() => `${IMG_BASE_URL}${item.listingItem.name}`, [item.listingItem.name]);
 
   // 할인율 계산: form 모드일 때는 inputPrice 기준, view 모드일 때는 finalPrice 또는 기존 가격 기준
   const discountRate = useMemo(() => {
-    const basePrice = item.price;
+    const basePrice = item.listingItem.price;
     let currentPrice: number;
 
     if (mode === "form" && inputPrice) {
       currentPrice = Number(inputPrice);
     } else {
-      currentPrice = finalPrice !== null ? finalPrice : item.discounted_price;
+      currentPrice = finalPrice !== null ? finalPrice : item.listingPrice;
     }
 
     if (currentPrice <= 0 || basePrice <= 0) return 0;
 
     const rate = ((basePrice - currentPrice) / basePrice) * 100;
     return Math.floor(rate);
-  }, [item.price, item.discounted_price, mode, inputPrice, finalPrice]);
+  }, [item.listingItem.price, item.listingPrice, mode, inputPrice, finalPrice]);
 
   // [change] 할인 적용 시 현재 판매가격 사용
   const applyDiscount = (pct: number) => {
-    const v = Math.max(1, Math.floor(item.discounted_price * (1 - pct)));
+    const v = Math.max(1, Math.floor(item.listingPrice * (1 - pct)));
     setInputPrice(String(v));
   };
 
@@ -76,8 +72,8 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   const handleClickCheckMarket = () => {
     navigate(
       `/market/my-item-price-check?name=${encodeURIComponent(
-        item.description
-      )}&id=${item.id}`
+        item.listingItem.description
+      )}&id=${item.listingItem.id}`
     );
   };
 
@@ -90,13 +86,13 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
     setIsSubmitting(true);
     try {
       const res = await postSellItem({
-        name: item.description,
+        name: item.listingItem.description,
         price: Number(inputPrice),
       });
       if (res?.ok) {
         const newPrice = Number(inputPrice);
         setFinalPrice(newPrice);
-        onPriceChange(item.id, newPrice); // 부모 컴포넌트에 알림
+        onPriceChange(item.listingId, newPrice); // 부모 컴포넌트에 알림
         setMode("view"); // View 모드로 복귀
         showToast("금액 변경을 완료했어요!", false, "200px");
       }
@@ -108,15 +104,19 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   const sellButtonEnabled = mode === "view" || (!!inputPrice && !isSubmitting);
 
   const handleDelete = async () => {
-    // 실제 삭제 API 호출
-    console.log("삭제 요청:", item.id);
-    setShowDeleteModal(false);
-
-    // 모달을 먼저 닫고 토스트 표시
-    onClose();
-    setTimeout(() => {
-      showToast("판매글을 삭제했어요");
-    }, 100);
+    try {
+      await deleteListing(item.listingId);
+      setShowDeleteModal(false);
+      onDelete(item.listingId);
+      onClose();
+      setTimeout(() => {
+        showToast("판매글을 삭제했어요");
+      }, 100);
+    } catch (error) {
+      console.error("삭제 실패:", error);
+      setShowDeleteModal(false);
+      showToast("삭제에 실패했어요");
+    }
   };
 
   return (
@@ -131,7 +131,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
 
           <div className={s.textArea}>
             <div className={s.titleRow}>
-              <span className={s.itemNameText}>{item.description}</span>
+              <span className={s.itemNameText}>{item.listingItem.description}</span>
               {mode === "view" && (
                 <div className={s.menuBtnWrapper}>
                   <img
@@ -168,7 +168,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
             <span className={s.priceText}>현재 판매 가격</span>
             <img src={stone} alt="stone" className={s.stoneIcon} />
             <span className={s.priceValue}>
-              {finalPrice !== null ? finalPrice : item.discounted_price}
+              {finalPrice !== null ? finalPrice : item.listingPrice}
             </span>
           </div>
 
