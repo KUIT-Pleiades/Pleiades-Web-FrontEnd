@@ -1,7 +1,6 @@
 import s from "./MarketHome.module.scss";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import MarketButton from "./HomeComponent/MarketButton";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import StoneBox from "../../components/Stone/StoneBox";
 
@@ -11,6 +10,8 @@ import mallIcon from "../../assets/market/home/mallIcon.svg";
 import sellMyItemIcon from "../../assets/market/home/sellMyItemIcon.svg";
 import myItemsIcon from "../../assets/market/home/myItemsIcon.svg";
 import transactionDetailsIcon from "../../assets/market/home/transactionDetailsIcon.svg";
+import insideButtonRightArrow from "../../assets/market/home/insideButtonRightArrow.svg";
+import adStone from "../../assets/market/Ad/adStone.svg";
 
 const MarketHome: React.FC = () => {
   const navigate = useNavigate();
@@ -104,17 +105,63 @@ const MarketHome: React.FC = () => {
           <img className={s.character} src={userCharacter} alt="캐릭터" />
         </div>
 
-        <div className={s.gridContainer}>
-          {buttons.map((btn, idx) => (
-            <MarketButton
-              key={idx}
-              idx={idx}
-              label={btn.label}
-              subText={btn.subText}
-              icon={btn.icon}
-              onClick={() => navigate(btn.path)}
-            />
-          ))}
+        <div className={s.bottomSection}>
+
+          {/* 광고 섹션 */}
+          <div className={s.bottomAdSection}>
+            <div className={s.leftSide}>
+              <img src={adStone} alt="ad stone" className={s.adStone} />
+              <span className={s.adText}>동영상 보고 무료로 스톤 충전하기</span>
+            </div>
+            <div className={s.rightSide}>
+              <span className={s.adCount}>2/30</span>
+              <div className={s.adButton}>충전하기</div>
+            </div>
+          </div>
+
+
+          <div className={s.bottomButtonSection}>
+            {/* 공식/중고몰 */}
+            <div
+              className={s.officialUsedStoreButton}
+              onClick={() => navigate(buttons[0].path)}
+            >
+              <div className={s.iconContainer}>
+                  <img src={buttons[0].icon} alt={`${buttons[0].label} icon`} className={s.icon} />
+              </div>
+              <div className={s.textContainer}>
+                  <div className={s.subText}>{buttons[0].subText}</div>
+                  <div className={s.label}>{buttons[0].label}</div>
+              </div>
+              <img src={insideButtonRightArrow} alt="inside button right arrow" className={s.insideButtonRightArrow} />
+            </div>
+
+            {/* 내 아이템 판매 */}
+            <div className={s.smallButtonsSection}>
+              <div className={s.smallButton} onClick={() => navigate(buttons[1].path)}>
+                <div className={s.smallIconContainer}>
+                  <img src={buttons[1].icon} alt={`${buttons[1].label} icon`} className={s.smallIcon} />
+                </div>
+                <div className={s.buttonText}>{buttons[1].label}</div>
+              </div>
+
+              {/* 판매 중인 아이템 */}
+              <div className={s.smallButton} onClick={() => navigate(buttons[2].path)}>
+                <div className={s.smallIconContainer}>
+                  <img src={buttons[2].icon} alt={`${buttons[2].label} icon`} className={s.smallIcon} />
+                </div>
+                <div className={s.buttonText}>{buttons[2].label}</div>
+              </div>
+
+              {/* 거래내역 */}
+              <div className={s.smallButton} onClick={() => navigate(buttons[3].path)}>
+                <div className={s.smallIconContainer}>
+                  <img src={buttons[3].icon} alt={`${buttons[3].label} icon`} className={s.smallIcon} />
+                </div>
+                <div className={s.buttonText}>{buttons[3].label}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
