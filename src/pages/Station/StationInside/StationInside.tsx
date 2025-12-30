@@ -150,6 +150,7 @@ const StationInside: React.FC = () => {
         backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground})`,
       }}
     >
+      <div className={s.dim} />
       {!stationData.reportWritten && (
         <StationReport
           stationId={stationId}
