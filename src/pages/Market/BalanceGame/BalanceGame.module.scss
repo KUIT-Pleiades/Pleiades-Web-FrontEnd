@@ -56,7 +56,7 @@
   width: 93dvw;
   display: flex;
   flex-direction: column;
-  padding: 20px 0 140px; // 버튼 높이 + 여백만큼 충분히 줌
+  padding: 20px 0 calc(env(safe-area-inset-bottom) + 120px);
 }
 
 .statusSection {
@@ -189,13 +189,16 @@
   bottom: 0;
   left: 0;
   width: 100dvw;
-  height: 9dvh;
+  height: auto;
   display: flex;
   gap: 12px;
   box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
   z-index: 100;
   background: rgba(255, 255, 255, 0.95); // 살짝 투명하게 해서 뒤가 비치게 하면 더 예쁨
   backdrop-filter: blur(5px);
+
+  padding-bottom: calc(env(safe-area-inset-bottom) + 10px); 
+  padding-top: 15px; // 버튼 위쪽 여백
 
   button {
     height: 50px;
@@ -204,6 +207,8 @@
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.2s;
+
+    margin-top: 0;
 
     &:disabled {
       background: #D9D9D9 !important;
@@ -217,7 +222,7 @@
     border: 1px solid #E7E2FF;
     color: #858585;
     margin-left: 15px;
-    margin-top: 15px;
+    margin-top: 0;
   }
 
   .nextBtn, .completeBtn {
@@ -226,6 +231,6 @@
     border: none;
     color: #FFF;
     margin-right: 15px;
-    margin-top: 15px;
+    margin-top: 0;
   }
 }
