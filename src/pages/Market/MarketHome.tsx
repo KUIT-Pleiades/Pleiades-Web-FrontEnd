@@ -1,5 +1,5 @@
 import s from "./MarketHome.module.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import StoneBox from "../../components/Stone/StoneBox";
@@ -12,16 +12,24 @@ import myItemsIcon from "../../assets/market/home/myItemsIcon.svg";
 import transactionDetailsIcon from "../../assets/market/home/transactionDetailsIcon.svg";
 import insideButtonRightArrow from "../../assets/market/home/insideButtonRightArrow.svg";
 import adStone from "../../assets/market/Ad/adStone.svg";
+import adInfoQuestionIcon from "../../assets/market/Ad/adInfoQuestionIcon.svg";
+import adSeeyouTomorrow from "../../assets/market/Ad/adSeeyouTomorrow.svg";
+import adInfoCloseIcon from "../../assets/market/Ad/adInfoClose.svg";
 
 const MarketHome: React.FC = () => {
   const navigate = useNavigate();
-  const { 
+  const {
     userInfo, 
-    fetchUserStone, 
-    // chargeStone 
+    fetchUserStone,
+    // chargeStone
+
   } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
+  // todo: const isAbleToChargeStone = userInfo.isAbleToChargeStone;
+  const isAbleToChargeStone = true;
+
+  const [isInformationModalVisible, setIsInformationModalVisible] = useState(false);
 
   useEffect(() => {
     fetchUserStone();
@@ -106,16 +114,29 @@ const MarketHome: React.FC = () => {
         </div>
 
         <div className={s.bottomSection}>
+          {!isAbleToChargeStone && (
+            <div className={s.adSeeYouTomorrow}>
+              <img src={adSeeyouTomorrow} alt="ad see you tomorrow" className={s.adSeeYouTomorrowIcon} />
+              <span className={s.adSeeYouTomorrowText}>내일 다시 만나요!</span>
+            </div>
+          )}
 
           {/* 광고 섹션 */}
           <div className={s.bottomAdSection}>
             <div className={s.leftSide}>
               <img src={adStone} alt="ad stone" className={s.adStone} />
-              <span className={s.adText}>동영상 보고 무료로 스톤 충전하기</span>
+              <span className={s.adText}>밸런스 게임하고 무료로 스톤 충전하기</span>
+              <img src={adInfoQuestionIcon} alt="ad info question icon" className={s.adInfoQuestionIcon} onClick={() => setIsInformationModalVisible(true)} />
             </div>
-            <div className={s.rightSide}>
-              <span className={s.adCount}>2/30</span>
-              <div className={s.adButton}>충전하기</div>
+            {/* 광고 카운트는 백엔드에서 넘겨주는 데이터가 있다면 연결, 일단 UI 유지 */}
+            <div 
+              className={isAbleToChargeStone ? s.adButton : s.adButtonDisabled} 
+              onClick={() => {
+                if (!isAbleToChargeStone) return;
+                navigate("/market/balance-game")
+              }} // 경로 이동
+            >
+              충전하기
             </div>
           </div>
 
@@ -164,6 +185,22 @@ const MarketHome: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {isInformationModalVisible && (
+        <div className={s.informationModalContainer} onClick={() => setIsInformationModalVisible(false)}>
+          <div className={s.informationModalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={s.informationModalTitle}>밸런스 게임하고 스톤 충전하기</div>
+
+            <div className={s.textContainer}>
+              <div className={s.informationModalText}>밸런스 게임은 하루에 한 세트 참여 가능합니다.</div>
+              <div className={s.informationModalText}>밸런스 게임 완료시 10 스톤을 받을 수 있습니다.</div>
+              <div className={s.informationModalText}>게임을 끝까지 완료하지 않을 경우, 스톤을 받을 수 없습니다.</div>
+            </div>
+
+            <img src={adInfoCloseIcon} alt="ad info close icon" className={s.adInfoCloseIcon} onClick={() => setIsInformationModalVisible(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -111,7 +111,7 @@
 .characterContainer {
     position: relative;
     width: 100%;
-    height: 50%;
+    height: 55%;
     overflow: hidden;
 }
 
@@ -145,7 +145,7 @@
 
 .bottomSection {
     position: absolute;
-    bottom: 42px;
+    bottom: 26px;
     width: 100%;
     max-width: 93dvw;
     display: flex;
@@ -153,6 +153,120 @@
     align-items: center;
 }
 
+// 광고 섹션
+.adSeeYouTomorrow {
+    width: 100%;
+    position: relative;
+    margin-bottom: 1.8px;
+}
+
+.adSeeYouTomorrowIcon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.adSeeYouTomorrowText {
+    position: absolute;
+    right: 15px;
+    bottom: 14.2px;
+
+    color: #FFF;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.233px;
+}
+
+.bottomAdSection {
+    width: 100%;
+    max-width: 93dvw;
+    height: 48px;
+    border-radius: 9.256px;
+    border: 1px solid #B6BCF8;
+    background: linear-gradient(91deg, #F6E7F6 0%, #E7E2FF 100%);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.leftSide {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.adStone{
+    margin-left: 18px;
+}
+
+.adText {
+    color: #444;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.22px;
+
+    margin-left: 16px;
+}
+
+.adInfoQuestionIcon {
+    margin-left: 4px;
+}
+
+
+.adButton {
+    width: 71px;
+    height: 28px;
+    cursor: pointer;
+    background: linear-gradient(144deg, #5B6ABD 14.93%, #C89FEB 77.56%);
+    border-radius: 28px;
+    margin-right: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFF;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.233px;
+}
+
+.adButtonDisabled {
+    cursor: not-allowed;
+    width: 71px;
+    height: 28px;
+    background: #D9D9D9;
+    border-radius: 28px;
+    margin-right: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #FFF;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.233px;
+}
+
+
+// 버튼 섹션
 .bottomButtonSection {
     width: 100%;
     max-width: 93dvw;
@@ -274,4 +388,66 @@
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.26px;
+}
+
+.informationModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.informationModalContent {
+    background-color: #FFF;
+    width: 308px;
+    height: 197px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.informationModalTitle {
+    color: var(--gray-22, #444);
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    margin-top: 53px;
+    margin-bottom: 15px;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 255px;
+}
+
+.informationModalText {
+    color: var(--Color-12, #858585);
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: -0.55px;
+}
+
+.adInfoCloseIcon {
+    cursor: pointer;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 18px;
+    top: 18px;
 }
