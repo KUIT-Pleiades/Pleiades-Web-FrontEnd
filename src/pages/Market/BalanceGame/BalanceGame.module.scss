@@ -234,3 +234,71 @@
     margin-top: 0;
   }
 }
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4); // 배경 어둡게
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; // 가장 위에 표시
+  backdrop-filter: blur(2px);
+}
+
+.rewardPopup {
+  background: #EDEFFF;
+  width: 248px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: 0 0 10px 0 rgba(23, 21, 28, 0.30);
+  animation: popupAppear 0.3s ease-out;
+
+  position: relative;
+
+  // .rewardIcon {
+  //   width: 50px;
+  //   height: 50px;
+  // }
+
+  .rewardText {
+    color: #000;
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 15px;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.popupLeftDeco {
+  position: absolute;
+  left: -23px;
+  top: -18px;
+}
+
+.popupRightDeco {
+  position: absolute;
+  right: -23px;
+  top: -15px;
+}
+
+// 팝업이 부드럽게 나타나는 애니메이션
+@keyframes popupAppear {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
