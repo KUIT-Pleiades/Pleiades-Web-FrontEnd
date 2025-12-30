@@ -6,12 +6,18 @@ import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.svg";
 import diary from "../../assets/home/diary.svg";
 import HomeBar from "./HomeBar/HomeBar";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function MyStar() {
-  const { userInfo } = useCharacterStore();
+  const { userInfo, fetchUserStone } = useCharacterStore();
   const navigate = useNavigate();
   const userCharacter = `${userInfo.character}`;
   const background = getImage(userInfo.starBackground);
+  const stone = userInfo.stone;
+
+  useEffect(() => {
+    fetchUserStone();
+  }, []);
 
   const showDiary = () => {
     navigate("/report");
@@ -21,7 +27,7 @@ export default function MyStar() {
     <div className={s.container}>
       <img className={s.background} src={background} alt="background" />
       <div className={s.dim} />
-      <HomeBar stoneBalance={300} />
+      <HomeBar stoneBalance={stone} />
       <div className={s.title}>
         <img className={s.planet} src={pleiadeslogo} alt="star" />
         <p className={s.owner}>{userInfo.userName}님의 별</p>
