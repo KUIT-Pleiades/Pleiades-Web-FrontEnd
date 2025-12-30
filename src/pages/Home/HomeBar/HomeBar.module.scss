@@ -1,47 +1,47 @@
 .homeBarContainer {
-  z-index: 1;
-  margin: 3em 1.5em 1em 1.5em;
-  width: calc(100dvw - 3em);
-  height: 21px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  left: 0;
+	z-index: 1;
+	margin: 3em 1.5em 1em 1.5em;
+	width: calc(100dvw - 3em);
+	height: 21px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .assets {
-  width: 30%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+	width: 30%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .icon {
-  margin-left: 0.5em;
+	margin-left: 0.5em;
 }
 
 .balance {
-  margin-left: 0.5em;
-  color: #fff;
-  text-align: center;
-  font-family: "Pretendard";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  letter-spacing: -0.32px;
+	margin-left: 0.5em;
+	color: #fff;
+	text-align: center;
+	font-family: "Pretendard";
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	letter-spacing: -0.32px;
 }
 
 .utils {
-  width: 25%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+	width: 15%; //25%
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
