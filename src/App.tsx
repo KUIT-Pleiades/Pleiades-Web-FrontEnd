@@ -33,6 +33,7 @@ import MyItemPriceCheck from "./pages/Market/MyItemPriceCheck/MyItemPriceCheck";
 import MySellingItems from "./pages/Market/MySellingItems/MySellingItems";
 import TransactionHistory from "./pages/Market/TransactionHistory/TransactionHistory";
 import Market from "./pages/Market/Market";
+import BalanceGame from "./pages/Market/BalanceGame/BalanceGame";
 // import LandingPage from "./pages/LandingPage/LandingPage";
 
 // === 블로그 개편으로 새로 추가/변경되는 페이지들 ===
@@ -92,9 +93,11 @@ export default function App() {
             ></Route>
           </Route>
           <Route path="/report" element={<Report />}></Route>
+
           <Route path="/market" element={<Market />}>
             <Route index element={<MarketHome />} />
             <Route path="official-store" element={<OfficialUsedStore />} />
+            <Route path="balance-game" element={<BalanceGame />} />
             <Route path="my-item-sell" element={<MyItemSell />} />
             <Route path="my-item-price-check" element={<MyItemPriceCheck />} />
             <Route path="my-item-selling" element={<MySellingItems />} />
@@ -103,6 +106,7 @@ export default function App() {
               element={<TransactionHistory />}
             />
           </Route>
+
           <Route path="/setting" element={<Setting />}>
             <Route index element={<PersonalSetting />} />
             <Route path="profile" element={<ProfileSetting />} />

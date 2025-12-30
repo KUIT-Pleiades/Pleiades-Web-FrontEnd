@@ -45,6 +45,7 @@ const SetStationBackground: React.FC<SetStationBackgroundProps> = ({
 
     return (
         <div className={s.container} style={{ backgroundImage: `url(${background})` }}>
+            <div className={s.dim} />
             {/* 헤더 영역 */}
             <div className={s.header}>
                 <div className={s.headerContents}>
