@@ -4,6 +4,9 @@ import s from "./BalanceGame.module.scss";
 import AdSenseUnit from "../../../components/AdSense/AdSenseUnit";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import backArrow from "../../../assets/pleiadesBackArrow.svg";
+import adStone from "../../../assets/market/Ad/stoneInPopup.svg";
+import popupLeftDeco from "../../../assets/market/Ad/popupLeftDeco.svg";
+import popupRightDeco from "../../../assets/market/Ad/popupRightDeco.svg";
 
 const QUESTIONS_PER_PAGE = 5;
 
@@ -15,6 +18,7 @@ const BalanceGame: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showRewardPopup, setShowRewardPopup] = useState(false);
 
   useEffect(() => {
     fetch("/balance-sets-30.json")
@@ -59,11 +63,19 @@ const BalanceGame: React.FC = () => {
       // todo
 
       await chargeStone(10);
+      await fetchUserStone();
       
       setIsCompleted(true);
-      fetchUserStone();
-      alert("10 스톤이 충전되었습니다!");
-      navigate("/market");
+      
+      setShowRewardPopup(true);
+
+      setTimeout(() => {
+        setShowRewardPopup(false);
+      }, 1500);
+      setTimeout(() =>{
+        navigate("/market");
+      }, 1600);
+
     } catch (e) {
       console.error("완료 처리 중 오류:", e);
     }
@@ -160,6 +172,17 @@ const BalanceGame: React.FC = () => {
           )}
         </div>
       </div>
+
+      {showRewardPopup && (
+        <div className={s.popupOverlay}>
+          <div className={s.rewardPopup}>
+            <img src={adStone} alt="stone" className={s.rewardIcon} />
+            <div className={s.rewardText}>10 스톤 충전 완료!</div>
+            <img src={popupLeftDeco} alt="left deco" className={s.popupLeftDeco} />
+            <img src={popupRightDeco} alt="right deco" className={s.popupRightDeco} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
