@@ -9,7 +9,7 @@ const QUESTIONS_PER_PAGE = 5;
 
 const BalanceGame: React.FC = () => {
   const navigate = useNavigate();
-  const { fetchUserStone } = useCharacterStore();
+  const { fetchUserStone, chargeStone } = useCharacterStore();
   const [questions, setQuestions] = useState<any[]>([]);
   const [setId, setSetId] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
@@ -41,19 +41,24 @@ const BalanceGame: React.FC = () => {
 
   const handlePageChange = (nextPage: number) => {
     setCurrentPage(nextPage);
-    // 페이지가 바뀔 때 화면을 최상단으로 이동시켜 다음 문제들이 바로 보이게 함
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   };
 
   const handleComplete = async () => {
     if (!isAllDone) return;
     try {
-      // PM 요청 API 호출
-      await fetch("/api/balance/complete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ setId }),
-      });
+      // // PM 요청 API 호출
+      // await fetch("/api/balance/complete", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ setId }),
+      // });
+
+      // todo
+
+      await chargeStone(10);
       
       setIsCompleted(true);
       fetchUserStone();
