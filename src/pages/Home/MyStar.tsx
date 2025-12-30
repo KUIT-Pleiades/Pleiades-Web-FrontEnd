@@ -21,7 +21,7 @@ export default function MyStar() {
     <div className={s.container}>
       <img className={s.background} src={background} alt="background" />
       <div className={s.dim} />
-      <HomeBar coinBalance={0} stoneBalance={300} />
+      <HomeBar stoneBalance={300} />
       <div className={s.title}>
         <img className={s.planet} src={pleiadeslogo} alt="star" />
         <p className={s.owner}>{userInfo.userName}님의 별</p>
