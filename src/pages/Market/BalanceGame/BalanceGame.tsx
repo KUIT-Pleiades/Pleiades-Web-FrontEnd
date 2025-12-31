@@ -62,7 +62,7 @@ const BalanceGame: React.FC = () => {
 
       // todo
 
-      await chargeStone(10);
+      await chargeStone();
       await fetchUserStone();
       
       setIsCompleted(true);
