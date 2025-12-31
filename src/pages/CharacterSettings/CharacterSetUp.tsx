@@ -1,10 +1,11 @@
 import s from "./CharacterSetUp.module.scss";
 import characterBackground from "../../assets/backgroundImg/characterBackground.png";
 import resetBtn from "../../assets/btnImg/resetBtn.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import Pending from "../PageManagement/Pending";
 import { useNavigate } from "react-router-dom";
+import { UserInfo } from "../../interfaces/Interfaces";
 
 // --- [추가] 새로운 탭과 관련된 파일들을 가져옵니다. ---
 import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
@@ -22,6 +23,16 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [currentTab, setCurrentTab] = useState("face");
   const [load, setLoad] = useState(false);
   const { userInfo, resetUserInfo } = useCharacterStore();
+
+  // 초기 유저 정보 저장 (세트 -> 상의/하의 전환 시 복구용)
+  const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
+    structuredClone(userInfo)
+  );
+
+  // userInfo가 변경될 때 초기값 동기화
+  useEffect(() => {
+    setInitialUserInfo(structuredClone(userInfo));
+  }, []);
 
   const increaseLoadCount = () => {
     setLoad(true);
@@ -179,6 +190,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             <FashionItems
               tabs={FASHION_TABS}
               increaseLoadCount={increaseLoadCount}
+              initialOutfit={initialUserInfo.outfit}
             />
           )}
         </div>

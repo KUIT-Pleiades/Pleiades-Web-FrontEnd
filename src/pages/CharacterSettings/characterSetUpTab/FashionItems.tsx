@@ -13,9 +13,15 @@ import s from "./characterSetUptab.module.scss";
 interface FashionItemsProps {
   tabs: { id: string; name: string }[];
   increaseLoadCount: () => void;
+  initialOutfit: {
+    top: string;
+    bottom: string;
+    set: string;
+    shoes: string;
+  };
 }
 
-const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
+const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
@@ -62,18 +68,18 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
           newOutfit.bottom = "";
           newOutfit.set = newValue;
         } else if (typedPartName === "top" && newValue) {
-          // 2. 상의를 입을 때: 세트를 비우고, 만약 하의가 비어있다면 기본 하의를 입힙니다.
+          // 2. 상의를 입을 때: 세트를 비우고, 하의가 비어있다면 초기 하의를 복구합니다.
           newOutfit.set = "";
           newOutfit.top = newValue;
           if (!newOutfit.bottom) {
-            newOutfit.bottom = "fashion_bottom_01.png"; // 기본 하의
+            newOutfit.bottom = initialOutfit.bottom;
           }
         } else if (typedPartName === "bottom" && newValue) {
-          // 3. 하의를 입을 때: 세트를 비우고, 만약 상의가 비어있다면 기본 상의를 입힙니다.
+          // 3. 하의를 입을 때: 세트를 비우고, 상의가 비어있다면 초기 상의를 복구합니다.
           newOutfit.set = "";
           newOutfit.bottom = newValue;
           if (!newOutfit.top) {
-            newOutfit.top = "fashion_top_01.png"; // 기본 상의
+            newOutfit.top = initialOutfit.top;
           }
         } else {
           // 4. 그 외 (신발 선택 등)
@@ -93,7 +99,7 @@ const FashionItems = ({ tabs, increaseLoadCount }: FashionItemsProps) => {
         });
       }
     },
-    [userInfo, updateUserInfo]
+    [userInfo, updateUserInfo, initialOutfit]
   );
 
 
