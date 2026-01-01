@@ -21,18 +21,18 @@ const MarketHome: React.FC = () => {
   const {
     userInfo, 
     fetchUserStone,
+    fetchIsStoneCharged,
     // chargeStone
 
   } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
-  // todo: const isAbleToChargeStone = userInfo.isAbleToChargeStone;
-  const isAbleToChargeStone = true;
 
   const [isInformationModalVisible, setIsInformationModalVisible] = useState(false);
 
   useEffect(() => {
     fetchUserStone();
+    fetchIsStoneCharged();
   }, []);
 
   // const handleWatchAd = async () => {
@@ -114,7 +114,7 @@ const MarketHome: React.FC = () => {
         </div>
 
         <div className={s.bottomSection}>
-          {!isAbleToChargeStone && (
+          {userInfo.isStoneCharged && (
             <div className={s.adSeeYouTomorrow}>
               <img src={adSeeyouTomorrow} alt="ad see you tomorrow" className={s.adSeeYouTomorrowIcon} />
               <span className={s.adSeeYouTomorrowText}>내일 다시 만나요!</span>
@@ -130,9 +130,9 @@ const MarketHome: React.FC = () => {
             </div>
             {/* 광고 카운트는 백엔드에서 넘겨주는 데이터가 있다면 연결, 일단 UI 유지 */}
             <div 
-              className={isAbleToChargeStone ? s.adButton : s.adButtonDisabled} 
+              className={!userInfo.isStoneCharged ? s.adButton : s.adButtonDisabled} 
               onClick={() => {
-                if (!isAbleToChargeStone) return;
+                if (userInfo.isStoneCharged) return;
                 navigate("/market/balance-game")
               }} // 경로 이동
             >
