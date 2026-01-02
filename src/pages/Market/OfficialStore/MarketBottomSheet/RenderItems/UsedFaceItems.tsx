@@ -43,11 +43,9 @@ const UsedFaceItems: React.FC<ItemProps> = ({
     점: "MOLE",
   };
 
-  const wishlist = new Set(data.wishlist);
-
   const filteredItems = data.items.filter((item) => {
     if (activeTheme === "좋아요") {
-      return wishlist.has(item.id);
+      return likedItems.has(item.id);
     }
     const themeMatch =
       activeTheme === "추천" || item.theme.includes(activeTheme);
