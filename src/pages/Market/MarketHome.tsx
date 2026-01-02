@@ -22,7 +22,7 @@ const MarketHome: React.FC = () => {
     userInfo, 
     fetchUserStone,
     fetchIsStoneCharged,
-    chargeStone
+    // chargeStone
 
   } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
@@ -81,7 +81,7 @@ const MarketHome: React.FC = () => {
 
           <div 
             className={s.stone} 
-            onClick={chargeStone} // todo: 디버깅용
+            //onClick={chargeStone} // todo: 디버깅용
           > {/*임시로 돈 무한 복사 버그판*/}
             <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
@@ -115,7 +115,7 @@ const MarketHome: React.FC = () => {
             <div 
               className={!userInfo.isStoneCharged ? s.adButton : s.adButtonDisabled} 
               onClick={() => {
-                // if (userInfo.isStoneCharged) return; // todo: 디버깅용으로 잠시 이거 주석처리
+                if (userInfo.isStoneCharged) return; // todo: 디버깅용으로 잠시 이거 주석처리
                 navigate("/market/balance-game")
               }} // 경로 이동
             >

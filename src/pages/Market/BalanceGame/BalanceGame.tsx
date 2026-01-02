@@ -56,7 +56,7 @@ const BalanceGame: React.FC = () => {
 
       console.log("chargeStone 실행");
       await chargeStone();
-      console.log("chargeStone 함수 실행 완료 (await 이후)");
+      console.log("chargeStone 함수 실행 완료");
 
       await fetchUserStone();
       
