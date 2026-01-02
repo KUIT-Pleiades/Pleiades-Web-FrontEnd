@@ -8,7 +8,8 @@ interface CharacterStore {
   resetUserInfo: () => void; // 캐릭터 초기화 함수
 
   fetchUserStone: () => Promise<void>; // 서버에서 스톤 정보를 가져옴
-  chargeStone: (addAmount: number) => Promise<void>; // 스톤 추가/차감 (결제 혹은 보상 등)
+  chargeStone: () => Promise<void>; // 스톤 추가/차감 (결제 혹은 보상 등)
+  fetchIsStoneCharged: () => Promise<void>; // 서버에서 스톤 충전 여부를 가져옴
 }
 
 // [수정] 새로운 UserInfo 구조에 맞게 초기 상태값 변경
@@ -22,6 +23,7 @@ const initialUserInfo: UserInfo = {
   profile:
     "https://gateway.pinata.cloud/ipfs/QmURNcGX98UAecKyEELM39117X7RwQZE8B1dtm56B4vxEJ",
   stone: 0, // 초기 스톤 잔액
+  isStoneCharged: false,
   face: {
     skinColor: "face_skin_1.png",
     hair: "face_hair_1.png",
@@ -78,19 +80,11 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   },
 
   // 스톤 충전 (POST)
-  chargeStone: async (addAmount: number) => {
-    // 1. 음수 값 방어 로직
-    if (addAmount < 0) {
-      console.warn("충전할 스톤 양(addAmount)은 0보다 커야 합니다.");
-      return;
-    }
-
+  chargeStone: async () => {
     try {
-      const currentStone = get().userInfo.stone;
-      console.log(`스톤 변경 요청: ${addAmount} (현재: ${currentStone})`);
+      console.log('스톤 충전 요청');
 
-      // 요청 바디 키 이름을 addAmount로 설정
-      const response = await axiosRequest<{ message: string }>('/users/stone', 'POST', { addAmount });
+      const response = await axiosRequest<{ message: string }>('/users/stone', 'POST', null);
       if (response.status === 200) {
         console.log(response.data.message);
         await get().fetchUserStone();
@@ -98,6 +92,24 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
 
     } catch (error) {
       console.error("스톤 충전 실패", error);
+    }
+  },
+
+  // 스톤 충전 여부 가져오기 (GET)
+  fetchIsStoneCharged: async () => {
+    try {
+      console.log("스톤 충전 여부 동기화 중...");
+
+      const response = await axiosRequest<{ isStoneCharged: boolean }>("/users/stone-charge", "GET", null);
+      if (response.status === 200 && response.data) {
+        set((state) => ({
+          userInfo: { ...state.userInfo, isStoneCharged: response.data.isStoneCharged }
+        }));
+        console.log("스톤 충전 여부 동기화 완료: " + response.data.isStoneCharged);
+      }
+
+    } catch (error) {
+      console.error("스톤 충전 여부를 가져오는데 실패했습니다.", error);
     }
   },
 }));

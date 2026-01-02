@@ -21,36 +21,19 @@ const MarketHome: React.FC = () => {
   const {
     userInfo, 
     fetchUserStone,
+    fetchIsStoneCharged,
     // chargeStone
 
   } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
-  // todo: const isAbleToChargeStone = userInfo.isAbleToChargeStone;
-  const isAbleToChargeStone = true;
 
   const [isInformationModalVisible, setIsInformationModalVisible] = useState(false);
 
   useEffect(() => {
     fetchUserStone();
+    fetchIsStoneCharged();
   }, []);
-
-  // const handleWatchAd = async () => {
-  //   try {
-  //     // --- [광고 SDK 연동 구간] ---
-  //     // 예: await AdMob.showRewardVideo();
-  //     // console.log("광고 시청 중...");
-  //     // -------------------------
-
-  //     // [테스트] 광고를 다 봤다고 가정하고 30 스톤 지급
-  //     const rewardAmount = 30;
-  //     await chargeStone(rewardAmount);
-      
-  //     // alert(`광고 시청 완료! ${rewardAmount} 스톤을 받았습니다.`);
-  //   } catch (error) {
-  //     console.error("광고 시청 중 오류 발생 또는 취소됨", error);
-  //   }
-  // };
 
   const buttons = [
     {
@@ -98,7 +81,7 @@ const MarketHome: React.FC = () => {
 
           <div 
             className={s.stone} 
-            // onClick={handleWatchAd}
+            //onClick={chargeStone} // todo: 디버깅용
           > {/*임시로 돈 무한 복사 버그판*/}
             <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
@@ -114,7 +97,7 @@ const MarketHome: React.FC = () => {
         </div>
 
         <div className={s.bottomSection}>
-          {!isAbleToChargeStone && (
+          {userInfo.isStoneCharged && (
             <div className={s.adSeeYouTomorrow}>
               <img src={adSeeyouTomorrow} alt="ad see you tomorrow" className={s.adSeeYouTomorrowIcon} />
               <span className={s.adSeeYouTomorrowText}>내일 다시 만나요!</span>
@@ -130,9 +113,9 @@ const MarketHome: React.FC = () => {
             </div>
             {/* 광고 카운트는 백엔드에서 넘겨주는 데이터가 있다면 연결, 일단 UI 유지 */}
             <div 
-              className={isAbleToChargeStone ? s.adButton : s.adButtonDisabled} 
+              className={!userInfo.isStoneCharged ? s.adButton : s.adButtonDisabled} 
               onClick={() => {
-                if (!isAbleToChargeStone) return;
+                if (userInfo.isStoneCharged) return; // todo: 디버깅용으로 잠시 이거 주석처리
                 navigate("/market/balance-game")
               }} // 경로 이동
             >

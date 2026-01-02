@@ -91,6 +91,7 @@ export interface UserInfo {
   character: string;
   profile: string;
   stone: number;
+  isStoneCharged: boolean;
 
   face: {
     skinColor: string; // 피부색

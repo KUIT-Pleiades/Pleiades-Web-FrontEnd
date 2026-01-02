@@ -53,16 +53,11 @@ const BalanceGame: React.FC = () => {
   const handleComplete = async () => {
     if (!isAllDone) return;
     try {
-      // // PM 요청 API 호출
-      // await fetch("/api/balance/complete", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ setId }),
-      // });
 
-      // todo
+      console.log("chargeStone 실행");
+      await chargeStone();
+      console.log("chargeStone 함수 실행 완료");
 
-      await chargeStone(10);
       await fetchUserStone();
       
       setIsCompleted(true);
