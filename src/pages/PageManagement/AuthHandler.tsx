@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../../store/authStore";
+import { useCharacterStore } from "../../store/useCharacterStore";
 import Error from "./Error";
 import { useEffect, useState } from "react";
 import { sha256 } from "../../utils/hashUtils";
@@ -7,6 +8,7 @@ import axios from "axios";
 
 export default function AuthHandler() {
   const { authorization, setToken } = useAuth();
+  const { updateUserInfo } = useCharacterStore();
   const [authState, setAuthState] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -46,6 +48,24 @@ export default function AuthHandler() {
           );
           const newToken = response.data.accessToken;
           setToken(newToken);
+
+          // 토큰 갱신 후 사용자 정보도 불러오기
+          try {
+            const userResponse = await axios.get(
+              `${import.meta.env.VITE_SERVER_URL}/home`,
+              {
+                withCredentials: true,
+                headers: {
+                  Authorization: `Bearer ${newToken}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            updateUserInfo(userResponse.data);
+          } catch (userError) {
+            console.error("사용자 정보 불러오기 실패:", userError);
+          }
+
           setAuthState(true);
           setLoading(false);
           return;
@@ -63,7 +83,7 @@ export default function AuthHandler() {
     };
 
     checkAuth();
-  }, [authorization, isDevelopment, devAuthBypass, setToken]);
+  }, [authorization, isDevelopment, devAuthBypass, setToken, updateUserInfo]);
 
   if (loading) {
     return null; // 또는 로딩 스피너
