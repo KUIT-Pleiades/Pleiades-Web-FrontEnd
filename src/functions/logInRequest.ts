@@ -64,6 +64,28 @@ export async function autoLogInRequest() {
   const BASE_URL: string = import.meta.env.VITE_SERVER_URL;
   const requestURL = `${BASE_URL}/auth`;
   const refreshURL = `${BASE_URL}/auth/refresh`;
+
+  // authorization이 없으면 바로 refresh 시도
+  if (!authorization) {
+    const refreshResponse = await fetch(refreshURL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!refreshResponse.ok) {
+      console.log("Refresh token expired or invalid");
+      return false;
+    }
+
+    const data = await refreshResponse.json();
+    setToken(data.accessToken);
+    return true;
+  }
+
+  // authorization이 있으면 /auth로 검증 시도
   const response1 = await fetch(requestURL, {
     method: "GET",
     headers: {
