@@ -3,9 +3,10 @@ import { useAuth } from "../../store/authStore";
 import Error from "./Error";
 import { useEffect, useState } from "react";
 import { sha256 } from "../../utils/hashUtils";
+import axios from "axios";
 
 export default function AuthHandler() {
-  const { authorization } = useAuth();
+  const { authorization, setToken } = useAuth();
   const [authState, setAuthState] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -33,13 +34,36 @@ export default function AuthHandler() {
         }
       }
 
-      // 일반 인증 체크
-      setAuthState(authorization !== null);
+      // access token이 없으면 refresh token으로 재발급 시도
+      if (!authorization) {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_SERVER_URL}/auth/refresh`,
+            {
+              withCredentials: true,
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const newToken = response.data.accessToken;
+          setToken(newToken);
+          setAuthState(true);
+          setLoading(false);
+          return;
+        } catch (error) {
+          console.error("토큰 갱신 실패:", error);
+          setAuthState(false);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // access token이 있으면 인증 성공
+      setAuthState(true);
       setLoading(false);
     };
 
     checkAuth();
-  }, [authorization, isDevelopment, devAuthBypass]);
+  }, [authorization, isDevelopment, devAuthBypass, setToken]);
 
   if (loading) {
     return null; // 또는 로딩 스피너
