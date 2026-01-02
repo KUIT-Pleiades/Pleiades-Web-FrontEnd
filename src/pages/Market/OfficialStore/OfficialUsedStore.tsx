@@ -10,7 +10,7 @@ import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
-import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem, purchaseOfficialItem } from "../../../api/marketApi";
+import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem, purchaseOfficialItem, searchOfficialItems, SearchResponse } from "../../../api/marketApi";
 import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 
@@ -38,6 +38,9 @@ export default function OfficialUsedStore() {
   const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [focusSearch, setFocusSearch] = useState(false); // 검색창 포커스 상태
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
+  const [searchResults, setSearchResults] = useState<SearchResponse | null>(null); // 검색 결과
+  const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
 
   const { userInfo, fetchUserStone } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
@@ -123,10 +126,47 @@ export default function OfficialUsedStore() {
   const reverseSearch = () => {
     setIsSearching(!isSearching);
     setFocusSearch(false);
+    // 검색 모드 종료 시 검색 결과 초기화
+    if (isSearching) {
+      setSearchQuery("");
+      setSearchResults(null);
+    }
   };
 
   const focusSearchInput = () => {
     setFocusSearch(true);
+  };
+
+  // 검색 실행 함수
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+
+    if (!query.trim()) {
+      setSearchResults(null);
+      return;
+    }
+
+    if (activeTab === "official") {
+      setIsSearchLoading(true);
+      try {
+        const results = await searchOfficialItems(query);
+        setSearchResults(results);
+        // 검색 결과의 wishlist를 officialLikedItems에 병합
+        if (results.wishlist && results.wishlist.length > 0) {
+          setOfficialLikedItems(prev => {
+            const newSet = new Set(prev);
+            results.wishlist.forEach(id => newSet.add(id));
+            return newSet;
+          });
+        }
+      } catch (error) {
+        console.error("검색 실패:", error);
+        setSearchResults(null);
+      } finally {
+        setIsSearchLoading(false);
+      }
+    }
+    // TODO: 중고몰 검색 API 연결
   };
 
 
@@ -138,6 +178,11 @@ export default function OfficialUsedStore() {
     type: string
   ) => {
     setSelectedItem({ id, name, description, price, type });
+
+    // 검색 모드에서 아이템 선택 시 fullscreen만 해제 (캐릭터 프리뷰 보이도록)
+    if (focusSearch) {
+      setFocusSearch(false);
+    }
 
     setTryOnUserInfo((prev) => {
       const newState = structuredClone(prev);
@@ -598,6 +643,10 @@ export default function OfficialUsedStore() {
         reverseSearch={reverseSearch}
         isFocus={focusSearch}
         setFocus={focusSearchInput}
+        searchQuery={searchQuery}
+        onSearch={handleSearch}
+        searchResults={searchResults}
+        isSearchLoading={isSearchLoading}
       />
     </div>
   );

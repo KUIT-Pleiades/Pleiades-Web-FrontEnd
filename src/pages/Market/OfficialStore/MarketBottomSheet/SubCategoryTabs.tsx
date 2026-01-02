@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import s from "./SubCategoryTabs.module.scss";
 import { CategoryType } from "../OfficialUsedStore";
 import searchBtnGray from "../../../../assets/btnImg/searchBtn.svg";
@@ -9,8 +9,10 @@ interface SubCategoryTabsProps {
   reverseSearch: () => void;
   activeSubTab: string;
   onSubTabChange: (subTab: string) => void;
-  isFocus: boolean; // isFocus prop 추가
-  setFocus: () => void; // setFocus prop 추가
+  isFocus: boolean;
+  setFocus: () => void;
+  searchQuery?: string;
+  onSearch?: (query: string) => void;
 }
 
 const SUB_CATEGORIES: Record<CategoryType, string[]> = {
@@ -26,12 +28,43 @@ export default function SubCategoryTabs({
   activeSubTab,
   onSubTabChange,
   setFocus,
+  searchQuery = "",
+  onSearch,
 }: SubCategoryTabsProps) {
   const tabs = SUB_CATEGORIES[activeCategory];
+  const [inputValue, setInputValue] = useState(searchQuery);
 
   useEffect(() => {
     onSubTabChange("전체");
   }, [activeCategory, onSubTabChange]);
+
+  // 검색어 디바운스 처리
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (onSearch && inputValue !== searchQuery) {
+        onSearch(inputValue);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [inputValue, onSearch, searchQuery]);
+
+  // 검색 모드 종료 시 입력값 초기화
+  useEffect(() => {
+    if (!isSearching) {
+      setInputValue("");
+    }
+  }, [isSearching]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && onSearch) {
+      onSearch(inputValue);
+    }
+  };
 
   if (!tabs) {
     return null;
@@ -46,7 +79,11 @@ export default function SubCategoryTabs({
             type="text"
             placeholder="아이템, 키워드를 검색해보세요"
             className={s.searchInput}
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             onFocus={setFocus}
+            autoFocus
           />
           <div className={s.cancel} onClick={reverseSearch}>
             취소
