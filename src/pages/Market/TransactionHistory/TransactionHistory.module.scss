@@ -103,7 +103,10 @@
 }
 
 .dateGroup {
+	display: flex;
+	flex-direction: column;
 	margin-bottom: 24px;
+
 
 	&:last-child {
 		margin-bottom: 0;
@@ -123,11 +126,12 @@
 }
 
 .grid {
-	width: 100%;
+	width: auto;
 	display: grid;
 	padding-top: 12px;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 20px 12px;
+	gap: 21px 23px;
+	padding: 0 3px;
 }
 
 .itemWrapper {
@@ -172,8 +176,8 @@
 	overflow: hidden;
 
 	img {
-		width: 100%;
-		height: 100%;
+		width: 100px;
+		height: 100px;
 		object-fit: cover;
 	}
 }

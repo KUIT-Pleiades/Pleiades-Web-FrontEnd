@@ -6,10 +6,10 @@ import StoneBox from "../../components/Stone/StoneBox";
 
 import marketSmallIcon from "../../assets/market/home/marketSmallIcon.svg";
 import characterBackground from "../../assets/market/home/characterBackground.svg";
-import mallIcon from "../../assets/market/home/mallIcon.svg";
-import sellMyItemIcon from "../../assets/market/home/sellMyItemIcon.svg";
-import myItemsIcon from "../../assets/market/home/myItemsIcon.svg";
-import transactionDetailsIcon from "../../assets/market/home/transactionDetailsIcon.svg";
+import mallIcon from "../../assets/market/home/mallIcon.png";
+import sellMyItemIcon from "../../assets/market/home/sellMyItemIcon.png";
+import myItemsIcon from "../../assets/market/home/myItemsIcon.png";
+import transactionDetailsIcon from "../../assets/market/home/transactionDetailsIcon.png";
 import insideButtonRightArrow from "../../assets/market/home/insideButtonRightArrow.svg";
 import adStone from "../../assets/market/Ad/adStone.svg";
 import adInfoQuestionIcon from "../../assets/market/Ad/adInfoQuestionIcon.svg";

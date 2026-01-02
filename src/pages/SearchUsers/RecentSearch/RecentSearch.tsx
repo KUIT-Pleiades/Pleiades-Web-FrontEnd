@@ -18,12 +18,14 @@ const RecentSearch: React.FC<RecentSearchProps> = ({ onUserClick, onRemove, onCl
         <div className={s.recentSearchContainer}>
             <div className={s.recentSearchHeader}>
                 <span className={s.recentSearchTitle}>최근 검색</span>
-                <span
-                    className={s.recentSearchClearAll}
-                    onClick={onClearAll}
-                >
-                    전체삭제
-                </span>
+                {(recentSearches && recentSearches.length > 0) && (
+                    <span
+                        className={s.recentSearchClearAll}
+                        onClick={onClearAll}
+                    >
+                        전체삭제
+                    </span>
+                )}
             </div>
             <div className={s.separator} />
 

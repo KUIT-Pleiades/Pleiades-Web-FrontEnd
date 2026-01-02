@@ -8,6 +8,7 @@ import {
   PurchaseHistoryResponse,
   SaleHistoryResponse,
 } from "../../../interfaces/Interfaces";
+// import { axiosRequest } from "../../../functions/axiosRequest";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
 
@@ -63,6 +64,15 @@ const TransactionHistory: React.FC = () => {
     totalCount: 0,
     sales: [],
   };
+
+  // const fetchPurchaseHistory = () => {
+
+  // };
+
+  // const fetchSaleHistory = () => {
+    
+  // };
+    
 
   const calculateDiscountRate = (
     originalPrice: number,
