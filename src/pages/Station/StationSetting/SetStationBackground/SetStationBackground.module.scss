@@ -11,13 +11,13 @@
 }
 
 .dim {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100dvw;
-  height: 54dvh;
-  background: linear-gradient(180deg, rgba(37, 32, 43, 0.85) 0%, rgba(37, 32, 43, 0.45) 53.99%, rgba(37, 32, 43, 0.00) 97.54%);
-  z-index: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100dvw;
+	height: 54dvh;
+	background: linear-gradient(180deg, rgba(37, 32, 43, 0.85) 0%, rgba(37, 32, 43, 0.45) 53.99%, rgba(37, 32, 43, 0.00) 97.54%);
+	z-index: 0;
 }
 
 .header {
@@ -28,6 +28,8 @@
 	flex-direction: column;
 	justify-content: flex-end;
 	margin-bottom: 1.44rem;
+
+	z-index: 1;
 
 	&Contents {
 		width: 100%;
@@ -79,7 +81,7 @@
 		line-height: normal;
 		letter-spacing: -0.01456rem;
 	}
-	z-index: 1;
+
 }
 
 .guideText {

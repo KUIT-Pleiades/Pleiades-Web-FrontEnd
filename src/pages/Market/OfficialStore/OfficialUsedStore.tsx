@@ -32,7 +32,8 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
-  const [likedItems, setLikedItems] = useState(new Set<number>());
+  const [officialLikedItems, setOfficialLikedItems] = useState(new Set<number>());
+  const [usedLikedItems, setUsedLikedItems] = useState(new Set<number>());
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -57,12 +58,14 @@ export default function OfficialUsedStore() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const [         officialFaceResponse,
+        const [
+          officialFaceResponse,
           officialClothResponse,
           officialBackgroundResponse,
           usedFaceResponse,
           usedClothResponse,
-          usedBackgroundResponse, ] = await Promise.all([
+          usedBackgroundResponse,
+        ] = await Promise.all([
           getOfficialFaceItems(),
           getOfficialClothItems(),
           getOfficialBackgroundItems(),
@@ -71,16 +74,21 @@ export default function OfficialUsedStore() {
           getUsedBackgroundItems(),
         ]);
 
-        const combinedWishlist = [
+        // 공식몰과 중고몰 위시리스트를 분리해서 저장
+        const officialWishlist = [
           ...officialFaceResponse.wishlist,
           ...officialClothResponse.wishlist,
           ...officialBackgroundResponse.wishlist,
+        ];
+
+        const usedWishlist = [
           ...usedFaceResponse.wishlist,
           ...usedClothResponse.wishlist,
           ...usedBackgroundResponse.wishlist,
         ];
 
-        setLikedItems(new Set(combinedWishlist));
+        setOfficialLikedItems(new Set(officialWishlist));
+        setUsedLikedItems(new Set(usedWishlist));
       } catch (error) {
         console.error("Failed to fetch wishlist", error);
       }
@@ -519,37 +527,60 @@ export default function OfficialUsedStore() {
             <img
               className={s.heartBtn}
               src={
-                selectedItem.id !== null && likedItems.has(selectedItem.id)
+                selectedItem.id !== null &&
+                (activeTab === 'official'
+                  ? officialLikedItems.has(selectedItem.id)
+                  : usedLikedItems.has(selectedItem.id))
                   ? redHeartBtn
                   : heartBtn
               }
               alt="좋아요 버튼"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
-                if (selectedItem.id !== null) {
-                  const isLiked = likedItems.has(selectedItem.id);
+                if (selectedItem.id === null) return;
+
+                const itemId = selectedItem.id;
+                const currentLikedItems = activeTab === 'official' ? officialLikedItems : usedLikedItems;
+                const setCurrentLikedItems = activeTab === 'official' ? setOfficialLikedItems : setUsedLikedItems;
+                const isLiked = currentLikedItems.has(itemId);
+
+                // 낙관적 업데이트: UI 먼저 변경
+                setCurrentLikedItems((prev) => {
+                  const newSet = new Set(prev);
+                  if (isLiked) {
+                    newSet.delete(itemId);
+                  } else {
+                    newSet.add(itemId);
+                  }
+                  return newSet;
+                });
+
+                try {
+                  // API 호출
                   if (activeTab === 'official') {
                     if (isLiked) {
-                      deleteWishlistItem(selectedItem.id);
+                      await deleteWishlistItem(itemId);
                     } else {
-                      postWishlistItem(selectedItem.id);
+                      await postWishlistItem(itemId);
                     }
-                  } else if (activeTab === 'used') {
+                  } else {
                     if (isLiked) {
-                      deleteUsedWishlistItem(selectedItem.id);
+                      await deleteUsedWishlistItem(itemId);
                     } else {
-                      postUsedWishlistItem(selectedItem.id);
+                      await postUsedWishlistItem(itemId);
                     }
                   }
-
-                  setLikedItems((prevLikedItems) => {
-                    const newLikedItems = new Set(prevLikedItems);
-                    if (newLikedItems.has(selectedItem.id!)) {
-                      newLikedItems.delete(selectedItem.id!);
+                } catch (error) {
+                  console.error("찜 목록 업데이트 실패:", error);
+                  // 롤백: API 실패 시 원래 상태로 복구
+                  setCurrentLikedItems((prev) => {
+                    const newSet = new Set(prev);
+                    if (isLiked) {
+                      newSet.add(itemId);
                     } else {
-                      newLikedItems.add(selectedItem.id!);
+                      newSet.delete(itemId);
                     }
-                    return newLikedItems;
+                    return newSet;
                   });
                 }
               }}
@@ -562,7 +593,7 @@ export default function OfficialUsedStore() {
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
-        likedItems={likedItems}
+        likedItems={activeTab === 'official' ? officialLikedItems : usedLikedItems}
         isSearching={isSearching}
         reverseSearch={reverseSearch}
         isFocus={focusSearch}

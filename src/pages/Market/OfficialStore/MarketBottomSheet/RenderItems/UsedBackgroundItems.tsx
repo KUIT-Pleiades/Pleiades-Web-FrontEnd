@@ -40,11 +40,9 @@ const UsedBackgroundItems: React.FC<ItemProps> = ({
     우주정거장: "STATIONBACKGROUND",
   };
 
-  const wishlist = new Set(data.wishlist);
-
   const filteredItems = data.items.filter((item) => {
     if (activeTheme === "좋아요") {
-      return wishlist.has(item.id);
+      return likedItems.has(item.id);
     }
     const themeMatch =
       activeTheme === "추천" || item.theme.includes(activeTheme);

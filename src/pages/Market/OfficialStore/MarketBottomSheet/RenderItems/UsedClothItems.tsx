@@ -51,11 +51,9 @@ const UsedClothItems: React.FC<ItemProps> = ({
     오른손: "RIGHTHAND",
   };
 
-  const wishlist = new Set(data.wishlist);
-
   const filteredItems = data.items.filter((item) => {
     if (activeTheme === "좋아요") {
-      return wishlist.has(item.id);
+      return likedItems.has(item.id);
     }
     const themeMatch =
       activeTheme === "추천" || item.theme.includes(activeTheme);
