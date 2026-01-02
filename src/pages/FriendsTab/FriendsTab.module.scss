@@ -59,11 +59,12 @@
     padding-left: 3.5dvw;
     overflow-y: auto;
     overflow-x: hidden;
+    margin-bottom: 5dvh;
 }
 
 .noFriend{
     width: 100%;
-    margin-bottom: 9dvh;
+    margin-bottom: 10dvh;
     flex: 1;
     display: flex;
     flex-direction: column;
