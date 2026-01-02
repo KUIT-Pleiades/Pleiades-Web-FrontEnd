@@ -73,7 +73,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
     navigate(
       `/market/my-item-price-check?name=${encodeURIComponent(
         item.listingItem.description
-      )}&id=${item.listingItem.id}`
+      )}&id=${item.listingItem.id}&img=${item.listingItem.name}`
     );
   };
 
