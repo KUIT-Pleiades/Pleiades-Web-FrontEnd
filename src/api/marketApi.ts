@@ -111,3 +111,29 @@ export const purchaseOfficialItem = async (itemId: number): Promise<PurchaseResp
   const response = await axiosRequest<PurchaseResponse>("/store/official/trades", "POST", { itemId });
   return response.data;
 };
+
+export interface SearchResponse {
+  items: {
+    id: number;
+    name: string;
+    description: string;
+    type: string;
+    price: number;
+    theme: string[];
+  }[];
+  wishlist: number[];
+}
+
+/**
+ * 공식몰 아이템 검색 API 함수
+ * @param query - 검색어
+ * @returns Promise<SearchResponse>
+ */
+export const searchOfficialItems = async (query: string): Promise<SearchResponse> => {
+  const response = await axiosRequest<SearchResponse>(
+    `/store/official?query=${encodeURIComponent(query)}`,
+    "GET",
+    null
+  );
+  return response.data;
+};
