@@ -10,6 +10,8 @@ import OfficialBackgroundItems from "./RenderItems/OfficialBackgroundItems";
 import UsedFaceItems from "./RenderItems/UsedFaceItems";
 import UsedClothItems from "./RenderItems/UsedClothItems";
 import UsedBackgroundItems from "./RenderItems/UsedBackgroundItems";
+import ItemGrid from "./RenderItems/ItemGrid";
+import { SearchResponse } from "../../../../api/marketApi";
 
 interface MarketBottomSheetProps {
   activeTab: string;
@@ -27,6 +29,10 @@ interface MarketBottomSheetProps {
   reverseSearch: () => void;
   isFocus: boolean;
   setFocus: () => void;
+  searchQuery?: string;
+  onSearch?: (query: string) => void;
+  searchResults?: SearchResponse | null;
+  isSearchLoading?: boolean;
 }
 
 const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
@@ -39,6 +45,10 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
   reverseSearch,
   isFocus,
   setFocus,
+  searchQuery = "",
+  onSearch,
+  searchResults,
+  isSearchLoading = false,
 }) => {
   const [activeTheme, setActiveTheme] = useState("추천");
   const [activeSubTab, setActiveSubTab] = useState("전체");
@@ -147,9 +157,26 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
               onSubTabChange={setActiveSubTab}
               isFocus={isFocus}
               setFocus={setFocus}
+              searchQuery={searchQuery}
+              onSearch={onSearch}
             />
           </div>
           {!isSearching && <div className={s.content}>{renderContent()}</div>}
+          {isSearching && (
+            <div className={s.content}>
+              {isSearchLoading ? (
+                <div className={s.searchLoading}>검색 중...</div>
+              ) : searchResults && searchResults.items.length > 0 ? (
+                <ItemGrid
+                  items={searchResults.items}
+                  likedItems={likedItems}
+                  onItemSelect={onItemSelect}
+                />
+              ) : searchQuery ? (
+                <div className={s.noResults}>검색 결과가 없습니다.</div>
+              ) : null}
+            </div>
+          )}
         </>
       )}
     </div>
