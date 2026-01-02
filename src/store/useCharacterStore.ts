@@ -100,7 +100,7 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
     try {
       console.log("스톤 충전 여부 동기화 중...");
 
-      const response = await axiosRequest<{ isStoneCharged: boolean }>("/users/stoneCharge", "GET", null);
+      const response = await axiosRequest<{ isStoneCharged: boolean }>("/users/stone-charge", "GET", null);
       if (response.status === 200 && response.data) {
         set((state) => ({
           userInfo: { ...state.userInfo, isStoneCharged: response.data.isStoneCharged }
