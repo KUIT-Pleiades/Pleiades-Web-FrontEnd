@@ -18,20 +18,29 @@
     margin-left: 0.5rem;
     color: #FFF;
     font-family: "Pretendard";
-    font-size: 0.8125rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    letter-spacing: -0.01625rem;
+    letter-spacing: -0.26px;
+
+    font-size: 16px; // iOS 확대 방지용 최소 크기
+    width: 125%;    // scale로 줄어들 것을 대비해 너비를 키움
+    transform: scale(0.8); // 16px * 0.8 = 약 12.8px (기존 크기 비슷하게)
+    transform-origin: left center;
 }
 .searchInput::placeholder{
     color: #FFF;
     font-family: "Pretendard";
-    font-size: 0.8125rem;
+    // font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    letter-spacing: -0.01625rem;
+    letter-spacing: -0.26px;
+
+    font-size: 16px; // iOS 확대 방지용 최소 크기
+    width: 125%;    // scale로 줄어들 것을 대비해 너비를 키움
+    transform: scale(0.8); // 16px * 0.8 = 약 12.8px (기존 크기 비슷하게)
+    transform-origin: left center;
 }
 .searchInput:focus{
     outline: none;
