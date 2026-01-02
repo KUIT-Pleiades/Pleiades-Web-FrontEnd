@@ -2,7 +2,7 @@ import { getImage } from "../../functions/getImage";
 // import { useCharacterStore } from "../../store/useCharacterStore";
 import s from "./MyStar.module.scss";
 import { useCharacterStore } from "../../store/useCharacterStore";
-import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.svg";
+import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.png";
 import diary from "../../assets/home/diary.svg";
 import HomeBar from "./HomeBar/HomeBar";
 import { useNavigate } from "react-router-dom";
