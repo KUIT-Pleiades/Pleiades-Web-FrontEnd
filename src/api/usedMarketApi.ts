@@ -133,3 +133,19 @@ export const deleteListing = async (listingId: number): Promise<void> => {
     null
   );
 };
+
+/**
+ * 판매 중인 아이템의 가격을 변경하는 API 함수
+ * PATCH /store/resale/listings
+ * @param listingId - 판매 등록 ID
+ * @param price - 변경할 가격
+ */
+export const updateListingPrice = async (
+  listingId: number,
+  price: number
+): Promise<void> => {
+  await axiosRequest<void>("/store/resale/listings", "PATCH", {
+    listingId,
+    price,
+  });
+};
