@@ -1,3 +1,5 @@
+// DraggableBottomSheet.module.scss
+
 .overlay {
     opacity: 0;
     pointer-events: none;
@@ -12,11 +14,11 @@
     transition: opacity 350ms ease-in-out;
     pointer-events: auto;
 }
+
 .sheet {
     position: fixed;
     left: 0;
     right: 0;
-    //bottom: 0;
     bottom: 9dvh;
     background: #1B142A;
     border-top-left-radius: 16px;
@@ -25,10 +27,9 @@
     z-index: 1001;
     display: flex;
     flex-direction: column;
-    transition: height 0.3s cubic-bezier(.4,1.2,.4,1);
     will-change: height;
     overflow: hidden;
-    overscroll-behavior: contain;
+    // transition은 인라인 스타일에서 제어함
 }
 
 .header {
@@ -38,6 +39,13 @@
     cursor: grab;
     user-select: none;
     background: #1B142A;
+
+    flex-shrink: 0;
+    position: relative;
+    
+    // 핵심: 브라우저 기본 터치 동작(스크롤) 방지
+    touch-action: none; 
+    z-index: 2;
 }
 
 .headerDim {
@@ -75,14 +83,26 @@
     margin: 0;
 }
 
+// .content {
+//     flex: 1;
+//     overflow-y: auto;
+//     background: #1B142A;
+
+//     scrollbar-width: none; /* Firefox */
+//     -ms-overflow-style: none; /* IE/Edge */
+//     &::-webkit-scrollbar {
+//         display: none; /* Chrome, Safari */
+//     }
+// }
+
 .content {
     flex: 1;
     overflow-y: auto;
     background: #1B142A;
+    transition: opacity 0.2s ease;
 
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
     &::-webkit-scrollbar {
-        display: none; /* Chrome, Safari */
+        display: none;
     }
 }
