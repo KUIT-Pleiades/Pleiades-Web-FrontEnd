@@ -3,7 +3,7 @@ import s from "./MySellingItemsModal.module.scss";
 import { useNavigate } from "react-router-dom";
 import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
 import { MyListing } from "../../interfaces/Interfaces";
-import { deleteListing } from "../../api/usedMarketApi";
+import { deleteListing, updateListingPrice } from "../../api/usedMarketApi";
 
 // image files
 import close from "../../assets/Signal/close.svg";
@@ -85,17 +85,15 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
     if (!inputPrice || isSubmitting) return;
     setIsSubmitting(true);
     try {
-      const res = await postSellItem({
-        name: item.listingItem.description,
-        price: Number(inputPrice),
-      });
-      if (res?.ok) {
-        const newPrice = Number(inputPrice);
-        setFinalPrice(newPrice);
-        onPriceChange(item.listingId, newPrice); // 부모 컴포넌트에 알림
-        setMode("view"); // View 모드로 복귀
-        showToast("금액 변경을 완료했어요!", false, "200px");
-      }
+      await updateListingPrice(item.listingId, Number(inputPrice));
+      const newPrice = Number(inputPrice);
+      setFinalPrice(newPrice);
+      onPriceChange(item.listingId, newPrice);
+      setMode("view");
+      showToast("금액 변경을 완료했어요!", false, "200px");
+    } catch (error) {
+      console.error("금액 변경 실패:", error);
+      showToast("금액 변경에 실패했어요");
     } finally {
       setIsSubmitting(false);
     }
@@ -250,12 +248,3 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
 };
 
 export default MySellingItemsModal;
-
-// 데모용 POST API (실 서버 연동 시 교체)
-async function postSellItem({ name, price }: { name: string; price: number }) {
-  if (!name || price <= 0) {
-    return null;
-  }
-  await new Promise((r) => setTimeout(r, 600));
-  return { ok: true };
-}
