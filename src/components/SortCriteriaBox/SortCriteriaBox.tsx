@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import s from './SortCriteriaBox.module.scss';
 
 // image files
-import sortShowDown from '../../assets/FriendsTab/sortShowDown.svg';
-import sortHideUp from '../../assets/FriendsTab/sortHideUp.svg';
+import sortShowDown from '../../assets/FriendsTab/sortShowDown.png';
+import sortHideUp from '../../assets/FriendsTab/sortHideUp.png';
 
 interface SortCriteriaBoxProps {
     sortCriteria: "최신순" | "이름순";

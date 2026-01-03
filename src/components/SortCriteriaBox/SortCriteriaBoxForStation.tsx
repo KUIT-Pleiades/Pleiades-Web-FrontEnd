@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import s from './SortCriteriaBoxForStation.module.scss';
 
 // image files
-import sortShowDown from '../../assets/FriendsTab/sortShowDown.svg';
-import sortHideUp from '../../assets/FriendsTab/sortHideUp.svg';
+import sortShowDown from '../../assets/FriendsTab/sortShowDown.png';
+import sortHideUp from '../../assets/FriendsTab/sortHideUp.png';
 import { SortOptionForStations } from '../../interfaces/Interfaces';
 
 // type SortOption = '새로운 활동순' | '최근 가입순' | '오래된 가입순' | '이름순';
