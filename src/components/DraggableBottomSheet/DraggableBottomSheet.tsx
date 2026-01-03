@@ -4,11 +4,11 @@ import styles from "./DraggableBottomSheet.module.scss";
 type DraggableBottomSheetProps = {
     open: boolean;
     onClose: () => void;
-    onOpen: () => void; // 부모 컴포넌트에서 open을 true로 바꿔줘야 함
+    onOpen: () => void;
     children: React.ReactNode;
-    maxHeightRatio?: number; // 0~1, default 0.8
-    headerHeight?: number;   // 헤더 높이(px), default 40
-    dragThreshold?: number;  // 드래그로 열고 닫히는 최소 거리(px), default 20
+    maxHeightRatio?: number;
+    headerHeight?: number;
+    dragThreshold?: number;
 };
 
 export const DraggableBottomSheet: React.FC<DraggableBottomSheetProps> = ({
@@ -31,234 +31,131 @@ export const DraggableBottomSheet: React.FC<DraggableBottomSheetProps> = ({
     const startY = useRef(0);
     const startHeight = useRef(0);
     const dragDelta = useRef(0);
-
     const clickPrevented = useRef(false);
 
-    // 바텀시트 열림/닫힘 상태에 따라 높이 조정
+    // 외부에서 open 상태가 바뀔 때만 높이 동기화 (드래그 중에는 무시)
     useEffect(() => {
-        console.log("now is" + (open ? " open" : " closed"));
+        if (isDragging) return;
+        
+        setAnimating(true);
         if (open) {
             setHeight(maxHeight);
-            console.log("set max height 1");
-            setAnimating(true);
             document.body.style.overflow = "hidden";
         } else {
             setHeight(minHeight);
-            setAnimating(true);
             document.body.style.overflow = "";
         }
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, [open, maxHeight, minHeight]);
+    }, [open, maxHeight, minHeight, isDragging]);
 
-    // 드래그 시작
     const onDragStart = (clientY: number) => {
         setIsDragging(true);
-        setAnimating(false);
+        setAnimating(false); // 드래그 시에는 트랜지션 제거
         startY.current = clientY;
         startHeight.current = height;
         dragDelta.current = 0;
         clickPrevented.current = false;
-        console.log("Drag Start");
     };
 
-    // 드래그 중
     const onDragMove = (clientY: number) => {
         if (!isDragging) return;
         const delta = startY.current - clientY;
         dragDelta.current = delta;
-        if (Math.abs(delta) >= 5) {
-            clickPrevented.current = true; // 손가락이 움직였으면 클릭 아님!
-        }
+        
+        if (Math.abs(delta) > 5) clickPrevented.current = true;
+
         let newHeight = startHeight.current + delta;
-        if (newHeight > maxHeight) newHeight = maxHeight;
-        if (newHeight < minHeight) newHeight = minHeight;
+        // 범위 제한
+        if (newHeight > maxHeight) newHeight = maxHeight + (newHeight - maxHeight) * 0.2; // 저항감
+        if (newHeight < minHeight) newHeight = minHeight - (minHeight - newHeight) * 0.2;
+        
         setHeight(newHeight);
     };
 
-    // 드래그 끝
     const onDragEnd = () => {
+        if (!isDragging) return;
         setIsDragging(false);
         setAnimating(true);
-        console.log("Drag End");
-        console.log("Drag Delta:", dragDelta.current);
-        console.log("now is" + (open ? " open" : " closed"));
+
+        // 드래그 방향과 거리에 따른 최종 상태 결정
         if (open) {
-            // 열려있을 때: 아래로 dragThreshold 이상 내리면 닫힘
+            // 열린 상태에서 아래로 일정 이상 내리면 닫기
             if (dragDelta.current < -dragThreshold) {
-                console.log("열려있을 때: 아래로 dragThreshold 이상 내리면 닫힘");
-                setHeight(minHeight);
-                setTimeout(onClose, 300);
-                return;
-            } 
-            if (dragDelta.current >= -dragThreshold) {
-                console.log("열려있을 때: 아래로 dragThreshold 이하로 움직이면 그대로 유지");
-                setHeight(maxHeight);
-                return;
-            }
-            // 열려있을 때: 위로 dragThreshold 이하로 움직이면 그대로 유지
-            if (height > maxHeight - dragThreshold) {
-                console.log("열려있을 때: 위로 dragThreshold 이하로 움직이면 그대로 유지");
-                setHeight(maxHeight);
-                return;
-            }
-            // 열려있을 때: 밑에서 dragThreshold보다 낮게 있으면 닫힘
-            if (height < minHeight + dragThreshold) {
-                console.log("열려있을 때: 밑에서 dragThreshold보다 낮게 있으면 닫힘");
-                setHeight(minHeight);
-                setTimeout(onClose, 300);
-                return;
-            }
-        } else {
-            // 닫혀있을 때: 위로 dragThreshold 이상 올리면 열림
-            if (dragDelta.current > dragThreshold) {
-                console.log("닫혀있을 때: 위로 dragThreshold 이상 올리면 열림");
-                setHeight(maxHeight);
-                setTimeout(() => onOpen(), 0); // 상태 전이 후 실행되도록 defer
-                return;
-            } else {
-                // 닫혀있을 때: 아래로 dragThreshold 이하로 움직이면 그대로 유지
-                console.log("닫혀있을 때: 아래로 dragThreshold 이하로 움직이면 그대로 유지");
                 setHeight(minHeight);
                 onClose();
-                return;
+            } else {
+                setHeight(maxHeight);
+            }
+        } else {
+            // 닫힌 상태에서 위로 일정 이상 올리면 열기
+            if (dragDelta.current > dragThreshold) {
+                setHeight(maxHeight);
+                onOpen();
+            } else {
+                setHeight(minHeight);
             }
         }
     };
 
-    // 마우스/터치 이벤트 핸들러
     useEffect(() => {
         if (!isDragging) return;
 
-        const handleMouseMove = (e: MouseEvent) => {
-            onDragMove(e.clientY);
+        const handleMove = (e: MouseEvent | TouchEvent) => {
+            const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+            onDragMove(clientY);
         };
-        const handleMouseUp = () => {
-            onDragEnd();
-        };
-        const handleTouchMove = (e: TouchEvent) => {
-            onDragMove(e.touches[0].clientY);
-        };
-        const handleTouchEnd = () => {
-            onDragEnd();
-        };
+        const handleEnd = () => onDragEnd();
 
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseup", handleMouseUp);
-        window.addEventListener("touchmove", handleTouchMove);
-        window.addEventListener("touchend", handleTouchEnd);
+        window.addEventListener("mousemove", handleMove);
+        window.addEventListener("mouseup", handleEnd);
+        window.addEventListener("touchmove", handleMove, { passive: false });
+        window.addEventListener("touchend", handleEnd);
 
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseup", handleMouseUp);
-            window.removeEventListener("touchmove", handleTouchMove);
-            window.removeEventListener("touchend", handleTouchEnd);
+            window.removeEventListener("mousemove", handleMove);
+            window.removeEventListener("mouseup", handleEnd);
+            window.removeEventListener("touchmove", handleMove);
+            window.removeEventListener("touchend", handleEnd);
         };
-        // eslint-disable-next-line
-    }, [isDragging, height, maxHeight, minHeight, open]);
+    }, [isDragging, height]);
 
-    // overlay는 바텀시트가 완전히 올라왔을 때만 보이게
-    const showOverlay = height > minHeight + 20;
+    // UI 계산
+    const showOverlay = height > minHeight + 10;
+    const dimOpacity = Math.max(0, 1 - (height - minHeight) / 50);
 
-    const hideHeaderDim = height > minHeight + 20;
-    // headerDim opacity 계산
-    const fadeStart = minHeight + 20;
-    const fadeEnd = minHeight + 60;
-    const fadeRange = fadeEnd - fadeStart;
-
-    const dimOpacity =
-        height <= fadeStart
-        ? 1.0
-        : height >= fadeEnd
-        ? 0.0
-        : 1 - (height - fadeStart) / fadeRange;
-
-    // 헤더 클릭 시 열기/닫기
-    const handleHeaderClick = () => {
-        console.log("헤더 클릭");
-        setAnimating(true);
-        if (open) {
-            setHeight(minHeight);
-            setTimeout(onClose, 300);
-        } else {
-            onOpen();
-        }
-    };
-
-    // 바텀시트가 완전히 닫힌 상태
-    if (!open && height === minHeight) {
-        return (
-            <div
-                className={styles.sheet}
-                style={{
-                    height: minHeight,
-                    maxHeight,
-                    transition: animating ? undefined : "none",
-                }}
-            >
-                <div
-                    className={`${styles.header} ${!hideHeaderDim ? styles.headerClosed : ""}`}
-                    onMouseDown={e => onDragStart(e.clientY)}
-                    onTouchStart={e => onDragStart(e.touches[0].clientY)}
-                    onClick={handleHeaderClick}
-                    style={{ height: `${headerHeight}px` }}
-                >
-                    {!hideHeaderDim && (
-                        <div
-                            className={styles.headerDim}
-                            style={{ opacity: dimOpacity }}
-                        />
-                    )}
-                    <div className={styles.dragHandle} />
-                    <h2 className={styles.handleText}>내 정거장 목록</h2>
-                </div>
-            </div>
-        );
-    }
-
-    // 바텀시트가 열려있을 때
     return (
         <>
             <div
                 className={`${styles.overlay} ${showOverlay ? styles.overlayShown : ""}`}
                 onClick={() => {
-                    setHeight(minHeight);
                     setAnimating(true);
-                    setTimeout(onClose, 300);
+                    setHeight(minHeight);
+                    onClose();
                 }}
             />
             <div
-            className={styles.sheet}
-            style={{
-                height,
-                maxHeight,
-                transition: animating ? undefined : "none",
-            }}
+                className={styles.sheet}
+                style={{
+                    height: `${height}px`,
+                    transition: animating ? "height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)" : "none",
+                }}
             >
                 <div
-                    className={`${styles.header} ${!hideHeaderDim ? styles.headerClosed : ""}`}
-                    onMouseDown={e => onDragStart(e.clientY)}
-                    onTouchStart={e => onDragStart(e.touches[0].clientY)}
+                    className={styles.header}
+                    onMouseDown={(e) => onDragStart(e.clientY)}
+                    onTouchStart={(e) => onDragStart(e.touches[0].clientY)}
                     onClick={() => {
-                        if (clickPrevented.current) {
-                            console.log("클릭 아님: 드래그");
-                            return;
+                        if (!clickPrevented.current) {
+                            if (open) { onClose(); setHeight(minHeight); }
+                            else onOpen();
                         }
-                        handleHeaderClick();
                     }}
                     style={{ height: `${headerHeight}px` }}
                 >
-                    {!hideHeaderDim && (
-                        <div
-                            className={styles.headerDim}
-                            style={{ opacity: dimOpacity }}
-                        />
-                    )}
+                    <div className={styles.headerDim} style={{ opacity: dimOpacity }} />
                     <div className={styles.dragHandle} />
                     <h2 className={styles.handleText}>내 정거장 목록</h2>
                 </div>
-                <div className={styles.content}>
+                <div className={styles.content} style={{ opacity: open || height > minHeight + 50 ? 1 : 0 }}>
                     {children}
                 </div>
             </div>
