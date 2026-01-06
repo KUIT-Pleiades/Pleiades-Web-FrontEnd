@@ -1,0 +1,122 @@
+// InstallGuide.module.scss
+
+.container {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/InstallGuide/InstallGuideBackgroundImage.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.logo {
+  width: 80px;
+  margin-top: 45px;
+  margin-bottom: 47px;
+}
+
+.contentText {
+    color: var(--Color-6, #E4D0E5);
+    text-align: center;
+    font-family: "ElectricalSafety";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px; /* 150% */
+    letter-spacing: -0.4px;
+}
+
+.guideSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.guideSectionContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 55px;
+    margin-top: 35px;
+}
+
+.safari {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.chrome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.guideImage {
+    width: 125px;
+    margin-bottom: 14px;
+}
+
+.guideText {
+    color: #FFF;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.22px;
+}
+
+.guideSubText {
+    color: #FFF;
+    text-align: center;
+    font-family: "Pretendard";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.22px;
+}
+
+.installButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--color-5-main, #C0B9DB);
+
+    span {
+        color: #FFF;
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.233px;
+    }
+}
+
