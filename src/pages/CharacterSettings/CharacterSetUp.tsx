@@ -52,7 +52,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
       {!load && <Pending />}
       <div className={s.showCharacter}>
         <button className={s.previousBtn} onClick={handlePrev}>
-          최소
+          취소
         </button>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>

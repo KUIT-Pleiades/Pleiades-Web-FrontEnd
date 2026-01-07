@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import s from "./TransactionHistory.module.scss";
 import backArrow from "../../../assets/pleiadesBackArrow.svg";
@@ -7,72 +7,44 @@ import stoneIcon from "../../../assets/market/stone.svg";
 import {
   PurchaseHistoryResponse,
   SaleHistoryResponse,
+  PurchaseOwnership,
+  SaleOwnership,
 } from "../../../interfaces/Interfaces";
-// import { axiosRequest } from "../../../functions/axiosRequest";
+import { getPurchaseHistory, getSaleHistory } from "../../../api/marketApi";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 const TransactionHistory: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"sale" | "purchase">("purchase");
-
-  // TODO: 실제 API 데이터로 교체 필요
-  const mockPurchaseData: PurchaseHistoryResponse = {
-    totalCount: 3,
-    purchases: [
-      {
-        date: "2025.01.15",
-        items: [
-          {
-            transactionId: 1,
-            id: 101,
-            name: "fashion_top_5.png",
-            description: "화이트 크롭 티셔츠",
-            originalPrice: 150,
-            price: 150,
-            isOfficial: true,
-          },
-          {
-            transactionId: 2,
-            id: 102,
-            name: "fashion_bottom_9.png",
-            description: "연청 스키니진",
-            originalPrice: 250,
-            price: 200,
-            isOfficial: false,
-          },
-        ],
-      },
-      {
-        date: "2025.01.10",
-        items: [
-          {
-            transactionId: 3,
-            id: 103,
-            name: "face_hair_3.png",
-            description: "긴 생머리",
-            originalPrice: 100,
-            price: 100,
-            isOfficial: true,
-          },
-        ],
-      },
-    ],
-  };
-
-  const mockSaleData: SaleHistoryResponse = {
+  const [purchaseData, setPurchaseData] = useState<PurchaseHistoryResponse>({
+    totalCount: 0,
+    purchases: [],
+  });
+  const [saleData, setSaleData] = useState<SaleHistoryResponse>({
     totalCount: 0,
     sales: [],
-  };
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const fetchPurchaseHistory = () => {
-
-  // };
-
-  // const fetchSaleHistory = () => {
-    
-  // };
-    
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [purchases, sales] = await Promise.all([
+          getPurchaseHistory(),
+          getSaleHistory(),
+        ]);
+        setPurchaseData(purchases);
+        setSaleData(sales);
+      } catch (error) {
+        console.error("거래 내역 조회 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const calculateDiscountRate = (
     originalPrice: number,
@@ -83,12 +55,14 @@ const TransactionHistory: React.FC = () => {
     return Math.floor(rate);
   };
 
+  const formatDate = (date: string) => {
+    return date.replace(/-/g, ".");
+  };
+
   const currentItems =
-    activeTab === "purchase" ? mockPurchaseData.purchases : mockSaleData.sales;
+    activeTab === "purchase" ? purchaseData.purchases : saleData.sales;
   const currentCount =
-    activeTab === "purchase"
-      ? mockPurchaseData.totalCount
-      : mockSaleData.totalCount;
+    activeTab === "purchase" ? purchaseData.totalCount : saleData.totalCount;
 
   return (
     <div className={s.container}>
@@ -124,20 +98,33 @@ const TransactionHistory: React.FC = () => {
           </span>
         </div>
 
-        {/* 아이템이 있을 때 */}
-        {currentItems.length > 0 ? (
+        {/* 로딩 중 */}
+        {isLoading ? (
+          <div className={s.emptyState}>
+            <p className={s.emptyTitle}>로딩 중...</p>
+          </div>
+        ) : currentItems.length > 0 ? (
+          /* 아이템이 있을 때 */
           <div className={s.itemsList}>
             {currentItems.map((group) => (
               <div key={group.date} className={s.dateGroup}>
-                <div className={s.dateHeader}>{group.date}</div>
+                <div className={s.dateHeader}>{formatDate(group.date)}</div>
                 <div className={s.grid}>
-                  {group.items.map((item) => {
+                  {group.ownerships.map((ownership) => {
+                    const soldPrice =
+                      activeTab === "purchase"
+                        ? (ownership as PurchaseOwnership).purchasedPrice
+                        : (ownership as SaleOwnership).soldPrice;
                     const discountRate = calculateDiscountRate(
-                      item.originalPrice,
-                      item.price
+                      ownership.item.price,
+                      soldPrice
                     );
+                    const isOfficial =
+                      activeTab === "purchase"
+                        ? (ownership as PurchaseOwnership).isOfficial
+                        : true;
                     return (
-                      <div key={item.transactionId} className={s.itemWrapper}>
+                      <div key={ownership.id} className={s.itemWrapper}>
                         <div className={s.cardWrapper}>
                           {discountRate > 0 && (
                             <div className={s.discountBadge}>
@@ -146,20 +133,20 @@ const TransactionHistory: React.FC = () => {
                           )}
                           <div className={s.card}>
                             <img
-                              src={`${IMG_BASE_URL}${item.name}`}
-                              alt={item.description}
+                              src={`${IMG_BASE_URL}${ownership.item.name}`}
+                              alt={ownership.item.description}
                             />
                           </div>
                         </div>
                         <div className={s.itemName}>
-                          {!item.isOfficial && (
+                          {!isOfficial && (
                             <span className={s.usedBadge}>[중고] </span>
                           )}
-                          <span>{item.description}</span>
+                          <span>{ownership.item.description}</span>
                         </div>
                         <div className={s.itemPrice}>
                           <img src={stoneIcon} alt="stone" />
-                          <span>{item.price.toLocaleString()}</span>
+                          <span>{soldPrice.toLocaleString()}</span>
                         </div>
                       </div>
                     );
