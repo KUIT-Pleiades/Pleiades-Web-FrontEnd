@@ -122,7 +122,7 @@ const MyItemSell: React.FC = () => {
     const [selectedOwnership, setSelectedOwnership] = useState<OwnershipDto | null>(null);
     const [isSellItemModalVisible, setIsSellItemModalVisible] = useState(false);
 
-    // // 내 아이템 목록 불러오기
+    // 내 아이템 목록 불러오기
     const fetchMyItems = async () => {
         if (USE_MOCK) {
             setMyItems(mockMyItems);
@@ -132,12 +132,14 @@ const MyItemSell: React.FC = () => {
         try {
             const response = await axiosRequest<MyItemsResponseDto>('/store/purchases', 'GET', null);
             if (response.status === 200) {
-                setMyItems(response.data.ownerships);
+                setMyItems(response.data.ownerships || []);
             } else {
                 console.error('아이템 목록 불러오기 실패:', response.message);
+                setMyItems([]); // 실패 시에도 빈 배열로 유지
             }
         } catch (error) {
             console.error('API 요청 중 오류 발생:', error);
+            setMyItems([]); // 실패 시에도 빈 배열로 유지
         }
     };
 
@@ -158,6 +160,8 @@ const MyItemSell: React.FC = () => {
 
     // 필터링 로직
     const filtered = useMemo(() => {
+        if (!myItems) return []; // myItems가 없으면 빈 배열 반환
+
         const allowedTypes = SUBLABEL_TO_TYPES[mainTab][subTab] ?? [];
         
         return myItems.filter((ownership) => {
