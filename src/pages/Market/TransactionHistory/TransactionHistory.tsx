@@ -10,7 +10,7 @@ import {
 } from "../../../interfaces/Interfaces";
 // import { axiosRequest } from "../../../functions/axiosRequest";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 const TransactionHistory: React.FC = () => {
   const navigate = useNavigate();

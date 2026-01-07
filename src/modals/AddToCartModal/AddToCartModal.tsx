@@ -3,7 +3,7 @@ import s from "./AddToCartModal.module.scss";
 import stone from "../../assets/market/stone.svg";
 import closeBtn from "../../assets/btnImg/closeBtn.svg";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface AddToCartModalProps {
   item: {

@@ -43,7 +43,7 @@ export default function OfficialUsedStore() {
   const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
 
   const { userInfo, fetchUserStone } = useCharacterStore();
-  const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+  const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
   const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)

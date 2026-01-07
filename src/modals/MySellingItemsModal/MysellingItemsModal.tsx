@@ -11,7 +11,7 @@ import stone from "../../assets/market/stone.svg";
 import menuBtn from "../../assets/btnImg/menuBtn.png";
 import deleteBtn from "../../assets/btnImg/deleteBtn.svg";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface MySellingItemsModalProps {
   item: MyListing;

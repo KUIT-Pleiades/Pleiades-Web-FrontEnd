@@ -15,7 +15,7 @@ interface StationProps {
 }
 
 function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'full'): string {
-    const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT as string;
+    const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL as string;
     if (!code) return `${IMG_BASE_URL}bg_station_1.png`;
 
     const match = code.match(/bg_station_(\d+)/);

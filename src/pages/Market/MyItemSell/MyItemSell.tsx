@@ -109,7 +109,7 @@ const SUBLABEL_TO_TYPES: Record<ItemCategory, Record<string, string[]>> = {
     },
 };
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT || '';
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
 
 
 const MyItemSell: React.FC = () => {
