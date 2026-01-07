@@ -12,7 +12,7 @@ import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
 import FaceItems from "./characterSetUpTab/FaceItems";
 import FashionItems from "./characterSetUpTab/FashionItems";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface CharacterSetUpProps {
   onNext: () => void;

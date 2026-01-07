@@ -3,7 +3,7 @@ import s from "../MarketBottomSheet.module.scss";
 import stoneIcon from "../../../../../assets/market/stone.svg";
 import heartIcon from "../../../../../assets/Icon/redHeart.svg";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface Item {
   id: number;

@@ -11,7 +11,7 @@ import messageIcon from "../../../assets/Icon/messageIcon.png";
 import signalBtn from "../../../assets/btnImg/signalBtn.png";
 import plusIcon from "../../../assets/Icon/plusIcon.png";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface StationMember {
   userId: string;

@@ -5,7 +5,7 @@ import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import { useIdCheckQuery } from "./hooks/useUserCharacterQuery"; // 새 훅 사용
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface ProfileSetUpProps {
   onNext: () => void;

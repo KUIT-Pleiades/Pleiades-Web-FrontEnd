@@ -11,7 +11,7 @@ import { useToast } from "../../../components/Toast/useToast";
 import { getMyListings } from "../../../api/usedMarketApi";
 import { MyListing } from "../../../interfaces/Interfaces";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 const MySellingItems: React.FC = () => {
   const navigate = useNavigate();

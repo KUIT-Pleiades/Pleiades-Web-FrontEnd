@@ -13,7 +13,7 @@ import CharacterReport from "./CharacterReport/CharacterReport";
 import Pending from "../../PageManagement/Pending";
 import DraggableMember from "./DraggableMember";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface StationMember {
   userId: string;

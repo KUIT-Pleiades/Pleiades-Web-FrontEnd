@@ -19,7 +19,7 @@ interface SellItemModalProps {
 
 type Mode = 'view' | 'form' | 'success';
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT || '';
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
 
 const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
