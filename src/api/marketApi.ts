@@ -5,6 +5,8 @@ import {
   OfficialBackgroundData,
   WishlistResponse,
   ThemeData,
+  PurchaseHistoryResponse,
+  SaleHistoryResponse,
 } from "../interfaces/Interfaces";
 
 /**
@@ -132,6 +134,32 @@ export interface SearchResponse {
 export const searchOfficialItems = async (query: string): Promise<SearchResponse> => {
   const response = await axiosRequest<SearchResponse>(
     `/store/official?query=${encodeURIComponent(query)}`,
+    "GET",
+    null
+  );
+  return response.data;
+};
+
+/**
+ * 구매 내역을 가져오는 API 함수
+ * @returns Promise<PurchaseHistoryResponse>
+ */
+export const getPurchaseHistory = async (): Promise<PurchaseHistoryResponse> => {
+  const response = await axiosRequest<PurchaseHistoryResponse>(
+    "/store/purchases",
+    "GET",
+    null
+  );
+  return response.data;
+};
+
+/**
+ * 판매 내역을 가져오는 API 함수
+ * @returns Promise<SaleHistoryResponse>
+ */
+export const getSaleHistory = async (): Promise<SaleHistoryResponse> => {
+  const response = await axiosRequest<SaleHistoryResponse>(
+    "/store/sales",
     "GET",
     null
   );

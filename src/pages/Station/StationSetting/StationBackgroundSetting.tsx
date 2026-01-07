@@ -5,7 +5,7 @@ import { axiosRequest } from "../../../functions/axiosRequest";
 
 import SetStationBackground from "./SetStationBackground/SetStationBackground";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 const stationBackgrounds = [
   `${IMG_BASE_URL}bg_station_1.png`,

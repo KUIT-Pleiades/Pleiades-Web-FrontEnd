@@ -3,7 +3,7 @@ import { SortOptionForStations, Station } from "../../../../interfaces/Interface
 import StationDisplay from "../StationDisplay/StationDisplay";
 import SortCriteriaBoxForStation from "../../../../components/SortCriteriaBox/SortCriteriaBoxForStation";
 
-const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
 // 정거장 목록 썸네일 이미지 매핑
 const stationThumbnails: { [key: string]: string } = {
