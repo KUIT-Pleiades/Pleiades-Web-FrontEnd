@@ -12,7 +12,7 @@ import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
 import FaceItems from "./characterSetUpTab/FaceItems";
 import FashionItems from "./characterSetUpTab/FashionItems";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -52,7 +52,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
       {!load && <Pending />}
       <div className={s.showCharacter}>
         <button className={s.previousBtn} onClick={handlePrev}>
-          최소
+          취소
         </button>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
         <button className={s.nextBtn} onClick={onNext}>

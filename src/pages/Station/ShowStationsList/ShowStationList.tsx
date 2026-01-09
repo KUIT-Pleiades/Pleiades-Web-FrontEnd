@@ -17,7 +17,7 @@ import searchIcon from '../../../assets/StationList/searchIcon.svg';
 import createIcon from '../../../assets/StationList/createIcon.svg';
 import noStationLogo from '../../../assets/StationList/noStationLogo.png';
 
-const IMG_BASE_URL = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
 // 서버에서 오는 'bg_station_X' 값을 실제 배경 이미지 파일명으로 매핑합니다.
 // const stationBackgrounds: { [key: string]: string } = {

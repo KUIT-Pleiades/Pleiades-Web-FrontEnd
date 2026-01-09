@@ -1,4 +1,4 @@
-const IMG_BASE_URL: string = import.meta.env.VITE_PINATA_ENDPOINT;
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 // 타입 정의: tags 속성은 이제 필요 없습니다.
 export interface FaceItem {

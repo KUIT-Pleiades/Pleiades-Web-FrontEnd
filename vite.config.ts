@@ -15,16 +15,19 @@ export default defineConfig({
       manifest: {
         name: "Pleiades",
         short_name: "Pleiades",
-        description: "Pleiades - A new way to connect",
+        start_url: ".",
+        display: "standalone",
+        background_color: "#ffffff",
         theme_color: "#ffffff",
+        description: "Pleiades App",
         icons: [
           {
-            src: "pleiadesLogo.png",
+            src: "icon-192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "pleiadesLogo.png",
+            src: "icon-512.png",
             sizes: "512x512",
             type: "image/png",
           },
