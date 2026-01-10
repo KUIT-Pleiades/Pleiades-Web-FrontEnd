@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { axiosRequest } from "../functions/axiosRequest";
 import {
   OfficialFaceData,
@@ -106,12 +107,29 @@ export interface PurchaseResponse {
 
 /**
  * 공식몰 아이템 구매 API 함수
- * @param itemId - 구매할 아이템 ID
+ * POST /store/official/trades
+ * @param itemId - 아이템 ID
  * @returns Promise<PurchaseResponse>
+ * @throws 404: 아이템 없음, 409: 이미 보유한 아이템, 422: 스톤 부족
  */
 export const purchaseOfficialItem = async (itemId: number): Promise<PurchaseResponse> => {
-  const response = await axiosRequest<PurchaseResponse>("/store/official/trades", "POST", { itemId });
-  return response.data;
+  try {
+    const response = await axiosRequest<PurchaseResponse>("/store/official/trades", "POST", { itemId });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        throw new Error("존재하지 않는 아이템입니다.");
+      }
+      if (error.response?.status === 409) {
+        throw new Error("이미 보유한 아이템입니다.");
+      }
+      if (error.response?.status === 422) {
+        throw new Error("스톤이 부족합니다.");
+      }
+    }
+    throw error;
+  }
 };
 
 export interface SearchResponse {

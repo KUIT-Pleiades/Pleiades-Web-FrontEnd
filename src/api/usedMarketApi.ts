@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { axiosRequest } from "../functions/axiosRequest";
 import {
   UsedFaceData,
@@ -148,4 +149,42 @@ export const updateListingPrice = async (
     listingId,
     price,
   });
+};
+
+export interface UsedPurchaseResponse {
+  ownershipId?: number;
+  message: string;
+}
+
+/**
+ * 중고몰 아이템 구매 API 함수
+ * POST /store/resale/trades
+ * @param listingId - 판매 등록 ID
+ * @returns Promise<UsedPurchaseResponse>
+ * @throws 404: 아이템 없음, 409: 본인 아이템 구매 불가, 422: 스톤 부족
+ */
+export const purchaseUsedItem = async (
+  listingId: number
+): Promise<UsedPurchaseResponse> => {
+  try {
+    const response = await axiosRequest<UsedPurchaseResponse>(
+      "/store/resale/trades",
+      "POST",
+      { listingId }
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        throw new Error("존재하지 않는 아이템입니다.");
+      }
+      if (error.response?.status === 409) {
+        throw new Error("본인 아이템은 구매할 수 없습니다.");
+      }
+      if (error.response?.status === 422) {
+        throw new Error("스톤이 부족합니다.");
+      }
+    }
+    throw error;
+  }
 };

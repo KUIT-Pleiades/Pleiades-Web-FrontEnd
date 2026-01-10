@@ -57,6 +57,10 @@
 	padding-bottom: 0;
 	border-bottom: 1px solid #E1E1E1;
 	flex-shrink: 0;
+	position: sticky;
+	top: 0;
+	background: linear-gradient(180deg, #F8F8FA 0%, #F8F8FA 100%);
+	z-index: 10;
 }
 
 .tab {
@@ -86,6 +90,10 @@
 
 .countContainer {
 	padding: 16px 0 8px 0;
+	position: sticky;
+	top: 51px;
+	background: linear-gradient(180deg, #F8F8FA 0%, #F8F8FA 100%);
+	z-index: 10;
 }
 
 .countText {
@@ -129,7 +137,7 @@
 	width: auto;
 	display: grid;
 	padding-top: 12px;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 21px 23px;
 	padding: 0 3px;
 }
@@ -138,6 +146,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	min-width: 0;
 }
 
 .cardWrapper {
@@ -176,9 +185,9 @@
 	overflow: hidden;
 
 	img {
-		width: 100px;
-		height: 100px;
-		object-fit: cover;
+		width: 80%;
+		height: 80%;
+		object-fit: contain;
 	}
 }
 
@@ -202,6 +211,8 @@
 	.usedBadge {
 		color: var(--Color-12, #858585);
 		padding-right: 3px;
+		text-overflow: clip;
+		overflow: visible;
 	}
 }
 
