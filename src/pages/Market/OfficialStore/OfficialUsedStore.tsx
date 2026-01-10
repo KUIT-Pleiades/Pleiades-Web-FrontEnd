@@ -11,8 +11,9 @@ import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
 import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem, purchaseOfficialItem, searchOfficialItems, SearchResponse } from "../../../api/marketApi";
-import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem } from "../../../api/usedMarketApi";
+import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem, purchaseUsedItem } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
+import PurchaseErrorModal from "../../../modals/AddToCartModal/PurchaseErrorModal";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -41,6 +42,7 @@ export default function OfficialUsedStore() {
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
   const [searchResults, setSearchResults] = useState<SearchResponse | null>(null); // 검색 결과
   const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
+  const [errorModalMessage, setErrorModalMessage] = useState<string | null>(null); // 에러 모달 메시지
 
   const { userInfo, fetchUserStone } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
@@ -318,12 +320,24 @@ export default function OfficialUsedStore() {
           setCartModalOpen(false);
         }
       } else {
-        // TODO: 중고몰 구매 API 연결
-        setCartModalOpen(false);
+        const response = await purchaseUsedItem(selectedItem.id);
+        if (response.ownershipId) {
+          setCartModalOpen(false);
+          setCompleteCartModalOpen(true);
+          fetchUserStone();
+        } else {
+          alert(response.message);
+          setCartModalOpen(false);
+        }
       }
     } catch (error) {
       console.error("구매 실패:", error);
       setCartModalOpen(false);
+      if (error instanceof Error) {
+        setErrorModalMessage(error.message);
+      } else {
+        setErrorModalMessage("구매에 실패했습니다.");
+      }
     }
   };
 
@@ -363,6 +377,12 @@ export default function OfficialUsedStore() {
           onConfirm={handleCompleteCart}
           onCustom={handleGoToCustom}
           onCancel={() => setCompleteCartModalOpen(false)}
+        />
+      )}
+      {errorModalMessage && (
+        <PurchaseErrorModal
+          message={errorModalMessage}
+          onClose={() => setErrorModalMessage(null)}
         />
       )}
       <div className={s.header}>
