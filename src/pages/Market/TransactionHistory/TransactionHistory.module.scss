@@ -57,6 +57,10 @@
 	padding-bottom: 0;
 	border-bottom: 1px solid #E1E1E1;
 	flex-shrink: 0;
+	position: sticky;
+	top: 0;
+	background: linear-gradient(180deg, #F8F8FA 0%, #F8F8FA 100%);
+	z-index: 10;
 }
 
 .tab {
@@ -86,6 +90,10 @@
 
 .countContainer {
 	padding: 16px 0 8px 0;
+	position: sticky;
+	top: 51px;
+	background: linear-gradient(180deg, #F8F8FA 0%, #F8F8FA 100%);
+	z-index: 10;
 }
 
 .countText {
