@@ -129,7 +129,7 @@
 	width: auto;
 	display: grid;
 	padding-top: 12px;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 21px 23px;
 	padding: 0 3px;
 }
@@ -138,6 +138,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	min-width: 0;
 }
 
 .cardWrapper {
@@ -176,9 +177,9 @@
 	overflow: hidden;
 
 	img {
-		width: 100px;
-		height: 100px;
-		object-fit: cover;
+		width: 80%;
+		height: 80%;
+		object-fit: contain;
 	}
 }
 
@@ -202,6 +203,8 @@
 	.usedBadge {
 		color: var(--Color-12, #858585);
 		padding-right: 3px;
+		text-overflow: clip;
+		overflow: visible;
 	}
 }
 
