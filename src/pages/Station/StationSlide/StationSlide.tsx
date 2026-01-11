@@ -26,6 +26,7 @@ interface StationMember {
 
 interface StationResponse {
   stationId: string;
+  stationCode: string;
   adminUserId: string;
   name: string;
   intro: string;
@@ -76,8 +77,8 @@ const StationSlide: React.FC<StationSlideProps> = ({
 
   const handleCopyClick = async () => {
     try {
-      // 클립보드에 정거장 ID를 복사
-      await navigator.clipboard.writeText(stationData.stationId);
+      // 클립보드에 정거장 코드를 복사
+      await navigator.clipboard.writeText(stationData.stationCode);
       // 복사 완료 상태로 변경
       setIsCopied(true);
       // 2초 후에 복사 상태 초기화
