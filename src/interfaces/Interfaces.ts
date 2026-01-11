@@ -254,15 +254,16 @@ export interface StationMember {
   positionX: number;
   positionY: number;
   todayReport: boolean;
+  isFriend: boolean;
 }
 
 export interface StationDetails {
   stationId: string;
+  stationCode: string;
   adminUserId: string;
   name: string;
   intro: string;
-  numberOfUsers: number;
-  createdAt: string;
+  numOfUsers: number;
   stationBackground: string;
   reportNoticeTime: string;
   reportWritten: boolean;
