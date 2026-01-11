@@ -208,21 +208,13 @@ const ProfileSetting: React.FC = () => {
               <div className={s.idHeader}>
                 <span>ID</span>
               </div>
-              <div className={s.btnContainer}>
-                <input
-                  type="text"
-                  value={userInfo.userId}
-                  // onChange={handleIdChange}
-                  placeholder="영문, 숫자 조합 4-10자리"
-                />
-                <button
-                  // onClick={handleIdCheck}
-                  className={`${s.checkBtn}`}
-                  disabled={true}
-                >
-                  변경불가
-                </button>
-              </div>
+              <input
+                type="text"
+                value={userInfo.userId}
+                placeholder="영문, 숫자 조합 4-10자리"
+                disabled
+                className={s.disabledInput}
+              />
             </div>
             <div className={s.ageInput}>
               <span className={s.age}>생년월일</span>

@@ -10,8 +10,24 @@ import heartBtn from "../../../assets/btnImg/heartBtn.svg";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
-import { getOfficialFaceItems, getOfficialClothItems, getOfficialBackgroundItems, postWishlistItem, deleteWishlistItem, purchaseOfficialItem, searchOfficialItems, SearchResponse } from "../../../api/marketApi";
-import { getUsedFaceItems, getUsedClothItems, getUsedBackgroundItems, postUsedWishlistItem, deleteUsedWishlistItem, purchaseUsedItem } from "../../../api/usedMarketApi";
+import {
+  getOfficialFaceItems,
+  getOfficialClothItems,
+  getOfficialBackgroundItems,
+  postWishlistItem,
+  deleteWishlistItem,
+  purchaseOfficialItem,
+  searchOfficialItems,
+  SearchResponse,
+} from "../../../api/marketApi";
+import {
+  getUsedFaceItems,
+  getUsedClothItems,
+  getUsedBackgroundItems,
+  postUsedWishlistItem,
+  deleteUsedWishlistItem,
+  purchaseUsedItem,
+} from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 import PurchaseErrorModal from "../../../modals/AddToCartModal/PurchaseErrorModal";
 
@@ -33,16 +49,22 @@ export default function OfficialUsedStore() {
   const [activeTab, setActiveTab] = useState("official");
   const [activeCategory, setActiveCategory] = useState<CategoryType>("face");
   const [isSheetCollapsed, setIsSheetCollapsed] = useState(false);
-  const [officialLikedItems, setOfficialLikedItems] = useState(new Set<number>());
+  const [officialLikedItems, setOfficialLikedItems] = useState(
+    new Set<number>()
+  );
   const [usedLikedItems, setUsedLikedItems] = useState(new Set<number>());
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isCompleteCartModalOpen, setCompleteCartModalOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [focusSearch, setFocusSearch] = useState(false); // 검색창 포커스 상태
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
-  const [searchResults, setSearchResults] = useState<SearchResponse | null>(null); // 검색 결과
+  const [searchResults, setSearchResults] = useState<SearchResponse | null>(
+    null
+  ); // 검색 결과
   const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
-  const [errorModalMessage, setErrorModalMessage] = useState<string | null>(null); // 에러 모달 메시지
+  const [errorModalMessage, setErrorModalMessage] = useState<string | null>(
+    null
+  ); // 에러 모달 메시지
 
   const { userInfo, fetchUserStone } = useCharacterStore();
   const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
@@ -155,9 +177,9 @@ export default function OfficialUsedStore() {
         setSearchResults(results);
         // 검색 결과의 wishlist를 officialLikedItems에 병합
         if (results.wishlist && results.wishlist.length > 0) {
-          setOfficialLikedItems(prev => {
+          setOfficialLikedItems((prev) => {
             const newSet = new Set(prev);
-            results.wishlist.forEach(id => newSet.add(id));
+            results.wishlist.forEach((id) => newSet.add(id));
             return newSet;
           });
         }
@@ -170,7 +192,6 @@ export default function OfficialUsedStore() {
     }
     // TODO: 중고몰 검색 API 연결
   };
-
 
   const handleItemSelect = (
     id: number,
@@ -531,6 +552,7 @@ export default function OfficialUsedStore() {
               }}
             >
               <img
+                className={s.faceIcon}
                 src={activeCategory === "face" ? faceWhiteIcon : faceIcon}
                 alt="얼굴 카테고리"
               />
@@ -546,6 +568,7 @@ export default function OfficialUsedStore() {
               }}
             >
               <img
+                className={s.clothIcon}
                 src={activeCategory === "cloth" ? clothWhiteIcon : clothIcon}
                 alt="의상 카테고리"
               />
@@ -561,6 +584,7 @@ export default function OfficialUsedStore() {
               }}
             >
               <img
+                className={s.backgroundIcon}
                 src={
                   activeCategory === "background"
                     ? backgroundWhiteIcon
@@ -593,7 +617,7 @@ export default function OfficialUsedStore() {
               className={s.heartBtn}
               src={
                 selectedItem.id !== null &&
-                (activeTab === 'official'
+                (activeTab === "official"
                   ? officialLikedItems.has(selectedItem.id)
                   : usedLikedItems.has(selectedItem.id))
                   ? redHeartBtn
@@ -605,8 +629,14 @@ export default function OfficialUsedStore() {
                 if (selectedItem.id === null) return;
 
                 const itemId = selectedItem.id;
-                const currentLikedItems = activeTab === 'official' ? officialLikedItems : usedLikedItems;
-                const setCurrentLikedItems = activeTab === 'official' ? setOfficialLikedItems : setUsedLikedItems;
+                const currentLikedItems =
+                  activeTab === "official"
+                    ? officialLikedItems
+                    : usedLikedItems;
+                const setCurrentLikedItems =
+                  activeTab === "official"
+                    ? setOfficialLikedItems
+                    : setUsedLikedItems;
                 const isLiked = currentLikedItems.has(itemId);
 
                 // 낙관적 업데이트: UI 먼저 변경
@@ -622,7 +652,7 @@ export default function OfficialUsedStore() {
 
                 try {
                   // API 호출
-                  if (activeTab === 'official') {
+                  if (activeTab === "official") {
                     if (isLiked) {
                       await deleteWishlistItem(itemId);
                     } else {
@@ -658,7 +688,9 @@ export default function OfficialUsedStore() {
         activeCategory={activeCategory}
         isCollapsed={isSheetCollapsed}
         onItemSelect={handleItemSelect}
-        likedItems={activeTab === 'official' ? officialLikedItems : usedLikedItems}
+        likedItems={
+          activeTab === "official" ? officialLikedItems : usedLikedItems
+        }
         isSearching={isSearching}
         reverseSearch={reverseSearch}
         isFocus={focusSearch}
