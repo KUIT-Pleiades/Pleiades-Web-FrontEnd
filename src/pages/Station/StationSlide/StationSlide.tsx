@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { axiosRequest } from "../../../functions/axiosRequest";
 import { useNavigate } from "react-router-dom";
+import { StationDetails } from "../../../interfaces/Interfaces";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import copyBtn from "../../../assets/btnImg/copyBtn.png";
 //import plusBtn from "../../../assets/btnImg/plusBtn.png"
@@ -13,32 +14,8 @@ import plusIcon from "../../../assets/Icon/plusIcon.png";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
-interface StationMember {
-  userId: string;
-  userName: string;
-  character: string;
-  profile: string;
-  positionX: number;
-  positionY: number;
-  todayReport: boolean;
-  isFriend: boolean;
-}
-
-interface StationResponse {
-  stationId: string;
-  stationCode: string;
-  adminUserId: string;
-  name: string;
-  intro: string;
-  numOfUsers: number;
-  stationBackground: string;
-  reportNoticeTime: string;
-  reportWritten: boolean;
-  stationMembers: StationMember[];
-}
-
 interface StationSlideProps {
-  stationData: StationResponse;
+  stationData: StationDetails;
   onClose: () => void;
 }
 
