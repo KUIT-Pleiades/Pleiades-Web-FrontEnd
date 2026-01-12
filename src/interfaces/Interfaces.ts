@@ -471,3 +471,16 @@ export interface MyListing {
 export interface MyListingsData {
   listings: MyListing[];
 }
+
+// GET /store/wearable API 응답 타입
+export interface WearableItem {
+  id: number;
+  name: string;
+  description: string;
+  basic: boolean;
+}
+
+export interface WearableItemsData {
+  faceItems: WearableItem[];
+  fashionItems: WearableItem[];
+}

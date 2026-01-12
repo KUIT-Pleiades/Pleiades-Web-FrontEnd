@@ -1,14 +1,15 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import {
-  FashionImages,
-} from "../../../assets/ImageData/FashionImage";
+import { useWearableItems } from "../../../hooks/queries/useWearableItems";
+import { WearableItem } from "../../../interfaces/Interfaces";
 import {
   getCategoryFromFileName,
   getMainCategory,
   getPartName,
 } from "../../../constants/characterTabs";
 import s from "./characterSetUptab.module.scss";
+
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 interface FashionItemsProps {
   tabs: { id: string; name: string }[];
@@ -23,27 +24,31 @@ interface FashionItemsProps {
 
 const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const { data, isLoading, isError } = useWearableItems();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   // --- [수정] 필터링 로직이 훨씬 간단해집니다. ---
   const filteredItems = useMemo(() => {
+    if (!data?.fashionItems) return [];
+
     if (activeTab === "all") {
-      return FashionImages; // 항상 FashionImages 배열 하나만 사용
+      return data.fashionItems;
     }
     // 'fashion_acc' 탭이면 'fashion_acc_'로 시작하는 아이템만 필터링
     if (activeTab === "fashion_acc") {
-      return FashionImages.filter((item) =>
+      return data.fashionItems.filter((item) =>
         item.name.startsWith("fashion_acc_")
       );
     }
     // 그 외 탭들은 해당 id로 시작하는 아이템만 필터링
-    return FashionImages.filter((item) =>
+    return data.fashionItems.filter((item) =>
       getCategoryFromFileName(item.name).startsWith(activeTab)
     );
-  }, [activeTab]);
+  }, [activeTab, data?.fashionItems]);
 
   const handleItemClick = useCallback(
-    (itemName: string) => {
+    (item: WearableItem) => {
+      const itemName = item.name;
       const mainCategory = getMainCategory(itemName);
       const partName = getPartName(itemName);
 
@@ -102,10 +107,20 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
     [userInfo, updateUserInfo, initialOutfit]
   );
 
-
+  // 데이터 로딩이 완료되면 이미지 로딩 카운트를 증가시킵니다.
   useEffect(() => {
-    increaseLoadCount();
-  }, [increaseLoadCount]);
+    if (!isLoading && data) {
+      increaseLoadCount();
+    }
+  }, [isLoading, data, increaseLoadCount]);
+
+  if (isLoading) {
+    return <div className={s.tabContainer}>아이템을 불러오는 중...</div>;
+  }
+
+  if (isError) {
+    return <div className={s.tabContainer}>아이템을 불러오지 못했습니다.</div>;
+  }
 
   return (
     <div className={s.tabContainer}>
@@ -124,16 +139,16 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
         <div className={s.gridItems}>
           {filteredItems.map((item) => (
             <div
-              key={item.name}
+              key={item.id}
               className={`${s.item} ${
                 Object.values(userInfo.outfit).includes(item.name) ||
                 Object.values(userInfo.item).includes(item.name)
                   ? s.selected
                   : ""
               }`}
-              onClick={() => handleItemClick(item.name)}
+              onClick={() => handleItemClick(item)}
             >
-              <img src={item.src} alt={item.name} />
+              <img src={`${IMG_BASE_URL}${item.name}`} alt={item.description} />
             </div>
           ))}
         </div>
