@@ -36,8 +36,8 @@ const UsedBackgroundItems: React.FC<ItemProps> = ({
   }
 
   const typeMap: { [key: string]: string } = {
-    별: "STARBACKGROUND",
-    우주정거장: "STATIONBACKGROUND",
+    별: "STAR_BG",
+    우주정거장: "STATION_BG",
   };
 
   const filteredItems = data.items.filter((item) => {

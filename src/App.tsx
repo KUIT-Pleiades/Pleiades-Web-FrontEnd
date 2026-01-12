@@ -52,8 +52,9 @@ function PwaCheckHandler({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // 1. Standalone 모드인지 확인 (이미 앱으로 접속했는지)
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
-                         || (window.navigator as any).standalone 
+    const nav = window.navigator as Navigator & { standalone?: boolean };
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                         || nav.standalone
                          || document.referrer.includes('android-app://');
 
     // 2. 개발 환경이 아니고, 앱 모드가 아니며, 이미 설치 가이드 페이지가 아니라면 이동

@@ -2,9 +2,14 @@
 import React, { useEffect } from "react";
 
 // 1. Window 인터페이스에 adsbygoogle 속성을 선언합니다.
+interface AdsbyGoogleItem {
+  google_ad_client?: string;
+  enable_page_level_ads?: boolean;
+}
+
 declare global {
   interface Window {
-    adsbygoogle: any[];
+    adsbygoogle: AdsbyGoogleItem[];
   }
 }
 

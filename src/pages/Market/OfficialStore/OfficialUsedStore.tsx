@@ -193,6 +193,16 @@ export default function OfficialUsedStore() {
     // TODO: 중고몰 검색 API 연결
   };
 
+  // 타입에 따른 폴더 경로 반환
+  const getCategoryFolder = (type: string): string => {
+    const faceTypes = ["HAIR", "EYES", "NOSE", "MOUTH", "MOLE"];
+    const backgroundTypes = ["STAR_BG", "STATION_BG"];
+
+    if (faceTypes.includes(type)) return "face";
+    if (backgroundTypes.includes(type)) return "background";
+    return "fashion";
+  };
+
   const handleItemSelect = (
     id: number,
     name: string,
@@ -207,30 +217,33 @@ export default function OfficialUsedStore() {
       setFocusSearch(false);
     }
 
+    // 폴더 경로를 포함한 전체 경로 생성
+    const fullPath = `${getCategoryFolder(type)}/${name}`;
+
     setTryOnUserInfo((prev) => {
       const newState = structuredClone(prev);
 
       switch (type) {
         // 얼굴 아이템
         case "HAIR":
-          newState.face.hair = name;
+          newState.face.hair = fullPath;
           break;
         case "EYES": // 얼굴 파츠 '눈'
-          newState.face.eyes = name;
+          newState.face.eyes = fullPath;
           break;
         case "NOSE":
-          newState.face.nose = name;
+          newState.face.nose = fullPath;
           break;
         case "MOUTH":
-          newState.face.mouth = name;
+          newState.face.mouth = fullPath;
           break;
         case "MOLE":
-          newState.face.mole = name;
+          newState.face.mole = fullPath;
           break;
 
         // 의상 아이템
         case "TOP":
-          newState.outfit.top = name;
+          newState.outfit.top = fullPath;
           newState.outfit.set = "";
           // 👇 직전에 세트 의상을 입고 있었는지 확인
           if (prev.outfit.set) {
@@ -240,7 +253,7 @@ export default function OfficialUsedStore() {
           // 세트를 안 입고 있었다면 -> 기존 하의를 그대로 유지 (아무것도 안 함)
           break;
         case "BOTTOM":
-          newState.outfit.bottom = name;
+          newState.outfit.bottom = fullPath;
           newState.outfit.set = "";
           // 👇 직전에 세트 의상을 입고 있었는지 확인
           if (prev.outfit.set) {
@@ -250,44 +263,44 @@ export default function OfficialUsedStore() {
           // 세트를 안 입고 있었다면 -> 기존 상의를 그대로 유지 (아무것도 안 함)
           break;
         case "SET":
-          newState.outfit.set = name;
+          newState.outfit.set = fullPath;
           newState.outfit.top = "";
           newState.outfit.bottom = "";
           break;
         case "SHOES":
-          newState.outfit.shoes = name;
+          newState.outfit.shoes = fullPath;
           break;
 
         // 악세서리 아이템
         case "EYESITEM": // ✨ 악세서리 '눈' 아이템 처리
-          newState.item.eyes_item = name;
+          newState.item.eyes_item = fullPath;
           break;
         case "EARS":
-          newState.item.ears = name;
+          newState.item.ears = fullPath;
           break;
         case "HEAD":
-          newState.item.head = name;
+          newState.item.head = fullPath;
           break;
         case "NECK":
-          newState.item.neck = name;
+          newState.item.neck = fullPath;
           break;
         case "LEFTWRIST":
-          newState.item.leftWrist = name;
+          newState.item.leftWrist = fullPath;
           break;
         case "RIGHTWRIST":
-          newState.item.rightWrist = name;
+          newState.item.rightWrist = fullPath;
           break;
         case "LEFTHAND":
-          newState.item.leftHand = name;
+          newState.item.leftHand = fullPath;
           break;
         case "RIGHTHAND":
-          newState.item.rightHand = name;
+          newState.item.rightHand = fullPath;
           break;
 
         // 배경 아이템
         case "STAR_BG":
         case "STATION_BG":
-          newState.starBackground = name;
+          newState.starBackground = fullPath;
           break;
       }
 
