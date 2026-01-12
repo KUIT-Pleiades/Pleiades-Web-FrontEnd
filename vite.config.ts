@@ -17,8 +17,8 @@ export default defineConfig({
         short_name: "Pleiades",
         start_url: ".",
         display: "standalone",
-        background_color: "#ffffff",
-        theme_color: "#ffffff",
+        background_color: "#1B142A",
+        theme_color: "#1B142A",
         description: "Pleiades App",
         icons: [
           {
