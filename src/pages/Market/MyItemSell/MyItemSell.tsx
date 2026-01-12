@@ -130,7 +130,7 @@ const MyItemSell: React.FC = () => {
         }
 
         try {
-            const response = await axiosRequest<MyItemsResponseDto>('/store/purchases', 'GET', null);
+            const response = await axiosRequest<MyItemsResponseDto>('/store/sellable', 'GET', null);
             if (response.status === 200) {
                 setMyItems(response.data.ownerships || []);
             } else {

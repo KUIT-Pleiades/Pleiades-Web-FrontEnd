@@ -65,6 +65,31 @@ const StationSlide: React.FC<StationSlideProps> = ({
     }
   };
 
+  const handleShareStation = async () => {
+    if (!stationData) return;
+
+    const shareText = `플레이아데스 정거장 초대장 도착 💌\n\n저랑 같이 우주정거장에서 놀아요!\n\n✨ 입장 코드 : ${stationData.stationCode}\n\n🔍 입장 가이드 '정거장' 탭 > 우측 상단 돋보기 클릭 > 코드 입력\n\n앱 접속하기 👉 https://your-pleiades.com/`;
+
+    // 초대 텍스트 구성
+    const shareParams = {
+      title: `[Pleiades] ${stationData.name} 정거장 초대`,
+      text: shareText,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareParams);
+      } catch (e) {
+        console.error('공유 실패', e);
+      }
+    } else {
+      // PC 등 미지원 환경 대응: 코드 클립보드 복사
+      handleCopyClick();
+    }
+  };
+
+
+
   const character = useCharacterStore((state) => state.userInfo);
 
   // 친구 요청 보내는 함수 추가
@@ -105,7 +130,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
             <div className={s.header}>
               <h2>[ {stationData.name} ]</h2>
               <p>{stationData.intro}</p>
-              <div className={s.codeCopy} onClick={handleCopyClick}>
+              <div className={s.codeCopy} onClick={handleShareStation}>
                 <img src={copyBtn} alt="" />
                 {isCopied ? "복사 완료!" : "정거장 코드 복사"}
               </div>

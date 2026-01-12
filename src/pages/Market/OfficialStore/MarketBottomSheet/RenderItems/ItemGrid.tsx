@@ -5,6 +5,22 @@ import heartIcon from "../../../../../assets/Icon/redHeart.svg";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
+// 타입에 따른 폴더 경로 반환
+const getCategoryFolder = (type: string): string => {
+  const faceTypes = ["HAIR", "EYES", "NOSE", "MOUTH", "MOLE"];
+  const backgroundTypes = ["STAR_BG", "STATION_BG"];
+
+  if (faceTypes.includes(type)) return "face";
+  if (backgroundTypes.includes(type)) return "background";
+  return "fashion";
+};
+
+// 썸네일 경로 생성
+const getThumbnailPath = (name: string, type: string): string => {
+  const folder = getCategoryFolder(type);
+  return `${folder}/thumbnails/rec_${name}`;
+};
+
 interface Item {
   id: number;
   name: string;
@@ -49,7 +65,7 @@ const ItemGrid: React.FC<ItemGridProps> = ({
           }
         >
           <div className={itemClassName}>
-            <img src={`${IMG_BASE_URL}${item.name}`} alt={item.name} />
+            <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name, item.type)}`} alt={item.name} />
             {likedItems.has(item.id) && (
               <div className={s.heartIconContainer}>
                 <img src={heartIcon} alt="liked" />
