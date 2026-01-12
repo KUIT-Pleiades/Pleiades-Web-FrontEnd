@@ -68,10 +68,12 @@ const StationSlide: React.FC<StationSlideProps> = ({
   const handleShareStation = async () => {
     if (!stationData) return;
 
+    const shareText = `플레이아데스 정거장 초대장 도착 💌\n\n저랑 같이 우주정거장에서 놀아요!\n\n✨ 입장 코드 : ${stationData.stationCode}\n\n🔍 입장 가이드 '정거장' 탭 > 우측 상단 돋보기 클릭 > 코드 입력\n\n앱 접속하기 👉 https://your-pleiades.com/`;
+
     // 초대 텍스트 구성
     const shareParams = {
       title: `[Pleiades] ${stationData.name} 정거장 초대`,
-      text: `${stationData.name} 정거장으로 당신을 초대합니다!🛸\n참여 코드: ${stationData.stationCode}\n\n플레이아데스에서 함께 여행해요!`
+      text: shareText,
     };
 
     if (navigator.share) {
