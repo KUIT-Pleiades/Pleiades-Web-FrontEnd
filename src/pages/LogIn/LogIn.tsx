@@ -65,16 +65,18 @@ export default function LogIn() {
 
   return (
     <div className={s.logInPageContainer}>
+      
       <div className={s.content}>
         <img
           className={s.logo}
           src={pleiadesLogo}
-          width={89.76}
-          height={64.58}
           alt="Logo"
         />
         <p className={s.subTitle}>별과 우주정거장이 모이는 곳,</p>
         <p className={s.title}>플레이아데스</p>
+      </div>
+
+      <div className={s.bottomContainer}>
         <button className={s.button} onClick={naverLogIn}>
           <img className={s.socialLogo} src={naver} alt="naver" />
           <div className={s.buttonDescription}>NAVER로 시작하기</div>
