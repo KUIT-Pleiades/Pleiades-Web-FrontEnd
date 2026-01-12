@@ -53,6 +53,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
   const handleIdChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newId = e.target.value;
+      if (newId.length > 10) return;
       updateUserInfo({ userId: newId });
       setIsValidId(validateId(newId));
       setButtonText("중복확인");

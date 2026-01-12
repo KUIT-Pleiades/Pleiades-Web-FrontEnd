@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { axiosRequest } from "../../../functions/axiosRequest";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { useNavigate } from "react-router-dom";
+import { StationDetails, StationMember } from "../../../interfaces/Interfaces";
 import s from "./StationInside.module.scss";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
 import customBtn from "../../../assets/btnImg/customBtn.png";
@@ -15,32 +16,9 @@ import DraggableMember from "./DraggableMember";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
-interface StationMember {
-  userId: string;
-  userName: string;
-  character: string;
-  profile: string;
-  positionX: number;
-  positionY: number;
-  todayReport: boolean;
-  isFriend: boolean;
-}
-
-interface StationResponse {
-  stationId: string;
-  adminUserId: string;
-  name: string;
-  intro: string;
-  numOfUsers: number;
-  stationBackground: string;
-  reportNoticeTime: string;
-  reportWritten: boolean;
-  stationMembers: StationMember[];
-}
-
 const StationInside: React.FC = () => {
   const navigate = useNavigate();
-  const [stationData, setStationData] = useState<StationResponse | null>(null);
+  const [stationData, setStationData] = useState<StationDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [showSlide, setShowSlide] = useState(false);
@@ -72,7 +50,7 @@ const StationInside: React.FC = () => {
   const refreshStationData = async () => {
     if (!stationId) return;
     try {
-        const response = await axiosRequest<StationResponse>(
+        const response = await axiosRequest<StationDetails>(
             `/stations/${stationId}`,
             "GET",
             null
@@ -113,7 +91,7 @@ const StationInside: React.FC = () => {
 
       try {
         setIsLoading(true);
-        const response = await axiosRequest<StationResponse>(
+        const response = await axiosRequest<StationDetails>(
           `/stations/${stationId}`,
           "GET",
           null

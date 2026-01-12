@@ -118,61 +118,76 @@
 		}
 	}
 
-		.idInput {
-			margin-top: 10px;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			
-			
+	.idInput {
+		margin-top: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 
-			.idHeader{
-				display: flex;
-				justify-content: space-between;
+		.idHeader {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		span {
+			color: var(--gray-22, #444);
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.26px;
+		}
+
+		.disabledInput {
+			text-indent: 26px;
+			border-radius: 12px;
+			border: 1px solid #C0B9DB;
+			background: #FFF;
+			font-family: Pretendard;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+			height: 5dvh;
+			width: 100%;
+			box-sizing: border-box;
+			color: #858585;
+		}
+
+		input {
+			text-indent: 26px;
+			border-radius: 12px;
+			border: none;
+			background: #FFF;
+			font-family: Pretendard;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: normal;
+			letter-spacing: -0.32px;
+			height: 100%;
+			width: 100%;
+			box-sizing: border-box;
+
+			&:focus {
+				outline: none; // 기본 포커스 테두리 제거
+				//border: 1px solid #9370DB; // 포커스 시 보라색 테두리
+
 			}
-	
-			span {
-				color: var(--gray-22, #444);
+
+			&::placeholder {
+				color: #E1E1E1;
 				font-family: Pretendard;
-				font-size: 13px;
+				font-size: 14px;
 				font-style: normal;
-				font-weight: 600;
+				font-weight: 400;
 				line-height: normal;
-				letter-spacing: -0.26px;
-			}
-	
-			input {
-				text-indent: 26px;
-				border-radius: 12px;
-				border: none;
-				background: #FFF;
-				font-family: Pretendard;
-				font-size: 16px;
-				font-style: normal;
-				font-weight: 700;
-				line-height: normal;
-				letter-spacing: -0.32px;
-				height: 100%;
-				width: 100%;
-				box-sizing: border-box;
-	
-				&:focus {
-					outline: none; // 기본 포커스 테두리 제거
-					//border: 1px solid #9370DB; // 포커스 시 보라색 테두리
-	
-				}
-	
-				&::placeholder {
-					color: #E1E1E1;
-					font-family: Pretendard;
-					font-size: 14px;
-					font-style: normal;
-					font-weight: 400;
-					line-height: normal;
-					letter-spacing: -0.28px;
-				}
+				letter-spacing: -0.28px;
 			}
 		}
+	}
 
 	.ageInput {
 		position: relative;
@@ -182,33 +197,33 @@
 		height: 7dvh;
 		align-items: center;
 
-		.age{
+		.age {
 			position: absolute;
 			top: 0;
 			left: 0;
 			color: var(--gray-22, #444);
-				font-family: Pretendard;
-				font-size: 13px;
-				font-style: normal;
-				font-weight: 600;
-				line-height: normal;
-				letter-spacing: -0.26px;
+			font-family: Pretendard;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: normal;
+			letter-spacing: -0.26px;
 		}
-		
 
-		:global(.react-calendar){
+
+		:global(.react-calendar) {
 			max-width: 450px;
 		}
 	}
 
 }
 
-.btnContainer{
+.btnContainer {
 	position: relative;
-			width: 100%;
-				height: 5dvh;
-				border: 1px solid #BEAADD;
-					border-radius: 12px;
+	width: 100%;
+	height: 5dvh;
+	border: 1px solid #BEAADD;
+	border-radius: 12px;
 }
 
 .checkBtn {
@@ -224,9 +239,9 @@
 	background: var(--color-5-main, #C0B9DB);
 	border-radius: 30px;
 	top: 1dvh;
-		right: 14px;
-		height: 3dvh;
-		width: 79px;
+	right: 14px;
+	height: 3dvh;
+	width: 79px;
 
 	&:disabled {
 		opacity: 0.5;
@@ -334,4 +349,3 @@
 	z-index: 1001;
 	/* 팝업 위에 표시되도록 z-index 설정 */
 }
-

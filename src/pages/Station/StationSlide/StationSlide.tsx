@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { axiosRequest } from "../../../functions/axiosRequest";
 import { useNavigate } from "react-router-dom";
+import { StationDetails } from "../../../interfaces/Interfaces";
 import planetIcon from "../../../assets/Icon/planet.svg";
 import copyBtn from "../../../assets/btnImg/copyBtn.png";
 //import plusBtn from "../../../assets/btnImg/plusBtn.png"
@@ -13,31 +14,8 @@ import plusIcon from "../../../assets/Icon/plusIcon.png";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
-interface StationMember {
-  userId: string;
-  userName: string;
-  character: string;
-  profile: string;
-  positionX: number;
-  positionY: number;
-  todayReport: boolean;
-  isFriend: boolean;
-}
-
-interface StationResponse {
-  stationId: string;
-  adminUserId: string;
-  name: string;
-  intro: string;
-  numOfUsers: number;
-  stationBackground: string;
-  reportNoticeTime: string;
-  reportWritten: boolean;
-  stationMembers: StationMember[];
-}
-
 interface StationSlideProps {
-  stationData: StationResponse;
+  stationData: StationDetails;
   onClose: () => void;
 }
 
@@ -76,8 +54,8 @@ const StationSlide: React.FC<StationSlideProps> = ({
 
   const handleCopyClick = async () => {
     try {
-      // 클립보드에 정거장 ID를 복사
-      await navigator.clipboard.writeText(stationData.stationId);
+      // 클립보드에 정거장 코드를 복사
+      await navigator.clipboard.writeText(stationData.stationCode);
       // 복사 완료 상태로 변경
       setIsCopied(true);
       // 2초 후에 복사 상태 초기화
