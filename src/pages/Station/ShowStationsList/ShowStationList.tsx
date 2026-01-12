@@ -28,12 +28,12 @@ const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 // };
 
 function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'dim'): string {
-    if (!code) return `${IMG_BASE_URL}station_dim_01.png`;
+    if (!code) return `${IMG_BASE_URL}background/station_dim_01.png`;
 
     const match = code.match(/bg_station_(\d+)/);
     if (!match) {
         if (/^https?:\/\//.test(code)) return code;
-        return `${IMG_BASE_URL}${code}`;
+        return `${IMG_BASE_URL}background/${code}`;
     }
 
     const n = parseInt(match[1], 10);
@@ -41,12 +41,12 @@ function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'ful
 
     switch (variant) {
         case 'full':
-            return `${IMG_BASE_URL}bg_station_${n}.png`;
+            return `${IMG_BASE_URL}background/bg_station_${n}.png`;
         case 'rec':
-            return `${IMG_BASE_URL}rec_bg_station_${n}.png`;
+            return `${IMG_BASE_URL}background/thumbnails/rec_bg_station_${n}.png`;
         case 'dim':
         default:
-            return `${IMG_BASE_URL}station_dim_${two}.png`;
+            return `${IMG_BASE_URL}background/station_dim_${two}.png`;
     }
 }
 

@@ -1,11 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useCharacterStore } from "../../../store/useCharacterStore";
-import { FaceImages, FaceItem } from "../../../assets/ImageData/FaceImage";
+import { useWearableItems } from "../../../hooks/queries/useWearableItems";
+import { WearableItem } from "../../../interfaces/Interfaces";
 import {
   getCategoryFromFileName,
   getPartName,
 } from "../../../constants/characterTabs";
 import s from "./characterSetUptab.module.scss";
+
+const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 // CharacterSetUp.tsx로부터 props를 받기 위한 인터페이스
 interface FaceItemsProps {
@@ -15,25 +18,29 @@ interface FaceItemsProps {
 
 const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const { data, isLoading, isError } = useWearableItems();
+
   // '얼굴' 탭 내의 세부 탭(전체, 피부색, 머리...) 상태를 관리합니다.
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
   // 현재 선택된 세부 탭에 따라 보여줄 아이템 목록을 결정합니다.
   const filteredItems = useMemo(() => {
+    if (!data?.faceItems) return [];
+
     // '전체' 탭이면 모든 얼굴 관련 아이템을 반환합니다.
     if (activeTab === "all") {
-      return FaceImages;
+      return data.faceItems;
     }
-    // 그 외의 탭이면, 파일명의 카테고리와 현재 탭의 id가 일치하는 아이템만 필터링합니다.
+    // 그 외의 탭이면, 파일명의 카테고리와 현재 탭의 id가 일치하는 아이템만 필터링됩니다.
     // 예: activeTab이 'face_hair'이면, 'face_hair_01.png', 'face_hair_02.png' 등이 필터링됩니다.
-    return FaceImages.filter((item) =>
+    return data.faceItems.filter((item) =>
       getCategoryFromFileName(item.name).startsWith(activeTab)
     );
-  }, [activeTab]);
+  }, [activeTab, data?.faceItems]);
 
   // 아이템을 클릭했을 때 Zustand 스토어의 상태를 업데이트하는 함수
   const handleItemClick = useCallback(
-    (item: FaceItem) => {
+    (item: WearableItem) => {
       const partName = getPartName(item.name);
       if (!partName) return;
 
@@ -62,10 +69,20 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
     [userInfo, updateUserInfo]
   );
 
-  // 이 컴포넌트가 화면에 보일 때 이미지 로딩 카운트를 증가시킵니다. (기존 로직 유지)
+  // 데이터 로딩이 완료되면 이미지 로딩 카운트를 증가시킵니다.
   useEffect(() => {
-    increaseLoadCount();
-  }, [increaseLoadCount]);
+    if (!isLoading && data) {
+      increaseLoadCount();
+    }
+  }, [isLoading, data, increaseLoadCount]);
+
+  if (isLoading) {
+    return <div className={s.tabContainer}>아이템을 불러오는 중...</div>;
+  }
+
+  if (isError) {
+    return <div className={s.tabContainer}>아이템을 불러오지 못했습니다.</div>;
+  }
 
   return (
     <div className={s.tabContainer}>
@@ -87,7 +104,7 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
         <div className={s.gridItems}>
           {filteredItems.map((item) => (
             <div
-              key={item.name}
+              key={item.id}
               className={`${s.item} ${
                 // 현재 캐릭터가 착용하고 있는 아이템인지 확인하여 'selected' 클래스를 부여합니다.
                 Object.values(userInfo.face).includes(item.name)
@@ -96,7 +113,7 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
               }`}
               onClick={() => handleItemClick(item)}
             >
-              <img src={item.src} alt={item.name} />
+              <img src={`${IMG_BASE_URL}${item.name}`} alt={item.description} />
             </div>
           ))}
         </div>

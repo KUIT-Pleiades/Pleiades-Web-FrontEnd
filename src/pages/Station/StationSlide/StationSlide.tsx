@@ -121,7 +121,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
             <div
               className={s.background}
               style={{
-                backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground})`,
+                backgroundImage: `url(${IMG_BASE_URL}background/${stationData.stationBackground})`,
               }}
             ></div>
             <div className={s.planetIcon}>

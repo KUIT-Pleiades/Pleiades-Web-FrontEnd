@@ -5,13 +5,13 @@ import SortCriteriaBoxForStation from "../../../../components/SortCriteriaBox/So
 
 const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
-// 정거장 목록 썸네일 이미지 매핑
-const stationThumbnails: { [key: string]: string } = {
-    // [change] 키에 .png 포함
-    'bg_station_1.png': `${IMG_BASE_URL}rec_bg_station_1.png`,
-    'bg_station_2.png': `${IMG_BASE_URL}rec_bg_station_2.png`,
-    'bg_station_3.png': `${IMG_BASE_URL}rec_bg_station_3.png`,
-    'bg_station_4.png': `${IMG_BASE_URL}rec_bg_station_4.png`,
+// 정거장 배경 파일명으로 썸네일 URL 생성
+const getStationThumbnailUrl = (backgroundFileName: string): string => {
+    if (!backgroundFileName) {
+        return `${IMG_BASE_URL}background/thumbnails/rec_bg_station_1.png`;
+    }
+    // bg_station_X.png -> rec_bg_station_X.png
+    return `${IMG_BASE_URL}background/thumbnails/rec_${backgroundFileName}`;
 };
 
 interface StationBottomSheetContentProps {
@@ -53,10 +53,7 @@ export default function StationBottomSheetContent({
                             <StationDisplay
                                 name={station.name}
                                 numOfUsers={station.numOfUsers}
-                                background={
-                                    stationThumbnails[station.stationBackground] || // 썸네일 맵 사용
-                                    `${IMG_BASE_URL}rec_bg_station_1.png` // 기본 썸네일
-                                }
+                                background={getStationThumbnailUrl(station.stationBackground)}
                                 favorite={station.favorite}
                                 onToggleFavorite={() =>
                                     onToggleFavorite(station.stationId, station.favorite)

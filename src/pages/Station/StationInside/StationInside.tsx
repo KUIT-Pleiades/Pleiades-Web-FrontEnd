@@ -125,7 +125,7 @@ const StationInside: React.FC = () => {
     <div
       className={s.container}
       style={{
-        backgroundImage: `url(${IMG_BASE_URL}${stationData.stationBackground})`,
+        backgroundImage: `url(${IMG_BASE_URL}background/${stationData.stationBackground})`,
       }}
     >
       <div className={s.dim} />

@@ -10,17 +10,17 @@ import CreateStationBackground from "./CreateStationBackground/CreateStationBack
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
 const stationBackgrounds = [
-  `${IMG_BASE_URL}bg_station_1.png`,
-  `${IMG_BASE_URL}bg_station_2.png`,
-  `${IMG_BASE_URL}bg_station_3.png`,
-  `${IMG_BASE_URL}bg_station_4.png`,
+  `${IMG_BASE_URL}background/bg_station_1.png`,
+  `${IMG_BASE_URL}background/bg_station_2.png`,
+  `${IMG_BASE_URL}background/bg_station_3.png`,
+  `${IMG_BASE_URL}background/bg_station_4.png`,
 ];
 
 const stationBackgroundPrevs = [
-  `${IMG_BASE_URL}rec_bg_station_1.png`,
-  `${IMG_BASE_URL}rec_bg_station_2.png`,
-  `${IMG_BASE_URL}rec_bg_station_3.png`,
-  `${IMG_BASE_URL}rec_bg_station_4.png`,
+  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_1.png`,
+  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_2.png`,
+  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_3.png`,
+  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_4.png`,
 ];
 
 const CreateStation: React.FC = () => {
@@ -36,7 +36,7 @@ const CreateStation: React.FC = () => {
 
   // 배경 선택 상태
   const [background, setBackground] = useState(
-    `${IMG_BASE_URL}bg_station_1.png`
+    `${IMG_BASE_URL}background/bg_station_1.png`
   );
 
   // “입력값 미완성” 팝업 표시 상태
