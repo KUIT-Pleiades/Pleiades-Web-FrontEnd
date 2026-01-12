@@ -7,11 +7,10 @@ const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
 // 정거장 목록 썸네일 이미지 매핑
 const stationThumbnails: { [key: string]: string } = {
-    // [change] 키에 .png 포함
-    'bg_station_1.png': `${IMG_BASE_URL}rec_bg_station_1.png`,
-    'bg_station_2.png': `${IMG_BASE_URL}rec_bg_station_2.png`,
-    'bg_station_3.png': `${IMG_BASE_URL}rec_bg_station_3.png`,
-    'bg_station_4.png': `${IMG_BASE_URL}rec_bg_station_4.png`,
+    'bg_station_1.png': `${IMG_BASE_URL}background/thumbnails/rec_bg_station_1.png`,
+    'bg_station_2.png': `${IMG_BASE_URL}background/thumbnails/rec_bg_station_2.png`,
+    'bg_station_3.png': `${IMG_BASE_URL}background/thumbnails/rec_bg_station_3.png`,
+    'bg_station_4.png': `${IMG_BASE_URL}background/thumbnails/rec_bg_station_4.png`,
 };
 
 interface StationBottomSheetContentProps {
@@ -55,7 +54,7 @@ export default function StationBottomSheetContent({
                                 numOfUsers={station.numOfUsers}
                                 background={
                                     stationThumbnails[station.stationBackground] || // 썸네일 맵 사용
-                                    `${IMG_BASE_URL}rec_bg_station_1.png` // 기본 썸네일
+                                    `${IMG_BASE_URL}background/thumbnails/rec_bg_station_1.png` // 기본 썸네일
                                 }
                                 favorite={station.favorite}
                                 onToggleFavorite={() =>
