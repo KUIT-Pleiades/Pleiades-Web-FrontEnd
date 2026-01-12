@@ -19,7 +19,7 @@ const SendSignalModal: React.FC<SendSignalModalProps> = ({
     imageIndex
 }) => {
     const images = [outgoing1, outgoing2, outgoing3];
-    const sentences1 = ["🚀 신호 발사 완료!", "🔭신호를 보냈어요!", "📨메시지 전송중..."];
+    const sentences1 = ["신호 발사 완료!", "신호를 보냈어요!", "메시지 전송중..."];
     const sentences2 = ["곧 포착할 거에요!", "발견할 때까지 조금만 기다려요!", "곧 받으실거에요!"];
 
     return (
