@@ -19,7 +19,7 @@ const ReceiveSignalModal: React.FC<ReceiveSignalModalProps> = ({
     imageIndex
 }) => {
     const images = [receive1, receive2, receive3];
-    const sentences1 = ["⚡️찌릿!", "🚀우주에서", "🔔띠링!"];
+    const sentences1 = ["찌릿!", "우주에서", "띠링!"];
     const sentences2 = ["님이 보낸 신호를", "님이 보낸 신호가", "님의 신호를 받았어요."];
     const sentences3 = ["우주에서 포착!", "도착했어요!", "응답해볼까요?"];
 
