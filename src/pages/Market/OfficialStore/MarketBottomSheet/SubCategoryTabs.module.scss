@@ -53,21 +53,29 @@
 }
 
 .searchInput {
-	width: 100%;
-	border-radius: 50px;
-	border: 1px solid var(--gray-7, #E1E1E1);
-	padding: 10px 10px 10px 35px;
-	color: var(--Gray4, #858585);
-	font-family: Pretendard;
-	font-size: 13px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
-	letter-spacing: -0.26px;
+  width: 123.07%; 
+  border-radius: 50px;
+  
+  border: 1.23px solid var(--gray-7, #E1E1E1);
+  padding: 12.3px 12.3px 12.3px 43.07px;
 
-	&:focus {
-		outline: #C0B9DB;
-	}
+  color: var(--Gray4, #858585);
+  font-family: Pretendard;
+  
+  /* iOS 자동 확대 방지 및 시각적 크기 유지 */
+  font-size: 16px; 
+  transform: scale(0.8125); 
+  transform-origin: left center; 
+  margin-right: -23.07%; 
+
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.26px;
+
+  &:focus {
+    outline: 1.23px solid #C0B9DB;
+  }
 }
 
 .searchIcon {

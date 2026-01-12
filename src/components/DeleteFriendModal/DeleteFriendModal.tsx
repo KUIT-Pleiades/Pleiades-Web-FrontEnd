@@ -1,9 +1,6 @@
 import React from "react";
 import s from './DeleteFriendModal.module.scss';
 
-// image files
-
-
 interface ModalProps {
     username: string;
     userId: string;
