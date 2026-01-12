@@ -46,11 +46,12 @@
 
 .gridItems {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	justify-items: center;
 	gap: 22px;
 	padding: 5px 20px 10px 20px;
 	box-sizing: border-box;
+	overflow-x: hidden;
 }
 
 .item {
