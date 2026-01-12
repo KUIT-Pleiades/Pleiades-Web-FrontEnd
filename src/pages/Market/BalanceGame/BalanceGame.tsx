@@ -8,12 +8,19 @@ import adStone from "../../../assets/market/Ad/stoneInPopup.svg";
 import popupLeftDeco from "../../../assets/market/Ad/popupLeftDeco.svg";
 import popupRightDeco from "../../../assets/market/Ad/popupRightDeco.svg";
 
+interface BalanceQuestion {
+  id: string;
+  prompt: string;
+  a: string;
+  b: string;
+}
+
 const QUESTIONS_PER_PAGE = 5;
 
 const BalanceGame: React.FC = () => {
   const navigate = useNavigate();
   const { fetchUserStone, chargeStone } = useCharacterStore();
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<BalanceQuestion[]>([]);
   const [setId, setSetId] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});

@@ -21,6 +21,13 @@ type Listing = {
     image: string;
 };
 
+// API 응답 타입
+interface PriceHistoryItem {
+    id: number;
+    price: number;
+    discountedPrice: number;
+}
+
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
 
 const MyItemPriceCheck: React.FC = () => {
@@ -55,14 +62,14 @@ const MyItemPriceCheck: React.FC = () => {
         }
 
         try {
-            const response = await axiosRequest<any[]>(
-                `/store/resale/items/${itemIdFromQuery}/price`, 
-                'GET', 
+            const response = await axiosRequest<PriceHistoryItem[]>(
+                `/store/resale/items/${itemIdFromQuery}/price`,
+                'GET',
                 null
             );
 
             if (response.status === 200 && Array.isArray(response.data)) {
-                const formatted = response.data.map((it: any) => ({
+                const formatted = response.data.map((it) => ({
                     id: it.id,
                     name: nameFromQuery,
                     price: it.price,

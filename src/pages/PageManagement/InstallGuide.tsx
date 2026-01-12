@@ -5,18 +5,31 @@ import pleiadesLogo from '../../assets/InstallGuide/logo.png';
 import safariImg from '../../assets/InstallGuide/safariGuideImage.png';
 import chromeImg from '../../assets/InstallGuide/chromeGuideImage.png';
 
+// BeforeInstallPromptEvent 타입 정의 (PWA 설치 프롬프트용)
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+// IE의 MSStream 타입 확장
+declare global {
+  interface Window {
+    MSStream?: unknown;
+  }
+}
+
 const InstallGuide: React.FC = () => {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   // 안드로이드 설치 프롬프트를 저장할 상태
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       // 브라우저가 기본적으로 띄우는 설치 하단바를 막습니다.
       e.preventDefault();
       // 이벤트를 상태에 저장합니다.
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
