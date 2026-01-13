@@ -11,7 +11,7 @@ import stone from "../../assets/market/stone.svg";
 import menuBtn from "../../assets/btnImg/menuBtn.png";
 import deleteBtn from "../../assets/btnImg/deleteBtn.svg";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getImagePath } from "../../functions/getImage";
 
 interface MySellingItemsModalProps {
   item: MyListing;
@@ -39,7 +39,7 @@ const MySellingItemsModal: React.FC<MySellingItemsModalProps> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // 모달 내부에서 필요한 값들 계산
-  const imageUrl = useMemo(() => `${IMG_BASE_URL}${item.listingItem.name}`, [item.listingItem.name]);
+  const imageUrl = useMemo(() => `${IMG_BASE_URL}${getImagePath(item.listingItem.name)}`, [item.listingItem.name]);
 
   // 할인율 계산: form 모드일 때는 inputPrice 기준, view 모드일 때는 finalPrice 또는 기존 가격 기준
   const discountRate = useMemo(() => {

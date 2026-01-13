@@ -7,8 +7,7 @@ import {
   getPartName,
 } from "../../../constants/characterTabs";
 import s from "./characterSetUptab.module.scss";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
 
 // CharacterSetUp.tsx로부터 props를 받기 위한 인터페이스
 interface FaceItemsProps {
@@ -113,7 +112,7 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
               }`}
               onClick={() => handleItemClick(item)}
             >
-              <img src={`${IMG_BASE_URL}${item.name}`} alt={item.description} />
+              <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name)}`} alt={item.description} />
             </div>
           ))}
         </div>

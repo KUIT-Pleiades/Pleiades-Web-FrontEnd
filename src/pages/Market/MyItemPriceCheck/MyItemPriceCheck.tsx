@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import backArrow from '../../../assets/pleiadesBackArrow.svg';
 import stone from '../../../assets/market/stone.svg';
 import { axiosRequest } from '../../../functions/axiosRequest';
+import { IMG_BASE_URL, getThumbnailPath } from '../../../functions/getImage';
 
 import noItemLogo from '../../../assets/market/logo.svg';
 
@@ -28,8 +29,6 @@ interface PriceHistoryItem {
     discountedPrice: number;
 }
 
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
-
 const MyItemPriceCheck: React.FC = () => {
     const navigate = useNavigate();
     const [params] = useSearchParams();
@@ -49,7 +48,7 @@ const MyItemPriceCheck: React.FC = () => {
                 name: nameFromQuery,
                 price: 200,
                 discountedPrice: 180 - (i * 10),
-                image: `${IMG_BASE_URL}${imgFromQuery}`,
+                image: `${IMG_BASE_URL}${getThumbnailPath(imgFromQuery)}`,
             }));
             setListings(mockData);
             setIsLoading(false);
@@ -74,7 +73,7 @@ const MyItemPriceCheck: React.FC = () => {
                     name: nameFromQuery,
                     price: it.price,
                     discountedPrice: it.discountedPrice,
-                    image: `${IMG_BASE_URL}${imgFromQuery}`,
+                    image: `${IMG_BASE_URL}${getThumbnailPath(imgFromQuery)}`,
                 }));
                 setListings(formatted);
             }

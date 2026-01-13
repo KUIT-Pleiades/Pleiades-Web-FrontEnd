@@ -2,8 +2,7 @@ import React from "react";
 import s from "./AddToCartModal.module.scss";
 import stone from "../../assets/market/stone.svg";
 import closeBtn from "../../assets/btnImg/closeBtn.svg";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getImagePathByType } from "../../functions/getImage";
 
 interface AddToCartModalProps {
   item: {
@@ -37,7 +36,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
         </button>
         <div className={s.itemDescription}>{item.description}</div>
         <img
-          src={`${IMG_BASE_URL}${item.name}`}
+          src={`${IMG_BASE_URL}${getImagePathByType(item.name, item.type)}`}
           alt={item.name}
           className={s.itemImage}
         />

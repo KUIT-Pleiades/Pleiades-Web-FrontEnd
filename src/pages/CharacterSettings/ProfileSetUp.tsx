@@ -4,8 +4,7 @@ import characterBackground from "../../assets/backgroundImg/characterBackground.
 import React, { useState, useCallback } from "react";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import { useIdCheckQuery } from "./hooks/useUserCharacterQuery"; // 새 훅 사용
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getImagePath } from "../../functions/getImage";
 
 interface ProfileSetUpProps {
   onNext: () => void;
@@ -115,35 +114,35 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.skinColor)}`}
             alt="skin"
           />
           <img
             className={s.characterEyes}
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.eyes)}`}
             alt="eyes"
           />
           <img
             className={s.characterNose}
-            src={`${IMG_BASE_URL}${userInfo.face.nose}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.nose)}`}
             alt="nose"
           />
           <img
             className={s.characterMouth}
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mouth)}`}
             alt="mouth"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole}
-              src={`${IMG_BASE_URL}${userInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mole)}`}
               alt="mole"
             />
           )}
 
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.hair)}`}
             alt="hair"
           />
 
@@ -151,12 +150,12 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             <>
               <img
                 className={s.characterTop}
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.top)}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom}
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.bottom)}`}
                 alt="bottom"
               />
             </>
@@ -164,14 +163,14 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
           {isWearingSet && (
             <img
               className={s.characterSet}
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.set)}`}
               alt="set"
             />
           )}
 
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.shoes)}`}
             alt="shoes"
           />
 
@@ -181,7 +180,7 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
               <img
                 key={part}
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}`}
+                src={`${IMG_BASE_URL}${getImagePath(src)}`}
                 alt={part}
               />
             );

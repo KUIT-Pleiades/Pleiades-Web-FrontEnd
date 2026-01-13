@@ -1,4 +1,4 @@
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { getBackgroundThumbnail } from "../../functions/getImage";
 
 // 타입 정의
 export interface BackgroundItem {
@@ -19,6 +19,6 @@ for (let i = 1; i <= totalBackgrounds; i++) {
 
   BackgroundImages.push({
     name: fileName,
-    src: `${IMG_BASE_URL}${fileName}`,
+    src: getBackgroundThumbnail(fileName),
   });
 }
