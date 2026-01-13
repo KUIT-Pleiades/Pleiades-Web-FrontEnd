@@ -13,9 +13,10 @@ import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
 interface FaceItemsProps {
   tabs: { id: string; name: string }[];
   increaseLoadCount: () => void;
+  onItemSelect?: (description: string) => void;
 }
 
-const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
+const FaceItems = ({ tabs, increaseLoadCount, onItemSelect }: FaceItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const { data, isLoading, isError } = useWearableItems();
 
@@ -57,6 +58,9 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
         return;
       }
 
+      // 아이템 설명 표시
+      onItemSelect?.(isDeselecting ? "" : item.description);
+
       updateUserInfo({
         face: {
           ...userInfo.face,
@@ -65,7 +69,7 @@ const FaceItems = ({ tabs, increaseLoadCount }: FaceItemsProps) => {
         },
       });
     },
-    [userInfo, updateUserInfo]
+    [userInfo, updateUserInfo, onItemSelect]
   );
 
   // 데이터 로딩이 완료되면 이미지 로딩 카운트를 증가시킵니다.

@@ -23,6 +23,9 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   const [load, setLoad] = useState(false);
   const { userInfo, resetUserInfo } = useCharacterStore();
 
+  // 선택된 아이템의 설명
+  const [selectedDescription, setSelectedDescription] = useState("");
+
   // 초기 유저 정보 저장 (세트 -> 상의/하의 전환 시 복구용)
   const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
     structuredClone(userInfo)
@@ -39,6 +42,11 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
 
   const handlePrev = () => {
     navigate(-1);
+  };
+
+  // 아이템 선택 시 설명 업데이트
+  const handleItemSelect = (description: string) => {
+    setSelectedDescription(description);
   };
 
   // --- [추가] 세트 의상 착용 여부를 확인하는 변수입니다. ---
@@ -150,6 +158,14 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           alt="리셋 버튼"
           onClick={resetUserInfo}
         />
+        <div
+          className={s.itemName}
+          style={{
+            visibility: selectedDescription ? "visible" : "hidden",
+          }}
+        >
+          <p>{selectedDescription}</p>
+        </div>
       </div>
       <div className={s.setCharacter}>
         <div className={s.menuBar}>
@@ -172,13 +188,18 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
         </div>
         <div className={s.contentArea}>
           {currentTab === "face" && (
-            <FaceItems tabs={FACE_TABS} increaseLoadCount={increaseLoadCount} />
+            <FaceItems
+              tabs={FACE_TABS}
+              increaseLoadCount={increaseLoadCount}
+              onItemSelect={handleItemSelect}
+            />
           )}
           {currentTab === "fashion" && (
             <FashionItems
               tabs={FASHION_TABS}
               increaseLoadCount={increaseLoadCount}
               initialOutfit={initialUserInfo.outfit}
+              onItemSelect={handleItemSelect}
             />
           )}
         </div>
