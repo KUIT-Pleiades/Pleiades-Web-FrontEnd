@@ -484,3 +484,11 @@ export interface WearableItemsData {
   faceItems: WearableItem[];
   fashionItems: WearableItem[];
 }
+
+// GET /items/backgrounds API 응답 타입
+export interface BackgroundItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+}

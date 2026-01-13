@@ -1,31 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./CreateStation.module.scss";
 import { useNavigate } from "react-router-dom";
 import { axiosRequest } from "../../../functions/axiosRequest";
 
 import SetStationBackground from "./SetStationBackground/SetStationBackground";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
-
-const stationBackgrounds = [
-  `${IMG_BASE_URL}background/bg_station_1.png`,
-  `${IMG_BASE_URL}background/bg_station_2.png`,
-  `${IMG_BASE_URL}background/bg_station_3.png`,
-  `${IMG_BASE_URL}background/bg_station_4.png`,
-];
-const stationBackgroundPrevs = [
-  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_1.png`,
-  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_2.png`,
-  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_3.png`,
-  `${IMG_BASE_URL}background/thumbnails/rec_bg_station_4.png`,
-];
+import { useStationBackgroundsQuery } from "../hooks/useStationBackgroundsQuery";
 
 const StationBackgroundSetting: React.FC = () => {
   const navigate = useNavigate();
 
-  const [background, setBackground] = useState(
-    `${IMG_BASE_URL}background/bg_station_1.png`
-  );
+  // 정거장 배경 API 데이터
+  const { data: bgData, isLoading } = useStationBackgroundsQuery();
+
+  const [background, setBackground] = useState("");
+
+  // API 데이터가 로드되면 첫 번째 배경을 기본값으로 설정
+  useEffect(() => {
+    if (bgData?.backgrounds && bgData.backgrounds.length > 0 && !background) {
+      setBackground(bgData.backgrounds[0]);
+    }
+  }, [bgData, background]);
 
   const handleBack = () => {
     navigate(-1);
@@ -74,11 +68,19 @@ const StationBackgroundSetting: React.FC = () => {
     }
   };
 
+  if (isLoading || !bgData) {
+    return (
+      <div className={s.container}>
+        <p>로딩 중...</p>
+      </div>
+    );
+  }
+
   return (
     <div className={s.container}>
       <SetStationBackground
-        backgrounds={stationBackgrounds}
-        backgroundPrevs={stationBackgroundPrevs}
+        backgrounds={bgData.backgrounds}
+        backgroundPrevs={bgData.backgroundPrevs}
         background={background}
         setBackground={setBackground}
         handleBack={handleBack}
