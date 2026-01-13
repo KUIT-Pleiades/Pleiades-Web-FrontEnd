@@ -63,7 +63,7 @@
 
     display: flex;
     flex-direction: column;
-    // cursor: pointer;
+    cursor: pointer;
 }
 
 .mainTabBtn.active::after {
@@ -113,7 +113,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    // cursor: pointer;
+    cursor: pointer;
 }
 .subTabBtn.active {
     color: #444;
