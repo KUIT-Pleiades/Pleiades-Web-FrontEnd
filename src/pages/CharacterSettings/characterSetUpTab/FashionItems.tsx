@@ -8,8 +8,7 @@ import {
   getPartName,
 } from "../../../constants/characterTabs";
 import s from "./characterSetUptab.module.scss";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
 
 interface FashionItemsProps {
   tabs: { id: string; name: string }[];
@@ -148,7 +147,7 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
               }`}
               onClick={() => handleItemClick(item)}
             >
-              <img src={`${IMG_BASE_URL}${item.name}`} alt={item.description} />
+              <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name)}`} alt={item.description} />
             </div>
           ))}
         </div>

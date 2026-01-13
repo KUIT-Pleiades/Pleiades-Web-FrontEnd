@@ -9,13 +9,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useGenerateCharacterImageMutation } from "./hooks/useGenerateCharacterImageMutation";
 import { useSignupMutation } from "./hooks/useSignupMutation";
 import { UserInfo } from "../../interfaces/Interfaces";
+import { IMG_BASE_URL, getImagePath } from "../../functions/getImage";
 
 interface BackgroundSetUpProps {
   onPrev: () => void;
 }
 
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
-  const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo, updateUserInfo } = useCharacterStore();
@@ -34,7 +34,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   );
 
   const backgroundStyle = {
-    backgroundImage: `url(${IMG_BASE_URL}${userInfo.starBackground})`,
+    backgroundImage: `url(${IMG_BASE_URL}background/${userInfo.starBackground})`,
     overflow: "hidden",
   };
 
@@ -84,46 +84,46 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         <div className={s.characterContainer}>
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.skinColor)}`}
             alt="skin"
           />
           <img
             className={s.characterEyes}
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.eyes)}`}
             alt="eyes"
           />
           <img
             className={s.characterNose}
-            src={`${IMG_BASE_URL}${userInfo.face.nose}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.nose)}`}
             alt="nose"
           />
           <img
             className={s.characterMouth}
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mouth)}`}
             alt="mouth"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole}
-              src={`${IMG_BASE_URL}${userInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mole)}`}
               alt="mole"
             />
           )}
           <img
             className={s.characterHair}
-            src={`${IMG_BASE_URL}${userInfo.face.hair}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.hair)}`}
             alt="hair"
           />
           {!isWearingSet && (
             <>
               <img
                 className={s.characterTop}
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.top)}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom}
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.bottom)}`}
                 alt="bottom"
               />
             </>
@@ -131,13 +131,13 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
           {isWearingSet && (
             <img
               className={s.characterSet}
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.set)}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes}
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.shoes)}`}
             alt="shoes"
           />
           {Object.entries(userInfo.item).map(([part, src]) => {
@@ -146,7 +146,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
               <img
                 key={part}
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}`}
+                src={`${IMG_BASE_URL}${getImagePath(src)}`}
                 alt={part}
               />
             );
