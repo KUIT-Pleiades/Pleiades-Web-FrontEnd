@@ -6,7 +6,7 @@ import backArrow from '../../../assets/pleiadesBackArrow.svg';
 import { axiosRequest } from '../../../functions/axiosRequest';
 
 // ============= 배포 시 false로 변경 =============
-const USE_MOCK = true;
+const USE_MOCK = false;
 // =============================================
 
 type ItemCategory = 'FACE' | 'FASHION' | 'BG';

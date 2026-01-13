@@ -13,6 +13,7 @@ import {
 import { getPurchaseHistory, getSaleHistory } from "../../../api/marketApi";
 
 import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
+import { getMainCategory } from "../../../constants/characterTabs"; // Import getMainCategory
 
 const TransactionHistory: React.FC = () => {
   const navigate = useNavigate();
@@ -123,6 +124,9 @@ const TransactionHistory: React.FC = () => {
                       activeTab === "purchase"
                         ? (ownership as PurchaseOwnership).isOfficial
                         : true;
+                    const isBackgroundItem =
+                      getMainCategory(ownership.item.name) === "background"; // Check if it's a background item
+
                     return (
                       <div key={ownership.id} className={s.itemWrapper}>
                         <div className={s.cardWrapper}>
@@ -135,6 +139,7 @@ const TransactionHistory: React.FC = () => {
                             <img
                               src={`${IMG_BASE_URL}${getThumbnailPath(ownership.item.name)}`}
                               alt={ownership.item.description}
+                              className={isBackgroundItem ? s.backgroundItemImage : ''} // Apply conditional class
                             />
                           </div>
                         </div>

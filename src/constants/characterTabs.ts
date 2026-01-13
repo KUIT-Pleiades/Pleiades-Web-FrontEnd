@@ -42,6 +42,9 @@ export const getMainCategory = (fileName: string) => {
   // [수정] 더 구체적인 'fashion_acc_'를 먼저 확인하도록 순서를 변경합니다.
   if (fileName.startsWith("fashion_acc_")) return "item";
 
+  // 배경 아이템 추가
+  if (fileName.startsWith("bg_")) return "background";
+
   if (fileName.startsWith("fashion_")) return "outfit";
 
   return "unknown";

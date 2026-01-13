@@ -19,9 +19,10 @@ interface FashionItemsProps {
     set: string;
     shoes: string;
   };
+  onItemSelect?: (description: string) => void;
 }
 
-const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsProps) => {
+const FashionItems = ({ tabs, increaseLoadCount, initialOutfit, onItemSelect }: FashionItemsProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const { data, isLoading, isError } = useWearableItems();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -65,6 +66,9 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
 
         const newValue = isEquipped ? "" : itemName;
 
+        // 아이템 설명 표시
+        onItemSelect?.(isEquipped ? "" : item.description);
+
         // --- [수정] 세트 <-> 상/하의 전환 로직을 개선합니다. ---
         if (typedPartName === "set" && newValue) {
           // 1. 세트를 입을 때: 상의와 하의를 비웁니다.
@@ -95,6 +99,10 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
         const typedPartName = partName as keyof typeof userInfo.item;
         const isEquipped = userInfo.item[typedPartName] === itemName;
         const newValue = isEquipped ? "" : itemName;
+
+        // 아이템 설명 표시
+        onItemSelect?.(isEquipped ? "" : item.description);
+
         updateUserInfo({
           item: {
             ...userInfo.item,
@@ -103,7 +111,7 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit }: FashionItemsPr
         });
       }
     },
-    [userInfo, updateUserInfo, initialOutfit]
+    [userInfo, updateUserInfo, initialOutfit, onItemSelect]
   );
 
   // 데이터 로딩이 완료되면 이미지 로딩 카운트를 증가시킵니다.
