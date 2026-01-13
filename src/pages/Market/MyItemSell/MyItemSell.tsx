@@ -109,7 +109,7 @@ const SUBLABEL_TO_TYPES: Record<ItemCategory, Record<string, string[]>> = {
     },
 };
 
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
+import { IMG_BASE_URL, getThumbnailPath } from '../../../functions/getImage';
 
 
 const MyItemSell: React.FC = () => {
@@ -231,10 +231,10 @@ const MyItemSell: React.FC = () => {
                         }}
                     >
                         {/* 이미지 경로 조합: ownership.item.name 사용 */}
-                        <img 
-                            src={`${IMG_BASE_URL}${ownership.item.name}`}
-                            alt={ownership.item.description} 
-                            className={s.itemThumb} 
+                        <img
+                            src={`${IMG_BASE_URL}${getThumbnailPath(ownership.item.name)}`}
+                            alt={ownership.item.description}
+                            className={s.itemThumb}
                         />
                     </div>
                 ))}

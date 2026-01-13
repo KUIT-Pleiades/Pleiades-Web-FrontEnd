@@ -12,7 +12,7 @@ import {
 } from "../../../interfaces/Interfaces";
 import { getPurchaseHistory, getSaleHistory } from "../../../api/marketApi";
 
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
 
 const TransactionHistory: React.FC = () => {
   const navigate = useNavigate();
@@ -133,7 +133,7 @@ const TransactionHistory: React.FC = () => {
                           )}
                           <div className={s.card}>
                             <img
-                              src={`${IMG_BASE_URL}${ownership.item.name}`}
+                              src={`${IMG_BASE_URL}${getThumbnailPath(ownership.item.name)}`}
                               alt={ownership.item.description}
                             />
                           </div>

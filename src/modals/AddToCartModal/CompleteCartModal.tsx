@@ -1,8 +1,7 @@
 import React from "react";
 import s from "./CompleteCartModal.module.scss";
 import closeBtn from "../../assets/btnImg/closeBtn.svg";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getImagePathByType } from "../../functions/getImage";
 
 interface CompleteCartModalProps {
   item: {
@@ -36,7 +35,7 @@ const CompleteCartModal: React.FC<CompleteCartModalProps> = ({
         <div className={s.header}>구매를 완료했어요!</div>
         <div className={s.itemDescription}>{item.description}</div>
         <img
-          src={`${IMG_BASE_URL}${item.name}`}
+          src={`${IMG_BASE_URL}${getImagePathByType(item.name, item.type)}`}
           alt={item.name}
           className={s.itemImage}
         />

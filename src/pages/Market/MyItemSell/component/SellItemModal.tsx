@@ -19,7 +19,7 @@ interface SellItemModalProps {
 
 type Mode = 'view' | 'form' | 'success';
 
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL || '';
+import { IMG_BASE_URL, getImagePath } from '../../../../functions/getImage';
 
 const SellItemModal: React.FC<SellItemModalProps> = ({
     itemName,
@@ -103,7 +103,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 
                 <div className={s.imageContainer}>
                     <img
-                        src={`${IMG_BASE_URL}${image}`}
+                        src={`${IMG_BASE_URL}${getImagePath(image)}`}
                         alt="item image"
                         className={s.itemImg}
                     />

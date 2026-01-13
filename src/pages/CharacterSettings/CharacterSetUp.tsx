@@ -11,8 +11,7 @@ import { UserInfo } from "../../interfaces/Interfaces";
 import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
 import FaceItems from "./characterSetUpTab/FaceItems";
 import FashionItems from "./characterSetUpTab/FashionItems";
-
-const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
+import { IMG_BASE_URL, getImagePath } from "../../functions/getImage";
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -63,39 +62,33 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {/* --- 얼굴 --- */}
           <img
             className={s.characterSkin}
-            src={`${IMG_BASE_URL}${userInfo.face.skinColor}`}
-            //src={`/${userInfo.face.skinColor}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.skinColor)}`}
             alt="skin"
           />
           <img
             className={s.characterEyes} // 눈
-            src={`${IMG_BASE_URL}${userInfo.face.eyes}`}
-            //src={`/${userInfo.face.eyes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.eyes)}`}
             alt="eyes"
           />
           <img
             className={s.characterNose} // 코
-            src={`${IMG_BASE_URL}${userInfo.face.nose}`}
-            //src={`/${userInfo.face.nose}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.nose)}`}
             alt="nose"
           />
           <img
             className={s.characterNose} // 입
-            src={`${IMG_BASE_URL}${userInfo.face.mouth}`}
-            //src={`/${userInfo.face.mouth}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mouth)}`}
             alt="mouth"
           />
           <img
             className={s.characterHair} // 머리카락
-            src={`${IMG_BASE_URL}${userInfo.face.hair}`}
-            //src={`/${userInfo.face.hair}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.face.hair)}`}
             alt="hair"
           />
           {userInfo.face.mole && (
             <img
               className={s.characterMole} // 점
-              src={`${IMG_BASE_URL}${userInfo.face.mole}`}
-              //src={`/${userInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mole)}`}
               alt="mole"
             />
           )}
@@ -105,14 +98,12 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             <>
               <img
                 className={s.characterTop} // 상의
-                src={`${IMG_BASE_URL}${userInfo.outfit.top}`}
-                //src={`/${userInfo.outfit.top}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.top)}`}
                 alt="top"
               />
               <img
                 className={s.characterBottom} // 하의
-                src={`${IMG_BASE_URL}${userInfo.outfit.bottom}`}
-                //src={`/${userInfo.outfit.bottom}`}
+                src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.bottom)}`}
                 alt="bottom"
               />
             </>
@@ -121,15 +112,13 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           {isWearingSet && (
             <img
               className={s.characterSet} // 세트 의상
-              src={`${IMG_BASE_URL}${userInfo.outfit.set}`}
-              //src={`/${userInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.set)}`}
               alt="set"
             />
           )}
           <img
             className={s.characterShoes} // 신발
-            src={`${IMG_BASE_URL}${userInfo.outfit.shoes}`}
-            //src={`/${userInfo.outfit.shoes}`}
+            src={`${IMG_BASE_URL}${getImagePath(userInfo.outfit.shoes)}`}
             alt="shoes"
           />
           {/* --- 아이템 --- */}
@@ -144,8 +133,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
                 key={part}
                 // s.head, s.ears 와 같이 동적으로 클래스 이름을 매핑합니다.
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}`}
-                //src={`/${src}`}
+                src={`${IMG_BASE_URL}${getImagePath(src)}`}
                 alt={part}
               />
             );
