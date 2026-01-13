@@ -207,18 +207,22 @@ const ProfileSetUp = ({ onNext, onPrev }: ProfileSetUpProps) => {
             type="text"
             value={userInfo.userId || ""}
             onChange={handleIdChange}
-            placeholder="영문, 숫자 조합 4-10자리"
+            placeholder=""
             className={s.idInput}
           />
-          {isIdChecked && (
-            <div
-              className={`${s.idCheckMessage} ${
-                idCheckData?.available ? s.available : s.unavailable
-              }`}
-            >
-              {idCheckData?.message || "확인 실패"}
-            </div>
-          )}
+          <div
+            className={`${s.idCheckMessage} ${
+              !isIdChecked
+                ? s.info
+                : idCheckData?.available
+                ? s.available
+                : s.unavailable
+            }`}
+          >
+            {!isIdChecked
+              ? "영문, 숫자 조합 4-10자리"
+              : idCheckData?.message || "확인 실패"}
+          </div>
           <button
             onClick={handleIdCheck}
             className={`${s.checkBtn} ${

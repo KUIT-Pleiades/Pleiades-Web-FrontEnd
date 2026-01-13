@@ -303,6 +303,10 @@ p {
 	&.unavailable {
 		color: #FF6767; // 사용 불가능할 때의 색상
 	}
+
+	&.info {
+		color: #BDBDBD;
+	}
 }
 
 .checkBtn {
