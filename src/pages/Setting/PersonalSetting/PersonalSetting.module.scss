@@ -5,6 +5,10 @@
 	overflow: hidden;
 	background: linear-gradient(180deg, #F8F8FA 28.21%, #E4D0E5 259.4%);
 
+	position: fixed;
+	top: 0;
+	left: 0;
+
 	.title {
 		position: absolute;
 		width: 100%;
