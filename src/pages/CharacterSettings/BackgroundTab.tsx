@@ -1,30 +1,32 @@
 import { useCallback, useEffect } from "react";
-// --- [수정] 새로운 데이터 파일을 import 합니다. ---
-import { BackgroundImages } from "../../assets/ImageData/BackgroundImage";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import { useStarBackgroundsQuery } from "./hooks/useStarBackgroundsQuery";
+import { getBackgroundThumbnail } from "../../functions/getImage";
 import s from "./backgroundTab.module.scss";
 
-// FaceTab에서 가져오던 타입을 제거하고, 직접 정의하거나 필요한 경우 로컬에 정의합니다.
 interface BackgroundTabProps {
   increaseLoadCount: () => void;
 }
 
 const BackgroundTab = ({ increaseLoadCount }: BackgroundTabProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
+  const { data: backgrounds, isLoading, isError } = useStarBackgroundsQuery();
 
-  // 이미지 로딩 로직을 더 안정적으로 수정
+  // 이미지 로딩 로직
   useEffect(() => {
-    let loadedCount = 0;
-    const NUM_OF_IMG = BackgroundImages.length;
+    if (isLoading) return;
 
-    if (NUM_OF_IMG === 0) {
+    if (!backgrounds || backgrounds.length === 0) {
       increaseLoadCount();
       return;
     }
 
-    BackgroundImages.forEach(({ src }) => {
+    let loadedCount = 0;
+    const NUM_OF_IMG = backgrounds.length;
+
+    backgrounds.forEach((bg) => {
       const img = new Image();
-      img.src = src;
+      img.src = getBackgroundThumbnail(bg.name);
 
       const onImageLoadOrError = () => {
         loadedCount++;
@@ -35,35 +37,54 @@ const BackgroundTab = ({ increaseLoadCount }: BackgroundTabProps) => {
 
       img.onload = onImageLoadOrError;
       img.onerror = () => {
-        console.error(`${src} load failed`);
+        console.error(`${bg.name} load failed`);
         onImageLoadOrError();
       };
     });
-  }, [increaseLoadCount]);
+  }, [backgrounds, isLoading, increaseLoadCount]);
 
-  // --- [수정] 핸들러 로직이 더 간단해집니다. ---
   const handleImageClick = useCallback(
     (imageName: string) => {
       updateUserInfo({
-        starBackground: imageName, // UserInfo의 속성과 정확히 일치
+        starBackground: imageName,
       });
     },
     [updateUserInfo]
   );
 
+  if (isLoading) {
+    return (
+      <div className={s.tabContainer}>
+        <div className={s.tabContent}>
+          <p>로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className={s.tabContainer}>
+        <div className={s.tabContent}>
+          <p>배경을 불러오는데 실패했습니다.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={s.tabContainer}>
       <div className={s.tabContent}>
         <div className={s.gridItems}>
-          {BackgroundImages.map((image) => (
+          {backgrounds?.map((bg) => (
             <div
-              key={image.name}
+              key={bg.id}
               className={`${s.item} ${
-                image.name === userInfo.starBackground ? s.selected : ""
+                bg.name === userInfo.starBackground ? s.selected : ""
               }`}
-              onClick={() => handleImageClick(image.name)}
+              onClick={() => handleImageClick(bg.name)}
             >
-              <img src={image.src} alt={image.name} />
+              <img src={getBackgroundThumbnail(bg.name)} alt={bg.description} />
             </div>
           ))}
         </div>

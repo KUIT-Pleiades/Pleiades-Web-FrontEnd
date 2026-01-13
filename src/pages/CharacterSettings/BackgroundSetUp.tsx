@@ -18,7 +18,7 @@ interface BackgroundSetUpProps {
 const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userInfo, updateUserInfo } = useCharacterStore();
+  const { userInfo, updateUserInfo, updateImgVersion } = useCharacterStore();
   const [loadingState, setLoadingState] = useState(false);
   const [showList, setShowList] = useState(true);
 
@@ -58,6 +58,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       } else {
         console.log("회원가입 성공");
         updateUserInfo(signupData);
+        updateImgVersion(); // 이미지 버전 업데이트
         navigate("/home");
       }
     } catch (error) {
