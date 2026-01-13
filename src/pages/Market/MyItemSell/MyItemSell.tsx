@@ -125,14 +125,18 @@ const MyItemSell: React.FC = () => {
     // 내 아이템 목록 불러오기
     const fetchMyItems = async () => {
         if (USE_MOCK) {
-            setMyItems(mockMyItems);
+            setMyItems(mockMyItems || []);
             return;
         }
 
         try {
             const response = await axiosRequest<MyItemsResponseDto>('/store/sellable', 'GET', null);
+            console.log("판매 가능한 내 아이템 불러오기 요청 response :", response);
             if (response.status === 200) {
-                setMyItems(response.data.ownerships || []);
+                setMyItems(response.data.ownerships);
+                console.log("판매 가능한 내 아이템 불러오기 성공 200");
+                console.log("response.data.ownerships : ", response.data.ownerships);
+                console.log("myItems : ", myItems);
             } else {
                 console.error('아이템 목록 불러오기 실패:', response.message);
                 setMyItems([]); // 실패 시에도 빈 배열로 유지
