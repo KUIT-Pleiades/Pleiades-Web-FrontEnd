@@ -39,7 +39,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   };
 
   const complete = async () => {
-    setLoadingState(false);
+    setLoadingState(false); // 로딩 시작 (Pending 컴포넌트 표시)
 
     try {
       const characterImg = await generateImageMutation.mutateAsync(userInfo);
@@ -58,12 +58,16 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       } else {
         console.log("회원가입 성공");
         updateUserInfo(signupData);
-        updateImgVersion(); // 이미지 버전 업데이트
+        updateImgVersion();
         navigate("/home");
       }
     } catch (error) {
       console.error("회원가입 또는 이미지 생성 실패", error);
       navigate("/loginfail");
+    } finally {
+        // 성공하든 실패하든 페이지 이동 전까지는 로딩 유지가 나을 수 있음
+        // 에러 시에만 로딩을 꺼야 할 수도 있지만, 
+        // navigate로 이동해버리므로 여기서 굳이 true로 바꿀 필요는 없을 수 있음
     }
   };
 
