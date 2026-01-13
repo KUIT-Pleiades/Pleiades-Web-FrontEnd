@@ -76,7 +76,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             alt="nose"
           />
           <img
-            className={s.characterNose} // 입
+            className={s.characterMouth} // 입
             src={`${IMG_BASE_URL}${getImagePath(userInfo.face.mouth)}`}
             alt="mouth"
           />
