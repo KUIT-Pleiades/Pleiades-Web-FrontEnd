@@ -28,11 +28,16 @@ export const getCategoryFolderByType = (type: string): string => {
 
 /**
  * 원본 이미지 경로를 생성합니다.
- * @param name 파일명
+ * 이미 폴더 경로가 포함된 경우 그대로 반환합니다.
+ * @param name 파일명 또는 전체 경로
  * @returns 전체 경로 (예: face/face_hair_1.png)
  */
 export const getImagePath = (name: string): string => {
   if (!name) return "";
+  // 이미 폴더 경로가 포함된 경우 그대로 반환
+  if (name.startsWith("face/") || name.startsWith("fashion/") || name.startsWith("background/")) {
+    return name;
+  }
   const folder = getCategoryFolder(name);
   return `${folder}/${name}`;
 };

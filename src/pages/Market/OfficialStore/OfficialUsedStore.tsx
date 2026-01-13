@@ -30,6 +30,7 @@ import {
 } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 import PurchaseErrorModal from "../../../modals/AddToCartModal/PurchaseErrorModal";
+import { getImagePath } from "../../../functions/getImage";
 
 // 일반 아이콘
 import faceIcon from "../../../assets/market/face.svg";
@@ -444,7 +445,7 @@ export default function OfficialUsedStore() {
           height: isSheetCollapsed ? "91dvh" : "",
           backgroundImage:
             activeCategory === "background" && tryOnUserInfo.starBackground
-              ? `url(${IMG_BASE_URL}${tryOnUserInfo.starBackground})`
+              ? `url(${IMG_BASE_URL}${getImagePath(tryOnUserInfo.starBackground)})`
               : "none", // 배경 이미지가 없을 때는 'none'으로 설정
         }}
       >
@@ -471,42 +472,42 @@ export default function OfficialUsedStore() {
           {tryOnUserInfo.face.skinColor && (
             <img
               className={s.characterSkin}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.skinColor}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.skinColor)}`}
               alt="skin"
             />
           )}
           {tryOnUserInfo.face.eyes && (
             <img
               className={s.characterEyes}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.eyes}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.eyes)}`}
               alt="eyes"
             />
           )}
           {tryOnUserInfo.face.nose && (
             <img
               className={s.characterNose}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.nose}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.nose)}`}
               alt="nose"
             />
           )}
           {tryOnUserInfo.face.mouth && (
             <img
               className={s.characterMouth}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.mouth}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.mouth)}`}
               alt="mouth"
             />
           )}
           {tryOnUserInfo.face.mole && (
             <img
               className={s.characterMole}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.mole}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.mole)}`}
               alt="mole"
             />
           )}
           {tryOnUserInfo.face.hair && (
             <img
               className={s.characterHair}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.face.hair}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.hair)}`}
               alt="hair"
             />
           )}
@@ -515,14 +516,14 @@ export default function OfficialUsedStore() {
               {tryOnUserInfo.outfit.top && (
                 <img
                   className={s.characterTop}
-                  src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.top}`}
+                  src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.top)}`}
                   alt="top"
                 />
               )}
               {tryOnUserInfo.outfit.bottom && (
                 <img
                   className={s.characterBottom}
-                  src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.bottom}`}
+                  src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.bottom)}`}
                   alt="bottom"
                 />
               )}
@@ -531,14 +532,14 @@ export default function OfficialUsedStore() {
           {isWearingSet && (
             <img
               className={s.characterSet}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.set}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.set)}`}
               alt="set"
             />
           )}
           {tryOnUserInfo.outfit.shoes && (
             <img
               className={s.characterShoes}
-              src={`${IMG_BASE_URL}${tryOnUserInfo.outfit.shoes}`}
+              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.shoes)}`}
               alt="shoes"
             />
           )}
@@ -548,7 +549,7 @@ export default function OfficialUsedStore() {
               <img
                 key={part}
                 className={s[part]}
-                src={`${IMG_BASE_URL}${src}`}
+                src={`${IMG_BASE_URL}${getImagePath(src)}`}
                 alt={part}
               />
             );
