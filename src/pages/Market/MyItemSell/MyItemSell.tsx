@@ -6,10 +6,10 @@ import backArrow from '../../../assets/pleiadesBackArrow.svg';
 import { axiosRequest } from '../../../functions/axiosRequest';
 
 // ============= 배포 시 false로 변경 =============
-const USE_MOCK = false;
+const USE_MOCK = true;
 // =============================================
 
-type ItemCategory = 'FACE' | 'FASHION' | 'BACKGROUND';
+type ItemCategory = 'FACE' | 'FASHION' | 'BG';
 
 // 아이템 상세 정보 DTO
 interface ItemDetailDto {
@@ -46,6 +46,24 @@ const mockMyItems: OwnershipDto[] = [
     { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
     { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
     { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
+    { id: 1001, item: { id: 1234, name: "face_eyes_1.png", description: "파란눈", price: 100, category: 'FACE', type: "EYES" } },
+    { id: 1002, item: { id: 1235, name: "face_eyes_2.png", description: "초록눈", price: 150, category: 'FACE', type: "EYES" } },
+    { id: 1003, item: { id: 2234, name: "face_nose_1.png", description: "작은코", price: 80, category: 'FACE', type: "NOSE" } },
+    { id: 1004, item: { id: 3234, name: "face_mouth_1.png", description: "미소입", price: 110, category: 'FACE', type: "MOUTH" } },
+    { id: 1005, item: { id: 3235, name: "face_mouth_2.png", description: "도톰입술", price: 120, category: 'FACE', type: "MOUTH" } },
+    { id: 1006, item: { id: 4234, name: "face_mole_1.png", description: "왼쪽볼점", price: 60, category: 'FACE', type: "MOLE" } },
+    { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
+    { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
+    { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
+    { id: 1001, item: { id: 1234, name: "face_eyes_1.png", description: "파란눈", price: 100, category: 'FACE', type: "EYES" } },
+    { id: 1002, item: { id: 1235, name: "face_eyes_2.png", description: "초록눈", price: 150, category: 'FACE', type: "EYES" } },
+    { id: 1003, item: { id: 2234, name: "face_nose_1.png", description: "작은코", price: 80, category: 'FACE', type: "NOSE" } },
+    { id: 1004, item: { id: 3234, name: "face_mouth_1.png", description: "미소입", price: 110, category: 'FACE', type: "MOUTH" } },
+    { id: 1005, item: { id: 3235, name: "face_mouth_2.png", description: "도톰입술", price: 120, category: 'FACE', type: "MOUTH" } },
+    { id: 1006, item: { id: 4234, name: "face_mole_1.png", description: "왼쪽볼점", price: 60, category: 'FACE', type: "MOLE" } },
+    { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
+    { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
+    { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
 
     // -------------------------------------------------------------------------
     // [Fashion Items] category: 'fashion'으로 변경
@@ -59,29 +77,29 @@ const mockMyItems: OwnershipDto[] = [
     { id: 2007, item: { id: 10001, name: "fashion_acc_ears_1.png", description: "베이지 버킷햇", price: 80, category: 'FASHION', type: "EARS" } },
     { id: 2008, item: { id: 10002, name: "fashion_acc_head_1.png", description: "동그란 안경", price: 60, category: 'FASHION', type: "HEAD" } },
     { id: 2009, item: { id: 10003, name: "fashion_acc_neck_1.png", description: "진주 목걸이", price: 120, category: 'FASHION', type: "NECK" } },
-    { id: 2010, item: { id: 10004, name: "fashion_acc_leftWrist_1.png", description: "실버 체인 팔찌", price: 95, category: 'FASHION', type: "LEFTWRIST" } },
-    { id: 2011, item: { id: 10006, name: "fashion_acc_leftHand_1.png", description: "심플한 은반지", price: 70, category: 'FASHION', type: "LEFTHAND" } },
-    { id: 2012, item: { id: 10007, name: "fashion_acc_leftHand_2.png", description: "골드 너클 링", price: 85, category: 'FASHION', type: "LEFTHAND" } },
-    { id: 2013, item: { id: 10008, name: "fashion_acc_eyes_1.png", description: "블랙 선글라스", price: 130, category: 'FASHION', type: "EYESITEM" } },
+    { id: 2010, item: { id: 10004, name: "fashion_acc_leftWrist_1.png", description: "실버 체인 팔찌", price: 95, category: 'FASHION', type: "LEFT_WRIST" } },
+    { id: 2011, item: { id: 10006, name: "fashion_acc_leftHand_1.png", description: "심플한 은반지", price: 70, category: 'FASHION', type: "LEFT_HAND" } },
+    { id: 2012, item: { id: 10007, name: "fashion_acc_leftHand_2.png", description: "골드 너클 링", price: 85, category: 'FASHION', type: "LEFT_HAND" } },
+    { id: 2013, item: { id: 10008, name: "fashion_acc_eyes_1.png", description: "블랙 선글라스", price: 130, category: 'FASHION', type: "EYES_ITEM" } },
 
     // -------------------------------------------------------------------------
     // [Background Items]
     // -------------------------------------------------------------------------
-    { id: 3001, item: { id: 10001, name: "bg_star_1.png", description: "보라빛 우주 배경", price: 300, category: 'BACKGROUND', type: "STARBACKGROUND" } },
-    { id: 3002, item: { id: 10002, name: "bg_star_2.png", description: "푸른 별자리 배경", price: 320, category: 'BACKGROUND', type: "STATIONBACKGROUND" } },
-    { id: 3003, item: { id: 10003, name: "bg_star_3.png", description: "노을빛 행성 배경", price: 350, category: 'BACKGROUND', type: "STATIONBACKGROUND" } },
+    { id: 3001, item: { id: 10001, name: "bg_star_1.png", description: "보라빛 우주 배경", price: 300, category: 'BG', type: "STAR_BG" } },
+    { id: 3002, item: { id: 10002, name: "bg_star_2.png", description: "푸른 별자리 배경", price: 320, category: 'BG', type: "STATION_BG" } },
+    { id: 3003, item: { id: 10003, name: "bg_star_3.png", description: "노을빛 행성 배경", price: 350, category: 'BG', type: "STATION_BG" } },
 ];
 
 const MAIN_TABS: { key: ItemCategory; label: string }[] = [
     { key: 'FACE', label: '얼굴' },
     { key: 'FASHION', label: '의상' },
-    { key: 'BACKGROUND', label: '배경' },
+    { key: 'BG', label: '배경' },
 ];
 
 const SUB_TABS: Record<ItemCategory, string[]> = {
     FACE: ['전체', '머리', '눈', '코', '입', '점'],
     FASHION: ['전체', '상의', '하의', '세트', '신발', '악세서리'],
-    BACKGROUND: ['전체', '별', '우주정거장'],
+    BG: ['전체', '별', '우주정거장'],
 };
 
 // UI Sub Label -> API Types (필터링용)
@@ -95,17 +113,17 @@ const SUBLABEL_TO_TYPES: Record<ItemCategory, Record<string, string[]>> = {
         점: ['MOLE'],
     },
     FASHION: {
-        전체: ['TOP', 'BOTTOM', 'SET', 'SHOES', 'EARS', 'EYESITEM', 'HEAD', 'NECK', 'LEFTWRIST', 'RIGHTWRIST', 'LEFTHAND', 'RIGHTHAND'],
+        전체: ['TOP', 'BOTTOM', 'SET', 'SHOES', 'EARS', 'EYES_ITEM', 'HEAD', 'NECK', 'LEFT_WRIST', 'RIGHT_WRIST', 'LEFT_HAND', 'RIGHT_HAND'],
         상의: ['TOP'],
         하의: ['BOTTOM'],
         세트: ['SET'],
         신발: ['SHOES'],
-        악세서리: ['EARS', 'EYESITEM', 'HEAD', 'NECK', 'LEFTWRIST', 'RIGHTWRIST', 'LEFTHAND', 'RIGHTHAND'],
+        악세서리: ['EARS', 'EYES_ITEM', 'HEAD', 'NECK', 'LEFT_WRIST', 'RIGHT_WRIST', 'LEFT_HAND', 'RIGHT_HAND'],
     },
-    BACKGROUND: {
-        전체: ['STARBACKGROUND', 'STATIONBACKGROUND'],
-        별: ['STARBACKGROUND'],
-        우주정거장: ['STATIONBACKGROUND'],
+    BG: {
+        전체: ['STAR_BG', 'STATION_BG'],
+        별: ['STAR_BG'],
+        우주정거장: ['STATION_BG'],
     },
 };
 
@@ -219,26 +237,29 @@ const MyItemSell: React.FC = () => {
             </div>
 
             {/* 아이템 그리드 */}
-            <div className={s.grid}>
-                {filtered.map((ownership) => (
-                    <div
-                        key={ownership.id}
-                        className={s.card}
-                        onClick={() => {
-                            setSelectedOwnership(ownership);
-                            setIsSellItemModalVisible(true);
-                            console.log('item.name : ', ownership.item.name);
-                        }}
-                    >
-                        {/* 이미지 경로 조합: ownership.item.name 사용 */}
-                        <img
-                            src={`${IMG_BASE_URL}${getThumbnailPath(ownership.item.name)}`}
-                            alt={ownership.item.description}
-                            className={s.itemThumb}
-                        />
-                    </div>
-                ))}
+            <div className={s.content}>
+                <div className={s.grid}>
+                    {filtered.map((ownership) => (
+                        <div
+                            key={ownership.id}
+                            className={s.card}
+                            onClick={() => {
+                                setSelectedOwnership(ownership);
+                                setIsSellItemModalVisible(true);
+                                console.log('item.name : ', ownership.item.name);
+                            }}
+                        >
+                            {/* 이미지 경로 조합: ownership.item.name 사용 */}
+                            <img
+                                src={`${IMG_BASE_URL}${getThumbnailPath(ownership.item.name)}`}
+                                alt={ownership.item.description}
+                                className={s.itemThumb}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
+            
 
             {/* 판매 모달 */}
             {isSellItemModalVisible && selectedOwnership && (
