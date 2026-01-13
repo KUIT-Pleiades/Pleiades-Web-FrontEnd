@@ -6,6 +6,7 @@ const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
  * @returns 폴더명 (face, fashion, background)
  */
 export const getCategoryFolder = (name: string): string => {
+  if (!name) return "face"; // null/undefined 체크
   if (name.startsWith("face_")) return "face";
   if (name.startsWith("bg_")) return "background";
   return "fashion";
@@ -31,6 +32,7 @@ export const getCategoryFolderByType = (type: string): string => {
  * @returns 전체 경로 (예: face/face_hair_1.png)
  */
 export const getImagePath = (name: string): string => {
+  if (!name) return "";
   const folder = getCategoryFolder(name);
   return `${folder}/${name}`;
 };
@@ -52,6 +54,7 @@ export const getImagePathByType = (name: string, type: string): string => {
  * @returns 썸네일 경로 (예: face/thumbnails/rec_face_hair_1.png)
  */
 export const getThumbnailPath = (name: string): string => {
+  if (!name) return "";
   const folder = getCategoryFolder(name);
   return `${folder}/thumbnails/rec_${name}`;
 };
