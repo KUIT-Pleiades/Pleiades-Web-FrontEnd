@@ -46,24 +46,6 @@ const mockMyItems: OwnershipDto[] = [
     { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
     { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
     { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
-    { id: 1001, item: { id: 1234, name: "face_eyes_1.png", description: "파란눈", price: 100, category: 'FACE', type: "EYES" } },
-    { id: 1002, item: { id: 1235, name: "face_eyes_2.png", description: "초록눈", price: 150, category: 'FACE', type: "EYES" } },
-    { id: 1003, item: { id: 2234, name: "face_nose_1.png", description: "작은코", price: 80, category: 'FACE', type: "NOSE" } },
-    { id: 1004, item: { id: 3234, name: "face_mouth_1.png", description: "미소입", price: 110, category: 'FACE', type: "MOUTH" } },
-    { id: 1005, item: { id: 3235, name: "face_mouth_2.png", description: "도톰입술", price: 120, category: 'FACE', type: "MOUTH" } },
-    { id: 1006, item: { id: 4234, name: "face_mole_1.png", description: "왼쪽볼점", price: 60, category: 'FACE', type: "MOLE" } },
-    { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
-    { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
-    { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
-    { id: 1001, item: { id: 1234, name: "face_eyes_1.png", description: "파란눈", price: 100, category: 'FACE', type: "EYES" } },
-    { id: 1002, item: { id: 1235, name: "face_eyes_2.png", description: "초록눈", price: 150, category: 'FACE', type: "EYES" } },
-    { id: 1003, item: { id: 2234, name: "face_nose_1.png", description: "작은코", price: 80, category: 'FACE', type: "NOSE" } },
-    { id: 1004, item: { id: 3234, name: "face_mouth_1.png", description: "미소입", price: 110, category: 'FACE', type: "MOUTH" } },
-    { id: 1005, item: { id: 3235, name: "face_mouth_2.png", description: "도톰입술", price: 120, category: 'FACE', type: "MOUTH" } },
-    { id: 1006, item: { id: 4234, name: "face_mole_1.png", description: "왼쪽볼점", price: 60, category: 'FACE', type: "MOLE" } },
-    { id: 1007, item: { id: 5234, name: "face_hair_1.png", description: "단발머리", price: 200, category: 'FACE', type: "HAIR" } },
-    { id: 1008, item: { id: 5235, name: "face_hair_2.png", description: "긴생머리", price: 210, category: 'FACE', type: "HAIR" } },
-    { id: 1009, item: { id: 5236, name: "face_hair_3.png", description: "곱슬머리", price: 220, category: 'FACE', type: "HAIR" } },
 
     // -------------------------------------------------------------------------
     // [Fashion Items] category: 'fashion'으로 변경
@@ -144,6 +126,7 @@ const MyItemSell: React.FC = () => {
     const fetchMyItems = async () => {
         if (USE_MOCK) {
             setMyItems(mockMyItems || []);
+            console.log('Mock data loaded');
             return;
         }
 
