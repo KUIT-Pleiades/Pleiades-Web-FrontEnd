@@ -9,7 +9,10 @@ import copyBtn from "../../../assets/btnImg/copyBtn.png";
 //import plusBtn from "../../../assets/btnImg/plusBtn.png"
 import onerIcon from "../../../assets/Icon/oner.png";
 import messageIcon from "../../../assets/Icon/messageIcon.png";
-import signalBtn from "../../../assets/btnImg/signalBtn.png";
+// import signalBtn from "../../../assets/btnImg/signalBtn.png";
+import { useSignalManager } from "../../../components/Signal/useSignalManager";
+import SignalButton from "../../../components/SignalButton/SignalButton";
+import SendSignalModal from "../../../components/Signal/SendSignalModal";
 import plusIcon from "../../../assets/Icon/plusIcon.png";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
@@ -88,8 +91,6 @@ const StationSlide: React.FC<StationSlideProps> = ({
     }
   };
 
-
-
   const character = useCharacterStore((state) => state.userInfo);
 
   // 친구 요청 보내는 함수 추가
@@ -113,6 +114,14 @@ const StationSlide: React.FC<StationSlideProps> = ({
     }
   };
 
+  const {
+    signalTo,
+    signalImageIndex,
+    isSendSignalPopupVisible,
+    sendSignal,
+    closeSendSignalPopup,
+  } = useSignalManager(false);
+
   return (
     <div className={s.container} onClick={onClose}>
       <div className={s.overlay}>
@@ -132,7 +141,7 @@ const StationSlide: React.FC<StationSlideProps> = ({
               <p>{stationData.intro}</p>
               <div className={s.codeCopy} onClick={handleShareStation}>
                 <img src={copyBtn} alt="" />
-                {isCopied ? "복사 완료!" : "정거장 코드 복사"}
+                {isCopied ? "복사 완료!" : "정거장 공유하기"}
               </div>
             </div>
           </div>
@@ -180,11 +189,16 @@ const StationSlide: React.FC<StationSlideProps> = ({
                       <div className={s.memberHandle}>@{member.userId}</div>
                     </div>
                     {member.isFriend && member.userId !== character.userId && (
-                      <img
-                        src={signalBtn}
-                        alt="signal button"
-                        className={s.signalBtn}
+                      <SignalButton
+                        onClickSignal={() =>{
+                          sendSignal(member.userId, member.userName)
+                        }}
                       />
+                      // <img
+                      //   src={signalBtn}
+                      //   alt="signal button"
+                      //   className={s.signalBtn}
+                      // />
                     )}
                   </div>
                 ))}
@@ -204,6 +218,15 @@ const StationSlide: React.FC<StationSlideProps> = ({
           </span>
         </div>
       )}
+
+      {isSendSignalPopupVisible && (
+        <SendSignalModal
+          username={signalTo}
+          handleCloseSendSignalPopup={closeSendSignalPopup}
+          imageIndex={signalImageIndex}
+        />
+      )}
+
     </div>
   );
 };

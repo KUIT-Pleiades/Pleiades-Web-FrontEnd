@@ -37,4 +37,4 @@ const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
     )
 }
 
-export default SignalButton
+export default SignalButton;
