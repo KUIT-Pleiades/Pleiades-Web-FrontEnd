@@ -149,7 +149,10 @@ const StationSlide: React.FC<StationSlideProps> = ({
           <div className={s.content}>
             <div className={s.settingButton} onClick={handleSettingClick}>
               정거장 설정
-              <span className={s.arrow}>›</span>
+              {/* <span className={s.arrow}>›</span> */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="15" viewBox="0 0 8 15" fill="none">
+                <path d="M0.5 0.5L7.5 7.50007L0.5 14.5" stroke="#17151C" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
 
             <div className={s.memberSection}>
@@ -194,11 +197,6 @@ const StationSlide: React.FC<StationSlideProps> = ({
                           sendSignal(member.userId, member.userName)
                         }}
                       />
-                      // <img
-                      //   src={signalBtn}
-                      //   alt="signal button"
-                      //   className={s.signalBtn}
-                      // />
                     )}
                   </div>
                 ))}

@@ -9,6 +9,7 @@ interface SignalButtonProps {
 
 const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
     const [isSignalPopupVisible, setIsSignalPopupVisible] = useState(false);
+
     const showSignalPopup = () => {
         setIsSignalPopupVisible(true);
         setTimeout(() => {
@@ -17,24 +18,22 @@ const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
     };
 
     return (
-        <>
-            {isSignalPopupVisible ? (
-            <button className={s.onSignalButton}>
-                <img src={signal} alt="onSignal" className={s.signalImg} />
-            </button>
-            ) : (
-            <button
-                className={s.signalButton}
-                onClick={() => {
-                showSignalPopup();
-                onClickSignal();
-                }}
-            >
-                <img src={signal} alt="signal" className={s.signalImg} />
-            </button>
-            )}
-        </>
-    )
-}
+        <button
+            className={`${s.signalButton} ${isSignalPopupVisible ? s.on : ''}`}
+            onClick={() => {
+                if (!isSignalPopupVisible) { // 연속 클릭 방지
+                    showSignalPopup();
+                    onClickSignal();
+                }
+            }}
+        >
+            <img 
+                src={signal} 
+                alt="signal" 
+                className={s.signalImg} 
+            />
+        </button>
+    );
+};
 
 export default SignalButton;
