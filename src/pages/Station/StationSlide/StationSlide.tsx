@@ -220,11 +220,13 @@ const StationSlide: React.FC<StationSlideProps> = ({
       )}
 
       {isSendSignalPopupVisible && (
-        <SendSignalModal
-          username={signalTo}
-          handleCloseSendSignalPopup={closeSendSignalPopup}
-          imageIndex={signalImageIndex}
-        />
+        <div onClick={(e) => e.stopPropagation()}> 
+          <SendSignalModal
+            username={signalTo}
+            handleCloseSendSignalPopup={closeSendSignalPopup}
+            imageIndex={signalImageIndex}
+          />
+        </div>
       )}
 
     </div>
