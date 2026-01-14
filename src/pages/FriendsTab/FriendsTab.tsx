@@ -10,8 +10,8 @@ import { Social } from '../../interfaces/Interfaces';
 import pleiadesLogo from '../../assets/FriendsTab/pleiadesLogoNoFriends.png';
 import backArrow from '../../assets/FriendsTab/backArrow.svg';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import SendSignalPopup from '../../components/Signal/SendSignalModal';
-import ReceiveSignalPopup from '../../components/Signal/ReceivedSignalModal';
+import SendSignalModal from '../../components/Signal/SendSignalModal';
+import ReceiveSignalModal from '../../components/Signal/ReceivedSignalModal';
 import { useSignalManager } from '../../components/Signal/useSignalManager';
 
 // 🔧 axios 응답 구조에 맞게 response.data 리턴
@@ -111,7 +111,7 @@ const FriendsTab: React.FC = () => {
       )}
 
       {isSendSignalPopupVisible && (
-        <SendSignalPopup
+        <SendSignalModal
           username={signalTo}
           handleCloseSendSignalPopup={closeSendSignalPopup}
           imageIndex={signalImageIndex}
@@ -119,7 +119,7 @@ const FriendsTab: React.FC = () => {
       )}
 
       {isReceiveSignalPopupVisible && signalsQueue.length > 0 && (
-        <ReceiveSignalPopup
+        <ReceiveSignalModal
           username={signalsQueue[currentSignalIndex].userName}
           handleCloseReceiveSignalPopup={closeReceiveSignalPopup}
           imageIndex={signalsQueue[currentSignalIndex].imageIndex}
