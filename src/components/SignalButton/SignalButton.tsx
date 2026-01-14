@@ -14,7 +14,7 @@ const SignalButton: React.FC<SignalButtonProps> = ({ onClickSignal }) => {
         setIsSignalPopupVisible(true);
         setTimeout(() => {
             setIsSignalPopupVisible(false);
-        }, 1000);
+        }, 1500);
     };
 
     return (
