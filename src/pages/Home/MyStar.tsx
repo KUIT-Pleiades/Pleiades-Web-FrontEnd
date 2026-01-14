@@ -5,20 +5,22 @@ import { useCharacterStore } from "../../store/useCharacterStore";
 import pleiadeslogo from "../../assets/bottomBarImg/starIconSelected.png";
 import diary from "../../assets/home/diary.svg";
 import HomeBar from "./HomeBar/HomeBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function MyStar() {
-  const { userInfo, fetchUserStone, imgVersion } = useCharacterStore();
+  const { userInfo, fetchUserInfo, fetchUserStone, imgVersion } = useCharacterStore();
   const navigate = useNavigate();
+  const location = useLocation();
   // 스토어의 imgVersion을 뒤에 추가
   const userCharacter = `${userInfo.character}?t=${imgVersion}`;
   const background = getImage(userInfo.starBackground);
   const stone = userInfo.stone;
 
   useEffect(() => {
+    fetchUserInfo();
     fetchUserStone();
-  }, []);
+  }, [location.state]);
 
   const showDiary = () => {
     navigate("/report");
