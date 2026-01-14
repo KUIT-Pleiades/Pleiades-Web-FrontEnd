@@ -78,7 +78,7 @@ const CreateStationBackground: React.FC<CreateStationBackgroundProps> = ({
                 ref={containerRef}
                 style={{
                     transition: "transform 0.3s ease-in-out",
-                    transform: isOpen ? "translateY(0)" : "translateY(85%)",
+                    transform: isOpen ? "translateY(0)" : "translateY(calc(100% - 34px))",
                 }}
             >
                 <div className={s.bottomBar} onClick={toggleOpen}>

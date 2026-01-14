@@ -175,7 +175,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         className={s.backgroundList}
         style={{
           transition: "transform 0.3s ease-in-out",
-          transform: showList ? "translateY(0)" : "translateY(85%)",
+          transform: showList ? "translateY(0)" : "translateY(calc(100% - 34px))",
         }}
       >
         <div className={s.bottomBar} onClick={() => setShowList(true)}>
