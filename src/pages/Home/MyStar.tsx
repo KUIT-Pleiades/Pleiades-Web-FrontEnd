@@ -20,7 +20,7 @@ export default function MyStar() {
   useEffect(() => {
     fetchUserInfo();
     fetchUserStone();
-  }, [location.key]);
+  }, [location.state]);
 
   const showDiary = () => {
     navigate("/report");
