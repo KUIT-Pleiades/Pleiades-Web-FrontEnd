@@ -19,14 +19,16 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo, updateUserInfo, updateImgVersion } = useCharacterStore();
-  const [loadingState, setLoadingState] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showList, setShowList] = useState(true);
   const [selectedDescription, setSelectedDescription] = useState("");
 
   const isWearingSet = !!userInfo.outfit.set;
+  const isLoading = !isImageLoaded || isSubmitting;
 
-  const handleLoadingState = () => {
-    setLoadingState(true);
+  const onImageLoadComplete = () => {
+    setIsImageLoaded(true);
   };
 
   const handleItemSelect = (description: string) => {
@@ -44,7 +46,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   };
 
   const complete = async () => {
-    setLoadingState(false); // 로딩 시작 (Pending 컴포넌트 표시)
+    setIsSubmitting(true); // 제출 로딩 시작
 
     try {
       const characterImg = await generateImageMutation.mutateAsync(userInfo);
@@ -68,24 +70,21 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
       }
     } catch (error) {
       console.error("회원가입 또는 이미지 생성 실패", error);
+      setIsSubmitting(false);
       navigate("/loginfail");
-    } finally {
-        // 성공하든 실패하든 페이지 이동 전까지는 로딩 유지가 나을 수 있음
-        // 에러 시에만 로딩을 꺼야 할 수도 있지만, 
-        // navigate로 이동해버리므로 여기서 굳이 true로 바꿀 필요는 없을 수 있음
     }
   };
 
   return (
     <div style={backgroundStyle} className={s.background}>
       <div className={s.dim} />
-      {!loadingState && <Pending />}
+      {isLoading && <Pending />}
       <div className={s.showCharacter} onClick={() => setShowList(false)}>
-        <button className={s.previousBtn} onClick={onPrev}>
+        <button className={s.previousBtn} onClick={onPrev} disabled={isSubmitting}>
           이전
         </button>
         <p className={s.pHeader}>별 배경 선택하기</p>
-        <button className={s.nextBtn} onClick={complete}>
+        <button className={s.nextBtn} onClick={complete} disabled={isSubmitting}>
           완료
         </button>
         <p className={s.pDescription}>
@@ -182,7 +181,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
           <div className={s.bar} />
         </div>
 
-        <BackgroundTab increaseLoadCount={handleLoadingState} onItemSelect={handleItemSelect} />
+        <BackgroundTab increaseLoadCount={onImageLoadComplete} onItemSelect={handleItemSelect} />
       </div>
     </div>
   );
