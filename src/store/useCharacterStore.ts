@@ -7,6 +7,7 @@ interface CharacterStore {
   updateUserInfo: (updates: Partial<UserInfo>) => void; // 캐릭터 업데이트 함수
   resetUserInfo: () => void; // 캐릭터 초기화 함수
 
+  fetchUserInfo: () => Promise<void>; // 서버에서 사용자 정보를 가져옴
   fetchUserStone: () => Promise<void>; // 서버에서 스톤 정보를 가져옴
   chargeStone: () => Promise<void>; // 스톤 추가/차감 (결제 혹은 보상 등)
   fetchIsStoneCharged: () => Promise<void>; // 서버에서 스톤 충전 여부를 가져옴
@@ -70,6 +71,21 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
     })),
 
   resetUserInfo: () => set({ userInfo: initialUserInfo }),
+
+  // 서버에서 사용자 정보 가져오기 (GET)
+  fetchUserInfo: async () => {
+    try {
+      console.log("사용자 정보 동기화 중...");
+
+      const response = await axiosRequest<UserInfo>("/home", "GET", null);
+      if (response.status === 200 && response.data) {
+        set({ userInfo: response.data });
+        console.log("사용자 정보 동기화 완료");
+      }
+    } catch (error) {
+      console.error("사용자 정보를 가져오는데 실패했습니다.", error);
+    }
+  },
 
   // 내 스톤 정보 가져오기 (GET)
   fetchUserStone: async () => {

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { SignalFrom } from "../../interfaces/Interfaces";
 import { axiosRequest } from "../../functions/axiosRequest";
 
-export const useSignalManager = () => {
+export const useSignalManager = (shouldReceive: boolean = true) => {
   const navigate = useNavigate();
 
   const [signalTo, setSignalTo] = useState("");
@@ -79,8 +79,10 @@ export const useSignalManager = () => {
   };
 
   useEffect(() => {
-    receiveSignal();
-  }, []);
+    if(shouldReceive){
+      receiveSignal();
+    }
+  }, [shouldReceive]);
 
   return {
     signalTo,
