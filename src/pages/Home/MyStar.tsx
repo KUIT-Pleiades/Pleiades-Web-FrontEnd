@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function MyStar() {
-  const { userInfo, fetchUserStone, imgVersion } = useCharacterStore();
+  const { userInfo, fetchUserInfo, fetchUserStone, imgVersion } = useCharacterStore();
   const navigate = useNavigate();
   // 스토어의 imgVersion을 뒤에 추가
   const userCharacter = `${userInfo.character}?t=${imgVersion}`;
@@ -17,6 +17,7 @@ export default function MyStar() {
   const stone = userInfo.stone;
 
   useEffect(() => {
+    fetchUserInfo();
     fetchUserStone();
   }, []);
 
