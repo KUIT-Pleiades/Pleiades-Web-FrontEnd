@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { axiosRequest } from "../../../functions/axiosRequest";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { useNavigate } from "react-router-dom";
 import { StationDetails, StationMember } from "../../../interfaces/Interfaces";
+import { useStationSocket } from "../../../hooks/queries/useStationSocket";
 import s from "./StationInside.module.scss";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
 import customBtn from "../../../assets/btnImg/customBtn.png";
@@ -16,20 +17,115 @@ import DraggableMember from "./DraggableMember";
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
+interface CharacterLock {
+  isLocked: boolean;
+  lockedBy: string | null;
+}
+
 const StationInside: React.FC = () => {
   const navigate = useNavigate();
   const [stationData, setStationData] = useState<StationDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [showSlide, setShowSlide] = useState(false);
-  const [selectedMember, setSelectedMember] = useState<StationMember | null>(
-    null
-  );
-  const [memberPositions, setMemberPositions] = useState<
-    Record<string, { x: number; y: number }>
-  >({});
+  const [selectedMember, setSelectedMember] = useState<StationMember | null>(null);
+  const [memberPositions, setMemberPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [characterLocks, setCharacterLocks] = useState<Record<string, CharacterLock>>({});
   const [, setIsDragging] = useState(false);
   const { userInfo } = useCharacterStore();
+
+  const stationId = sessionStorage.getItem("stationId") as string;
+  const currentUserId = userInfo.userId;
+
+  // WebSocket 이벤트 핸들러
+  const handleMemberMoved = useCallback((targetUserId: string, x: number, y: number) => {
+    setMemberPositions((prev) => ({
+      ...prev,
+      [targetUserId]: { x, y },
+    }));
+  }, []);
+
+  const handleMemberJoined = useCallback((userId: string) => {
+    // 새 멤버 입장 시 데이터 새로고침
+    refreshStationData();
+  }, []);
+
+  const handleMemberLeft = useCallback((userId: string) => {
+    // 멤버 퇴장 시 잠금 해제
+    setCharacterLocks((prev) => {
+      const updated = { ...prev };
+      Object.keys(updated).forEach((key) => {
+        if (updated[key].lockedBy === userId) {
+          updated[key] = { isLocked: false, lockedBy: null };
+        }
+      });
+      return updated;
+    });
+  }, []);
+
+  const handleMemberAdded = useCallback((userId: string, x: number, y: number) => {
+    // 새 멤버 가입 시 데이터 새로고침
+    refreshStationData();
+  }, []);
+
+  const handleMemberRemoved = useCallback((userId: string) => {
+    // 멤버 제거 시 목록에서 삭제
+    setStationData((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        stationMembers: prev.stationMembers.filter((m) => m.userId !== userId),
+      };
+    });
+    setMemberPositions((prev) => {
+      const updated = { ...prev };
+      delete updated[userId];
+      return updated;
+    });
+  }, []);
+
+  const handleLockResult = useCallback((targetUserId: string, success: boolean, lockedBy?: string) => {
+    if (!success && lockedBy) {
+      alert(`${lockedBy}님이 이동 중입니다.`);
+    }
+  }, []);
+
+  const handleCharacterLocked = useCallback((targetUserId: string, lockedBy: string) => {
+    setCharacterLocks((prev) => ({
+      ...prev,
+      [targetUserId]: { isLocked: true, lockedBy },
+    }));
+  }, []);
+
+  const handleCharacterUnlocked = useCallback((targetUserId: string) => {
+    setCharacterLocks((prev) => ({
+      ...prev,
+      [targetUserId]: { isLocked: false, lockedBy: null },
+    }));
+  }, []);
+
+  const handleInitialMembers = useCallback((members: { userId: string; x: number; y: number }[]) => {
+    const positions: Record<string, { x: number; y: number }> = {};
+    members.forEach((m) => {
+      positions[m.userId] = { x: m.x, y: m.y };
+    });
+    setMemberPositions((prev) => ({ ...prev, ...positions }));
+  }, []);
+
+  // WebSocket 연결
+  const { isConnected, dragStart, move, dragEnd } = useStationSocket({
+    stationId,
+    userId: currentUserId,
+    onMemberMoved: handleMemberMoved,
+    onMemberJoined: handleMemberJoined,
+    onMemberLeft: handleMemberLeft,
+    onMemberAdded: handleMemberAdded,
+    onMemberRemoved: handleMemberRemoved,
+    onLockResult: handleLockResult,
+    onCharacterLocked: handleCharacterLocked,
+    onCharacterUnlocked: handleCharacterUnlocked,
+    onInitialMembers: handleInitialMembers,
+  });
 
   const handleSettingClick = () => {
     setShowSlide(true);
@@ -39,50 +135,38 @@ const StationInside: React.FC = () => {
     navigate("/station/stationbackgroundsetting");
   };
 
-  const handlePositionChange = (userId: string, x: number, y: number) => {
-    setMemberPositions((prev) => ({
-      ...prev,
-      [userId]: { x, y },
-    }));
-  };
-
   // 스테이션 데이터를 새로고침하는 함수
   const refreshStationData = async () => {
     if (!stationId) return;
     try {
-        const response = await axiosRequest<StationDetails>(
-            `/stations/${stationId}`,
-            "GET",
-            null
-        );
-        if (response) {
-            setStationData(response.data);
-        }
+      const response = await axiosRequest<StationDetails>(
+        `/stations/${stationId}`,
+        "GET",
+        null
+      );
+      if (response) {
+        setStationData(response.data);
+      }
     } catch (err) {
-        setError(err as Error);
+      setError(err as Error);
     }
-};
+  };
 
-  const currentUserId = userInfo.userId;
-
-  // 멤버 클릭 핸들러 추가
+  // 멤버 클릭 핸들러
   const handleMemberClick = (member: StationMember) => {
     setSelectedMember(member);
   };
 
-  // const stationCode = sessionStorage.getItem("stationCode") as string;
   const handleLeaveStation = () => {
     sessionStorage.removeItem("stationId");
     navigate("/station");
   };
 
-  const stationId = sessionStorage.getItem("stationId") as string;
-
   useEffect(() => {
-      if (!stationId) {
-          navigate("/station");
-          return;
-      }
+    if (!stationId) {
+      navigate("/station");
+      return;
+    }
   }, [stationId, navigate]);
 
   useEffect(() => {
@@ -129,6 +213,26 @@ const StationInside: React.FC = () => {
       }}
     >
       <div className={s.dim} />
+      
+      {/* 연결 상태 표시 (개발용, 필요시 제거) */}
+      {!isConnected && (
+        <div
+          style={{
+            position: "fixed",
+            top: 10,
+            right: 10,
+            background: "rgba(255,0,0,0.8)",
+            color: "white",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            fontSize: "12px",
+            zIndex: 1000,
+          }}
+        >
+          연결 중...
+        </div>
+      )}
+
       {!stationData.reportWritten && (
         <StationReport
           stationId={stationId}
@@ -164,7 +268,11 @@ const StationInside: React.FC = () => {
                   y: member.positionY,
                 }
               }
-              onPositionChange={handlePositionChange}
+              isLocked={characterLocks[member.userId]?.isLocked || false}
+              lockedBy={characterLocks[member.userId]?.lockedBy || null}
+              onDragStart={dragStart}
+              onMove={move}
+              onDragEnd={dragEnd}
               onMemberClick={() => handleMemberClick(member)}
               onDragStateChange={setIsDragging}
             />
