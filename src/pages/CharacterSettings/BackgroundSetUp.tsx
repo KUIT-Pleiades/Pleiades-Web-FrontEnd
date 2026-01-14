@@ -66,7 +66,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         console.log("회원가입 성공");
         updateUserInfo(signupData);
         updateImgVersion();
-        navigate("/home");
+        navigate("/home", { state: { refresh: Date.now() } });
       }
     } catch (error) {
       console.error("회원가입 또는 이미지 생성 실패", error);
