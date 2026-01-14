@@ -4,6 +4,7 @@ import s from './SetStationBackground.module.scss';
 interface SetStationBackgroundProps {
 	backgrounds: string[];
     backgroundPrevs: string[];
+    descriptions: string[];
     background: string;
     setBackground: React.Dispatch<React.SetStateAction<string>>;
     handleBack: () => void;
@@ -14,12 +15,14 @@ interface SetStationBackgroundProps {
 const SetStationBackground: React.FC<SetStationBackgroundProps> = ({
 	backgrounds,
     backgroundPrevs,
+    descriptions,
     background,
     setBackground,
     handleBack,
     handleComplete,
 }) => {
     const [isOpen, setIsOpen] = useState(true); // 슬라이드 박스 상태
+    const [selectedDescription, setSelectedDescription] = useState("");
     const containerRef = useRef<HTMLDivElement>(null);
 
     // 외부 클릭 시 슬라이드 박스 닫기
@@ -60,6 +63,15 @@ const SetStationBackground: React.FC<SetStationBackgroundProps> = ({
             </div>
 			<span className={s.guideText}>정거장 컨셉에 어울리는 배경을 골라보세요!</span>
 
+            <div
+                className={s.itemName}
+                style={{
+                    visibility: selectedDescription && isOpen ? "visible" : "hidden",
+                }}
+            >
+                <p>{selectedDescription}</p>
+            </div>
+
             {/* 슬라이드 박스 */}
             <div
                 className={s.slideBox}
@@ -78,7 +90,10 @@ const SetStationBackground: React.FC<SetStationBackgroundProps> = ({
                     key={prevSrc}
                     // 선택된 배경과 일치하면 s.selected 클래스가 추가되어 스타일이 적용됩니다.
                     className={`${s.backgroundItem} ${background === backgrounds[index] ? s.selected : ''}`}
-                    onClick={() => setBackground(backgrounds[index])}
+                    onClick={() => {
+                        setBackground(backgrounds[index]);
+                        setSelectedDescription(descriptions[index] || "");
+                    }}
                     style={{ backgroundImage: `url(${prevSrc})` }}
                     />
                 ))}

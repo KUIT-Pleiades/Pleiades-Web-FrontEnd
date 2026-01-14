@@ -21,11 +21,16 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
   const { userInfo, updateUserInfo, updateImgVersion } = useCharacterStore();
   const [loadingState, setLoadingState] = useState(false);
   const [showList, setShowList] = useState(true);
+  const [selectedDescription, setSelectedDescription] = useState("");
 
   const isWearingSet = !!userInfo.outfit.set;
 
   const handleLoadingState = () => {
     setLoadingState(true);
+  };
+
+  const handleItemSelect = (description: string) => {
+    setSelectedDescription(description);
   };
 
   const generateImageMutation = useGenerateCharacterImageMutation();
@@ -159,6 +164,14 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
         </div>
       </div>
       <div
+        className={s.itemName}
+        style={{
+          visibility: selectedDescription && showList ? "visible" : "hidden",
+        }}
+      >
+        <p>{selectedDescription}</p>
+      </div>
+      <div
         className={s.backgroundList}
         style={{
           transition: "transform 0.3s ease-in-out",
@@ -169,7 +182,7 @@ const BackgroundSetUp = ({ onPrev }: BackgroundSetUpProps) => {
           <div className={s.bar} />
         </div>
 
-        <BackgroundTab increaseLoadCount={handleLoadingState} />
+        <BackgroundTab increaseLoadCount={handleLoadingState} onItemSelect={handleItemSelect} />
       </div>
     </div>
   );

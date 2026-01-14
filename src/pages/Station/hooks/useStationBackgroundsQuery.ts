@@ -14,7 +14,8 @@ export const useStationBackgroundsQuery = () => {
       const backgroundPrevs = data.map(
         (bg) => `${IMG_BASE_URL}background/thumbnails/rec_${bg.name}`
       );
-      return { backgrounds, backgroundPrevs, rawData: data };
+      const descriptions = data.map((bg) => bg.description);
+      return { backgrounds, backgroundPrevs, descriptions, rawData: data };
     },
   });
 };

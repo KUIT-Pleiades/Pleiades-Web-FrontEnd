@@ -81,6 +81,7 @@ const StationBackgroundSetting: React.FC = () => {
       <SetStationBackground
         backgrounds={bgData.backgrounds}
         backgroundPrevs={bgData.backgroundPrevs}
+        descriptions={bgData.descriptions}
         background={background}
         setBackground={setBackground}
         handleBack={handleBack}

@@ -150,6 +150,7 @@ const CreateStation: React.FC = () => {
         <CreateStationBackground
           backgrounds={bgData.backgrounds}
           backgroundPrevs={bgData.backgroundPrevs}
+          descriptions={bgData.descriptions}
           background={background}
           setBackground={setBackground}
           handleBack={handleBack}
