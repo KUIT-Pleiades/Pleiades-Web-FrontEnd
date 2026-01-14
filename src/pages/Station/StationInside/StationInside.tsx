@@ -3,7 +3,7 @@ import { axiosRequest } from "../../../functions/axiosRequest";
 import { useCharacterStore } from "../../../store/useCharacterStore";
 import { useNavigate } from "react-router-dom";
 import { StationDetails, StationMember } from "../../../interfaces/Interfaces";
-import { useStationSocket } from "../../../hooks/queries/useStationSocket";
+import { useStationSocket } from "../../../hooks/queries/useStationSocket" // hooks 폴더에 파일 있는지 확인
 import s from "./StationInside.module.scss";
 import backBtn from "../../../assets/btnImg/whiteBackBtn.png";
 import customBtn from "../../../assets/btnImg/customBtn.png";
@@ -31,6 +31,7 @@ const StationInside: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<StationMember | null>(null);
   const [memberPositions, setMemberPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [characterLocks, setCharacterLocks] = useState<Record<string, CharacterLock>>({});
+  const [_onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set());
   const [, setIsDragging] = useState(false);
   const { userInfo } = useCharacterStore();
 
@@ -46,12 +47,18 @@ const StationInside: React.FC = () => {
   }, []);
 
   const handleMemberJoined = useCallback((userId: string) => {
-    // 새 멤버 입장 시 데이터 새로고침
-    refreshStationData();
+    // 접속한 유저 온라인 표시
+    setOnlineUsers((prev) => new Set([...prev, userId]));
   }, []);
 
   const handleMemberLeft = useCallback((userId: string) => {
-    // 멤버 퇴장 시 잠금 해제
+    // 퇴장한 유저 오프라인 표시
+    setOnlineUsers((prev) => {
+      const updated = new Set(prev);
+      updated.delete(userId);
+      return updated;
+    });
+    // 해당 유저가 잠근 캐릭터 해제
     setCharacterLocks((prev) => {
       const updated = { ...prev };
       Object.keys(updated).forEach((key) => {
@@ -64,7 +71,12 @@ const StationInside: React.FC = () => {
   }, []);
 
   const handleMemberAdded = useCallback((userId: string, x: number, y: number) => {
-    // 새 멤버 가입 시 데이터 새로고침
+    // 새 멤버 위치 추가
+    setMemberPositions((prev) => ({
+      ...prev,
+      [userId]: { x, y },
+    }));
+    // 멤버 정보 새로고침
     refreshStationData();
   }, []);
 
@@ -86,7 +98,7 @@ const StationInside: React.FC = () => {
 
   const handleLockResult = useCallback((targetUserId: string, success: boolean, lockedBy?: string) => {
     if (!success && lockedBy) {
-      alert(`${lockedBy}님이 이동 중입니다.`);
+      alert(`${targetUserId} 캐릭터를 ${lockedBy}님이 이동 중입니다.`);
     }
   }, []);
 
