@@ -118,19 +118,25 @@ const ShowStationList: React.FC = () => {
             if (USE_MOCK) {
                 const mock = getMockStations();
                 setStations(mock);
-                setCarouselStations(mock.stations.slice(0, 5));
+                const sortedMock = [...mock.stations].sort((a, b) => 
+                    new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime()
+                );
+                setCarouselStations(sortedMock.slice(0, 5));
                 return;
             }
 
             try {
                 // GET /stations API 호출
                 const response = await axiosRequest<Stations>('/stations', 'GET', null);
-                if (response && response.data && response.data.stations) {
-                    setStations({ stations: response.data.stations });
-                    // 캐러셀에는 최대 5개 또는 그 이하의 정거장을 표시합니다.
-                    setCarouselStations(response.data.stations.slice(0, 5));
+                if (response?.data?.stations) {
+                    const allStations = response.data.stations;
+                    setStations({ stations: allStations });
+                    const sortedForCarousel = [...allStations].sort((a, b) => {
+                        return new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime();
+                    });
+
+                    setCarouselStations(sortedForCarousel.slice(0, 5));
                 } else {
-                    // 데이터가 없는 경우 빈 배열로 초기화
                     setStations({ stations: [] });
                     setCarouselStations([]);
                 }
