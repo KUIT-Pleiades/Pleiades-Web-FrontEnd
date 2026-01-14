@@ -5,8 +5,8 @@ import s from "./OfficialUsedStore.module.scss";
 import MarketBottomSheet from "./MarketBottomSheet/MarketBottomSheet";
 import characterBackground from "../../../assets/backgroundImg/characterBackground.png";
 import resetBtn from "../../../assets/btnImg/resetBtn.svg";
-import addBagBtn from "../../../assets/btnImg/addBagBtn.svg";
-import heartBtn from "../../../assets/btnImg/heartBtn.svg";
+import addBagBtn from "../../../assets/btnImg/addBagBtn.png";
+import heartBtn from "../../../assets/btnImg/heartBtn.png";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
@@ -445,7 +445,9 @@ export default function OfficialUsedStore() {
           height: isSheetCollapsed ? "91dvh" : "",
           backgroundImage:
             activeCategory === "background" && tryOnUserInfo.starBackground
-              ? `url(${IMG_BASE_URL}${getImagePath(tryOnUserInfo.starBackground)})`
+              ? `url(${IMG_BASE_URL}${getImagePath(
+                  tryOnUserInfo.starBackground
+                )})`
               : "none", // 배경 이미지가 없을 때는 'none'으로 설정
         }}
       >
@@ -472,7 +474,9 @@ export default function OfficialUsedStore() {
           {tryOnUserInfo.face.skinColor && (
             <img
               className={s.characterSkin}
-              src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.face.skinColor)}`}
+              src={`${IMG_BASE_URL}${getImagePath(
+                tryOnUserInfo.face.skinColor
+              )}`}
               alt="skin"
             />
           )}
@@ -516,14 +520,18 @@ export default function OfficialUsedStore() {
               {tryOnUserInfo.outfit.top && (
                 <img
                   className={s.characterTop}
-                  src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.top)}`}
+                  src={`${IMG_BASE_URL}${getImagePath(
+                    tryOnUserInfo.outfit.top
+                  )}`}
                   alt="top"
                 />
               )}
               {tryOnUserInfo.outfit.bottom && (
                 <img
                   className={s.characterBottom}
-                  src={`${IMG_BASE_URL}${getImagePath(tryOnUserInfo.outfit.bottom)}`}
+                  src={`${IMG_BASE_URL}${getImagePath(
+                    tryOnUserInfo.outfit.bottom
+                  )}`}
                   alt="bottom"
                 />
               )}
