@@ -21,12 +21,20 @@ const getThumbnailPath = (name: string, type: string): string => {
   return `${folder}/thumbnails/rec_${name}`;
 };
 
+// 할인율 계산
+const calculateDiscountRate = (originalPrice: number, discountedPrice: number): number => {
+  if (originalPrice === 0) return 0;
+  const rate = ((originalPrice - discountedPrice) / originalPrice) * 100;
+  return Math.floor(rate);
+};
+
 interface Item {
   id: number;
   name: string;
   description: string;
   type: string;
   price: number;
+  discounted_price?: number;
 }
 
 interface ItemGridProps {
@@ -50,34 +58,43 @@ const ItemGrid: React.FC<ItemGridProps> = ({
 }) => {
   return (
     <div className={s.gridItems}>
-      {items.map((item) => (
-        <div
-          key={item.id}
-          // 2. onClick에서 onItemSelect 호출 시 모든 인자를 전달하도록 수정합니다.
-          onClick={() =>
-            onItemSelect(
-              item.id,
-              item.name,
-              item.description,
-              item.price,
-              item.type
-            )
-          }
-        >
-          <div className={itemClassName}>
-            <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name, item.type)}`} alt={item.name} />
-            {likedItems.has(item.id) && (
-              <div className={s.heartIconContainer}>
-                <img src={heartIcon} alt="liked" />
-              </div>
+      {items.map((item) => {
+        const discountRate = item.discounted_price
+          ? calculateDiscountRate(item.price, item.discounted_price)
+          : 0;
+
+        return (
+          <div
+            key={item.id}
+            className={s.itemWrapper}
+            onClick={() =>
+              onItemSelect(
+                item.id,
+                item.name,
+                item.description,
+                item.discounted_price ?? item.price,
+                item.type
+              )
+            }
+          >
+            {discountRate > 0 && (
+              <div className={s.discountBadge}>{discountRate}%</div>
             )}
+            <div className={itemClassName}>
+              <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name, item.type)}`} alt={item.name} />
+              {likedItems.has(item.id) && (
+                <div className={s.heartIconContainer}>
+                  <img src={heartIcon} alt="liked" />
+                </div>
+              )}
+            </div>
+            <div className={s.itemPrice}>
+              <img src={stoneIcon} alt="stone" />
+              {item.discounted_price ?? item.price}
+            </div>
           </div>
-          <div className={s.itemPrice}>
-            <img src={stoneIcon} alt="stone" />
-            {item.price}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };

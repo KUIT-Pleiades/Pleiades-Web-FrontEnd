@@ -6,9 +6,10 @@ import s from "./backgroundTab.module.scss";
 
 interface BackgroundTabProps {
   increaseLoadCount: () => void;
+  onItemSelect?: (description: string) => void;
 }
 
-const BackgroundTab = ({ increaseLoadCount }: BackgroundTabProps) => {
+const BackgroundTab = ({ increaseLoadCount, onItemSelect }: BackgroundTabProps) => {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const { data: backgrounds, isLoading, isError } = useStarBackgroundsQuery();
 
@@ -44,12 +45,13 @@ const BackgroundTab = ({ increaseLoadCount }: BackgroundTabProps) => {
   }, [backgrounds, isLoading, increaseLoadCount]);
 
   const handleImageClick = useCallback(
-    (imageName: string) => {
+    (imageName: string, description: string) => {
       updateUserInfo({
         starBackground: imageName,
       });
+      onItemSelect?.(description);
     },
-    [updateUserInfo]
+    [updateUserInfo, onItemSelect]
   );
 
   if (isLoading) {
@@ -82,7 +84,7 @@ const BackgroundTab = ({ increaseLoadCount }: BackgroundTabProps) => {
               className={`${s.item} ${
                 bg.name === userInfo.starBackground ? s.selected : ""
               }`}
-              onClick={() => handleImageClick(bg.name)}
+              onClick={() => handleImageClick(bg.name, bg.description)}
             >
               <img src={getBackgroundThumbnail(bg.name)} alt={bg.description} />
             </div>

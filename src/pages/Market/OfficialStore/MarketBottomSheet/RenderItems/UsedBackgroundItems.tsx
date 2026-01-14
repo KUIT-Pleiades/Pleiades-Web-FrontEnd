@@ -1,6 +1,7 @@
 import React from "react";
 import ItemGrid from "./ItemGrid";
 import { useUsedBackgroundItems } from "../../../../../hooks/queries/useUsedBackgroundItems";
+import s from "../MarketBottomSheet.module.scss";
 
 interface ItemProps {
   activeTheme: string;
@@ -56,6 +57,7 @@ const UsedBackgroundItems: React.FC<ItemProps> = ({
       items={filteredItems}
       likedItems={likedItems}
       onItemSelect={onItemSelect}
+      itemClassName={s.backgroundItem}
     />
   );
 };

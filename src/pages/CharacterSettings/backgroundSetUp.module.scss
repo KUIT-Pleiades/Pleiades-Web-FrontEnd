@@ -214,7 +214,7 @@ p {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	padding: 12px 0 16px 0;
+	padding: 16px 0;
 	background: transparent;
 	cursor: pointer;
 	z-index: 101;
@@ -229,4 +229,33 @@ p {
 	}
 
 
+}
+
+.itemName {
+	position: absolute;
+	bottom: 25dvh;
+	left: 5%;
+	display: flex;
+	min-width: 80px;
+	max-width: 150px;
+	height: 24px;
+	padding: 6px 16px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100px;
+	background: #FFF;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+	z-index: 2;
+
+	p {
+		margin: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		color: #444;
+		text-align: center;
+		font-family: Pretendard;
+		font-size: 14px;
+		font-weight: 600;
+	}
 }
