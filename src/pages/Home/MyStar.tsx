@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function MyStar() {
-  const { userInfo, fetchUserInfo, fetchUserStone, imgVersion } = useCharacterStore();
+  const { userInfo, fetchUserInfo, fetchUserStone, imgVersion, updateImgVersion } = useCharacterStore();
   const navigate = useNavigate();
   const location = useLocation();
   // 스토어의 imgVersion을 뒤에 추가
@@ -20,6 +20,7 @@ export default function MyStar() {
   useEffect(() => {
     fetchUserInfo();
     fetchUserStone();
+    updateImgVersion();
   }, [location.state]);
 
   const showDiary = () => {
