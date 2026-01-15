@@ -5,39 +5,30 @@ import stoneImg from "../../../assets/home/stone.svg";
 import custom from "../../../assets/home/custom.svg";
 import social from "../../../assets/home/social.svg";
 import { useNavigate } from "react-router-dom";
+import { useCharacterStore } from "../../../store/useCharacterStore";
+import { useEffect } from "react";
 
-interface HomeBarProps {
-  // coinBalance: number;
-  stoneBalance: number;
-}
-
-export default function HomeBar({ stoneBalance }: HomeBarProps) {
+export default function HomeBar() {
   const navigate = useNavigate();
+  const { userInfo, fetchUserStone } = useCharacterStore();
+
+  useEffect(() => {
+    fetchUserStone();
+  }, [userInfo.stone]);
+  
   return (
     <div className={s.homeBarContainer}>
+
       <div className={s.assets}>
-        {/* <div className={s.item}>
-          <img src={coinImg} alt="coin" />
-          <p className={s.balance}>{coinBalance}</p>
-        </div> */}
-        <div className={s.item}>
-          <img className={s.icon} src={stoneImg} alt="stone" />
-          <p className={s.balance}>{stoneBalance}</p>
-        </div>
+        <img className={s.icon} src={stoneImg} alt="stone" />
+        <p className={s.balance}>{userInfo.stone}</p>
       </div>
+
       <div className={s.utils}>
-        {/* <img
-          src={notification}
-          alt="알림"
-          onClick={() => navigate("/notification")}
-        /> */}
-        <img
-          src={custom}
-          alt="캐릭터수정"
-          onClick={() => navigate("/home/charactersetting")}
-        />
+        <img src={custom} alt="캐릭터수정" onClick={() => navigate("/home/charactersetting")} />
         <img src={social} alt="친구" onClick={() => navigate("/friendtab")} />
       </div>
+
     </div>
   );
 }
