@@ -20,7 +20,7 @@ export default function MyStar() {
     fetchUserInfo();
     fetchUserStone();
     updateImgVersion();
-  }, [location.state]);
+  }, [location.state, userInfo.character, imgVersion]);
 
   const showDiary = () => {
     navigate("/report");
@@ -30,7 +30,7 @@ export default function MyStar() {
     <div className={s.container}>
       <img className={s.background} src={background} alt="background" />
       <div className={s.dim} />
-      <HomeBar stoneBalance={userInfo.stone} />
+      <HomeBar />
       <div className={s.title}>
         <img className={s.planet} src={pleiadeslogo} alt="star" />
         <p className={s.owner}>{userInfo.userName}님의 별</p>
@@ -40,3 +40,4 @@ export default function MyStar() {
     </div>
   );
 }
+
