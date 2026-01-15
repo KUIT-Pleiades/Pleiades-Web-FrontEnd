@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { SignalFrom } from "../../interfaces/Interfaces";
 import { axiosRequest } from "../../functions/axiosRequest";
+import { trackEvent } from "../../utils/analytics";
 
 export const useSignalManager = (shouldReceive: boolean = true) => {
   const navigate = useNavigate();
@@ -32,7 +33,12 @@ export const useSignalManager = (shouldReceive: boolean = true) => {
         imageIndex: randomIndex,
       });
 
-      if (response.data.message === "Signal sent successfully" || response.data.message === "You already sent a signal") {
+      if (
+        response.data.message === "Signal sent successfully" || 
+        response.data.message === "You already sent a signal"
+      ) {
+        trackEvent("Social", "send_signal_complete");
+        
         openSendSignalPopup(friendName);
         console.log("시그널 전송 성공:", response.data.message);
       } else if (response.data.message === "Invalid or expired token") {

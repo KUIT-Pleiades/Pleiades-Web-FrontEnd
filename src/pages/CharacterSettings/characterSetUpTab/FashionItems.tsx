@@ -9,6 +9,7 @@ import {
 } from "../../../constants/characterTabs";
 import s from "./characterSetUptab.module.scss";
 import { IMG_BASE_URL, getThumbnailPath } from "../../../functions/getImage";
+import { trackEvent } from "../../../utils/analytics";
 
 interface FashionItemsProps {
   tabs: { id: string; name: string }[];
@@ -27,20 +28,12 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit, onItemSelect }: 
   const { data, isLoading, isError } = useWearableItems();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
 
-  // --- [수정] 필터링 로직이 훨씬 간단해집니다. ---
   const filteredItems = useMemo(() => {
     if (!data?.fashionItems) return [];
-
-    if (activeTab === "all") {
-      return data.fashionItems;
-    }
-    // 'fashion_acc' 탭이면 'fashion_acc_'로 시작하는 아이템만 필터링
+    if (activeTab === "all") return data.fashionItems;
     if (activeTab === "fashion_acc") {
-      return data.fashionItems.filter((item) =>
-        item.name.startsWith("fashion_acc_")
-      );
+      return data.fashionItems.filter((item) => item.name.startsWith("fashion_acc_"));
     }
-    // 그 외 탭들은 해당 id로 시작하는 아이템만 필터링
     return data.fashionItems.filter((item) =>
       getCategoryFromFileName(item.name).startsWith(activeTab)
     );
@@ -53,81 +46,54 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit, onItemSelect }: 
       const partName = getPartName(itemName);
 
       if (!mainCategory || !partName) return;
+      
+      const isEquipped = mainCategory === "outfit" 
+        ? userInfo.outfit[partName as keyof typeof userInfo.outfit] === itemName
+        : userInfo.item[partName as keyof typeof userInfo.item] === itemName;
+
+      trackEvent("Character", "preview_item", { 
+        item_id: itemName, 
+        category: activeTab,
+        action: isEquipped ? "deselect" : "select"
+      });
 
       if (mainCategory === "outfit") {
         const typedPartName = partName as keyof typeof userInfo.outfit;
-        const isEquipped = userInfo.outfit[typedPartName] === itemName;
-        const newOutfit = { ...userInfo.outfit };
-
         const mandatoryParts = ["top", "bottom", "set", "shoes"];
-        if (isEquipped && mandatoryParts.includes(typedPartName)) {
-          return;
-        }
+        if (isEquipped && mandatoryParts.includes(typedPartName)) return;
 
         const newValue = isEquipped ? "" : itemName;
-
-        // 아이템 설명 표시
         onItemSelect?.(isEquipped ? "" : item.description);
 
-        // --- [수정] 세트 <-> 상/하의 전환 로직을 개선합니다. ---
+        const newOutfit = { ...userInfo.outfit };
         if (typedPartName === "set" && newValue) {
-          // 1. 세트를 입을 때: 상의와 하의를 비웁니다.
-          newOutfit.top = "";
-          newOutfit.bottom = "";
-          newOutfit.set = newValue;
+          newOutfit.top = ""; newOutfit.bottom = ""; newOutfit.set = newValue;
         } else if (typedPartName === "top" && newValue) {
-          // 2. 상의를 입을 때: 세트를 비우고, 하의가 비어있다면 초기 하의를 복구합니다.
-          newOutfit.set = "";
-          newOutfit.top = newValue;
-          if (!newOutfit.bottom) {
-            newOutfit.bottom = initialOutfit.bottom;
-          }
+          newOutfit.set = ""; newOutfit.top = newValue;
+          if (!newOutfit.bottom) newOutfit.bottom = initialOutfit.bottom;
         } else if (typedPartName === "bottom" && newValue) {
-          // 3. 하의를 입을 때: 세트를 비우고, 상의가 비어있다면 초기 상의를 복구합니다.
-          newOutfit.set = "";
-          newOutfit.bottom = newValue;
-          if (!newOutfit.top) {
-            newOutfit.top = initialOutfit.top;
-          }
+          newOutfit.set = ""; newOutfit.bottom = newValue;
+          if (!newOutfit.top) newOutfit.top = initialOutfit.top;
         } else {
-          // 4. 그 외 (신발 선택 등)
           newOutfit[typedPartName] = newValue;
         }
-
         updateUserInfo({ outfit: newOutfit });
       } else if (mainCategory === "item") {
         const typedPartName = partName as keyof typeof userInfo.item;
-        const isEquipped = userInfo.item[typedPartName] === itemName;
         const newValue = isEquipped ? "" : itemName;
-
-        // 아이템 설명 표시
         onItemSelect?.(isEquipped ? "" : item.description);
-
-        updateUserInfo({
-          item: {
-            ...userInfo.item,
-            [typedPartName]: newValue,
-          },
-        });
+        updateUserInfo({ item: { ...userInfo.item, [typedPartName]: newValue } });
       }
     },
-    [userInfo, updateUserInfo, initialOutfit, onItemSelect]
+    [userInfo, updateUserInfo, initialOutfit, onItemSelect, activeTab]
   );
 
-  // 데이터 로딩이 완료되면 이미지 로딩 카운트를 증가시킵니다.
   useEffect(() => {
-    if (!isLoading && data) {
-      increaseLoadCount();
-    }
+    if (!isLoading && data) increaseLoadCount();
   }, [isLoading, data, increaseLoadCount]);
 
-  if (isLoading) {
-    return <div className={s.tabContainer}>아이템을 불러오는 중...</div>;
-  }
-
-  if (isError) {
-    return <div className={s.tabContainer}>아이템을 불러오지 못했습니다.</div>;
-  }
+  if (isLoading) return <div className={s.tabContainer}>아이템을 불러오는 중...</div>;
+  if (isError) return <div className={s.tabContainer}>아이템을 불러오지 못했습니다.</div>;
 
   return (
     <div className={s.tabContainer}>
@@ -136,7 +102,11 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit, onItemSelect }: 
           <button
             key={tab.id}
             className={activeTab === tab.id ? s.active : ""}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => {
+              // [Insight] 의상 카테고리(상의, 하의 등) 이동을 추적합니다.
+              trackEvent("Character", "click_sub_tab", { category: tab.id });
+              setActiveTab(tab.id);
+            }}
           >
             {tab.name}
           </button>
@@ -150,8 +120,7 @@ const FashionItems = ({ tabs, increaseLoadCount, initialOutfit, onItemSelect }: 
               className={`${s.item} ${
                 Object.values(userInfo.outfit).includes(item.name) ||
                 Object.values(userInfo.item).includes(item.name)
-                  ? s.selected
-                  : ""
+                  ? s.selected : ""
               }`}
               onClick={() => handleItemClick(item)}
             >

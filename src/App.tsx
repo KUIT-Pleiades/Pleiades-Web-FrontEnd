@@ -44,6 +44,7 @@ import TermsOfService from "./policies/TermsOfService";
 // ⭐ --- [추가] AboutUs, Contact 페이지 import --- ⭐
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
+import RouteTracker from "./components/Analytics/RouteTracker";
 
 
 function PwaCheckHandler({ children }: { children: React.ReactNode }) {
@@ -70,6 +71,7 @@ function PwaCheckHandler({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <RouteTracker />
       <PwaCheckHandler>
         <ScrollToTop />
 

@@ -14,6 +14,8 @@ import { axiosRequest } from "../../functions/axiosRequest";
 import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { useCharacterStore } from "../../store/useCharacterStore";
 
+import { trackEvent } from "../../utils/analytics";
+
 export default function LogIn() {
   const { userInfo, updateUserInfo } = useCharacterStore();
   const navigate = useNavigate();
@@ -56,10 +58,12 @@ export default function LogIn() {
   }, [navigate, updateUserInfo]);
 
   const naverLogIn = () => {
+    trackEvent("Auth", "click_login_naver");
     window.location.href = naverLogInRedirect();
   };
 
   const kakaoLogin = () => {
+    trackEvent("Auth", "click_login_kakao");
     kakaoLogInRedirect();
   };
 
