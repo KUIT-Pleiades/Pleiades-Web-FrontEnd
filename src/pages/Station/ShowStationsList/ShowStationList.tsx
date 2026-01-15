@@ -19,14 +19,6 @@ import noStationLogo from '../../../assets/StationList/noStationLogo.png';
 
 const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL;
 
-// 서버에서 오는 'bg_station_X' 값을 실제 배경 이미지 파일명으로 매핑합니다.
-// const stationBackgrounds: { [key: string]: string } = {
-//     bg_station_1: `${IMG_BASE_URL}station_dim_01.png`,
-//     bg_station_2: `${IMG_BASE_URL}station_dim_02.png`,
-//     bg_station_3: `${IMG_BASE_URL}station_dim_03.png`,
-//     bg_station_4: `${IMG_BASE_URL}station_dim_04.png`,
-// };
-
 function getStationBackgroundUrl(code: string | undefined, variant: 'dim' | 'full' | 'rec' = 'dim'): string {
     if (!code) return `${IMG_BASE_URL}background/station_dim_01.png`;
 
