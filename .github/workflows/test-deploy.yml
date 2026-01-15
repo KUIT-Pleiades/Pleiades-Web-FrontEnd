@@ -32,6 +32,7 @@ jobs:
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
           echo "VITE_IMG_BASE_URL=${{ secrets.VITE_IMG_BASE_URL }}" >> .env
           echo "VITE_IMG_MAKER=${{ secrets.VITE_IMG_MAKER }}" >> .env
+          echo "VITE_GA_MEASUREMENT_ID=${{ secrets.VITE_GA_MEASUREMENT_ID }}" >> .env
       - run: npm run build --if-present
       - name: S3 Deploy
         uses: awact/s3-action@master
