@@ -15,6 +15,7 @@
 	flex: 1;
 	display: flex;
 	flex-direction: row;
+	align-items: flex-start;
 }
 
 .icon {
@@ -42,4 +43,5 @@
 		height: 19.2;
 		margin-left: 15.91px;
 	}
+
 }

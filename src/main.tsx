@@ -11,7 +11,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
-if (GA_ID) {
+if (GA_ID && window.location.hostname !== "localhost") {
   ReactGA.initialize(GA_ID, {
     gaOptions: {
       send_page_view: false,
