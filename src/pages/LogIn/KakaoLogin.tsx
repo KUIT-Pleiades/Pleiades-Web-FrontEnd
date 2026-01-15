@@ -7,6 +7,7 @@ import { axiosRequest } from "../../functions/axiosRequest";
 import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { isMessage } from "../../functions/isMessage";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import { trackEvent } from "../../utils/analytics";
 
 export default function KakaoLogin() {
   const navigate = useNavigate();
@@ -34,33 +35,29 @@ export default function KakaoLogin() {
   }, [hash, navigate, setToken, updateUserInfo, url.search]);
 
   useEffect(() => {
-    if (authorization) {
-      const getUser = async () => {
-        try {
-          const userData = await axiosRequest<UserInfo | Message>(
-            "/home",
-            "GET",
-            null
-          );
+  if (authorization) {
+    const getUser = async () => {
+      try {
+        const userData = await axiosRequest<UserInfo | Message>("/home", "GET", null);
 
-          // 응답 상태 코드 확인 (선택사항)
-          console.log("응답 상태 코드:", userData.status);
-
-          if (isMessage(userData.data)) {
-            console.log(userData.data.message);
-            navigate("/onboarding");
-          } else {
-            updateUserInfo(userData.data);
-            navigate("/home");
-          }
-        } catch (error) {
-          console.error("사용자 정보 요청 오류:", error);
-          navigate("/loginfail"); // 오류 발생 시 로그인 실패 페이지로 이동
+        if (isMessage(userData.data)) {
+          /* [Insight] 신규 유저가 온보딩으로 넘어가는 시점입니다. */
+          trackEvent("Auth", "login_success", { method: "kakao", isNewUser: true });
+          navigate("/onboarding");
+        } else {
+          /* [Insight] 기존 유저가 메인 홈으로 들어가는 시점입니다. */
+          updateUserInfo(userData.data);
+          trackEvent("Auth", "login_success", { method: "kakao", isNewUser: false });
+          navigate("/home");
         }
-      };
-      getUser();
-    }
-  }, [authorization, navigate, updateUserInfo]);
+      } catch (error) {
+        console.error("사용자 정보 요청 오류:", error);
+        navigate("/loginfail");
+      }
+    };
+    getUser();
+  }
+}, [authorization, navigate, updateUserInfo]);
 
   return <LogInPending />;
 }

@@ -7,6 +7,7 @@ import { axiosRequest } from "../../../functions/axiosRequest";
 import CreateStationInfo from "./CreateStationInfo/CreateStationInfo";
 import CreateStationBackground from "./CreateStationBackground/CreateStationBackground";
 import { useStationBackgroundsQuery } from "../hooks/useStationBackgroundsQuery";
+import { trackEvent } from "../../../utils/analytics"; // [Insight] GA 이벤트 추적을 위해 유틸리티를 가져옵니다.
 
 const CreateStation: React.FC = () => {
   const navigate = useNavigate();
@@ -81,7 +82,6 @@ const CreateStation: React.FC = () => {
     };
 
     const backgroundName = getFileName(background);
-    console.log("backgroundName:", backgroundName);
 
     try {
       // 서버에 최종 데이터 전송
@@ -94,39 +94,24 @@ const CreateStation: React.FC = () => {
         intro: stationIntro,
         reportNoticeTime: reportNoticeTime,
       });
-      console.log("정거장 생성 요청 보내는 중. 요청 바디: ");
-      console.log("stationBackground: ", backgroundName);
-      console.log("name: ", stationName);
-      console.log("intro: ", stationIntro);
-      console.log("reportNoticeTime: ", reportNoticeTime);
 
       if (response && response.data.stationId) {
-        console.log("정거장 생성 성공:", response);
+        trackEvent("Station", "create_station_success"); 
+        
         sessionStorage.setItem("stationId", response.data.stationId);
         navigate("/station/stationinside");
       } else {
-        console.log("정거장 생성 실패. 응답: ", response);
         if (response?.message === "Invalid or expired token") {
-          console.log(
-            "토큰이 만료되었거나 유효하지 않습니다. 로그인 페이지로 이동합니다. 주석 해제 필요"
-          );
-          //navigate('/login');
+          // navigate('/login');
         }
       }
     } catch (error: unknown) {
       console.error("정거장 생성 중 오류:", error);
-
-      if (error instanceof Error) {
-        console.log(`정거장 생성 중 오류 발생: ${error.message}`);
-      } else {
-        console.log("알 수 없는 오류가 발생했습니다.");
-      }
     }
   };
 
   return (
     <div className={s.container}>
-      {/* 1단계: 정거장 정보 입력 */}
       {step === 1 && (
         <CreateStationInfo
           stationName={stationName}
@@ -145,7 +130,6 @@ const CreateStation: React.FC = () => {
         />
       )}
 
-      {/* 2단계: 배경 선택 */}
       {step === 2 && bgData && (
         <CreateStationBackground
           backgrounds={bgData.backgrounds}

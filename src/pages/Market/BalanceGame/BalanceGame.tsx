@@ -7,6 +7,7 @@ import backArrow from "../../../assets/pleiadesBackArrow.svg";
 import adStone from "../../../assets/market/Ad/stoneInPopup.svg";
 import popupLeftDeco from "../../../assets/market/Ad/popupLeftDeco.svg";
 import popupRightDeco from "../../../assets/market/Ad/popupRightDeco.svg";
+import { trackEvent } from "../../../utils/analytics";
 
 interface BalanceQuestion {
   id: string;
@@ -44,6 +45,11 @@ const BalanceGame: React.FC = () => {
   );
 
   const handleSelect = (qId: string, choice: string) => {
+    trackEvent("Game", "balance_game_participation", { 
+      selected: choice,
+      question_id: qId,
+      set_id: setId
+    });
     setAnswers((prev) => ({ ...prev, [qId]: choice }));
   };
 

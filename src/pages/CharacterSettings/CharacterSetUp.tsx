@@ -7,11 +7,11 @@ import Pending from "../PageManagement/Pending";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "../../interfaces/Interfaces";
 
-// --- [추가] 새로운 탭과 관련된 파일들을 가져옵니다. ---
 import { FACE_TABS, FASHION_TABS } from "../../constants/characterTabs";
 import FaceItems from "./characterSetUpTab/FaceItems";
 import FashionItems from "./characterSetUpTab/FashionItems";
 import { IMG_BASE_URL, getImagePath } from "../../functions/getImage";
+import { trackEvent } from "../../utils/analytics";
 
 interface CharacterSetUpProps {
   onNext: () => void;
@@ -31,6 +31,10 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
     structuredClone(userInfo)
   );
 
+  useEffect(() => {
+    trackEvent("Character", "view_character_setup");
+  }, []);
+
   // userInfo가 변경될 때 초기값 동기화
   useEffect(() => {
     setInitialUserInfo(structuredClone(userInfo));
@@ -41,6 +45,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
   };
 
   const handlePrev = () => {
+    trackEvent("Character", "click_cancel_setup");
     navigate(-1);
   };
 
@@ -49,10 +54,7 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
     setSelectedDescription(description);
   };
 
-  // --- [추가] 세트 의상 착용 여부를 확인하는 변수입니다. ---
   const isWearingSet = !!userInfo.outfit.set;
-
-  // 레이어 순서: 액세서리>얼굴>머리>상의>하의>신발>피부
 
   return (
     <div className={s.characterSetUpContainer}>
@@ -62,7 +64,13 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           취소
         </button>
         <p className={s.pHeader}>캐릭터 꾸미기</p>
-        <button className={s.nextBtn} onClick={onNext}>
+        <button 
+          className={s.nextBtn} 
+          onClick={() => {
+            trackEvent("Character", "click_next_setup");
+            onNext();
+          }}
+        >
           다음
         </button>
         <p className={s.pDescription}>내 캐릭터는 어떤 모습인가요?</p>
@@ -156,7 +164,10 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
           className={s.resetBtn}
           src={resetBtn}
           alt="리셋 버튼"
-          onClick={resetUserInfo}
+          onClick={() => {
+            trackEvent("Character", "click_reset_character");
+            resetUserInfo();
+          }}
         />
         <div
           className={s.itemName}
@@ -173,7 +184,10 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             className={`${s.menuItem} ${
               currentTab === "face" ? s.active : s.inactive
             }`}
-            onClick={() => setCurrentTab("face")}
+            onClick={() => {
+              trackEvent("Character", "switch_main_tab", { tab: "face" });
+              setCurrentTab("face");
+            }}
           >
             얼굴
           </button>
@@ -181,7 +195,10 @@ const CharacterSetUp = ({ onNext }: CharacterSetUpProps) => {
             className={`${s.menuItem} ${
               currentTab === "fashion" ? s.active : s.inactive
             }`}
-            onClick={() => setCurrentTab("fashion")}
+            onClick={() => {
+              trackEvent("Character", "switch_main_tab", { tab: "fashion" });
+              setCurrentTab("fashion");
+            }}
           >
             패션
           </button>

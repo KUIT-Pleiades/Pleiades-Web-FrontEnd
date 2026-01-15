@@ -1,5 +1,6 @@
 import s from "./BottomBar.module.scss";
 import { Link, useLocation } from "react-router-dom";
+import { trackEvent } from "../utils/analytics";
 
 interface BottomBarItemProps {
   itemTag: string;
@@ -21,8 +22,16 @@ export default function BottomBarItem({
   const location = useLocation();
   const isSelected = location.pathname.includes(link);
 
+  const handleNavClick = () => {
+    trackEvent("Navigation", "click_bottom_tab", { tab_name: itemTag });
+  };
+
   return (
-    <Link className={s.barItem} to={link}>
+    <Link 
+      className={s.barItem} 
+      to={link}
+      onClick={handleNavClick} // [추가] 클릭 시 GA 이벤트 실행
+    >
       {isSelected ? (
         <img className={s.icon} src={isDarkMode ? darkModeImg : selectedImg} alt=" " />
       ) : (

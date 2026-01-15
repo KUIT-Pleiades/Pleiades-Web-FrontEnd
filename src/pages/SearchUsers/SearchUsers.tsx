@@ -12,6 +12,7 @@ import { useSearchUsers } from './hooks/useSearchUsers';
 import { useRecentSearches } from './hooks/useRecentSearches';
 
 import { useToast } from '../../components/Toast/useToast';
+import { trackEvent } from '../../utils/analytics';
 
 const SearchUsers: React.FC = () => {
   const navigate = useNavigate();
@@ -34,11 +35,13 @@ const SearchUsers: React.FC = () => {
 
   const handleSearch = () => {
     if (searchValue.trim()) {
+      trackEvent("Social", "try_search_user", { keyword: searchValue });
       setTriggerSearch(true);
     }
   };
 
   const handleRecentClick = (id: string) => {
+    trackEvent("Social", "click_recent_search", { keyword: id });
     setSearchValue(id);
     setTriggerSearch(true);
   };
@@ -70,7 +73,10 @@ const SearchUsers: React.FC = () => {
           </div>
           <button
             className={s.cancelSearchButton}
-            onClick={() => navigate('/friendtab')}
+            onClick={() => {
+              trackEvent("Social", "cancel_search_page");
+              navigate('/friendtab');
+            }}
           >
             취소
           </button>

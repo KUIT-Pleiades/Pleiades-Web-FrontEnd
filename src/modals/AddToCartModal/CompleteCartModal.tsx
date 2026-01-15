@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./CompleteCartModal.module.scss";
 import closeBtn from "../../assets/btnImg/closeBtn.svg";
 import { IMG_BASE_URL, getImagePathByType } from "../../functions/getImage";
+import { trackEvent } from "../../utils/analytics";
 
 interface CompleteCartModalProps {
   item: {
@@ -22,6 +23,16 @@ const CompleteCartModal: React.FC<CompleteCartModalProps> = ({
   onCustom,
   onCancel,
 }) => {
+  useEffect(() => {
+    if (item && item.id !== null) {
+      trackEvent("Market", "purchase_success", {
+        item_id: item.name,
+        price: item.price,
+        category: item.type
+      });
+    }
+  }, [item]);
+
   if (!item || item.id === null) {
     return null;
   }

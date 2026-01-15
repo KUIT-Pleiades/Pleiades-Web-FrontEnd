@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacterStore } from "../../store/useCharacterStore";
 import StoneBox from "../../components/Stone/StoneBox";
+import { trackEvent } from "../../utils/analytics";
 
 import marketSmallIcon from "../../assets/market/home/marketSmallIcon.svg";
 import characterBackground from "../../assets/market/home/characterBackground.svg";
@@ -22,8 +23,6 @@ const MarketHome: React.FC = () => {
     userInfo, 
     fetchUserStone,
     fetchIsStoneCharged,
-    // chargeStone
-
   } = useCharacterStore();
   const userName = userInfo.userName || "플레이아데스";
   const userCharacter = `${userInfo.character}`;
@@ -33,6 +32,9 @@ const MarketHome: React.FC = () => {
   useEffect(() => {
     fetchUserStone();
     fetchIsStoneCharged();
+
+    // [Insight] 상점 메인 화면 진입 시 기록 (기존 로직 유지)
+    trackEvent("Market", "view_market_home");
   }, []);
 
   const buttons = [
@@ -41,24 +43,28 @@ const MarketHome: React.FC = () => {
       subText: "쇼핑하러 가볼까요?",
       path: "official-store",
       icon: mallIcon,
+      gaName: "official_store"
     },
     {
       label: "내 아이템 판매",
       subText: "아이템 팔고 스톤 벌자!",
       path: "my-item-sell",
       icon: sellMyItemIcon,
+      gaName: "my_item_sell"
     },
     {
       label: "판매 중인 아이템",
       subText: "상품을 관리해요",
       path: "my-item-selling",
       icon: myItemsIcon,
+      gaName: "my_item_selling"
     },
     {
       label: "거래내역",
       subText: "거래내역이 궁금할땐",
       path: "transaction-history",
       icon: transactionDetailsIcon,
+      gaName: "transaction_history"
     },
   ];
 
@@ -71,28 +77,16 @@ const MarketHome: React.FC = () => {
       <div className={s.content}>
         <div className={s.topInformationSection}>
           <div className={s.userName}>
-            <img
-              src={marketSmallIcon}
-              alt="market small icon"
-              className={s.userNameMarketSmallIcon}
-            />
+            <img src={marketSmallIcon} alt="market small icon" className={s.userNameMarketSmallIcon} />
             <span className={s.userNameText}>{userName}님의 상점</span>
           </div>
-
-          <div 
-            className={s.stone} 
-            //onClick={chargeStone} // todo: 디버깅용
-          > {/*임시로 돈 무한 복사 버그판*/}
+          <div className={s.stone}>
             <StoneBox stoneAmount={userInfo.stone || 0} />
           </div>
         </div>
 
         <div className={s.characterContainer}>
-          <img
-            className={s.characterBackground}
-            src={characterBackground}
-            alt="캐릭터 배경"
-          />
+          <img className={s.characterBackground} src={characterBackground} alt="캐릭터 배경" />
           <img className={s.character} src={userCharacter} alt="캐릭터" />
         </div>
 
@@ -111,24 +105,27 @@ const MarketHome: React.FC = () => {
               <span className={s.adText}>밸런스 게임하고 무료로 스톤 충전하기</span>
               <img src={adInfoQuestionIcon} alt="ad info question icon" className={s.adInfoQuestionIcon} onClick={() => setIsInformationModalVisible(true)} />
             </div>
-            {/* 광고 카운트는 백엔드에서 넘겨주는 데이터가 있다면 연결, 일단 UI 유지 */}
             <div 
               className={!userInfo.isStoneCharged ? s.adButton : s.adButtonDisabled} 
               onClick={() => {
-                if (userInfo.isStoneCharged) return; // todo: 디버깅용으로 잠시 이거 주석처리
-                navigate("/market/balance-game")
-              }} // 경로 이동
+                if (userInfo.isStoneCharged) return;
+                trackEvent("Market", "click_ad_game_start");
+                navigate("/market/balance-game");
+              }}
             >
               충전하기
             </div>
           </div>
 
-
           <div className={s.bottomButtonSection}>
             {/* 공식/중고몰 */}
             <div
               className={s.officialUsedStoreButton}
-              onClick={() => navigate(buttons[0].path)}
+              onClick={() => {
+                // [Insight] 메뉴 클릭 추적을 위한 이벤트 전송
+                trackEvent("Market", "click_menu", { name: buttons[0].gaName });
+                navigate(buttons[0].path);
+              }}
             >
               <div className={s.iconContainer}>
                   <img src={buttons[0].icon} alt={`${buttons[0].label} icon`} className={s.icon} />
@@ -140,9 +137,12 @@ const MarketHome: React.FC = () => {
               <img src={insideButtonRightArrow} alt="inside button right arrow" className={s.insideButtonRightArrow} />
             </div>
 
-            {/* 내 아이템 판매 */}
             <div className={s.smallButtonsSection}>
-              <div className={s.smallButton} onClick={() => navigate(buttons[1].path)}>
+              {/* 내 아이템 판매 */}
+              <div className={s.smallButton} onClick={() => {
+                trackEvent("Market", "click_menu", { name: buttons[1].gaName });
+                navigate(buttons[1].path);
+              }}>
                 <div className={s.smallIconContainer}>
                   <img src={buttons[1].icon} alt={`${buttons[1].label} icon`} className={s.smallIcon} />
                 </div>
@@ -150,7 +150,10 @@ const MarketHome: React.FC = () => {
               </div>
 
               {/* 판매 중인 아이템 */}
-              <div className={s.smallButton} onClick={() => navigate(buttons[2].path)}>
+              <div className={s.smallButton} onClick={() => {
+                trackEvent("Market", "click_menu", { name: buttons[2].gaName });
+                navigate(buttons[2].path);
+              }}>
                 <div className={s.smallIconContainer}>
                   <img src={buttons[2].icon} alt={`${buttons[2].label} icon`} className={s.smallIcon} />
                 </div>
@@ -158,7 +161,10 @@ const MarketHome: React.FC = () => {
               </div>
 
               {/* 거래내역 */}
-              <div className={s.smallButton} onClick={() => navigate(buttons[3].path)}>
+              <div className={s.smallButton} onClick={() => {
+                trackEvent("Market", "click_menu", { name: buttons[3].gaName });
+                navigate(buttons[3].path);
+              }}>
                 <div className={s.smallIconContainer}>
                   <img src={buttons[3].icon} alt={`${buttons[3].label} icon`} className={s.smallIcon} />
                 </div>
@@ -173,13 +179,11 @@ const MarketHome: React.FC = () => {
         <div className={s.informationModalContainer} onClick={() => setIsInformationModalVisible(false)}>
           <div className={s.informationModalContent} onClick={(e) => e.stopPropagation()}>
             <div className={s.informationModalTitle}>밸런스 게임하고 스톤 충전하기</div>
-
             <div className={s.textContainer}>
               <div className={s.informationModalText}>밸런스 게임은 하루에 한 세트 참여 가능합니다.</div>
               <div className={s.informationModalText}>밸런스 게임 완료시 10 스톤을 받을 수 있습니다.</div>
               <div className={s.informationModalText}>게임을 끝까지 완료하지 않을 경우, 스톤을 받을 수 없습니다.</div>
             </div>
-
             <img src={adInfoCloseIcon} alt="ad info close icon" className={s.adInfoCloseIcon} onClick={() => setIsInformationModalVisible(false)} />
           </div>
         </div>

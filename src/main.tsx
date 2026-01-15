@@ -4,9 +4,20 @@ window.Buffer = Buffer;
 
 import React from "react";
 import { createRoot } from "react-dom/client";
+import ReactGA from "react-ga4";
 import App from "./App";
 import "./index.css";
 import { HelmetProvider } from 'react-helmet-async';
+
+const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
+if (GA_ID) {
+  ReactGA.initialize(GA_ID, {
+    gaOptions: {
+      send_page_view: false,
+    },
+  });
+}
 
 // 1. React Query 관련 import
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
