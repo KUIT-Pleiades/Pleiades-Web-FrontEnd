@@ -32,6 +32,7 @@ const MySellingItems: React.FC = () => {
         setSaleItems(data.listings);
       } catch (error) {
         console.error("판매 중인 아이템 조회 실패:", error);
+        showToast("아이템 목록을 불러오지 못했습니다.");
       } finally {
         setIsLoading(false);
       }

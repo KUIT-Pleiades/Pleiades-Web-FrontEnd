@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import s from "./SellItemModal.module.scss";
 import { useNavigate } from "react-router-dom";
 import { postSellItem } from "../../../../api/usedMarketApi";
+import { useToast } from "../../../../components/Toast/useToast";
 
 // image files
 import close from '../../../../assets/Signal/close.svg';
@@ -31,6 +32,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
     onSellSuccess,
 }) => {
     const navigate = useNavigate();
+    const { showToast, ToastContainer } = useToast();
     const [mode, setMode] = useState<Mode>('view');
     const [inputPrice, setInputPrice] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,17 +64,16 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 
         try {
             const result = await postSellItem(ownershipId, Number(inputPrice));
-            
-            if (result) {
-                console.log("판매 등록 성공, Listing ID:", result.listingId);
-                setFinalPrice(Number(inputPrice));
-                setMode('success');
-                onSellSuccess();
-            } else {
-                alert("판매 등록에 실패했습니다.");
-            }
+            console.log("판매 등록 성공, Listing ID:", result.listingId);
+            setFinalPrice(Number(inputPrice));
+            setMode('success');
+            onSellSuccess();
         } catch (error) {
-            console.error('판매 등록 중 오류 발생:', error);
+            if (error instanceof Error) {
+                showToast(error.message);
+            } else {
+                showToast("판매 등록에 실패했습니다.");
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -82,6 +83,7 @@ const SellItemModal: React.FC<SellItemModalProps> = ({
 
     return (
         <div className={s.modalOverlay}>
+            <ToastContainer />
             <div className={`${s.modal} ${mode === 'form' ? s.isForm : ''} ${mode === 'success' ? s.isSuccess : ''}`}>
                 <button
                     className={s.modalClose}

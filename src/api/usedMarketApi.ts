@@ -85,25 +85,32 @@ export const deleteUsedWishlistItem = async (
  * POST /store/resale/listings
  * @param ownershipId - 소유권 ID
  * @param price - 판매 가격
- * @returns Promise<SellItemResponse | null>
+ * @returns Promise<SellItemResponse>
+ * @throws 403: 본인의 아이템이 아닙니다, 404: 아이템을 찾을 수 없습니다, 409: 사용중인 아이템입니다
  */
 export const postSellItem = async (
   ownershipId: number,
   price: number
-): Promise<SellItemResponse | null> => {
+): Promise<SellItemResponse> => {
   try {
     const response = await axiosRequest<SellItemResponse>(
       "/store/resale/listings",
       "POST",
       { ownershipId, price }
     );
-
-    if (response.status === 200) {
-      return response.data;
-    }
-    return null;
+    return response.data;
   } catch (error) {
-    console.error("아이템 판매 등록 실패:", error);
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 403) {
+        throw new Error("본인의 아이템이 아닙니다.");
+      }
+      if (error.response?.status === 404) {
+        throw new Error("아이템을 찾을 수 없습니다.");
+      }
+      if (error.response?.status === 409) {
+        throw new Error("사용중인 아이템입니다.");
+      }
+    }
     throw error;
   }
 };

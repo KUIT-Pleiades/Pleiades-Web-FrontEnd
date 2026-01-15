@@ -38,13 +38,13 @@ const OfficialClothItems: React.FC<ItemProps> = ({
 
   const accessoryTypes = [
     "EARS",
-    "EYESITEM",
+    "EYES_ITEM",
     "HEAD",
     "NECK",
-    "LEFTWRIST",
-    "RIGHTWRIST",
-    "LEFTHAND",
-    "RIGHTHAND",
+    "LEFT_WRIST",
+    "RIGHT_WRIST",
+    "LEFT_HAND",
+    "RIGHT_HAND",
   ];
   const typeMap: { [key: string]: string } = {
     상의: "TOP",
