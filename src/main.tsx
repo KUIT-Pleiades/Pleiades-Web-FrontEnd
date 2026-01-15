@@ -17,6 +17,9 @@ if (GA_ID) {
       send_page_view: false,
     },
   });
+
+  ReactGA.event({ category: "Test", action: "ping" });
+  console.log("GA Ping Sent with ID:", GA_ID);
 }
 
 // 1. React Query 관련 import
