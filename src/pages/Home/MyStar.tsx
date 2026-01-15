@@ -15,7 +15,6 @@ export default function MyStar() {
   // 스토어의 imgVersion을 뒤에 추가
   const userCharacter = `${userInfo.character}?t=${imgVersion}`;
   const background = getImage(userInfo.starBackground);
-  const stone = userInfo.stone;
 
   useEffect(() => {
     fetchUserInfo();
@@ -31,7 +30,7 @@ export default function MyStar() {
     <div className={s.container}>
       <img className={s.background} src={background} alt="background" />
       <div className={s.dim} />
-      <HomeBar stoneBalance={stone} />
+      <HomeBar stoneBalance={userInfo.stone} />
       <div className={s.title}>
         <img className={s.planet} src={pleiadeslogo} alt="star" />
         <p className={s.owner}>{userInfo.userName}님의 별</p>
