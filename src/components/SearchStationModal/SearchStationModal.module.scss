@@ -66,22 +66,26 @@
         text-align: center;
         color: #FFF;
         font-family: "ElectricalSafety";
-        font-size: 0.8125rem;
+        font-size: 1rem;
+        transform: scale(0.8125); 
+        transform-origin: center;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        &::placeholder{
+
+        &::placeholder {
             color: var(--Color-4, #BEAADD);
             font-family: "Pretendard";
-            font-size: 0.8125rem;
+            font-size: 1rem; 
             font-style: normal;
             font-weight: 400;
             line-height: normal;
             text-align: center;
         }
-        &:focus{
+
+        &:focus {
             outline: none;
-            &::placeholder{
+            &::placeholder {
                 color: transparent;
             }
         }
