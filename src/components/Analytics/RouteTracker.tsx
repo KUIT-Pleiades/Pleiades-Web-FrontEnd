@@ -7,7 +7,7 @@ const RouteTracker = () => {
   const lastPageRef = useRef<string>("");
 
   useEffect(() => {
-    if (!import.meta.env.PROD) return;
+    if (window.location.hostname === "localhost") return;
 
     const page = location.pathname + location.search;
     if (lastPageRef.current === page) return;
