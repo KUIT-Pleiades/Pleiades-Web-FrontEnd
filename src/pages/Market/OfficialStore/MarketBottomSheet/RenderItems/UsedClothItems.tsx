@@ -42,13 +42,13 @@ const UsedClothItems: React.FC<ItemProps> = ({
     신발: "SHOES",
     // 악세서리 타입 추가
     머리: "HEAD",
-    눈: "EYESITEM",
+    눈: "EYES_ITEM",
     귀: "EARS",
     목: "NECK",
-    왼쪽손목: "LEFTWRIST",
-    오른쪽손목: "RIGHTWRIST",
-    왼손: "LEFTHAND",
-    오른손: "RIGHTHAND",
+    왼쪽손목: "LEFT_WRIST",
+    오른쪽손목: "RIGHT_WRIST",
+    왼손: "LEFT_HAND",
+    오른손: "RIGHT_HAND",
   };
 
   const filteredItems = data.items.filter((item) => {

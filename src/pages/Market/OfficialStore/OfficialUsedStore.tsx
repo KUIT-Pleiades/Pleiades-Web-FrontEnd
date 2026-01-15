@@ -10,6 +10,7 @@ import heartBtn from "../../../assets/btnImg/heartBtn.png";
 import redHeartBtn from "../../../assets/btnImg/redHeartBtn.svg";
 import backBtn from "../../../assets/btnImg/backBtn.png";
 import { UserInfo } from "../../../interfaces/Interfaces";
+import { useToast } from "../../../components/Toast/useToast";
 import {
   getOfficialFaceItems,
   getOfficialClothItems,
@@ -29,7 +30,6 @@ import {
   purchaseUsedItem,
 } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
-import PurchaseErrorModal from "../../../modals/AddToCartModal/PurchaseErrorModal";
 import { getImagePath } from "../../../functions/getImage";
 
 // 일반 아이콘
@@ -63,11 +63,9 @@ export default function OfficialUsedStore() {
     null
   ); // 검색 결과
   const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
-  const [errorModalMessage, setErrorModalMessage] = useState<string | null>(
-    null
-  ); // 에러 모달 메시지
 
   const { userInfo, fetchUserStone } = useCharacterStore();
+  const { showToast, ToastContainer } = useToast();
   const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
   const [initialUserInfo, setInitialUserInfo] = useState<UserInfo>(() =>
@@ -273,7 +271,7 @@ export default function OfficialUsedStore() {
           break;
 
         // 악세서리 아이템
-        case "EYESITEM": // ✨ 악세서리 '눈' 아이템 처리
+        case "EYES_ITEM": // ✨ 악세서리 '눈' 아이템 처리
           newState.item.eyes_item = fullPath;
           break;
         case "EARS":
@@ -285,16 +283,16 @@ export default function OfficialUsedStore() {
         case "NECK":
           newState.item.neck = fullPath;
           break;
-        case "LEFTWRIST":
+        case "LEFT_WRIST":
           newState.item.leftWrist = fullPath;
           break;
-        case "RIGHTWRIST":
+        case "RIGHT_WRIST":
           newState.item.rightWrist = fullPath;
           break;
-        case "LEFTHAND":
+        case "LEFT_HAND":
           newState.item.leftHand = fullPath;
           break;
-        case "RIGHTHAND":
+        case "RIGHT_HAND":
           newState.item.rightHand = fullPath;
           break;
 
@@ -351,8 +349,8 @@ export default function OfficialUsedStore() {
           setCompleteCartModalOpen(true);
           fetchUserStone();
         } else {
-          alert(response.message);
           setCartModalOpen(false);
+          showToast(response.message);
         }
       } else {
         const response = await purchaseUsedItem(selectedItem.id);
@@ -361,17 +359,17 @@ export default function OfficialUsedStore() {
           setCompleteCartModalOpen(true);
           fetchUserStone();
         } else {
-          alert(response.message);
           setCartModalOpen(false);
+          showToast(response.message);
         }
       }
     } catch (error) {
       console.error("구매 실패:", error);
       setCartModalOpen(false);
       if (error instanceof Error) {
-        setErrorModalMessage(error.message);
+        showToast(error.message);
       } else {
-        setErrorModalMessage("구매에 실패했습니다.");
+        showToast("구매에 실패했습니다.");
       }
     }
   };
@@ -399,6 +397,7 @@ export default function OfficialUsedStore() {
 
   return (
     <div className={s.container}>
+      <ToastContainer />
       {isCartModalOpen && (
         <AddToCartModal
           item={selectedItem}
@@ -412,12 +411,6 @@ export default function OfficialUsedStore() {
           onConfirm={handleCompleteCart}
           onCustom={handleGoToCustom}
           onCancel={() => setCompleteCartModalOpen(false)}
-        />
-      )}
-      {errorModalMessage && (
-        <PurchaseErrorModal
-          message={errorModalMessage}
-          onClose={() => setErrorModalMessage(null)}
         />
       )}
       <div className={s.header}>
