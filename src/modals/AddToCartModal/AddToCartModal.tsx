@@ -3,6 +3,7 @@ import s from "./AddToCartModal.module.scss";
 import stone from "../../assets/market/stone.svg";
 import closeBtn from "../../assets/btnImg/closeBtn.svg";
 import { IMG_BASE_URL, getImagePathByType } from "../../functions/getImage";
+import { trackEvent } from "../../utils/analytics";
 
 interface AddToCartModalProps {
   item: {
@@ -25,12 +26,25 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
     return null;
   }
 
+  const handleCancelClick = () => {
+    trackEvent("Market", "cancel_purchase", { item_id: item.name });
+    onCancel();
+  };
+
+  const handleConfirmClick = () => {
+    trackEvent("Market", "confirm_purchase", { 
+      item_id: item.name, 
+      price: item.price 
+    });
+    onConfirm();
+  };
+
   return (
     <div className={s.modalOverlay}>
       <div className={s.modal}>
         <button
           className={`${s.modalButton} ${s.cancelButton}`}
-          onClick={onCancel}
+          onClick={handleCancelClick}
         >
           <img src={closeBtn} alt="닫기" />
         </button>
@@ -47,7 +61,7 @@ const AddToCartModal: React.FC<AddToCartModalProps> = ({
 
         <button
           className={`${s.modalButton} ${s.confirmButton}`}
-          onClick={onConfirm}
+          onClick={handleConfirmClick}
         >
           구매하기
         </button>

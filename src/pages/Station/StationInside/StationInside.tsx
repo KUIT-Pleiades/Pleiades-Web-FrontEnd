@@ -13,6 +13,7 @@ import MyReport from "./CharacterReport/MyReport";
 import CharacterReport from "./CharacterReport/CharacterReport";
 import Pending from "../../PageManagement/Pending";
 import DraggableMember from "./DraggableMember";
+import { trackEvent } from "../../../utils/analytics"; // [Insight] GA 이벤트를 위해 임포트
 
 const IMG_BASE_URL: string = import.meta.env.VITE_IMG_BASE_URL;
 
@@ -22,14 +23,21 @@ const StationInside: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [showSlide, setShowSlide] = useState(false);
-  const [selectedMember, setSelectedMember] = useState<StationMember | null>(
-    null
-  );
-  const [memberPositions, setMemberPositions] = useState<
-    Record<string, { x: number; y: number }>
-  >({});
+  const [selectedMember, setSelectedMember] = useState<StationMember | null>(null);
+  const [memberPositions, setMemberPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [, setIsDragging] = useState(false);
   const { userInfo } = useCharacterStore();
+
+  const stationId = sessionStorage.getItem("stationId") as string;
+  const currentUserId = userInfo.userId;
+
+  useEffect(() => {
+    if (stationData) {
+      trackEvent("Station", "view_station_inside", { 
+        owner_id: stationData.adminUserId // PM 요구사항: 주인 ID 포함
+      });
+    }
+  }, [stationData]);
 
   const handleSettingClick = () => {
     setShowSlide(true);
@@ -46,15 +54,10 @@ const StationInside: React.FC = () => {
     }));
   };
 
-  // 스테이션 데이터를 새로고침하는 함수
   const refreshStationData = async () => {
     if (!stationId) return;
     try {
-        const response = await axiosRequest<StationDetails>(
-            `/stations/${stationId}`,
-            "GET",
-            null
-        );
+        const response = await axiosRequest<StationDetails>(`/stations/${stationId}`, "GET", null);
         if (response) {
             setStationData(response.data);
         }
@@ -63,20 +66,14 @@ const StationInside: React.FC = () => {
     }
 };
 
-  const currentUserId = userInfo.userId;
-
-  // 멤버 클릭 핸들러 추가
   const handleMemberClick = (member: StationMember) => {
     setSelectedMember(member);
   };
 
-  // const stationCode = sessionStorage.getItem("stationCode") as string;
   const handleLeaveStation = () => {
     sessionStorage.removeItem("stationId");
     navigate("/station");
   };
-
-  const stationId = sessionStorage.getItem("stationId") as string;
 
   useEffect(() => {
       if (!stationId) {
@@ -88,14 +85,9 @@ const StationInside: React.FC = () => {
   useEffect(() => {
     const getStationData = async () => {
       if (!stationId) return;
-
       try {
         setIsLoading(true);
-        const response = await axiosRequest<StationDetails>(
-          `/stations/${stationId}`,
-          "GET",
-          null
-        );
+        const response = await axiosRequest<StationDetails>(`/stations/${stationId}`, "GET", null);
         if (response) {
           setStationData(response.data);
           const initialPositions: Record<string, { x: number; y: number }> = {};
@@ -113,7 +105,6 @@ const StationInside: React.FC = () => {
         setIsLoading(false);
       }
     };
-
     getStationData();
   }, [stationId]);
 

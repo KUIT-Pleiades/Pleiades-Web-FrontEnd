@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { AuthToken } from "../interfaces/Interfaces";
 import { useAuth } from "../store/authStore";
 import { Methods } from "../types/types";
+import { trackEvent } from "../utils/analytics";
 
 const BASEURL = import.meta.env.VITE_SERVER_URL;
 
@@ -21,9 +22,17 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    if (error.response) {
+      trackEvent("System", "api_error", {
+        url: error.config?.url,
+        status: error.response?.status,
+        message: error.message
+      });
+    }
+
     const originalRequest = error.config;
     if (
-      (error.response.status === 401 || error.response.status === 428) &&
+      (error.response?.status === 401 || error.response?.status === 428) &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
@@ -44,7 +53,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-    if (error.response.status === 403) {
+    if (error.response?.status === 403) {
       console.log("재로그인 필요");
     }
     return Promise.reject(error);

@@ -7,6 +7,7 @@ import { axiosRequest } from "../../functions/axiosRequest";
 import { Message, UserInfo } from "../../interfaces/Interfaces";
 import { isMessage } from "../../functions/isMessage";
 import { useCharacterStore } from "../../store/useCharacterStore";
+import { trackEvent } from "../../utils/analytics";
 
 export default function NaverLogin() {
   const navigate = useNavigate();
@@ -34,26 +35,25 @@ export default function NaverLogin() {
   }, [authCode, navigate, setToken, updateUserInfo, url.search]);
 
   useEffect(() => {
-    if (authorization) {
-      const getUser = async () => {
-        const userData = await axiosRequest<UserInfo | Message>(
-          "/home",
-          "GET",
-          null
-        );
-        if (userData !== null) {
-          if (isMessage(userData.data)) {
-            console.log(userData.message);
-            navigate("/onboarding");
-          } else {
-            updateUserInfo(userData.data);
-            navigate("/home");
-          }
-        } else navigate("/loginfail");
-      };
-      getUser();
-    }
-  }, [authorization, navigate, updateUserInfo]);
+  if (authorization) {
+    const getUser = async () => {
+      const userData = await axiosRequest<UserInfo | Message>("/home", "GET", null);
+      if (userData !== null) {
+        if (isMessage(userData.data)) {
+          /* [Insight] 네이버 로그인 성공 - 신규 유저 */
+          trackEvent("Auth", "login_success", { method: "naver", isNewUser: true });
+          navigate("/onboarding");
+        } else {
+          /* [Insight] 네이버 로그인 성공 - 기존 유저 */
+          updateUserInfo(userData.data);
+          trackEvent("Auth", "login_success", { method: "naver", isNewUser: false });
+          navigate("/home");
+        }
+      } else navigate("/loginfail");
+    };
+    getUser();
+  }
+}, [authorization, navigate, updateUserInfo]);
 
   return <LogInPending />;
 }

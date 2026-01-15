@@ -1,3 +1,5 @@
+// SignalButton.module.scss
+
 .signalButton{
     width: 1.875rem;
     height: 1.875rem;
@@ -17,4 +19,5 @@
 .signalImg{
     margin-top: 0.2rem;
     pointer-events: none; // 이미지가 클릭을 방해하지 않도록 설정
+    cursor: pointer;
 }

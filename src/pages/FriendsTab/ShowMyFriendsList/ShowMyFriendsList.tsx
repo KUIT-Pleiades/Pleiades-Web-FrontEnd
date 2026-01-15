@@ -44,26 +44,6 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
     setOnActionFriendId("");
   };
 
-  const RenderButtons = () => {
-    if (onActionFriendId === otherUser.userId) {
-      return (
-        <button
-          className={s.showDeleteFriendModalButton}
-          onClick={handleOpenDeleteFriendModal}
-        >
-          친구 삭제
-        </button>
-      );
-    }
-    return (
-      <SignalButton
-        onClickSignal={() =>
-          handleSendSignal(otherUser.userId, otherUser.userName)
-        }
-      />
-    );
-  };
-
   return (
     <div className={s.container}>
       <div className={s.userInfoContainer} onClick={handleGoStation}>
@@ -84,7 +64,20 @@ const ShowMyFriendsList: React.FC<ShowMyFriendsListProps> = ({
       <div className={s.emptySpace} onClick={handleGoStation} />
       {/*============= 버튼 =============*/}
       <div className={s.buttonContainer}>
-        <RenderButtons />
+        {onActionFriendId === otherUser.userId ? (
+          <button
+            className={s.showDeleteFriendModalButton}
+            onClick={handleOpenDeleteFriendModal}
+          >
+            친구 삭제
+          </button>
+        ) : (
+          <SignalButton
+            onClickSignal={() =>
+              handleSendSignal(otherUser.userId, otherUser.userName)
+            }
+          />
+        )}
 
         <button
           className={s.deleteFriendsButton}
