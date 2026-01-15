@@ -90,8 +90,6 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   // 내 스톤 정보 가져오기 (GET)
   fetchUserStone: async () => {
     try {
-      console.log("재화 정보 동기화 중...");
-
       const response = await axiosRequest<{ stone: number }>(
         "/users/stone",
         "GET",
@@ -101,7 +99,6 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
         set((state) => ({
           userInfo: { ...state.userInfo, stone: response.data.stone },
         }));
-        console.log("재화 정보 동기화 완료: " + response.data.stone + " Stone");
       }
     } catch (error) {
       console.error("스톤 정보를 가져오는데 실패했습니다.", error);
@@ -111,8 +108,6 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   // 스톤 충전 (POST)
   chargeStone: async () => {
     try {
-      console.log("스톤 충전 요청");
-
       const response = await axiosRequest<{ message: string }>(
         "/users/stone",
         "POST",
@@ -130,8 +125,6 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
   // 스톤 충전 여부 가져오기 (GET)
   fetchIsStoneCharged: async () => {
     try {
-      console.log("스톤 충전 여부 동기화 중...");
-
       const response = await axiosRequest<{ isStoneCharged: boolean }>(
         "/users/stone-charge",
         "GET",
@@ -144,9 +137,6 @@ export const useCharacterStore = create<CharacterStore>((set, get) => ({
             isStoneCharged: response.data.isStoneCharged,
           },
         }));
-        console.log(
-          "스톤 충전 여부 동기화 완료: " + response.data.isStoneCharged
-        );
       }
     } catch (error) {
       console.error("스톤 충전 여부를 가져오는데 실패했습니다.", error);
