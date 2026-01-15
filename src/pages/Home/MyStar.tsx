@@ -20,7 +20,7 @@ export default function MyStar() {
     fetchUserInfo();
     fetchUserStone();
     updateImgVersion();
-  }, [location.state, userInfo.character, imgVersion]);
+  }, [location.state, userInfo.character, imgVersion, userInfo]);
 
   const showDiary = () => {
     navigate("/report");
