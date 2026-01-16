@@ -127,21 +127,21 @@ const StationInside: React.FC = () => {
         />
       )}
       <div className={s.headerContainer}>
-        <div className={s.backBtn}>
-          <img src={backBtn} alt="뒤로가기" onClick={handleLeaveStation} />
-        </div>
-        <div className={s.header}>
-          <h2>[ {stationData.name} ]</h2>
-          <p>{stationData.intro}</p>
-        </div>
-        <div className={s.btnGroup}>
-          <div className={s.customBtn} onClick={handleCustomClick}>
-            <img src={customBtn} alt="" />
+
+        <div className={s.titleSection}>
+
+          <img className={s.backBtn} src={backBtn} alt="뒤로가기" onClick={handleLeaveStation} />
+
+          <p className={s.title}>[ {stationData.name} ]</p>
+
+          <div className={s.btnGroup}>
+            <img className={s.customBtn} src={customBtn} alt="" onClick={handleCustomClick} />
+            <img className={s.settingBtn} src={settingBtn} alt="" onClick={handleSettingClick} />
           </div>
-          <div className={s.settingBtn} onClick={handleSettingClick}>
-            <img src={settingBtn} alt="" />
-          </div>
+          
         </div>
+
+        <p className={s.intro}>{stationData.intro}</p>
       </div>
       <div className={s.content}>
         <div className={s.memberList}>
