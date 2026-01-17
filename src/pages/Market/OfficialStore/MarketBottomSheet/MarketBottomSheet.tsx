@@ -167,7 +167,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             <div className={s.content}>
               {isSearchLoading ? (
                 <div className={s.searchLoading}>검색 중...</div>
-              ) : searchResults?.items?.length > 0 ? (
+              ) : searchResults?.items && searchResults.items.length > 0 ? (
                 <ItemGrid
                   items={searchResults.items}
                   likedItems={likedItems}
