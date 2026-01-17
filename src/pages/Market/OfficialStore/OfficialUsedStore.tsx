@@ -407,6 +407,27 @@ export default function OfficialUsedStore() {
     });
   };
 
+  const handleTabChange = (tab: string) => {
+    if (activeTab === tab) return; // 같은 탭이면 무시
+
+    setActiveTab(tab);
+    // 찜목록 제외 모든 상태 초기화
+    setActiveCategory("face");
+    setIsSheetCollapsed(false);
+    setIsSearching(false);
+    setFocusSearch(false);
+    setSearchQuery("");
+    setSearchResults(null);
+    setSelectedItem({
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
+    setTryOnUserInfo(structuredClone(initialUserInfo));
+  };
+
   return (
     <div className={s.container}>
       <ToastContainer />
@@ -431,13 +452,13 @@ export default function OfficialUsedStore() {
         </button>
         <div className={s.tabGroup}>
           <button
-            onClick={() => setActiveTab("official")}
+            onClick={() => handleTabChange("official")}
             className={activeTab === "official" ? s.active : ""}
           >
             공식몰
           </button>
           <button
-            onClick={() => setActiveTab("used")}
+            onClick={() => handleTabChange("used")}
             className={activeTab === "used" ? s.active : ""}
           >
             중고몰
