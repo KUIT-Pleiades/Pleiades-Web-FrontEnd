@@ -50,11 +50,19 @@ interface ItemGridProps {
   itemClassName?: string;
 }
 
+// 타입에 따른 아이템 스타일 클래스 반환
+const getItemClassName = (type: string, customClassName?: string): string => {
+  if (customClassName) return customClassName;
+  const backgroundTypes = ["STAR_BG", "STATION_BG"];
+  if (backgroundTypes.includes(type)) return s.backgroundItem;
+  return s.item;
+};
+
 const ItemGrid: React.FC<ItemGridProps> = ({
   items,
   likedItems,
   onItemSelect,
-  itemClassName = s.item,
+  itemClassName,
 }) => {
   return (
     <div className={s.gridItems}>
@@ -80,7 +88,7 @@ const ItemGrid: React.FC<ItemGridProps> = ({
             {discountRate > 0 && (
               <div className={s.discountBadge}>{discountRate}%</div>
             )}
-            <div className={itemClassName}>
+            <div className={getItemClassName(item.type, itemClassName)}>
               <img src={`${IMG_BASE_URL}${getThumbnailPath(item.name, item.type)}`} alt={item.name} />
               {likedItems.has(item.id) && (
                 <div className={s.heartIconContainer}>
