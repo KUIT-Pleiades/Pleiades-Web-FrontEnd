@@ -28,6 +28,8 @@ import {
   postUsedWishlistItem,
   deleteUsedWishlistItem,
   purchaseUsedItem,
+  searchUsedItems,
+  UsedSearchResponse,
 } from "../../../api/usedMarketApi";
 import AddToCartModal from "../../../modals/AddToCartModal/AddToCartModal";
 import { getImagePath } from "../../../functions/getImage";
@@ -59,7 +61,7 @@ export default function OfficialUsedStore() {
   const [isSearching, setIsSearching] = useState(false);
   const [focusSearch, setFocusSearch] = useState(false); // 검색창 포커스 상태
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
-  const [searchResults, setSearchResults] = useState<SearchResponse | null>(
+  const [searchResults, setSearchResults] = useState<SearchResponse | UsedSearchResponse | null>(
     null
   ); // 검색 결과
   const [isSearchLoading, setIsSearchLoading] = useState(false); // 검색 로딩 상태
@@ -169,9 +171,9 @@ export default function OfficialUsedStore() {
       return;
     }
 
-    if (activeTab === "official") {
-      setIsSearchLoading(true);
-      try {
+    setIsSearchLoading(true);
+    try {
+      if (activeTab === "official") {
         const results = await searchOfficialItems(query);
         setSearchResults(results);
         // 검색 결과의 wishlist를 officialLikedItems에 병합
@@ -182,14 +184,24 @@ export default function OfficialUsedStore() {
             return newSet;
           });
         }
-      } catch (error) {
-        console.error("검색 실패:", error);
-        setSearchResults(null);
-      } finally {
-        setIsSearchLoading(false);
+      } else {
+        const results = await searchUsedItems(query);
+        setSearchResults(results);
+        // 검색 결과의 wishlist를 usedLikedItems에 병합
+        if (results.wishlist && results.wishlist.length > 0) {
+          setUsedLikedItems((prev) => {
+            const newSet = new Set(prev);
+            results.wishlist.forEach((id) => newSet.add(id));
+            return newSet;
+          });
+        }
       }
+    } catch (error) {
+      console.error("검색 실패:", error);
+      setSearchResults(null);
+    } finally {
+      setIsSearchLoading(false);
     }
-    // TODO: 중고몰 검색 API 연결
   };
 
   // 타입에 따른 폴더 경로 반환
@@ -395,6 +407,27 @@ export default function OfficialUsedStore() {
     });
   };
 
+  const handleTabChange = (tab: string) => {
+    if (activeTab === tab) return; // 같은 탭이면 무시
+
+    setActiveTab(tab);
+    // 찜목록 제외 모든 상태 초기화
+    setActiveCategory("face");
+    setIsSheetCollapsed(false);
+    setIsSearching(false);
+    setFocusSearch(false);
+    setSearchQuery("");
+    setSearchResults(null);
+    setSelectedItem({
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      type: "",
+    });
+    setTryOnUserInfo(structuredClone(initialUserInfo));
+  };
+
   return (
     <div className={s.container}>
       <ToastContainer />
@@ -419,13 +452,13 @@ export default function OfficialUsedStore() {
         </button>
         <div className={s.tabGroup}>
           <button
-            onClick={() => setActiveTab("official")}
+            onClick={() => handleTabChange("official")}
             className={activeTab === "official" ? s.active : ""}
           >
             공식몰
           </button>
           <button
-            onClick={() => setActiveTab("used")}
+            onClick={() => handleTabChange("used")}
             className={activeTab === "used" ? s.active : ""}
           >
             중고몰

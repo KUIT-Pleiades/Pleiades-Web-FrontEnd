@@ -158,6 +158,40 @@ export const updateListingPrice = async (
   });
 };
 
+export interface UsedSearchItem {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  price: number;
+  discounted_price: number;
+  status: string;
+  theme: string[];
+}
+
+export interface UsedSearchResponse {
+  items: UsedSearchItem[];
+  wishlist: number[];
+}
+
+/**
+ * 중고몰 아이템 검색 API 함수
+ * @param query - 검색어
+ * @returns Promise<UsedSearchResponse>
+ */
+export const searchUsedItems = async (query: string): Promise<UsedSearchResponse> => {
+  const response = await axiosRequest<UsedSearchItem[]>(
+    `/store/resale?query=${encodeURIComponent(query)}`,
+    "GET",
+    null
+  );
+  // API가 배열로 직접 반환하므로 형태를 맞춤
+  return {
+    items: response.data,
+    wishlist: [],
+  };
+};
+
 export interface UsedPurchaseResponse {
   ownershipId?: number;
   message: string;

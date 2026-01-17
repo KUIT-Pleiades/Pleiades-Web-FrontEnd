@@ -12,6 +12,7 @@ import UsedClothItems from "./RenderItems/UsedClothItems";
 import UsedBackgroundItems from "./RenderItems/UsedBackgroundItems";
 import ItemGrid from "./RenderItems/ItemGrid";
 import { SearchResponse } from "../../../../api/marketApi";
+import { UsedSearchResponse } from "../../../../api/usedMarketApi";
 
 interface MarketBottomSheetProps {
   activeTab: string;
@@ -31,7 +32,7 @@ interface MarketBottomSheetProps {
   setFocus: () => void;
   searchQuery?: string;
   onSearch?: (query: string) => void;
-  searchResults?: SearchResponse | null;
+  searchResults?: SearchResponse | UsedSearchResponse | null;
   isSearchLoading?: boolean;
 }
 
@@ -166,7 +167,7 @@ const MarketBottomSheet: React.FC<MarketBottomSheetProps> = ({
             <div className={s.content}>
               {isSearchLoading ? (
                 <div className={s.searchLoading}>검색 중...</div>
-              ) : searchResults && searchResults.items.length > 0 ? (
+              ) : searchResults?.items && searchResults.items.length > 0 ? (
                 <ItemGrid
                   items={searchResults.items}
                   likedItems={likedItems}
